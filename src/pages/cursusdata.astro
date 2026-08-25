@@ -1,0 +1,633 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { courses } from '../data/courses.js';
+
+const uniqueCategories = [...new Set(courses.map(c => c.category))];
+const uniqueLocations = [...new Set(courses.map(c => c.location))];
+---
+
+<Layout title="Cursusdata & Trainingen | Edusafe" description="Bekijk alle aankomende cursussen en trainingen van Edusafe op diverse locaties. Schrijf u direct online in.">
+  <main class="w-full">
+    
+    <!-- Hero Header Section -->
+    <section class="relative bg-brand-secondary text-white pt-28 pb-40 md:pt-36 md:pb-48 overflow-hidden">
+      <!-- Background pattern -->
+      <div class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.03)_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none"></div>
+      
+      <div class="max-w-[1280px] mx-auto px-6 relative z-10">
+        <div class="max-w-3xl">
+          <span class="inline-flex items-center gap-1.5 text-brand-accent font-display font-black text-sm uppercase tracking-wider mb-4">
+            <i class="fa-solid fa-calendar-days"></i>
+            Actuele Cursusdata
+          </span>
+          <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight mb-6">
+            Kies een datum <br />en start met <span class="relative inline-block text-white px-5 py-2 mx-1 mt-2 transform -rotate-1"><span class="absolute inset-0 bg-brand-accent rounded-2xl z-0"></span><span class="relative z-10">leren</span></span>
+          </h1>
+          <p class="text-white/80 text-base md:text-lg max-w-2xl mb-8">
+            Vind de perfecte cursus op een locatie bij jou in de buurt. Schrijf je direct in voor onze praktijkgerichte veiligheidstrainingen.
+          </p>
+          
+          <ul class="flex flex-col md:flex-row gap-4 md:gap-8">
+            <li class="flex items-center gap-2.5 text-sm font-semibold text-white/90">
+              <i class="fa-solid fa-circle-check text-brand-accent text-base"></i>
+              <span>Praktijkgerichte trainingen</span>
+            </li>
+            <li class="flex items-center gap-2.5 text-sm font-semibold text-white/90">
+              <i class="fa-solid fa-circle-check text-brand-accent text-base"></i>
+              <span>Gecertificeerde instructeurs</span>
+            </li>
+            <li class="flex items-center gap-2.5 text-sm font-semibold text-white/90">
+              <i class="fa-solid fa-circle-check text-brand-accent text-base"></i>
+              <span>Landelijk dekkend netwerk</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search & Filter Bar (Floating Container) -->
+    <section class="max-w-[1280px] mx-auto px-6 -mt-24 relative z-20 mb-12">
+      <div class="bg-white rounded-3xl shadow-xl border border-brand-dark/5 p-6 flex flex-col lg:flex-row gap-4 items-stretch lg:items-center">
+        <!-- Search Input -->
+        <div class="relative flex-1">
+          <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-brand-dark/40"></i>
+          <input 
+            id="search-input"
+            type="text" 
+            class="w-full rounded-2xl border border-brand-dark/10 px-4 py-3.5 pl-11 text-sm bg-brand-cream/20 placeholder:text-brand-dark/40 focus:outline-none focus:border-brand-primary/45 transition-colors"
+            placeholder="Zoek op cursusnaam..."
+          />
+        </div>
+        
+        <!-- Category Dropdown -->
+        <div class="relative flex-1">
+          <select 
+            id="category-select"
+            class="w-full rounded-2xl border border-brand-dark/10 px-4 py-3.5 text-sm bg-brand-cream/20 text-brand-secondary font-bold focus:outline-none focus:border-brand-primary/45 transition-colors appearance-none cursor-pointer"
+          >
+            <option value="all">Alle Cursussen</option>
+            {uniqueCategories.map(cat => (
+              <option value={cat}>{cat}</option>
+            ))}
+          </select>
+          <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-brand-dark/40 pointer-events-none"></i>
+        </div>
+
+        <!-- Location Dropdown -->
+        <div class="relative flex-1">
+          <select 
+            id="location-select"
+            class="w-full rounded-2xl border border-brand-dark/10 px-4 py-3.5 text-sm bg-brand-cream/20 text-brand-secondary font-bold focus:outline-none focus:border-brand-primary/45 transition-colors appearance-none cursor-pointer"
+          >
+            <option value="all">Alle Locaties</option>
+            {uniqueLocations.map(loc => (
+              <option value={loc}>{loc}</option>
+            ))}
+          </select>
+          <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-brand-dark/40 pointer-events-none"></i>
+        </div>
+
+        <!-- Reset Button -->
+        <button 
+          id="reset-filters"
+          class="font-display font-black text-sm px-6 py-3.5 rounded-2xl bg-brand-cream hover:bg-brand-cream/80 text-brand-secondary transition-all duration-300 flex items-center justify-center gap-2"
+        >
+          <i class="fa-solid fa-filter-circle-xmark"></i>
+          Filters Wissen
+        </button>
+      </div>
+    </section>
+
+    <!-- Courses List Grid -->
+    <section class="max-w-[1280px] mx-auto px-6 pb-24">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-10 gap-4">
+        <div>
+          <h2 class="font-display text-3xl font-black text-brand-secondary mb-2">Aankomende Cursussen</h2>
+          <p id="course-count" class="text-sm text-brand-dark/60 font-semibold">{courses.length} cursussen gevonden</p>
+        </div>
+        
+        <!-- Toggle View (Grid / List) -->
+        <div class="flex bg-white rounded-2xl p-1 border border-brand-dark/5 shadow-sm shrink-0">
+          <button 
+            id="grid-view-btn" 
+            class="p-2.5 rounded-xl transition-all duration-300 flex items-center justify-center bg-brand-primary text-white shadow-md cursor-pointer"
+            aria-label="Grid weergave"
+          >
+            <i class="fa-solid fa-table-cells text-sm"></i>
+          </button>
+          <button 
+            id="list-view-btn" 
+            class="p-2.5 rounded-xl transition-all duration-300 flex items-center justify-center text-brand-dark/40 hover:text-brand-dark/70 cursor-pointer"
+            aria-label="Lijst weergave"
+          >
+            <i class="fa-solid fa-list text-sm"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- VIEW 1: Course Grid Cards (Visible by default) -->
+      <div id="courses-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {courses.map(course => (
+          <div 
+            class="course-card bg-white rounded-3xl overflow-hidden shadow-sm border border-brand-dark/5 hover:shadow-xl hover:border-brand-primary/20 transition-all duration-300 flex flex-col justify-between"
+            data-title={course.title}
+            data-category={course.category}
+            data-location={course.location}
+          >
+            <!-- Card Header Image -->
+            <div class="relative h-48 overflow-hidden bg-brand-cream">
+              <img 
+                src={course.image} 
+                alt={course.title} 
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+              
+              <!-- Badges -->
+              <div class="absolute top-4 left-4 z-10 flex flex-wrap gap-2">
+                <span class="inline-flex items-center bg-white text-brand-primary text-xs font-black px-4 py-1.5 rounded-full shadow-md uppercase tracking-wider">
+                  {course.category}
+                </span>
+                {course.spotsLeft && (
+                  <span class="inline-flex items-center bg-brand-accent text-white text-[10px] font-black px-3 py-1.5 rounded-full shadow-md uppercase tracking-wider animate-pulse">
+                    <i class="fa-solid fa-user-clock mr-1"></i>
+                    {course.spotsLeft}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <!-- Card Content -->
+            <div class="p-6 flex-1 flex flex-col justify-between">
+              <div>
+                <h3 class="font-display text-xl font-black text-brand-secondary mb-4">
+                  {course.title}
+                </h3>
+                
+                <!-- Info List -->
+                <ul class="space-y-3 mb-6">
+                  <li class="flex items-center text-brand-dark/75 text-sm font-semibold">
+                    <i class="fa-solid fa-calendar text-brand-primary w-5 text-center mr-2"></i>
+                    <span>{course.date}</span>
+                  </li>
+                  <li class="flex items-center text-brand-dark/75 text-sm font-semibold">
+                    <i class="fa-solid fa-clock text-brand-dark/45 w-5 text-center mr-2"></i>
+                    <span>{course.time}</span>
+                  </li>
+                  <li class="flex items-start text-brand-dark/75 text-sm font-semibold">
+                    <i class="fa-solid fa-location-dot text-brand-primary w-5 text-center mr-2 mt-0.5"></i>
+                    <span>{course.location}</span>
+                  </li>
+                </ul>
+              </div>
+
+              <!-- Card Action CTA -->
+              <div class="pt-5 border-t border-brand-dark/5 flex items-center justify-between">
+                <a 
+                  href={`/inschrijven/${course.id}`} 
+                  class="font-display font-black text-sm py-3 px-6 rounded-2xl text-center bg-brand-primary text-white hover:bg-brand-primary-hover transition-all duration-300 w-full flex items-center justify-center gap-1.5 shadow-[0_4px_12px_rgba(27,102,177,0.15)]"
+                >
+                  Inschrijven
+                  <i class="fa-solid fa-chevron-right text-[10px]"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- VIEW 2: Course List Rows (Hidden by default) -->
+      <div id="courses-list" class="hidden flex-col gap-4">
+        {courses.map(course => (
+          <div 
+            class="course-list-item bg-white p-5 rounded-3xl border border-brand-dark/5 shadow-sm hover:shadow-md hover:border-brand-primary/20 transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-6"
+            data-title={course.title}
+            data-category={course.category}
+            data-location={course.location}
+          >
+            <!-- Left: Big Date Block -->
+            <div class="flex items-center gap-3 shrink-0">
+              <span class="font-display font-black text-4xl text-brand-secondary leading-none w-10 text-right">
+                {course.date.split(' ')[0]}
+              </span>
+              <div class="text-[10px] font-black text-brand-dark/50 leading-tight">
+                <div>{course.date.split(' ')[1]}</div>
+                <div>{course.date.split(' ')[2]}</div>
+              </div>
+            </div>
+
+            <!-- Middle: Details -->
+            <div class="flex-1 min-w-0">
+              <div class="flex flex-wrap items-center gap-2 mb-2">
+                <h3 class="font-display font-black text-lg text-brand-secondary leading-tight truncate">
+                  {course.title}
+                </h3>
+                <span class="inline-flex items-center bg-brand-primary/10 text-brand-primary text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                  {course.category}
+                </span>
+                {course.spotsLeft && (
+                  <span class="inline-flex items-center bg-brand-accent/15 text-brand-accent text-[9px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider animate-pulse border border-brand-accent/20">
+                    {course.spotsLeft}
+                  </span>
+                )}
+              </div>
+              
+              <!-- Info metadata -->
+              <div class="flex flex-wrap gap-x-6 gap-y-1 text-xs text-brand-dark/65 font-semibold">
+                <span class="flex items-center gap-1.5">
+                  <i class="fa-solid fa-location-dot text-brand-primary"></i>
+                  {course.location}
+                </span>
+                <span class="flex items-center gap-1.5">
+                  <i class="fa-solid fa-clock text-brand-dark/40"></i>
+                  {course.time}
+                </span>
+              </div>
+            </div>
+
+            <!-- Right: Action CTA Button -->
+            <div class="shrink-0 w-full md:w-auto">
+              <a 
+                href={`/inschrijven/${course.id}`} 
+                class="font-display font-black text-sm py-3 px-8 rounded-2xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 w-full md:w-auto block shadow-[0_4px_12px_rgba(255,107,53,0.15)]"
+              >
+                Inschrijven
+              </a>
+            </div>
+          </div>
+        ))}
+      </div>
+
+    </section>
+
+    <!-- SECTION 4: Scrolling Marquee Text Ticker -->
+    <section class="py-12 md:py-16 overflow-hidden bg-brand-cream-dark/20 flex flex-col gap-4 md:gap-6 relative z-10 w-full border-t border-b border-brand-dark/5 reveal">
+      <div class="flex whitespace-nowrap animate-marquee w-max select-none">
+        {Array.from({ length: 4 }).map(() => (
+          <div class="flex items-center text-4xl md:text-5xl lg:text-7xl font-display font-black text-brand-secondary tracking-tighter pr-8 md:pr-16">
+            <span>Praktijkgerichte trainingen</span>
+            <span class="text-brand-accent text-4xl md:text-6xl mx-6 md:mx-12">*</span>
+            <span>Direct certificaat</span>
+            <span class="text-brand-accent text-4xl md:text-6xl mx-6 md:mx-12">*</span>
+          </div>
+        ))}
+      </div>
+      <div class="flex whitespace-nowrap animate-marquee-reverse w-max select-none">
+        {Array.from({ length: 4 }).map(() => (
+          <div class="flex items-center text-4xl md:text-5xl lg:text-7xl font-display font-black text-brand-dark/15 tracking-tighter pr-8 md:pr-16">
+            <span>Veiligheid voorop</span>
+            <span class="text-brand-dark/10 text-4xl md:text-6xl mx-6 md:mx-12">*</span>
+            <span>Ervaren instructeurs</span>
+            <span class="text-brand-dark/10 text-4xl md:text-6xl mx-6 md:mx-12">*</span>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- SECTION 5: Stat Counters -->
+    <section class="py-20 bg-brand-cream-dark/10 border-b border-brand-dark/5 reveal">
+      <div class="max-w-[1280px] mx-auto px-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 text-center reveal-stagger">
+          <!-- Stat 1 -->
+          <div class="flex flex-col items-center justify-center">
+            <div class="text-5xl md:text-6xl font-display font-black text-brand-primary tracking-tighter mb-2">
+              30<span class="text-brand-accent">+</span>
+            </div>
+            <div class="text-xs md:text-sm font-black text-brand-primary uppercase tracking-wider">Locaties</div>
+          </div>
+          <!-- Stat 2 -->
+          <div class="flex flex-col items-center justify-center">
+            <div class="text-5xl md:text-6xl font-display font-black text-brand-primary tracking-tighter mb-2">
+              100<span class="text-brand-accent">%</span>
+            </div>
+            <div class="text-xs md:text-sm font-black text-brand-primary uppercase tracking-wider">Slagingspercentage</div>
+          </div>
+          <!-- Stat 3 -->
+          <div class="flex flex-col items-center justify-center">
+            <div class="text-5xl md:text-6xl font-display font-black text-brand-primary tracking-tighter mb-2">
+              20<span class="text-brand-accent">+</span>
+            </div>
+            <div class="text-xs md:text-sm font-black text-brand-primary uppercase tracking-wider">Jaren ervaring</div>
+          </div>
+          <!-- Stat 4 -->
+          <div class="flex flex-col items-center justify-center">
+            <div class="text-5xl md:text-6xl font-display font-black text-brand-primary tracking-tighter mb-2">
+              15<span class="text-brand-accent">+</span>
+            </div>
+            <div class="text-xs md:text-sm font-black text-brand-primary uppercase tracking-wider">Instructeurs</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: E-Learning Promo Banner -->
+    <section class="py-24 bg-brand-cream reveal">
+      <div class="max-w-[1280px] mx-auto px-6">
+        <div class="relative bg-brand-secondary text-white rounded-3xl md:rounded-[3rem] overflow-hidden flex flex-col md:flex-row items-stretch min-h-[300px] shadow-2xl border border-white/5">
+          <!-- Ticket-like decorative circles -->
+          <div class="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 -translate-x-8 w-16 h-16 bg-brand-cream rounded-full z-10"></div>
+          <div class="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 translate-x-8 w-16 h-16 bg-brand-cream rounded-full z-10"></div>
+          
+          <!-- Left side content -->
+          <div class="p-10 md:p-16 lg:p-20 md:w-2/3 border-b md:border-b-0 md:border-r border-dashed border-white/20 relative">
+            <div class="absolute right-8 top-1/2 -translate-y-1/2 opacity-5 pointer-events-none hidden lg:block">
+              <div class="text-8xl font-display font-black leading-none tracking-tighter">E-LEARN<br>PORTAL</div>
+            </div>
+            <div class="relative z-10">
+              <div class="text-brand-accent font-display font-black tracking-widest uppercase mb-4 text-xs md:text-sm">Nieuw bij Edusafe</div>
+              <h2 class="font-display text-4xl md:text-5xl lg:text-6xl font-black mb-6 leading-tight">Start direct met <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/60">E-Learning</span>
+              </h2>
+              <p class="text-white/60 text-base md:text-lg max-w-xl mb-8 leading-relaxed font-medium">Volg de theorie van onze veiligheidscursussen volledig online. In je eigen tempo, waar en wanneer het jou uitkomt.</p>
+              <div class="flex items-center gap-6 text-sm font-bold text-white/90">
+                <span class="flex items-center gap-2">
+                  <i class="fa-solid fa-circle-check text-brand-accent text-base"></i> 24/7 Toegang
+                </span>
+                <span class="flex items-center gap-2">
+                  <i class="fa-solid fa-circle-check text-brand-accent text-base"></i> Interactief
+                </span>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Right side portal log in -->
+          <div class="p-10 md:p-16 md:w-1/3 flex flex-col items-center justify-center text-center bg-white/5 relative overflow-hidden">
+            <div class="absolute right-4 top-1/2 -translate-y-1/2 rotate-180" style="writing-mode: vertical-rl;">
+              <span class="text-white/5 text-4xl font-display font-black tracking-widest uppercase">Toegang</span>
+            </div>
+            <div class="relative z-10 w-full flex flex-col items-center">
+              <div class="w-20 h-20 bg-brand-accent/20 rounded-full flex items-center justify-center mb-6">
+                <div class="w-16 h-16 bg-brand-accent rounded-full flex items-center justify-center shadow-lg shadow-brand-accent/30">
+                  <i class="fa-solid fa-chevron-right text-white text-xl"></i>
+                </div>
+              </div>
+              <h3 class="font-display text-2xl font-black mb-6 text-white">Meld je aan</h3>
+              <a 
+                href="https://edusafe.app.clientclub.net/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                class="inline-flex items-center justify-center h-14 bg-white text-brand-secondary hover:bg-slate-100 rounded-2xl px-8 text-base font-black w-full shadow-xl transition-all duration-300 hover:-translate-y-0.5 active:scale-95 cursor-pointer"
+              >
+                Naar e-learning
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: Full Testimonials Section -->
+    <section class="py-24 bg-brand-cream-dark/25 border-t border-brand-dark/5 reveal">
+      <div class="max-w-[1280px] mx-auto px-6">
+        <div class="text-center mb-16">
+          <h2 class="font-display text-3xl md:text-4xl font-black text-brand-secondary mb-4">Wat onze cursisten zeggen</h2>
+          <p class="text-brand-dark/60 max-w-2xl mx-auto font-semibold text-sm md:text-base">Lees de ervaringen van mensen die je voorgingen met onze praktijkgerichte trainingen.</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 reveal-stagger">
+          
+          <!-- Card 1 -->
+          <div class="bg-white p-8 rounded-3xl shadow-md border border-brand-dark/5 flex flex-col justify-between hover:shadow-xl transition-all duration-300">
+            <div>
+              <div class="flex gap-1 mb-6 text-amber-500">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+              <p class="text-brand-dark/70 mb-8 font-semibold text-sm leading-relaxed">"Zeer professionele BHV cursus gehad. De instructeur legde alles duidelijk uit en er was veel ruimte voor praktijkoefeningen. Een aanrader!"</p>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="h-12 w-12 rounded-full overflow-hidden border border-brand-dark/5 shadow-inner">
+                <img src="/assets/images/0942f99c-0c49-4f5a-b280-362643425d75.jpg" alt="Sanne de Jong" class="h-full w-full object-cover">
+              </div>
+              <div>
+                <span class="font-display font-black text-brand-secondary text-sm block">Sanne de Jong</span>
+                <span class="text-xs text-brand-dark/50 font-semibold">Rotterdam</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="bg-white p-8 rounded-3xl shadow-md border border-brand-dark/5 flex flex-col justify-between hover:shadow-xl transition-all duration-300">
+            <div>
+              <div class="flex gap-1 mb-6 text-amber-500">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+              <p class="text-brand-dark/70 mb-8 font-semibold text-sm leading-relaxed">"Het nieuwe e-learning portaal is echt ideaal. Ik kon de theorie voor mijn VCA in mijn eigen tijd doen, waardoor de praktijkdag veel korter was."</p>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="h-12 w-12 rounded-full overflow-hidden border border-brand-dark/5 shadow-inner">
+                <img src="/assets/images/00457656-619b-4bc5-bc92-364e6d5c7533.jpg" alt="Mark Visser" class="h-full w-full object-cover">
+              </div>
+              <div>
+                <span class="font-display font-black text-brand-secondary text-sm block">Mark Visser</span>
+                <span class="text-xs text-brand-dark/50 font-semibold">Den Haag</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="bg-white p-8 rounded-3xl shadow-md border border-brand-dark/5 flex flex-col justify-between hover:shadow-xl transition-all duration-300">
+            <div>
+              <div class="flex gap-1 mb-6 text-amber-500">
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+              <p class="text-brand-dark/70 mb-8 font-semibold text-sm leading-relaxed">"Top locatie en goede faciliteiten. De instructeur nam de tijd voor iedereen en de lunch was ook nog eens uitstekend verzorgd."</p>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="h-12 w-12 rounded-full overflow-hidden border border-brand-dark/5 shadow-inner">
+                <img src="/assets/images/9f847927-354e-4000-9e3e-b31e062f316e.jpg" alt="Lisa Bakker" class="h-full w-full object-cover">
+              </div>
+              <div>
+                <span class="font-display font-black text-brand-secondary text-sm block">Lisa Bakker</span>
+                <span class="text-xs text-brand-dark/50 font-semibold">Utrecht</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action / Newsletter Section -->
+    <section class="bg-brand-secondary text-white py-20 relative overflow-hidden reveal">
+      <!-- Background pattern -->
+      <div class="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.03)_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none"></div>
+
+      <div class="max-w-[1280px] mx-auto px-6 text-center relative z-10">
+        <div class="max-w-2xl mx-auto">
+          <h2 class="font-display text-3xl md:text-4xl font-black mb-4">Blijf op de hoogte</h2>
+          <p class="text-white/70 mb-8 text-sm md:text-base font-semibold">
+            Schrijf je in voor onze nieuwsbrief en ontvang de laatste updates over veiligheidstrainingen, nieuwe cursussen en exclusieve aanbiedingen.
+          </p>
+          
+          <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" onsubmit="event.preventDefault(); alert('Bedankt voor uw inschrijving!'); this.reset();">
+            <input 
+              type="email" 
+              class="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-3.5 text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-white/40 transition-colors" 
+              placeholder="Jouw e-mailadres" 
+              required
+            />
+            <button 
+              type="submit" 
+              class="font-display font-black text-sm py-3.5 px-8 rounded-2xl bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 shrink-0 shadow-[0_4px_15px_rgba(255,107,53,0.3)]"
+            >
+              Inschrijven
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 9: Partner Logo Marquee -->
+    <section class="py-12 border-t border-brand-dark/5 overflow-hidden bg-brand-cream-dark/25 w-full reveal">
+      <div class="flex whitespace-nowrap animate-marquee w-max opacity-80 grayscale hover:grayscale-0 transition-all duration-500">
+        {Array.from({ length: 3 }).map(() => (
+          <div class="flex items-center gap-16 md:gap-28 px-8 md:px-14 select-none">
+            <img src="/assets/images/cirque-du-soleil-160x80.png" alt="Cirque du Soleil" class="h-10 md:h-12 object-contain" />
+            <img src="/assets/images/uithof-160x80.png" alt="De Uithof" class="h-10 md:h-12 object-contain" />
+            <img src="/assets/images/paard-160x80.svg" alt="Paard" class="h-10 md:h-12 object-contain" />
+            <img src="/assets/images/ronald-mcdonald-den-haag-160x80.png" alt="Ronald McDonald Huis" class="h-10 md:h-12 object-contain" />
+          </div>
+        ))}
+      </div>
+    </section>
+
+  </main>
+</Layout>
+
+<script>
+  // Dynamic client-side search & filtering logic
+  const searchInput = document.getElementById('search-input') as HTMLInputElement;
+  const categorySelect = document.getElementById('category-select') as HTMLSelectElement;
+  const locationSelect = document.getElementById('location-select') as HTMLSelectElement;
+  const resetBtn = document.getElementById('reset-filters') as HTMLButtonElement;
+  const countText = document.getElementById('course-count');
+
+  // Toggle View Buttons and Layout Containers
+  const gridViewBtn = document.getElementById('grid-view-btn') as HTMLButtonElement;
+  const listViewBtn = document.getElementById('list-view-btn') as HTMLButtonElement;
+  const coursesGrid = document.getElementById('courses-grid') as HTMLDivElement;
+  const coursesList = document.getElementById('courses-list') as HTMLDivElement;
+
+  let currentLayout = 'grid'; // 'grid' or 'list'
+
+  function filterCourses() {
+    const query = searchInput.value.toLowerCase().trim();
+    const selectedCategory = categorySelect.value;
+    const selectedLocation = locationSelect.value;
+    let visibleCount = 0;
+
+    // Filter Grid Cards
+    const gridCards = document.querySelectorAll('.course-card');
+    gridCards.forEach(card => {
+      const htmlCard = card as HTMLElement;
+      const title = htmlCard.getAttribute('data-title')?.toLowerCase() || '';
+      const category = htmlCard.getAttribute('data-category') || '';
+      const location = htmlCard.getAttribute('data-location') || '';
+
+      const matchesQuery = title.includes(query);
+      const matchesCategory = selectedCategory === 'all' || category === selectedCategory;
+      const matchesLocation = selectedLocation === 'all' || location === selectedLocation;
+
+      if (matchesQuery && matchesCategory && matchesLocation) {
+        htmlCard.style.display = 'flex';
+        if (currentLayout === 'grid') visibleCount++;
+      } else {
+        htmlCard.style.display = 'none';
+      }
+    });
+
+    // Filter List Rows
+    const listRows = document.querySelectorAll('.course-list-item');
+    listRows.forEach(row => {
+      const htmlRow = row as HTMLElement;
+      const title = htmlRow.getAttribute('data-title')?.toLowerCase() || '';
+      const category = htmlRow.getAttribute('data-category') || '';
+      const location = htmlRow.getAttribute('data-location') || '';
+
+      const matchesQuery = title.includes(query);
+      const matchesCategory = selectedCategory === 'all' || category === selectedCategory;
+      const matchesLocation = selectedLocation === 'all' || location === selectedLocation;
+
+      if (matchesQuery && matchesCategory && matchesLocation) {
+        htmlRow.style.display = 'flex';
+        if (currentLayout === 'list') visibleCount++;
+      } else {
+        htmlRow.style.display = 'none';
+      }
+    });
+
+    // If query is run, make sure the count reflects the active layout visible items
+    if (countText) {
+      countText.textContent = `${visibleCount} ${visibleCount === 1 ? 'cursus' : 'cursussen'} gevonden`;
+    }
+  }
+
+  function resetFilters() {
+    searchInput.value = '';
+    categorySelect.value = 'all';
+    locationSelect.value = 'all';
+    filterCourses();
+  }
+
+  function switchLayout(layout: 'grid' | 'list') {
+    currentLayout = layout;
+    
+    if (layout === 'grid') {
+      coursesGrid.classList.remove('hidden');
+      coursesGrid.classList.add('grid');
+      coursesList.classList.remove('flex');
+      coursesList.classList.add('hidden');
+
+      // Update button active state styles
+      gridViewBtn.classList.add('bg-brand-primary', 'text-white', 'shadow-md');
+      gridViewBtn.classList.remove('text-brand-dark/40', 'hover:text-brand-dark/70');
+      listViewBtn.classList.remove('bg-brand-primary', 'text-white', 'shadow-md');
+      listViewBtn.classList.add('text-brand-dark/40', 'hover:text-brand-dark/70');
+    } else {
+      coursesGrid.classList.remove('grid');
+      coursesGrid.classList.add('hidden');
+      coursesList.classList.remove('hidden');
+      coursesList.classList.add('flex');
+
+      // Update button active state styles
+      listViewBtn.classList.add('bg-brand-primary', 'text-white', 'shadow-md');
+      listViewBtn.classList.remove('text-brand-dark/40', 'hover:text-brand-dark/70');
+      gridViewBtn.classList.remove('bg-brand-primary', 'text-white', 'shadow-md');
+      gridViewBtn.classList.add('text-brand-dark/40', 'hover:text-brand-dark/70');
+    }
+
+    filterCourses();
+  }
+
+  // Event Listeners
+  if (searchInput) searchInput.addEventListener('input', filterCourses);
+  if (categorySelect) categorySelect.addEventListener('change', filterCourses);
+  if (locationSelect) locationSelect.addEventListener('change', filterCourses);
+  if (resetBtn) resetBtn.addEventListener('click', resetFilters);
+
+  if (gridViewBtn) gridViewBtn.addEventListener('click', () => switchLayout('grid'));
+  if (listViewBtn) listViewBtn.addEventListener('click', () => switchLayout('list'));
+
+  // Parse query parameters for initial category selection
+  const params = new URLSearchParams(window.location.search);
+  const initialCategory = params.get('category');
+  if (initialCategory && categorySelect) {
+    // Check if the option exists
+    const options = Array.from(categorySelect.options).map(o => o.value);
+    if (options.includes(initialCategory)) {
+      categorySelect.value = initialCategory;
+      filterCourses();
+    }
+  }
+</script>

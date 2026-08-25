@@ -1,0 +1,496 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const elearningCourses = [
+  {
+    id: "bhv-theory",
+    title: "BHV Theorie E-learning",
+    category: "BHV",
+    price: "€ 59,00",
+    rawPrice: 59.00,
+    duration: "± 4 uur",
+    description: "Volledige online voorbereiding op het BHV-examen. Studeer in je eigen tempo op je mobiel, tablet of desktop.",
+    features: [
+      "Interactieve lesmodules met video's",
+      "Proefexamens conform NIBHV richtlijnen",
+      "Digitaal theorie-certificaat",
+      "100% slagingsgarantie"
+    ],
+    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=400"
+  },
+  {
+    id: "vca-basis",
+    title: "VCA Basis E-learning",
+    category: "VCA",
+    price: "€ 49,00",
+    rawPrice: 49.00,
+    duration: "± 6 uur",
+    description: "De ideale online voorbereiding op het officiële VCA Basis examen. Inclusief onbeperkt oefenexamens trainen.",
+    features: [
+      "Volledige VCA Basis lesstof",
+      "Onbeperkt oefenexamens trainen",
+      "Direct inzicht in fouten en uitleg",
+      "Digitaal theorie-certificaat"
+    ],
+    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=400"
+  },
+  {
+    id: "vca-vol",
+    title: "VCA VOL E-learning",
+    category: "VCA",
+    price: "€ 69,00",
+    rawPrice: 69.00,
+    duration: "± 8 uur",
+    description: "Speciaal ontwikkeld voor leidinggevenden en ZZP'ers in risicovolle sectoren. Volledig online en Arbo-conform.",
+    features: [
+      "VOL-specifieke veiligheidsstof",
+      "Management & Arbowetgeving modules",
+      "Grote database met VCA oefenvragen",
+      "Digitaal theorie-certificaat"
+    ],
+    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=400"
+  },
+  {
+    id: "ehbo-theory",
+    title: "EHBO & Reanimatie E-learning",
+    category: "EHBO",
+    price: "€ 39,00",
+    rawPrice: 39.00,
+    duration: "± 3 uur",
+    description: "Leer de theorie van levensreddend handelen, reanimatie (CPR) en AED-bediening online op ons platform.",
+    features: [
+      "Duidelijke instructievideo's",
+      "EHBO & AED theoriemodules",
+      "Interactieve quizzen ter toetsing",
+      "Digitaal theorie-certificaat"
+    ],
+    image: "https://images.unsplash.com/photo-1603398938378-e54eab446dde?auto=format&fit=crop&q=80&w=400"
+  }
+];
+
+const defaultCourse = elearningCourses[0];
+---
+
+<Layout title="E-learning Academie | Edusafe" description="Start direct online met uw BHV, VCA of EHBO theorie via de Edusafe E-learning Academie. Snel, flexibel en direct afrekenen via iDEAL.">
+  <main class="w-full">
+    
+    <!-- Hero Header -->
+    <section class="relative bg-brand-secondary text-white pt-28 pb-40 md:pt-36 md:pb-48 overflow-hidden">
+      <!-- Background pattern/image -->
+      <div class="absolute inset-0 z-0 overflow-hidden bg-brand-cream/5">
+        <img 
+          src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=1200" 
+          alt="E-learning Academie" 
+          class="w-full h-full object-cover opacity-15 scale-105" 
+        />
+        <div class="absolute inset-0 bg-gradient-to-br from-brand-secondary via-[#142e54] to-brand-primary opacity-90"></div>
+      </div>
+      
+      <div class="max-w-[1280px] mx-auto px-6 relative z-10">
+        <div class="max-w-3xl animate-fade-in">
+          <span class="inline-flex items-center gap-1.5 text-brand-accent font-display font-black text-xs uppercase tracking-wider mb-4">
+            <i class="fa-solid fa-graduation-cap animate-pulse"></i>
+            Edusafe Online Academie
+          </span>
+          <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight mb-6">
+            Direct Starten Met <span class="relative inline-block text-white px-5 py-2 mx-1 mt-2 transform -rotate-1"><span class="absolute inset-0 bg-brand-accent rounded-2xl z-0"></span><span class="relative z-10">E-learning</span></span>
+          </h1>
+          <p class="text-white/80 text-base md:text-lg max-w-2xl mb-8 leading-relaxed font-semibold">
+            Bereid uzelf of uw personeel online voor op het examen. Kies een cursus, vul uw gegevens in en reken veilig af om direct inloggegevens te ontvangen.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Content Grid & Checkout -->
+    <section class="max-w-[1280px] mx-auto px-6 -mt-24 relative z-20 pb-24">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        
+        <!-- Left Column: Course Selection & Features (8 columns) -->
+        <div class="lg:col-span-7 space-y-6">
+          
+          <!-- Header title for selection -->
+          <div class="bg-white rounded-3xl p-6 md:p-8 shadow-lg border border-brand-dark/5 reveal">
+            <h2 class="font-display text-xl md:text-2xl font-black text-brand-secondary mb-2">1. Kies uw E-learning training</h2>
+            <p class="text-xs text-brand-dark/60 font-semibold mb-6">Selecteer de gewenste theoriecursus die u direct online wilt starten.</p>
+
+            <div class="space-y-4">
+              {elearningCourses.map((course, idx) => (
+                <label 
+                  class={`course-option-label relative flex flex-col sm:flex-row items-start sm:items-center justify-between p-5 rounded-2xl border transition-all duration-300 cursor-pointer ${
+                    idx === 0 
+                      ? 'border-brand-primary bg-brand-cream/10 ring-2 ring-brand-primary/10' 
+                      : 'border-brand-dark/5 hover:border-brand-primary/20 bg-white'
+                  }`}
+                >
+                  <input 
+                    type="radio" 
+                    name="selected_course_radio" 
+                    value={course.id} 
+                    checked={idx === 0} 
+                    class="sr-only"
+                  />
+                  
+                  <!-- Left: Selection indicator & Info -->
+                  <div class="flex items-start gap-4">
+                    <!-- Custom radio indicator -->
+                    <div class="w-5 h-5 rounded-full border border-brand-dark/20 flex items-center justify-center shrink-0 mt-1 sm:mt-0.5">
+                      <div class={`w-2.5 h-2.5 rounded-full bg-brand-primary transition-transform ${idx === 0 ? 'scale-100' : 'scale-0'}`}></div>
+                    </div>
+                    
+                    <div>
+                      <div class="flex items-center gap-2 mb-1">
+                        <span class="font-display font-black text-brand-secondary text-base lg:text-lg leading-tight">{course.title}</span>
+                        <span class="text-[9px] font-black uppercase text-brand-primary bg-brand-primary/10 px-2 py-0.5 rounded-md">{course.category}</span>
+                      </div>
+                      <p class="text-xs text-brand-dark/60 font-medium leading-relaxed max-w-[420px]">{course.description}</p>
+                      
+                      <!-- Duration -->
+                      <div class="flex items-center gap-1.5 mt-2.5 text-[10px] font-bold text-brand-dark/50">
+                        <i class="fa-solid fa-clock"></i>
+                        <span>Studieduur: {course.duration}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Right: Pricing -->
+                  <div class="mt-4 sm:mt-0 text-left sm:text-right shrink-0">
+                    <span class="text-[9px] font-black uppercase text-brand-dark/40 block leading-none mb-0.5">Tarief excl.</span>
+                    <span class="font-display font-black text-brand-secondary text-lg lg:text-xl leading-none">{course.price}</span>
+                  </div>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <!-- Feature benefits cards -->
+          <div class="bg-white rounded-3xl p-6 md:p-8 shadow-lg border border-brand-dark/5 reveal">
+            <h3 class="font-display text-lg font-black text-brand-secondary mb-6">Voordelen van onze E-learning</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              
+              <div class="flex gap-3">
+                <span class="w-8 h-8 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center text-sm shrink-0">
+                  <i class="fa-solid fa-mobile-screen-button"></i>
+                </span>
+                <div>
+                  <h4 class="font-display font-black text-brand-secondary text-sm mb-1">Volledig mobielvriendelijk</h4>
+                  <p class="text-xs text-brand-dark/65 leading-relaxed font-semibold">Volg de theorie waar en wanneer u wilt: in de trein, thuis op de bank of op kantoor.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <span class="w-8 h-8 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center text-sm shrink-0">
+                  <i class="fa-solid fa-bolt"></i>
+                </span>
+                <div>
+                  <h4 class="font-display font-black text-brand-secondary text-sm mb-1">Direct online starten</h4>
+                  <p class="text-xs text-brand-dark/65 leading-relaxed font-semibold">Na de betaling worden uw inloggegevens direct automatisch gegenereerd en gemaild.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <span class="w-8 h-8 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center text-sm shrink-0">
+                  <i class="fa-solid fa-graduation-cap"></i>
+                </span>
+                <div>
+                  <h4 class="font-display font-black text-brand-secondary text-sm mb-1">100% Slagingsgarantie</h4>
+                  <p class="text-xs text-brand-dark/65 leading-relaxed font-semibold">Onze oefenexamens bootsen het officiële examen na. Niet geslaagd? Gratis verlenging.</p>
+                </div>
+              </div>
+
+              <div class="flex gap-3">
+                <span class="w-8 h-8 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center text-sm shrink-0">
+                  <i class="fa-solid fa-shield-halved"></i>
+                </span>
+                <div>
+                  <h4 class="font-display font-black text-brand-secondary text-sm mb-1">Officieel gecertificeerd</h4>
+                  <p class="text-xs text-brand-dark/65 leading-relaxed font-semibold">Al onze lesstof voldoet aan de strengste wettelijke Arbo- en NIBHV/VCA-richtlijnen.</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Sticky Checkout Form (5 columns) -->
+        <div class="lg:col-span-5 relative z-30">
+          
+          <div class="bg-white rounded-[32px] shadow-xl border border-brand-dark/5 p-8 sticky top-28 reveal" id="checkout-sidebar">
+            <h2 class="font-display text-xl font-black text-brand-secondary mb-2">2. Gegevens & Betaling</h2>
+            <p class="text-xs text-brand-dark/60 font-semibold mb-6">Controleer uw bestelling en reken direct veilig af.</p>
+
+            <!-- Order Summary details -->
+            <div class="bg-brand-cream/35 border border-brand-dark/5 rounded-2xl p-4 space-y-3 mb-6">
+              <div class="flex items-start justify-between">
+                <div>
+                  <span class="text-[9px] font-black uppercase text-brand-dark/40 tracking-wider block">Gekozen cursus</span>
+                  <span id="summary-title" class="text-sm font-display font-black text-brand-secondary leading-snug">{defaultCourse.title}</span>
+                </div>
+                <span id="summary-duration" class="text-[10px] font-bold text-brand-dark/50 shrink-0 mt-0.5">{defaultCourse.duration}</span>
+              </div>
+              
+              <div class="border-t border-brand-dark/5 pt-3 flex items-center justify-between">
+                <span class="text-[10px] font-black uppercase text-brand-dark/40">Subtotaal</span>
+                <span id="summary-subtotal" class="text-sm font-bold text-brand-secondary">{defaultCourse.price}</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-black uppercase text-brand-dark/40">BTW (21%)</span>
+                <span id="summary-btw" class="text-sm font-bold text-brand-secondary">€ 12,39</span>
+              </div>
+              <div class="border-t border-brand-dark/5 pt-3 flex items-baseline justify-between">
+                <span class="text-xs font-display font-black text-brand-secondary uppercase">Totaal incl. BTW</span>
+                <span id="summary-total" class="text-xl font-display font-black text-brand-primary">€ 71,39</span>
+              </div>
+            </div>
+
+            <!-- Checkout Form simulator -->
+            <form id="elearning-checkout-form" class="space-y-4">
+              <div>
+                <label class="block text-[10px] font-black uppercase text-brand-secondary mb-1.5 tracking-wider">Voor- en Achternaam *</label>
+                <input type="text" id="checkout-name" class="w-full bg-brand-cream/30 border border-brand-dark/10 rounded-xl px-4 py-3 text-sm text-brand-secondary font-semibold focus:outline-none focus:border-brand-primary focus:bg-white transition-colors shadow-sm" required placeholder="Bijv. Jan de Vries" />
+              </div>
+
+              <div>
+                <label class="block text-[10px] font-black uppercase text-brand-secondary mb-1.5 tracking-wider">E-mailadres *</label>
+                <input type="email" id="checkout-email" class="w-full bg-brand-cream/30 border border-brand-dark/10 rounded-xl px-4 py-3 text-sm text-brand-secondary font-semibold focus:outline-none focus:border-brand-primary focus:bg-white transition-colors shadow-sm" required placeholder="Bijv. jan@voorbeeld.nl" />
+              </div>
+
+              <div>
+                <label class="block text-[10px] font-black uppercase text-brand-secondary mb-1.5 tracking-wider">Bedrijfsnaam (Optioneel)</label>
+                <input type="text" id="checkout-company" class="w-full bg-brand-cream/30 border border-brand-dark/10 rounded-xl px-4 py-3 text-sm text-brand-secondary font-semibold focus:outline-none focus:border-brand-primary focus:bg-white transition-colors shadow-sm" placeholder="Bijv. De Vries Beveiliging B.V." />
+              </div>
+
+              <!-- Payment Method Selection -->
+              <div class="pt-2">
+                <label class="block text-[10px] font-black uppercase text-brand-secondary mb-2 tracking-wider">Betaalmethode *</label>
+                <div class="grid grid-cols-2 gap-3">
+                  <!-- iDEAL -->
+                  <label class="payment-method-btn flex items-center justify-between p-3.5 rounded-xl border border-brand-primary bg-brand-cream/10 ring-2 ring-brand-primary/10 cursor-pointer transition-all duration-300">
+                    <input type="radio" name="payment_method" value="ideal" checked class="sr-only" />
+                    <span class="text-xs font-bold text-brand-secondary">iDEAL</span>
+                    <i class="fa-solid fa-building-columns text-brand-primary text-sm"></i>
+                  </label>
+                  
+                  <!-- Creditcard -->
+                  <label class="payment-method-btn flex items-center justify-between p-3.5 rounded-xl border border-brand-dark/5 bg-white cursor-pointer transition-all duration-300 hover:border-brand-primary/20">
+                    <input type="radio" name="payment_method" value="creditcard" class="sr-only" />
+                    <span class="text-xs font-bold text-brand-secondary">Creditcard</span>
+                    <i class="fa-solid fa-credit-card text-brand-dark/45 text-sm"></i>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Submit Secure Checkout Button -->
+              <button 
+                type="submit"
+                class="font-display font-black text-sm py-4.5 px-6 rounded-2xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 w-full block shadow-[0_4px_15px_rgba(255,107,53,0.2)] cursor-pointer mt-4"
+              >
+                <i class="fa-solid fa-lock text-xs mr-2"></i>
+                Afrekenen & Direct Starten
+              </button>
+              
+              <div class="text-center text-[10px] font-bold text-brand-dark/40 flex items-center justify-center gap-1.5 mt-2">
+                <i class="fa-solid fa-shield-halved text-[11px] text-emerald-600"></i>
+                Beveiligde SSL-verbinding & instant levering
+              </div>
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- iDEAL Betaling Simulator Modal -->
+  <div id="ideal-modal" class="fixed inset-0 z-[999] hidden items-center justify-center bg-brand-secondary/95 backdrop-blur-md opacity-0 transition-opacity duration-300">
+    <div class="relative bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full mx-4 scale-95 transition-transform duration-300" id="ideal-card-container">
+      
+      <!-- STEP 1: LOADING BANK CONNECTION -->
+      <div id="ideal-step-1" class="text-center py-6 space-y-6">
+        <!-- Spinner -->
+        <div class="w-16 h-16 border-4 border-brand-primary border-t-transparent rounded-full animate-spin mx-auto"></div>
+        <div>
+          <h3 class="font-display font-black text-brand-secondary text-xl mb-1">Verbinding maken met bank...</h3>
+          <p class="text-xs text-brand-dark/60 font-semibold">U wordt omgeleid naar uw iDEAL betaalomgeving.</p>
+        </div>
+      </div>
+
+      <!-- STEP 2: PAYMENT SUCCESS CONFIRMATION -->
+      <div id="ideal-step-2" class="text-center py-6 space-y-6 hidden animate-fade-in">
+        <!-- Big Checkmark Success Circle -->
+        <div class="w-20 h-20 bg-emerald-50 border border-emerald-200 rounded-full flex items-center justify-center text-emerald-500 text-3xl mx-auto shadow-sm">
+          <i class="fa-solid fa-check"></i>
+        </div>
+        <div>
+          <h3 class="font-display font-black text-brand-secondary text-2xl mb-2">Betaling geslaagd!</h3>
+          <p class="text-sm text-brand-dark/80 font-bold leading-relaxed max-w-xs mx-auto">
+            Bedankt! Er is een e-mail gestuurd naar <span id="confirmed-email" class="text-brand-primary"></span> met uw inloggegevens.
+          </p>
+        </div>
+        
+        <div class="border-t border-brand-dark/5 pt-5 space-y-3">
+          <button id="success-close-btn" class="font-display font-black text-sm py-4 px-6 rounded-xl bg-brand-primary text-white hover:bg-brand-primary-hover transition-colors w-full cursor-pointer shadow-md">
+            Direct inloggen op Academie
+          </button>
+          <p class="text-[10px] text-brand-dark/45 font-bold">U kunt de theorie direct starten op uw dashboard.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</Layout>
+
+<script define:vars={{ elearningCourses }}>
+  function initElearningCheckout() {
+    const radioLabels = document.querySelectorAll('.course-option-label');
+    const paymentLabels = document.querySelectorAll('.payment-method-btn');
+    const checkoutForm = document.getElementById('elearning-checkout-form');
+    
+    // Elements to update dynamically
+    const summaryTitle = document.getElementById('summary-title');
+    const summaryDuration = document.getElementById('summary-duration');
+    const summarySubtotal = document.getElementById('summary-subtotal');
+    const summaryBtw = document.getElementById('summary-btw');
+    const summaryTotal = document.getElementById('summary-total');
+
+    // iDEAL simulator elements
+    const idealModal = document.getElementById('ideal-modal');
+    const idealCard = document.getElementById('ideal-card-container');
+    const idealStep1 = document.getElementById('ideal-step-1');
+    const idealStep2 = document.getElementById('ideal-step-2');
+    const confirmedEmail = document.getElementById('confirmed-email');
+    const successCloseBtn = document.getElementById('success-close-btn');
+
+    // 1. Course radio change listener
+    radioLabels.forEach(label => {
+      const radioInput = label.querySelector('input[type="radio"]');
+      if (!radioInput) return;
+
+      radioInput.addEventListener('change', () => {
+        if (!radioInput.checked) return;
+        
+        // Update active class styling in list
+        radioLabels.forEach(lbl => {
+          lbl.classList.remove('border-brand-primary', 'bg-brand-cream/10', 'ring-2', 'ring-brand-primary/10');
+          lbl.classList.add('border-brand-dark/5', 'bg-white');
+          const innerDot = lbl.querySelector('.rounded-full bg-brand-primary');
+          if (innerDot) {
+            innerDot.classList.add('scale-0');
+            innerDot.classList.remove('scale-100');
+          }
+        });
+
+        label.classList.add('border-brand-primary', 'bg-brand-cream/10', 'ring-2', 'ring-brand-primary/10');
+        label.classList.remove('border-brand-dark/5', 'bg-white');
+        
+        // Find course details
+        const courseId = radioInput.value;
+        const course = elearningCourses.find(c => c.id === courseId);
+        if (!course) return;
+
+        // Update checkout sidebar values
+        if (summaryTitle) summaryTitle.textContent = course.title;
+        if (summaryDuration) summaryDuration.textContent = course.duration;
+        if (summarySubtotal) summarySubtotal.textContent = course.price;
+        
+        // Calculate tax and total
+        const subtotal = course.rawPrice;
+        const btw = subtotal * 0.21;
+        const total = subtotal + btw;
+
+        if (summaryBtw) summaryBtw.textContent = `€ ${btw.toFixed(2).replace('.', ',')}`;
+        if (summaryTotal) summaryTotal.textContent = `€ ${total.toFixed(2).replace('.', ',')}`;
+      });
+    });
+
+    // 2. Payment method change listener
+    paymentLabels.forEach(label => {
+      const radioInput = label.querySelector('input[type="radio"]');
+      if (!radioInput) return;
+
+      radioInput.addEventListener('change', () => {
+        if (!radioInput.checked) return;
+
+        paymentLabels.forEach(lbl => {
+          lbl.classList.remove('border-brand-primary', 'bg-brand-cream/10', 'ring-2', 'ring-brand-primary/10');
+          lbl.classList.add('border-brand-dark/5', 'bg-white');
+          const icon = lbl.querySelector('.fa-solid');
+          if (icon) {
+            icon.classList.remove('text-brand-primary');
+            icon.classList.add('text-brand-dark/45');
+          }
+        });
+
+        label.classList.add('border-brand-primary', 'bg-brand-cream/10', 'ring-2', 'ring-brand-primary/10');
+        label.classList.remove('border-brand-dark/5', 'bg-white');
+        const icon = label.querySelector('.fa-solid');
+        if (icon) {
+          icon.classList.add('text-brand-primary');
+          icon.classList.remove('text-brand-dark/45');
+        }
+      });
+    });
+
+    // 3. Checkout submit listener (Opens payment simulation)
+    if (checkoutForm && idealModal && idealCard) {
+      checkoutForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('checkout-name').value;
+        const email = document.getElementById('checkout-email').value;
+
+        // Open modal
+        idealModal.classList.remove('hidden');
+        idealModal.classList.add('flex');
+        
+        // Transition animation
+        requestAnimationFrame(() => {
+          idealModal.classList.remove('opacity-0');
+          idealCard.classList.remove('scale-95');
+          idealCard.classList.add('scale-100');
+        });
+
+        // Set email confirmation text
+        if (confirmedEmail) confirmedEmail.textContent = email;
+
+        // Reset step visibility
+        if (idealStep1) idealStep1.classList.remove('hidden');
+        if (idealStep2) idealStep2.classList.add('hidden');
+
+        // Simulate Bank redirect spinner (2.5s)
+        setTimeout(() => {
+          if (idealStep1) idealStep1.classList.add('hidden');
+          if (idealStep2) {
+            idealStep2.classList.remove('hidden');
+            idealStep2.classList.add('block');
+          }
+        }, 2200);
+      });
+    }
+
+    // 4. Modal Success close listener
+    if (successCloseBtn && idealModal) {
+      successCloseBtn.addEventListener('click', () => {
+        // Transition close
+        idealModal.classList.add('opacity-0');
+        idealCard.classList.remove('scale-100');
+        idealCard.classList.add('scale-95');
+        setTimeout(() => {
+          idealModal.classList.remove('flex');
+          idealModal.classList.add('hidden');
+          
+          // Reset checkout form
+          if (checkoutForm) checkoutForm.reset();
+        }, 300);
+      });
+    }
+  }
+
+  // Init navigator
+  initElearningCheckout();
+  document.addEventListener('astro:page-load', initElearningCheckout);
+</script>

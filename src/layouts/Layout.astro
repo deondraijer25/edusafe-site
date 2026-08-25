@@ -1,0 +1,149 @@
+---
+import '../styles/global.css';
+import SeoHeader from '../components/SeoHeader.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="nl" class="scroll-smooth">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<SeoHeader title={title} description={description} />
+		
+		<!-- JSON-LD Organization Schema for Google and AI Crawlers -->
+		<script type="application/ld+json" is:inline>
+			{
+			  "@context": "https://schema.org",
+			  "@type": "Organization",
+			  "name": "Edusafe",
+			  "url": "https://edusafe.nl",
+			  "logo": "https://edusafe.nl/favicon.svg",
+			  "description": "Expert in bedrijfsveiligheid, BHV, EHBO en VCA trainingen.",
+			  "address": {
+				"@type": "PostalAddress",
+				"streetAddress": "Oude Middenweg 241A",
+				"addressLocality": "Den Haag",
+				"postalCode": "2491 AH",
+				"addressCountry": "NL"
+			  },
+			  "contactPoint": {
+				"@type": "ContactPoint",
+				"telephone": "+31-70-4447795",
+				"contactType": "customer service",
+				"email": "info@edusafe.nl"
+			  }
+			}
+		</script>
+		
+		<!-- Google Fonts (Plus Jakarta Sans & Outfit) -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&family=Outfit:wght@100..900&display=swap" rel="stylesheet">
+		
+		<!-- Font Awesome 6 for professional icons -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	</head>
+	<body class="bg-brand-cream text-brand-dark font-sans antialiased overflow-x-clip min-h-screen flex flex-col">
+		<!-- Page Preloader (3 seconds Coin Flip) -->
+		<div id="preloader" class="fixed inset-0 z-[9999] bg-gradient-to-br from-brand-secondary via-[#142e54] to-brand-primary flex flex-col items-center justify-center transition-all duration-700 ease-in-out">
+			<!-- 3D Coin container (circular) -->
+			<div class="coin-container w-56 h-56 relative">
+				<div class="coin w-full h-full relative transform-style-3d animate-coin-flip">
+					<!-- Front of the coin: Edusafe logo in original brand colors -->
+					<div class="coin-side coin-front absolute inset-0 w-full h-full rounded-full bg-white shadow-2xl flex items-center justify-center p-8 border border-brand-dark/5">
+						<img src="/assets/images/edusafe_logo.png" alt="Edusafe Logo" class="w-full h-auto max-h-[75px] object-contain" />
+					</div>
+					<!-- Back of the coin: Edusafe logo in original brand colors -->
+					<div class="coin-side coin-back absolute inset-0 w-full h-full rounded-full bg-white shadow-2xl flex items-center justify-center p-8 border border-brand-dark/5 rotate-y-180">
+						<img src="/assets/images/edusafe_logo.png" alt="Edusafe Logo" class="w-full h-auto max-h-[75px] object-contain" />
+					</div>
+				</div>
+			</div>
+			
+			<!-- Elegant scaled progress bar -->
+			<div class="mt-12 flex flex-col items-center">
+				<div class="h-1.5 w-[300px] bg-white/15 rounded-full overflow-hidden relative shadow-inner">
+					<div class="absolute top-0 left-0 h-full bg-brand-accent rounded-full animate-loader-progress w-0"></div>
+				</div>
+				<span class="text-[10px] font-black text-brand-cream uppercase tracking-widest mt-4 animate-pulse">Veiligheid Eerst...</span>
+			</div>
+		</div>
+
+		<!-- Inline script to hide loader after 3 seconds, avoiding run on internal page transitions -->
+		<script is:inline>
+			(function() {
+				// Astro page transition check
+				if (window.preloaderActive === undefined) {
+					window.preloaderActive = true;
+					document.body.classList.add('overflow-hidden');
+					
+					const handlePreloader = () => {
+						const loader = document.getElementById('preloader');
+						if (loader) {
+							setTimeout(() => {
+								loader.classList.add('opacity-0', 'pointer-events-none');
+								document.body.classList.remove('overflow-hidden');
+								setTimeout(() => {
+									loader.style.display = 'none';
+								}, 700);
+							}, 3000);
+						} else {
+							document.body.classList.remove('overflow-hidden');
+						}
+					};
+
+					if (document.readyState === 'complete' || document.readyState === 'interactive') {
+						handlePreloader();
+					} else {
+						document.addEventListener('DOMContentLoaded', handlePreloader);
+					}
+				} else {
+					// Instantly hide on internal route swaps
+					const loader = document.getElementById('preloader');
+					if (loader) loader.style.display = 'none';
+				}
+			})();
+		</script>
+
+		<Navbar />
+		<div class="relative z-10 flex-grow flex flex-col">
+			<slot />
+		</div>
+		<Footer />
+
+		<script>
+			// Scroll animation observer
+			const observeRevealElements = () => {
+				const observer = new IntersectionObserver((entries) => {
+					entries.forEach(entry => {
+						if (entry.isIntersecting) {
+							entry.target.classList.add('active');
+						}
+					});
+				}, {
+					threshold: 0.05,
+					rootMargin: "0px 0px -40px 0px"
+				});
+
+				document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+			};
+
+			// Run on initial load
+			observeRevealElements();
+
+			// Handle Astro page transitions or content updates if any
+			document.addEventListener('astro:after-swap', observeRevealElements);
+		</script>
+	</body>
+</html>

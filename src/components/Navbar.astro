@@ -1,0 +1,440 @@
+---
+---
+<header class="w-full fixed top-0 left-0 z-50 border-b border-brand-dark/5 bg-brand-cream lg:bg-[linear-gradient(to_right,var(--color-brand-cream)_calc(50%+103px),var(--color-brand-secondary)_calc(50%+103px))]">
+  
+  <!-- Centered container with relative positioning for full-width aligned mega menu -->
+  <div class="max-w-[1280px] mx-auto px-6 w-full grid grid-cols-12 items-center h-[90px] relative">
+    
+    <!-- Left Section: Logo & Menu Links (Spans columns 1 to 7) -->
+    <div class="col-span-12 lg:col-span-7 flex items-center justify-between lg:justify-start gap-12 h-full">
+      <!-- Logo (Enlarged to h-[72px]) -->
+      <a href="/" class="flex items-center group shrink-0 py-1">
+        <img 
+          class="h-16 lg:h-[72px] w-auto object-contain block transform group-hover:scale-[1.02] transition-transform duration-300" 
+          src="/assets/images/edusafe_logo.png" 
+          alt="Edusafe Logo" 
+          height="72"
+          width="162"
+        />
+      </a>
+
+      <!-- Desktop Nav Links (Home link removed) -->
+      <nav class="hidden lg:flex items-center gap-7 h-full">
+        
+        <!-- Cursussen Mega Menu Dropdown (Parent div is NOT relative, so absolute menu aligns to header container) -->
+        <div class="group h-full flex items-center">
+          <button class="font-display font-black text-[15px] tracking-wide text-brand-dark hover:text-brand-primary transition-colors flex items-center gap-0.5 py-4 focus:outline-none cursor-pointer">
+            Cursussen
+            <svg class="w-4 h-4 opacity-60 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          
+          <!-- Mega Menu Card (Aligned left-[180px], w-[960px], rounded-3xl) -->
+          <div class="absolute top-[76px] left-[180px] bg-white border border-brand-dark/5 shadow-2xl rounded-3xl p-8 w-[960px] transition-all duration-300 transform scale-95 opacity-0 pointer-events-none group-hover:scale-100 group-hover:opacity-100 group-hover:pointer-events-auto flex flex-col text-brand-secondary z-50">
+            <!-- Tiny bridge to prevent losing hover -->
+            <div class="absolute -top-5 left-0 w-full h-5 bg-transparent"></div>
+            
+            <!-- Header Title -->
+            <div class="mb-6">
+              <h4 class="font-display font-black text-xl mb-1 text-brand-secondary">Cursussen & Opleidingen</h4>
+              <p class="text-[12px] text-brand-dark/65 font-medium">Kies een van onze gecertificeerde trainingen of vraag een incompany offerte aan.</p>
+            </div>
+
+            <!-- 4 Columns Grid: Wrapped into multiple rows when > 4 items -->
+            <div class="grid grid-cols-4 gap-4 items-stretch">
+              
+              <!-- Card 1: BHV -->
+              <a href="/bhv-cursus" class="flex flex-col justify-between p-5 rounded-2xl bg-brand-cream/40 border border-brand-dark/5 hover:border-brand-primary/20 hover:bg-brand-cream/80 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[175px] text-left">
+                <div>
+                  <div class="w-9 h-9 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-4 shrink-0 transition-transform group-hover/item:scale-105">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                  </div>
+                  <span class="font-display font-black text-[14px] text-brand-secondary mb-1.5 block leading-tight">BHV</span>
+                  <span class="text-[11px] text-brand-dark/70 leading-normal block">Brand, ontruiming en eerste hulp op de werkvloer.</span>
+                </div>
+              </a>
+
+              <!-- Card 2: EHBO -->
+              <a href="/cursusdata?category=EHBO" class="flex flex-col justify-between p-5 rounded-2xl bg-brand-cream/40 border border-brand-dark/5 hover:border-brand-primary/20 hover:bg-brand-cream/80 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[175px] text-left">
+                <div>
+                  <div class="w-9 h-9 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-4 shrink-0 transition-transform group-hover/item:scale-105">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                  </div>
+                  <span class="font-display font-black text-[14px] text-brand-secondary mb-1.5 block leading-tight">EHBO</span>
+                  <span class="text-[11px] text-brand-dark/70 leading-normal block">Eerste hulp bij ongevallen conform het Oranje Kruis.</span>
+                </div>
+              </a>
+
+              <!-- Card 3: AED & Reanimatie -->
+              <a href="/cursusdata?category=AED/Reanimatie" class="flex flex-col justify-between p-5 rounded-2xl bg-brand-cream/40 border border-brand-dark/5 hover:border-brand-primary/20 hover:bg-brand-cream/80 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[175px] text-left">
+                <div>
+                  <div class="w-9 h-9 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-4 shrink-0 transition-transform group-hover/item:scale-105">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                    </svg>
+                  </div>
+                  <span class="font-display font-black text-[14px] text-brand-secondary mb-1.5 block leading-tight">Reanimatie & AED</span>
+                  <span class="text-[11px] text-brand-dark/70 leading-normal block">Leer levensreddend handelen en reanimeren met een AED.</span>
+                </div>
+              </a>
+
+              <!-- Card 4: VCA -->
+              <a href="/cursusdata?category=VCA" class="flex flex-col justify-between p-5 rounded-2xl bg-brand-cream/40 border border-brand-dark/5 hover:border-brand-primary/20 hover:bg-brand-cream/80 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[175px] text-left">
+                <div>
+                  <div class="w-9 h-9 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-4 shrink-0 transition-transform group-hover/item:scale-105">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+                    </svg>
+                  </div>
+                  <span class="font-display font-black text-[14px] text-brand-secondary mb-1.5 block leading-tight">VCA</span>
+                  <span class="text-[11px] text-brand-dark/70 leading-normal block">Veilig werken in bouw, techniek en risicovolle sectoren.</span>
+                </div>
+              </a>
+
+              <!-- Card 5: Ontruiming -->
+              <a href="/cursusdata?category=Ontruiming" class="flex flex-col justify-between p-5 rounded-2xl bg-brand-cream/40 border border-brand-dark/5 hover:border-brand-primary/20 hover:bg-brand-cream/80 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[175px] text-left">
+                <div>
+                  <div class="w-9 h-9 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-4 shrink-0 transition-transform group-hover/item:scale-105">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </div>
+                  <span class="font-display font-black text-[14px] text-brand-secondary mb-1.5 block leading-tight">Brand & Ontruiming</span>
+                  <span class="text-[11px] text-brand-dark/70 leading-normal block">Bereid uw team voor met effectieve ontruimingsoefeningen.</span>
+                </div>
+              </a>
+
+              <!-- Card 6: Heftruck -->
+              <a href="/cursusdata" class="flex flex-col justify-between p-5 rounded-2xl bg-brand-cream/40 border border-brand-dark/5 hover:border-brand-primary/20 hover:bg-brand-cream/80 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[175px] text-left">
+                <div>
+                  <div class="w-9 h-9 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-4 shrink-0 transition-transform group-hover/item:scale-105">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <span class="font-display font-black text-[14px] text-brand-secondary mb-1.5 block leading-tight">Heftruck</span>
+                  <span class="text-[11px] text-brand-dark/70 leading-normal block">Veilig en gecertificeerd werken met intern transport.</span>
+                </div>
+              </a>
+
+              <!-- Card 7: Offshore -->
+              <a href="/offshore-cursus" class="flex flex-col justify-between p-5 rounded-2xl bg-brand-cream/40 border border-brand-dark/5 hover:border-brand-primary/20 hover:bg-brand-cream/80 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[175px] text-left">
+                <div>
+                  <div class="w-9 h-9 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-4 shrink-0 transition-transform group-hover/item:scale-105">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 22a10 10 0 100-20 10 10 0 000 20z" />
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V3m0 15v3m-6-9H3m15 0h3m-3-6l-2 2m-8-2l2 2m8 8l-2-2m-8 2l2-2" />
+                    </svg>
+                  </div>
+                  <span class="font-display font-black text-[14px] text-brand-secondary mb-1.5 block leading-tight">Offshore</span>
+                  <span class="text-[11px] text-brand-dark/70 leading-normal block">Gecertificeerde OPITO offshore veiligheidstrainingen (BOSIET).</span>
+                </div>
+              </a>
+
+              <!-- Card 8: Incompany & Maatwerk Promo -->
+              <a href="#contact" class="flex flex-col justify-between p-5 rounded-2xl bg-[#FFE5B4]/50 border border-orange-200 hover:border-brand-accent/50 hover:bg-[#FFE5B4]/80 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[175px] text-left">
+                <div>
+                  <div class="w-9 h-9 rounded-xl bg-brand-accent text-white flex items-center justify-center mb-4 shrink-0 transition-transform group-hover/item:scale-105 shadow-[0_3px_8px_rgba(255,107,53,0.2)]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
+                  </div>
+                  <span class="font-display font-black text-[14px] text-brand-secondary mb-1.5 block leading-tight">Incompany</span>
+                  <span class="text-[11px] text-brand-dark/80 leading-normal block mb-4">Groepstraining op uw eigen bedrijfslocatie.</span>
+                </div>
+                <span class="inline-flex items-center gap-0.5 font-display font-black text-[11px] text-brand-accent group-hover/item:text-brand-accent-hover mt-auto">
+                  Offerte Aanvragen ↗
+                </span>
+              </a>
+
+            </div>
+          </div>
+        </div>
+
+        <a href="/cursusdata" class="font-display font-black text-[15px] tracking-wide text-brand-dark hover:text-brand-primary transition-colors py-4">Cursusdata</a>
+
+        <a href="/e-learning" class="font-display font-black text-[15px] tracking-wide text-brand-dark hover:text-brand-primary transition-colors py-4">E-learning</a>
+
+        <!-- Diensten Mega Menu Dropdown (Parent div is NOT relative, so absolute menu aligns to header container) -->
+        <div class="group h-full flex items-center">
+          <button class="font-display font-black text-[15px] tracking-wide text-brand-dark hover:text-brand-primary transition-colors flex items-center gap-0.5 py-4 focus:outline-none cursor-pointer">
+            Diensten
+            <svg class="w-4 h-4 opacity-60 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          
+          <!-- Mega Menu Card (Starts from exact same left-[180px] coordinate, same w-[960px] size and rounded corners) -->
+          <div class="absolute top-[76px] left-[180px] bg-white border border-brand-dark/5 shadow-2xl rounded-3xl p-8 w-[960px] transition-all duration-300 transform scale-95 opacity-0 pointer-events-none group-hover:scale-100 group-hover:opacity-100 group-hover:pointer-events-auto flex flex-col text-brand-secondary z-50">
+            <!-- Tiny bridge to prevent losing hover -->
+            <div class="absolute -top-5 left-0 w-full h-5 bg-transparent"></div>
+            
+            <!-- Header Title -->
+            <div class="mb-6">
+              <h4 class="font-display font-black text-xl mb-1 text-brand-secondary">Onze Veiligheidsdiensten</h4>
+              <p class="text-[12px] text-brand-dark/65 font-medium">Naast opleidingen ontzorgen we uw organisatie ook met keuringen, advies en webshop.</p>
+            </div>
+
+            <!-- 4 Columns Grid: Wrapped into multiple rows when > 4 items -->
+            <div class="grid grid-cols-4 gap-4 items-stretch">
+              
+              <!-- Card 1: RI&E Audit -->
+              <a href="#contact" class="flex flex-col justify-between p-5 rounded-2xl bg-brand-cream/40 border border-brand-dark/5 hover:border-brand-primary/20 hover:bg-brand-cream/80 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[175px] text-left">
+                <div>
+                  <div class="w-9 h-9 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-4 shrink-0 transition-transform group-hover/item:scale-105">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                    </svg>
+                  </div>
+                  <span class="font-display font-black text-[14px] text-brand-secondary mb-1.5 block leading-tight">RI&E Audit</span>
+                  <span class="text-[11px] text-brand-dark/70 leading-normal block">Risico-Inventarisatie en -Evaluatie voor uw Arbobeleid.</span>
+                </div>
+              </a>
+
+              <!-- Card 2: Brandbeveiliging -->
+              <a href="#contact" class="flex flex-col justify-between p-5 rounded-2xl bg-brand-cream/40 border border-brand-dark/5 hover:border-brand-primary/20 hover:bg-brand-cream/80 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[175px] text-left">
+                <div>
+                  <div class="w-9 h-9 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-4 shrink-0 transition-transform group-hover/item:scale-105">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
+                    </svg>
+                  </div>
+                  <span class="font-display font-black text-[14px] text-brand-secondary mb-1.5 block leading-tight">Brandveiligheid</span>
+                  <span class="text-[11px] text-brand-dark/70 leading-normal block">Levering en jaarlijks onderhoud van gecertificeerde blusmiddelen.</span>
+                </div>
+              </a>
+
+              <!-- Card 3: Noodverlichting -->
+              <a href="#contact" class="flex flex-col justify-between p-5 rounded-2xl bg-brand-cream/40 border border-brand-dark/5 hover:border-brand-primary/20 hover:bg-brand-cream/80 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[175px] text-left">
+                <div>
+                  <div class="w-9 h-9 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-4 shrink-0 transition-transform group-hover/item:scale-105">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  </div>
+                  <span class="font-display font-black text-[14px] text-brand-secondary mb-1.5 block leading-tight">Noodverlichting</span>
+                  <span class="text-[11px] text-brand-dark/70 leading-normal block">Jaarlijks onderhoud en plaatsing van noodverlichting.</span>
+                </div>
+              </a>
+
+              <!-- Card 4: Ontruimingsplattegronden -->
+              <a href="#contact" class="flex flex-col justify-between p-5 rounded-2xl bg-brand-cream/40 border border-brand-dark/5 hover:border-brand-primary/20 hover:bg-brand-cream/80 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[175px] text-left">
+                <div>
+                  <div class="w-9 h-9 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-4 shrink-0 transition-transform group-hover/item:scale-105">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+                    </svg>
+                  </div>
+                  <span class="font-display font-black text-[14px] text-brand-secondary mb-1.5 block leading-tight">Plattegronden</span>
+                  <span class="text-[11px] text-brand-dark/70 leading-normal block">NEN-ontruimingsplattegronden en vluchtwegtekeningen.</span>
+                </div>
+              </a>
+
+              <!-- Card 5: Event EHBO -->
+              <a href="#contact" class="flex flex-col justify-between p-5 rounded-2xl bg-brand-cream/40 border border-brand-dark/5 hover:border-brand-primary/20 hover:bg-brand-cream/80 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[175px] text-left">
+                <div>
+                  <div class="w-9 h-9 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-4 shrink-0 transition-transform group-hover/item:scale-105">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                  </div>
+                  <span class="font-display font-black text-[14px] text-brand-secondary mb-1.5 block leading-tight">Event EHBO</span>
+                  <span class="text-[11px] text-brand-dark/70 leading-normal block">Professionele EHBO-posten en medische hulpverleners op evenementen.</span>
+                </div>
+              </a>
+
+              <!-- Card 6: Draglineschotten -->
+              <a href="#contact" class="flex flex-col justify-between p-5 rounded-2xl bg-brand-cream/40 border border-brand-dark/5 hover:border-brand-primary/20 hover:bg-brand-cream/80 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[175px] text-left">
+                <div>
+                  <div class="w-9 h-9 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-4 shrink-0 transition-transform group-hover/item:scale-105">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                    </svg>
+                  </div>
+                  <span class="font-display font-black text-[14px] text-brand-secondary mb-1.5 block leading-tight">Draglineschotten</span>
+                  <span class="text-[11px] text-brand-dark/70 leading-normal block">Levering en verhuur van houten en stalen draglineschotten.</span>
+                </div>
+              </a>
+
+              <!-- Card 7: Webshop -->
+              <a href="#contact" class="flex flex-col justify-between p-5 rounded-2xl bg-brand-cream/40 border border-brand-dark/5 hover:border-brand-primary/20 hover:bg-brand-cream/80 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[175px] text-left">
+                <div>
+                  <div class="w-9 h-9 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-4 shrink-0 transition-transform group-hover/item:scale-105">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                  </div>
+                  <span class="font-display font-black text-[14px] text-brand-secondary mb-1.5 block leading-tight">AED & EHBO Webshop</span>
+                  <span class="text-[11px] text-brand-dark/70 leading-normal block">Direct online bestellen van AED's, verbandtrommels en oefenpoppen.</span>
+                </div>
+              </a>
+
+              <!-- Card 8: Maatwerk Advies Promo -->
+              <a href="#contact" class="flex flex-col justify-between p-5 rounded-2xl bg-[#FFE5B4]/50 border border-orange-200 hover:border-brand-accent/50 hover:bg-[#FFE5B4]/80 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[175px] text-left">
+                <div>
+                  <div class="w-9 h-9 rounded-xl bg-brand-accent text-white flex items-center justify-center mb-4 shrink-0 transition-transform group-hover/item:scale-105 shadow-[0_3px_8px_rgba(255,107,53,0.2)]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                    </svg>
+                  </div>
+                  <span class="font-display font-black text-[14px] text-brand-secondary mb-1.5 block leading-tight">Maatwerk Advies</span>
+                  <span class="text-[11px] text-brand-dark/80 leading-normal block mb-4">Complete Arbo-ondersteuning en calamiteitenplannen op maat.</span>
+                </div>
+                <span class="inline-flex items-center gap-0.5 font-display font-black text-[11px] text-brand-accent group-hover/item:text-brand-accent-hover mt-auto">
+                  Advies Aanvragen ↗
+                </span>
+              </a>
+
+            </div>
+          </div>
+        </div>
+
+        <a href="#over-ons" class="font-display font-black text-[15px] tracking-wide text-brand-dark hover:text-brand-primary transition-colors py-4">Over Ons</a>
+      </nav>
+
+      <!-- Mobile Menu Button -->
+      <button id="mobile-menu-btn" class="lg:hidden p-2 text-brand-dark hover:text-brand-primary focus:outline-none transition-colors" aria-label="Toggle menu">
+        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="hamburger-icon">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+        <svg class="w-7 h-7 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="close-icon">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Right Section: Login & CTA (Spans columns 8 to 12) -->
+    <div class="hidden lg:col-span-5 h-full lg:flex items-center justify-end gap-6 pl-8">
+      <!-- Login Button (Ghost style) -->
+      <a href="https://edusafe.app.clientclub.net/" target="_blank" rel="noopener noreferrer" class="font-display font-black text-[15px] tracking-wide text-white hover:text-brand-accent border border-white/20 hover:border-brand-accent/50 rounded-xl px-5 py-2.5 transition-all duration-300">
+        Log in
+      </a>
+      
+      <!-- Register/CTA Button (Filled orange style) -->
+      <a href="#contact" class="font-display font-black text-[15px] tracking-wide bg-brand-accent hover:bg-brand-accent-hover text-white px-6 py-2.5 rounded-xl transition-all duration-300 shadow-[0_4px_15px_rgba(255,107,53,0.3)] hover:-translate-y-0.5">
+        Aanmelden
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Mobile Dropdown Menu -->
+  <div id="mobile-dropdown" class="lg:hidden hidden w-full bg-brand-cream border-t border-brand-dark/5 shadow-2xl transition-all duration-300">
+    <nav class="flex flex-col p-6 gap-5">
+      
+      <!-- Mobile Cursussen Submenu -->
+      <div class="flex flex-col">
+        <button class="mobile-submenu-toggle flex items-center justify-between font-display font-black text-lg text-brand-dark hover:text-brand-primary cursor-pointer w-full text-left focus:outline-none">
+          Cursussen
+          <svg class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+        <div class="mobile-submenu hidden flex flex-col pl-4 mt-2 gap-3 text-[15px] border-l-2 border-brand-primary/20">
+          <a href="/bhv-cursus" class="mobile-nav-link font-bold text-brand-dark/75 hover:text-brand-primary">BHV</a>
+          <a href="/cursusdata?category=EHBO" class="mobile-nav-link font-bold text-brand-dark/75 hover:text-brand-primary">EHBO</a>
+          <a href="/cursusdata?category=AED/Reanimatie" class="mobile-nav-link font-bold text-brand-dark/75 hover:text-brand-primary">Reanimatie & AED</a>
+          <a href="/cursusdata?category=VCA" class="mobile-nav-link font-bold text-brand-dark/75 hover:text-brand-primary">VCA</a>
+          <a href="/cursusdata?category=Ontruiming" class="mobile-nav-link font-bold text-brand-dark/75 hover:text-brand-primary">Brand & Ontruiming</a>
+          <a href="/cursusdata" class="mobile-nav-link font-bold text-brand-dark/75 hover:text-brand-primary">Heftruck</a>
+          <a href="/offshore-cursus" class="mobile-nav-link font-bold text-brand-dark/75 hover:text-brand-primary">Offshore</a>
+        </div>
+      </div>
+
+      <a href="/cursusdata" class="mobile-nav-link font-display font-black text-lg text-brand-dark hover:text-brand-primary">Cursusdata</a>
+
+      <a href="/e-learning" class="mobile-nav-link font-display font-black text-lg text-brand-dark hover:text-brand-primary">E-learning</a>
+
+      <!-- Mobile Diensten Submenu -->
+      <div class="flex flex-col">
+        <button class="mobile-submenu-toggle flex items-center justify-between font-display font-black text-lg text-brand-dark hover:text-brand-primary cursor-pointer w-full text-left focus:outline-none">
+          Diensten
+          <svg class="w-5 h-5 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
+        </button>
+        <div class="mobile-submenu hidden flex flex-col pl-4 mt-2 gap-3 text-[15px] border-l-2 border-brand-primary/20">
+          <a href="#contact" class="mobile-nav-link font-bold text-brand-dark/75 hover:text-brand-primary">RI&E</a>
+          <a href="#contact" class="mobile-nav-link font-bold text-brand-dark/75 hover:text-brand-primary">Brandveiligheid</a>
+          <a href="#contact" class="mobile-nav-link font-bold text-brand-dark/75 hover:text-brand-primary">Noodverlichting</a>
+          <a href="#contact" class="mobile-nav-link font-bold text-brand-dark/75 hover:text-brand-primary">Plattegronden</a>
+          <a href="#contact" class="mobile-nav-link font-bold text-brand-dark/75 hover:text-brand-primary">Event EHBO</a>
+          <a href="#contact" class="mobile-nav-link font-bold text-brand-dark/75 hover:text-brand-primary">Draglineschotten</a>
+          <a href="#contact" class="mobile-nav-link font-bold text-brand-dark/75 hover:text-brand-primary">Webshop</a>
+          <a href="#contact" class="mobile-nav-link font-bold text-brand-dark/75 hover:text-brand-primary">Maatwerk</a>
+        </div>
+      </div>
+
+      <a href="#over-ons" class="mobile-nav-link font-display font-black text-lg text-brand-dark hover:text-brand-primary">Over Ons</a>
+      
+      <div class="h-px bg-brand-dark/5 my-2"></div>
+      
+      <div class="flex flex-col gap-4">
+        <a href="https://edusafe.app.clientclub.net/" target="_blank" rel="noopener noreferrer" class="font-display font-black text-base text-brand-secondary text-center border border-brand-secondary/20 py-3 rounded-xl hover:bg-brand-secondary/5 transition-all">
+          Log in
+        </a>
+        <a href="#contact" class="mobile-nav-link text-center font-display font-black text-base bg-brand-accent text-white py-3.5 rounded-xl shadow-lg">
+          Aanmelden
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  function initMobileNav() {
+    const btn = document.getElementById('mobile-menu-btn');
+    const dropdown = document.getElementById('mobile-dropdown');
+    const hamburger = document.getElementById('hamburger-icon');
+    const close = document.getElementById('close-icon');
+    const links = document.querySelectorAll('.mobile-nav-link');
+    const submenuToggles = document.querySelectorAll('.mobile-submenu-toggle');
+
+    if (btn && dropdown && hamburger && close) {
+      const toggleMenu = () => {
+        const isHidden = dropdown.classList.contains('hidden');
+        if (isHidden) {
+          dropdown.classList.remove('hidden');
+          hamburger.classList.add('hidden');
+          close.classList.remove('hidden');
+        } else {
+          dropdown.classList.add('hidden');
+          hamburger.classList.remove('hidden');
+          close.classList.add('hidden');
+        }
+      };
+
+      btn.addEventListener('click', toggleMenu);
+
+      links.forEach(link => {
+        link.addEventListener('click', (e) => {
+          // If the element is a submenu toggle itself, do not close the menu
+          if (link.classList.contains('mobile-submenu-toggle')) return;
+          dropdown.classList.add('hidden');
+          hamburger.classList.remove('hidden');
+          close.classList.add('hidden');
+        });
+      });
+
+      // Handle mobile accordion submenu toggles
+      submenuToggles.forEach(toggle => {
+        toggle.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const submenu = toggle.nextElementSibling;
+          const icon = toggle.querySelector('svg');
+          if (submenu) {
+            submenu.classList.toggle('hidden');
+          }
+          if (icon) {
+            icon.classList.toggle('rotate-180');
+          }
+        });
+      });
+    }
+  }
+
+  initMobileNav();
+  document.addEventListener('astro:page-load', initMobileNav);
+</script>

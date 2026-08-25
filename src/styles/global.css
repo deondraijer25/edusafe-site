@@ -1,0 +1,164 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-brand-primary: #1B66B1;
+  --color-brand-primary-hover: #154e88;
+  --color-brand-secondary: #0E223D;
+  --color-brand-secondary-hover: #081629;
+  --color-brand-accent: #FF6B35;
+  --color-brand-accent-hover: #e55620;
+  --color-brand-cream: #FAF9F6;
+  --color-brand-cream-dark: #F0EDE6;
+  --color-brand-dark: #1A202C;
+
+  --font-sans: 'Plus Jakarta Sans', 'Outfit', sans-serif;
+  --font-display: 'Outfit', sans-serif;
+
+  /* Custom Animations */
+  --animate-fade-in-up: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-fade-in-right: fade-in-right 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-marquee-reverse: marquee-reverse 40s linear infinite;
+  --animate-coin-flip: coin-flip-3d 1.5s infinite ease-in-out;
+  --animate-loader-progress: loader-fill 3s linear forwards;
+
+  @keyframes fade-in-up {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in-right {
+    0% {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes marquee-reverse {
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes coin-flip-3d {
+    0% {
+      transform: rotateY(0deg) scale(1);
+    }
+    50% {
+      transform: rotateY(180deg) scale(1.1);
+    }
+    100% {
+      transform: rotateY(360deg) scale(1);
+    }
+  }
+
+  @keyframes loader-fill {
+    0% {
+      width: 0%;
+    }
+    100% {
+      width: 100%;
+    }
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-brand-cream text-brand-dark font-sans antialiased selection:bg-brand-primary selection:text-white;
+  }
+}
+
+@layer utilities {
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .text-glow-primary {
+    text-glow: 0 0 20px rgba(27, 102, 177, 0.2);
+  }
+  
+  .text-glow-accent {
+    text-glow: 0 0 20px rgba(255, 107, 53, 0.2);
+  }
+
+  /* 3D Coin Flip Preloader Utilities */
+  .transform-style-3d {
+    transform-style: preserve-3d;
+  }
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+  .coin-side {
+    backface-visibility: hidden;
+  }
+
+  /* Reveal scroll animations */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+  }
+  
+  .reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Reveal stagger children */
+  .reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform, opacity;
+  }
+
+  .reveal.active .reveal-stagger > * {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal.active .reveal-stagger > *:nth-child(1) { transition-delay: 100ms; }
+  .reveal.active .reveal-stagger > *:nth-child(2) { transition-delay: 200ms; }
+  .reveal.active .reveal-stagger > *:nth-child(3) { transition-delay: 300ms; }
+  .reveal.active .reveal-stagger > *:nth-child(4) { transition-delay: 400ms; }
+  .reveal.active .reveal-stagger > *:nth-child(5) { transition-delay: 500ms; }
+  .reveal.active .reveal-stagger > *:nth-child(6) { transition-delay: 600ms; }
+}

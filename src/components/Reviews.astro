@@ -1,0 +1,265 @@
+---
+// Mock reviews for Edusafe training courses
+const reviewsRow1 = [
+  { 
+    title: "Uitstekende BHV herhaling",
+    text: "De BHV training was praktisch, interactief en erg leerzaam. Onze medewerkers zijn weer helemaal up-to-date en voelen zich veilig.", 
+    author: "Martijn de Vries", 
+    role: "HR Manager, TechNL",
+    date: "3 dagen geleden"
+  },
+  { 
+    title: "Zeer professionele EHBO",
+    text: "Gecertificeerde trainers met échte praktijkervaring. De reanimatie- en AED training gaf ons team enorm veel zelfvertrouwen.", 
+    author: "Linda H.", 
+    role: "Operations Director, KPN",
+    date: "1 week geleden"
+  },
+  { 
+    title: "VCA in één keer gehaald!",
+    text: "Dankzij de uitstekende voorbereiding en heldere uitleg heeft ons hele buitendienstteam hun VCA-certificaat in één keer behaald.", 
+    author: "Youssef El M.", 
+    role: "Veiligheidscoördinator, BouwWest",
+    date: "2 weken geleden"
+  },
+  { 
+    title: "Heftrucktraining soepel geregeld",
+    text: "Incompany heftrucktraining op onze eigen locatie. De instructeur lette scherp op veiligheid en efficiëntie. Zeer tevreden!", 
+    author: "Peter van Dijk", 
+    role: "Logistiek Manager, DistriLog",
+    date: "1 maand geleden"
+  }
+];
+
+const reviewsRow2 = [
+  { 
+    title: "Fijne instructeurs op locatie",
+    text: "Edusafe dacht heel flexibel mee met onze ploegendiensten. De BHV trainingen waren perfect afgestemd op onze werkomgeving.", 
+    author: "Sandra K.", 
+    role: "HSE Specialist, FoodGroup",
+    date: "5 dagen geleden"
+  },
+  { 
+    title: "Aanrader voor elk bedrijf",
+    text: "Complete ontzorging van de registratie tot de pasjes. Volgend jaar boeken we onze herhalingscursussen zeker weer bij Edusafe.", 
+    author: "Thomas B.", 
+    role: "Office Manager, Alfa Advies",
+    date: "3 weken geleden"
+  },
+  { 
+    title: "AED & Reanimatie op maat",
+    text: "Praktijkgerichte AED instructie met levensechte scenario's. Heel fijn dat dit direct bij ons op kantoor kon worden georganiseerd.", 
+    author: "Anouk de Jong", 
+    role: "Preventiemedewerker, Gemeente Den Haag",
+    date: "1 week geleden"
+  },
+  { 
+    title: "Arboconform en deskundig",
+    text: "Edusafe adviseerde ons ook over de benodigde BHV-bezetting conform de Arbowet. Prettige samenwerking en deskundig advies.", 
+    author: "Robert T.", 
+    role: "HSE Director, Securitas",
+    date: "2 maanden geleden"
+  }
+];
+---
+<section class="py-20 md:py-28 overflow-hidden bg-brand-cream text-brand-secondary relative border-t border-b border-brand-dark/5 z-10 reveal">
+  
+  <!-- Header Text -->
+  <div class="max-w-[1280px] mx-auto px-6 mb-12 text-center animate-fade-in">
+    <span class="text-xs font-display font-black tracking-widest uppercase text-brand-primary block mb-3">Beoordelingen</span>
+    <h2 class="font-display text-4xl md:text-5xl font-black tracking-tight text-brand-secondary">
+      Wat klanten over Edusafe zeggen
+    </h2>
+    
+    <!-- App Store Rating Badge representation -->
+    <div class="flex items-center justify-center gap-2 mt-4 text-xs font-bold text-brand-dark/70">
+      <span class="font-black text-brand-secondary bg-brand-primary/10 px-2.5 py-0.5 rounded-lg border border-brand-primary/20">4.9</span>
+      <div class="flex gap-0.5 text-amber-500">
+        {Array.from({ length: 5 }).map(() => (
+          <svg class="h-3.5 w-3.5 fill-current" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+        ))}
+      </div>
+      <span class="text-brand-dark/50 font-medium">&bull; 150+ gecertificeerde partners</span>
+    </div>
+  </div>
+
+  <!-- Scrolling Marquee container (Dual row with pause on hover) -->
+  <div class="relative w-full flex flex-col gap-6 py-6 reveal-stagger">
+    
+    <!-- Row 1: Left moving -->
+    <div class="marquee-row overflow-hidden flex w-full relative">
+      <div class="marquee-track-left flex gap-6 whitespace-nowrap">
+        {reviewsRow1.map(review => (
+          <div class="w-[320px] sm:w-[380px] shrink-0 whitespace-normal bg-white p-6 rounded-3xl border border-brand-dark/5 shadow-[0_4px_20px_rgba(0,0,0,0.015)] flex flex-col justify-between hover:border-brand-primary/20 transition-all duration-300">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex gap-0.5 text-amber-500">
+                  {Array.from({ length: 5 }).map(() => (
+                    <svg class="h-3.5 w-3.5 fill-current" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                <span class="text-[10px] text-brand-dark/40 font-medium">{review.date}</span>
+              </div>
+              <h4 class="font-display font-black text-brand-secondary text-sm sm:text-base mb-2">{review.title}</h4>
+              <p class="text-xs sm:text-sm text-brand-dark/75 leading-relaxed font-medium mb-6">
+                "{review.text}"
+              </p>
+            </div>
+            <div class="flex items-center gap-3 pt-4 border-t border-brand-dark/5">
+              <!-- Initials Avatar Badge -->
+              <div class="w-9 h-9 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xs font-black border border-brand-primary/20 uppercase">
+                {review.author.split(' ').map(n => n[0]).join('')}
+              </div>
+              <div>
+                <span class="font-display font-black text-brand-secondary text-xs block leading-tight">{review.author}</span>
+                <span class="text-[10px] text-brand-dark/50 font-medium">{review.role}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <!-- Duplicate for infinite effect -->
+      <div class="marquee-track-left flex gap-6 whitespace-nowrap" aria-hidden="true">
+        {reviewsRow1.map(review => (
+          <div class="w-[320px] sm:w-[380px] shrink-0 whitespace-normal bg-white p-6 rounded-3xl border border-brand-dark/5 shadow-[0_4px_20px_rgba(0,0,0,0.015)] flex flex-col justify-between hover:border-brand-primary/20 transition-all duration-300">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex gap-0.5 text-amber-500">
+                  {Array.from({ length: 5 }).map(() => (
+                    <svg class="h-3.5 w-3.5 fill-current" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                <span class="text-[10px] text-brand-dark/40 font-medium">{review.date}</span>
+              </div>
+              <h4 class="font-display font-black text-brand-secondary text-sm sm:text-base mb-2">{review.title}</h4>
+              <p class="text-xs sm:text-sm text-brand-dark/75 leading-relaxed font-medium mb-6">
+                "{review.text}"
+              </p>
+            </div>
+            <div class="flex items-center gap-3 pt-4 border-t border-brand-dark/5">
+              <!-- Initials Avatar Badge -->
+              <div class="w-9 h-9 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xs font-black border border-brand-primary/20 uppercase">
+                {review.author.split(' ').map(n => n[0]).join('')}
+              </div>
+              <div>
+                <span class="font-display font-black text-brand-secondary text-xs block leading-tight">{review.author}</span>
+                <span class="text-[10px] text-brand-dark/50 font-medium">{review.role}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Row 2: Right moving -->
+    <div class="marquee-row overflow-hidden flex w-full relative">
+      <div class="marquee-track-right flex gap-6 whitespace-nowrap">
+        {reviewsRow2.map(review => (
+          <div class="w-[320px] sm:w-[380px] shrink-0 whitespace-normal bg-white p-6 rounded-3xl border border-brand-dark/5 shadow-[0_4px_20px_rgba(0,0,0,0.015)] flex flex-col justify-between hover:border-brand-primary/20 transition-all duration-300">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex gap-0.5 text-amber-500">
+                  {Array.from({ length: 5 }).map(() => (
+                    <svg class="h-3.5 w-3.5 fill-current" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                <span class="text-[10px] text-brand-dark/40 font-medium">{review.date}</span>
+              </div>
+              <h4 class="font-display font-black text-brand-secondary text-sm sm:text-base mb-2">{review.title}</h4>
+              <p class="text-xs sm:text-sm text-brand-dark/75 leading-relaxed font-medium mb-6">
+                "{review.text}"
+              </p>
+            </div>
+            <div class="flex items-center gap-3 pt-4 border-t border-brand-dark/5">
+              <!-- Initials Avatar Badge -->
+              <div class="w-9 h-9 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xs font-black border border-brand-primary/20 uppercase">
+                {review.author.split(' ').map(n => n[0]).join('')}
+              </div>
+              <div>
+                <span class="font-display font-black text-brand-secondary text-xs block leading-tight">{review.author}</span>
+                <span class="text-[10px] text-brand-dark/50 font-medium">{review.role}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <!-- Duplicate for infinite effect -->
+      <div class="marquee-track-right flex gap-6 whitespace-nowrap" aria-hidden="true">
+        {reviewsRow2.map(review => (
+          <div class="w-[320px] sm:w-[380px] shrink-0 whitespace-normal bg-white p-6 rounded-3xl border border-brand-dark/5 shadow-[0_4px_20px_rgba(0,0,0,0.015)] flex flex-col justify-between hover:border-brand-primary/20 transition-all duration-300">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex gap-0.5 text-amber-500">
+                  {Array.from({ length: 5 }).map(() => (
+                    <svg class="h-3.5 w-3.5 fill-current" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                <span class="text-[10px] text-brand-dark/40 font-medium">{review.date}</span>
+              </div>
+              <h4 class="font-display font-black text-brand-secondary text-sm sm:text-base mb-2">{review.title}</h4>
+              <p class="text-xs sm:text-sm text-brand-dark/75 leading-relaxed font-medium mb-6">
+                "{review.text}"
+              </p>
+            </div>
+            <div class="flex items-center gap-3 pt-4 border-t border-brand-dark/5">
+              <!-- Initials Avatar Badge -->
+              <div class="w-9 h-9 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xs font-black border border-brand-primary/20 uppercase">
+                {review.author.split(' ').map(n => n[0]).join('')}
+              </div>
+              <div>
+                <span class="font-display font-black text-brand-secondary text-xs block leading-tight">{review.author}</span>
+                <span class="text-[10px] text-brand-dark/50 font-medium">{review.role}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Custom scrolling animation for infinite marquee */
+  .marquee-row {
+    display: flex;
+    overflow: hidden;
+    user-select: none;
+    gap: 1.5rem;
+  }
+  .marquee-track-left {
+    flex-shrink: 0;
+    display: flex;
+    width: max-content;
+    gap: 1.5rem;
+    animation: scroll-left 36s linear infinite;
+  }
+  .marquee-track-right {
+    flex-shrink: 0;
+    display: flex;
+    width: max-content;
+    gap: 1.5rem;
+    animation: scroll-right 36s linear infinite;
+  }
+  @keyframes scroll-left {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-100% - 1.5rem)); }
+  }
+  @keyframes scroll-right {
+    from { transform: translateX(calc(-100% - 1.5rem)); }
+    to { transform: translateX(0); }
+  }
+  .marquee-row:hover .marquee-track-left,
+  .marquee-row:hover .marquee-track-right {
+    animation-play-state: paused;
+  }
+</style>

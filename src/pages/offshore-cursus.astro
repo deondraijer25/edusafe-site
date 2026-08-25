@@ -1,0 +1,460 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const offshoreCourses = [
+  {
+    id: "bosiet",
+    title: "BOSIET met EBS (OPITO)",
+    tagline: "Basic Offshore Safety Induction & Emergency Training",
+    price: "€ 925,00",
+    spotsText: "Gecertificeerde OPITO 5700 training",
+    duration: "3 dagen (Rotterdam/partnerlocatie)",
+    target: "Voor werknemers die nieuw instappen in de offshore olie- en gassector en reizen per helikopter.",
+    requirements: "Geldige offshore medische keuring (voldoende fitverklaring).",
+    exam: "Continue praktijkbeoordeling en theorie-toetsen (HUET simulator, zee-overleving en brandblussen).",
+    certification: "Officieel OPITO BOSIET met EBS certificaat (4 jaar geldig) + registratie in Vantage database.",
+    inclusions: ["Praktijktraining HUET", "Zee-overleving & Eerste Hulp", "Brand & Ontruiming", "OPITO registratiekosten", "Koffie, thee & warme lunch"],
+    modules: [
+      { name: "Helicopter HUET & EBS" },
+      { name: "Sea Survival & First Aid" },
+      { name: "Fire Fighting & Self Rescue" },
+      { name: "Safe Transfer (Scheepsopstap)" }
+    ],
+    image: "https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&q=80&w=600",
+    registerLink: "/cursusdata?category=Offshore"
+  },
+  {
+    id: "foet",
+    title: "FOET met EBS (OPITO herhaling)",
+    tagline: "Further Offshore Emergency Training - Verleng uw certificering",
+    price: "€ 575,00",
+    spotsText: "Herhalingscursus OPITO 5850",
+    duration: "1 dag (Rotterdam/partnerlocatie)",
+    target: "Voor ervaren offshore medewerkers die hun huidige BOSIET of FOET certificaat willen verlengen.",
+    requirements: "In het bezit van een nog geldig (of recent verlopen) OPITO BOSIET of FOET certificaat.",
+    exam: "Praktische opfrissing en toetsing op helikopterontsnapping en brandveiligheid.",
+    certification: "OPITO FOET herhalingscertificaat (verlenging met 4 jaar) + Vantage registratie.",
+    inclusions: ["HUET & EBS opfrisser", "Brandbestrijding & EHBO herhaling", "OPITO Vantage registratie", "Koffie, thee & warme lunch"],
+    modules: [
+      { name: "Helicopter HUET herhaling" },
+      { name: "Brandbestrijding opfrisser" },
+      { name: "Zee-overleving & EHBO" }
+    ],
+    image: "https://images.unsplash.com/photo-1542362567-b07eac790acd?auto=format&fit=crop&q=80&w=600",
+    registerLink: "/cursusdata?category=Offshore"
+  },
+  {
+    id: "huet",
+    title: "HUET met EBS (OPITO)",
+    tagline: "Helicopter UnderWater Escape Training",
+    price: "€ 395,00",
+    spotsText: "OPITO 5070 certificering",
+    duration: "1 dag (FMTC Rotterdam / partner)",
+    target: "Voor offshore medewerkers die uitsluitend per helikopter reizen en al overige veiligheidstrainingen hebben.",
+    requirements: "Geldige offshore medische keuring.",
+    exam: "Praktijkbeoordeling in de HUET-helikoptersimulator in het zwembad.",
+    certification: "Officieel OPITO HUET certificaat (4 jaar geldig).",
+    inclusions: ["HUET simulator training", "Gebruik noodademhalingssysteem (EBS)", "Gecertificeerde instructeurs", "Koffie, thee & lunch"],
+    modules: [
+      { name: "Helicopter Escape scenario's" },
+      { name: "Noodademhaling (EBS)" },
+      { name: "Helikopter Veiligheidsregels" }
+    ],
+    image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=600",
+    registerLink: "/cursusdata?category=Offshore"
+  },
+  {
+    id: "nogepa-basis",
+    title: "NOGEPA 0.5A (Basisveiligheid)",
+    tagline: "Basis Offshore Veiligheidstraining voor de Nederlandse sector",
+    price: "€ 895,00",
+    spotsText: "Erkend door NOGEPA",
+    duration: "2,5 dag (Rotterdam/partnerlocatie)",
+    target: "Voor werknemers op mijnbouwinstallaties in het Nederlandse deel van het continentaal plat.",
+    requirements: "Offshore medische keuring (keuringsarts vereist).",
+    exam: "Theoretische toetsing en praktische scenario-beoordelingen conform NOGEPA richtlijnen.",
+    certification: "NOGEPA 0.5A basiscertificaat (4 jaar geldig) + registratie.",
+    inclusions: ["HUET helicopter escape", "Sea survival & EHBO", "Brandblussen & redding", "NOGEPA registratiekosten", "Koffie, thee & warme lunch"],
+    modules: [
+      { name: "Helicopter HUET" },
+      { name: "Sea Survival & Safe Transfer" },
+      { name: "Offshore EHBO" },
+      { name: "Brandbestrijding" }
+    ],
+    image: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&q=80&w=600",
+    registerLink: "/cursusdata?category=Offshore"
+  },
+  {
+    id: "nogepa-herhaling",
+    title: "NOGEPA 0.5B (Herhaling)",
+    tagline: "Houd uw NOGEPA basiscertificaat geldig",
+    price: "€ 525,00",
+    spotsText: "Jaarlijkse/4-jaarlijkse opfrisser",
+    duration: "1 dag (Rotterdam/partnerlocatie)",
+    target: "Voor offshore medewerkers die hun NOGEPA 0.5A of 0.5B certificaat moeten verlengen.",
+    requirements: "In het bezit van een geldig NOGEPA 0.5A of 0.5B certificaat.",
+    exam: "Praktische herhalingstoetsing op helikopterontsnapping en brandveiligheid.",
+    certification: "NOGEPA 0.5B herhalingscertificaat (4 jaar geldig) + registratie.",
+    inclusions: ["HUET & safe transfer opfrisser", "Brandbestrijding & EHBO", "NOGEPA registratie", "Koffie, thee & warme lunch"],
+    modules: [
+      { name: "Helicopter HUET herhaling" },
+      { name: "Zee-overleving opfrisser" },
+      { name: "Brandbestrijding scenario's" }
+    ],
+    image: "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&q=80&w=600",
+    registerLink: "/cursusdata?category=Offshore"
+  }
+];
+
+const defaultCourse = offshoreCourses[0];
+---
+
+<Layout title="Offshore Veiligheidstrainingen | Edusafe" description="Boek uw OPITO BOSIET, FOET en NOGEPA offshore veiligheidstrainingen direct via Edusafe. Voldoet aan alle internationale veiligheidseisen voor werken op zee.">
+  <main class="w-full">
+    
+    <!-- Hero Header Section -->
+    <section class="relative bg-brand-secondary text-white pt-28 pb-40 md:pt-36 md:pb-48 overflow-hidden">
+      <!-- Background pattern/image -->
+      <div class="absolute inset-0 z-0 overflow-hidden bg-brand-cream/5">
+        <img 
+          src="https://images.unsplash.com/photo-1544724480-6cc691cf9569?auto=format&fit=crop&q=80&w=1200" 
+          alt="Offshore Veiligheidstrainingen" 
+          class="w-full h-full object-cover opacity-20 scale-105" 
+        />
+        <div class="absolute inset-0 bg-gradient-to-r from-brand-secondary via-brand-secondary/90 to-transparent"></div>
+      </div>
+      
+      <div class="max-w-[1280px] mx-auto px-6 relative z-10">
+        <div class="max-w-3xl animate-fade-in">
+          <span class="inline-flex items-center gap-1.5 text-brand-accent font-display font-black text-xs uppercase tracking-wider mb-4">
+            <i class="fa-solid fa-anchor animate-pulse"></i>
+            OPITO & NOGEPA Gecertificeerd
+          </span>
+          <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight mb-6">
+            Offshore <span class="relative inline-block text-white px-5 py-2 mx-1 mt-2 transform -rotate-1"><span class="absolute inset-0 bg-brand-accent rounded-2xl z-0"></span><span class="relative z-10">Trainingen</span></span>
+          </h1>
+          <p class="text-white/80 text-base md:text-lg max-w-2xl mb-8 leading-relaxed font-semibold">
+            Werken op zee of windparken vereist de strengste internationale veiligheidscertificering. Bekijk hieronder de specifieke trainingen en klik op een kaart voor de details.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content Grid -->
+    <section class="max-w-[1280px] mx-auto px-6 -mt-24 relative z-20 pb-24">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        
+        <!-- Left Side: Dynamic Grid of Cards + Details (8 columns) -->
+        <div class="lg:col-span-8 space-y-6">
+          
+          <!-- Dynamic Details Card (Left side) - Clean & Minimal -->
+          <div class="bg-white rounded-3xl p-6 md:p-8 shadow-lg border border-brand-dark/5 reveal" id="details-card-left">
+            
+            <!-- Title Header -->
+            <div class="border-b border-brand-dark/5 pb-4 mb-5">
+              <span id="selected-tagline" class="text-[10px] font-black text-brand-primary uppercase tracking-wider block mb-1">{defaultCourse.tagline}</span>
+              <h2 id="selected-title" class="font-display text-2xl md:text-3xl font-black text-brand-secondary leading-tight">{defaultCourse.title}</h2>
+            </div>
+            
+            <!-- Description -->
+            <div class="mb-6">
+              <p id="selected-target" class="text-brand-secondary/80 text-sm leading-relaxed font-semibold">
+                {defaultCourse.target}
+              </p>
+            </div>
+            
+            <!-- Modules (Clean checklist, no text description) -->
+            <div class="mb-6 border-t border-brand-dark/5 pt-5">
+              <h3 class="font-display text-[10px] font-black uppercase text-brand-dark/40 tracking-widest mb-3">Cursusprogramma & Modulen</h3>
+              <div id="selected-modules" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {defaultCourse.modules.map(mod => (
+                  <div class="flex items-center gap-2.5">
+                    <span class="w-5 h-5 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xs shrink-0">
+                      <i class="fa-solid fa-check"></i>
+                    </span>
+                    <span class="font-display font-black text-brand-secondary text-sm">{mod.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <!-- Specs Table (Clean layout grid table) -->
+            <div class="border-t border-brand-dark/5 pt-5">
+              <h3 class="font-display text-[10px] font-black uppercase text-brand-dark/40 tracking-widest mb-4">Praktische Informatie</h3>
+              <div class="space-y-3.5 text-xs">
+                <!-- Row 1 -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-1">
+                  <span class="font-display font-black text-brand-secondary text-[10px] uppercase tracking-wider">Toelatingseisen</span>
+                  <span id="selected-requirements" class="sm:col-span-2 text-brand-dark/75 font-semibold leading-relaxed">{defaultCourse.requirements}</span>
+                </div>
+                <!-- Row 2 -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-1 border-t border-brand-dark/5 pt-3.5">
+                  <span class="font-display font-black text-brand-secondary text-[10px] uppercase tracking-wider">Examen & Toetsing</span>
+                  <span id="selected-exam" class="sm:col-span-2 text-brand-dark/75 font-semibold leading-relaxed">{defaultCourse.exam}</span>
+                </div>
+                <!-- Row 3 -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-1 border-t border-brand-dark/5 pt-3.5">
+                  <span class="font-display font-black text-brand-secondary text-[10px] uppercase tracking-wider">Certificering</span>
+                  <span id="selected-certification" class="sm:col-span-2 text-brand-dark/75 font-semibold leading-relaxed">{defaultCourse.certification}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section Divider/Header for Variations -->
+          <div class="pt-2 reveal">
+            <h3 class="font-display text-xl font-black text-brand-secondary mb-1">Andere Offshore Cursussen</h3>
+            <p class="text-xs text-brand-dark/60 font-semibold mb-4">Klik op een van de onderstaande trainingen om de details hierboven te bekijken.</p>
+          </div>
+
+          <!-- Cards Grid Section -->
+          <div class="reveal">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 reveal-stagger">
+              {offshoreCourses.map((course, idx) => (
+                <button 
+                  data-id={course.id}
+                  class={`course-card-btn group relative bg-white rounded-[24px] p-3 border transition-all duration-500 cursor-pointer text-left flex flex-col justify-between shadow-[0_10px_30px_rgba(0,0,0,0.015)] hover:shadow-[0_20px_40px_rgba(27,102,177,0.06)] hover:-translate-y-1.5 ${
+                    idx === 0 
+                      ? 'border-brand-primary ring-2 ring-brand-primary/20 bg-brand-cream/5' 
+                      : 'border-brand-dark/5 hover:border-brand-primary/25'
+                  }`}
+                >
+                  <!-- Framed Image Area with Fallback support -->
+                  <div class="relative w-full aspect-[16/10] rounded-[18px] overflow-hidden mb-4 shrink-0 bg-gradient-to-br from-brand-secondary to-brand-primary">
+                    <img 
+                      src={course.image} 
+                      alt={course.title} 
+                      class="absolute inset-0 w-full h-full object-cover grayscale-[30%] opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105" 
+                      onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
+                    />
+                    <!-- Fallback placeholder -->
+                    <div class="absolute inset-0 flex items-center justify-center text-white/30 hidden">
+                      <i class="fa-solid fa-anchor text-4xl animate-pulse"></i>
+                    </div>
+                    
+                    <!-- Duration floating badge -->
+                    <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 shadow-sm flex items-center gap-1.5 z-10">
+                      <span class="w-1.5 h-1.5 rounded-full bg-brand-primary animate-pulse"></span>
+                      <span class="text-[9px] font-black uppercase text-brand-secondary tracking-wider">{course.duration.split(' ')[0] + ' ' + (course.duration.includes('dag') ? 'Dag(en)' : 'Dagen')}</span>
+                    </div>
+                  </div>
+
+                  <!-- Content Area -->
+                  <div class="px-2 pb-2 flex-grow flex flex-col justify-between w-full">
+                    <div>
+                      <h3 class="font-display font-black text-brand-secondary text-base lg:text-lg leading-tight mb-2 group-hover:text-brand-primary transition-colors">
+                        {course.title}
+                      </h3>
+                      <p class="text-[11px] text-brand-dark/60 font-semibold leading-relaxed mb-4 line-clamp-2">
+                        {course.target}
+                      </p>
+                    </div>
+
+                    <!-- Bottom Pricing & Action Row -->
+                    <div class="flex items-center justify-between pt-3 border-t border-brand-dark/5 mt-auto w-full">
+                      <div class="flex flex-col">
+                        <span class="text-[9px] font-black uppercase text-brand-dark/40 leading-none mb-0.5">Tarief excl.</span>
+                        <span class="font-display font-black text-brand-secondary text-sm leading-none">{course.price}</span>
+                      </div>
+                      <span class="inline-flex items-center gap-1 text-[10px] font-black uppercase text-brand-primary tracking-wider group-hover:text-brand-accent transition-colors">
+                        Bekijk details
+                        <svg class="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <!-- Incompany Quote Form Section -->
+          <div id="offerte" class="bg-brand-secondary text-white rounded-3xl p-8 md:p-10 shadow-xl border border-white/5 relative overflow-hidden scroll-mt-24 reveal">
+            <div class="absolute -right-12 -bottom-12 text-white/5 pointer-events-none">
+              <i class="fa-solid fa-file-invoice-dollar text-[240px]"></i>
+            </div>
+            
+            <div class="relative z-10 max-w-2xl">
+              <h3 class="font-display text-2xl md:text-3xl font-black mb-3">Offshore groepsboeking</h3>
+              <p class="text-white/70 text-sm leading-relaxed mb-8">
+                Wilt u meerdere werknemers tegelijk aanmelden of een offshore training op maat inkopen? Wij coördineren de planning, keuringen en registratie volledig voor uw organisatie.
+              </p>
+              
+              <form class="space-y-4" onsubmit="event.preventDefault(); alert('Bedankt! Uw offshore aanvraag is verzonden. Wij nemen zo snel mogelijk contact met u op.'); this.reset();">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <input type="text" placeholder="Bedrijfsnaam" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors" required />
+                  <input type="text" placeholder="Contactpersoon" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors" required />
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <input type="email" placeholder="E-mailadres" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors" required />
+                  <input type="tel" placeholder="Telefoonnummer" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors" required />
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <input type="number" placeholder="Aantal werknemers" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors" required min="1" />
+                  <input type="text" placeholder="Gewenste startdatum" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors" required />
+                </div>
+                <textarea rows="3" placeholder="Aanvullende opmerkingen (bijv. OPITO en/of NOGEPA voorkeuren)" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white resize-none focus:outline-none focus:border-brand-accent transition-colors"></textarea>
+                <button type="submit" class="font-display font-black text-sm py-4 px-8 rounded-xl bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 w-full shadow-lg shadow-brand-accent/20 cursor-pointer">
+                  Offerte Aanvragen
+                </button>
+              </form>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Side: Details & Booking (4 columns) -->
+        <div class="lg:col-span-4 relative z-30">
+          
+          <!-- Sticky Booking Card -->
+          <div class="bg-white rounded-[32px] shadow-xl border border-brand-dark/5 p-8 space-y-6 sticky top-28 reveal" id="details-card">
+            <div>
+              <span class="text-[9px] font-black uppercase text-brand-dark/40 tracking-wider block mb-1">Geselecteerde training</span>
+              <h3 id="sidebar-title" class="font-display text-2xl font-black text-brand-secondary leading-snug">{defaultCourse.title}</h3>
+            </div>
+
+            <!-- Price -->
+            <div class="pt-5 border-t border-brand-dark/5">
+              <span class="text-[9px] font-black uppercase text-brand-dark/40 tracking-wider block mb-1">Cursustarief</span>
+              <div class="flex items-baseline gap-2">
+                <span id="selected-price" class="font-display text-4xl font-black text-brand-secondary">{defaultCourse.price}</span>
+                <span class="text-xs font-bold text-brand-dark/50">excl. BTW</span>
+              </div>
+            </div>
+
+            <!-- Specs list -->
+            <div class="space-y-4 pt-5 border-t border-brand-dark/5">
+              <div class="flex items-center gap-3">
+                <span class="w-8 h-8 rounded-xl bg-brand-cream text-brand-primary flex items-center justify-center text-sm shrink-0">
+                  <i class="fa-solid fa-clock"></i>
+                </span>
+                <div>
+                  <div class="text-[9px] font-black uppercase text-brand-dark/40 leading-none mb-0.5">Duur & Locatie</div>
+                  <span id="selected-duration" class="text-xs font-bold text-brand-secondary">{defaultCourse.duration}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Inclusions -->
+            <div class="pt-5 border-t border-brand-dark/5">
+              <span class="text-[9px] font-black uppercase text-brand-dark/40 tracking-wider block mb-3">Wat is inclusief?</span>
+              <ul id="selected-inclusions" class="space-y-2.5">
+                {defaultCourse.inclusions.map(inc => (
+                  <li class="flex items-center gap-3 text-sm font-bold text-brand-secondary">
+                    <span class="w-5 h-5 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xs shrink-0">
+                      <i class="fa-solid fa-check"></i>
+                    </span>
+                    {inc}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <a 
+              id="selected-booking-btn"
+              href={defaultCourse.registerLink}
+              class="font-display font-black text-sm py-4 px-6 rounded-2xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 w-full block shadow-[0_4px_12px_rgba(255,107,53,0.15)] cursor-pointer"
+            >
+              Direct Boeken
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+</Layout>
+
+<script define:vars={{ offshoreCourses }}>
+  function initCourseNavigator() {
+    const buttons = document.querySelectorAll('.course-card-btn');
+    if (!buttons.length) return;
+
+    function selectCourse(courseId) {
+      const course = offshoreCourses.find(c => c.id === courseId);
+      if (!course) return;
+
+      // Update active state in cards grid
+      buttons.forEach(btn => {
+        if (btn.getAttribute('data-id') === courseId) {
+          btn.classList.add('border-brand-primary', 'ring-2', 'ring-brand-primary/20', 'bg-brand-cream/5');
+          btn.classList.remove('border-brand-dark/5', 'hover:border-brand-primary/25');
+        } else {
+          btn.classList.remove('border-brand-primary', 'ring-2', 'ring-brand-primary/20', 'bg-brand-cream/5');
+          btn.classList.add('border-brand-dark/5', 'hover:border-brand-primary/25');
+        }
+      });
+
+      // Update details card on the left
+      const tagline = document.getElementById('selected-tagline');
+      const title = document.getElementById('selected-title');
+      const target = document.getElementById('selected-target');
+      const requirements = document.getElementById('selected-requirements');
+      const exam = document.getElementById('selected-exam');
+      const certification = document.getElementById('selected-certification');
+
+      if (tagline) tagline.textContent = course.tagline;
+      if (title) title.textContent = course.title;
+      if (target) target.textContent = course.target;
+      if (requirements) requirements.textContent = course.requirements;
+      if (exam) exam.textContent = course.exam;
+      if (certification) certification.textContent = course.certification;
+
+      // Update details card on the right
+      const sidebarTitle = document.getElementById('sidebar-title');
+      const price = document.getElementById('selected-price');
+      const duration = document.getElementById('selected-duration');
+      const bookingBtn = document.getElementById('selected-booking-btn');
+
+      if (sidebarTitle) sidebarTitle.textContent = course.title;
+      if (price) price.textContent = course.price;
+      if (duration) duration.textContent = course.duration;
+      if (bookingBtn) bookingBtn.setAttribute('href', course.registerLink);
+
+      // Update Modules grid on the left
+      const modulesContainer = document.getElementById('selected-modules');
+      if (modulesContainer) {
+        modulesContainer.innerHTML = course.modules.map(mod => `
+          <div class="flex items-center gap-2.5 animate-fade-in">
+            <span class="w-5 h-5 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xs shrink-0">
+              <i class="fa-solid fa-check"></i>
+            </span>
+            <span class="font-display font-black text-brand-secondary text-sm">${mod.name}</span>
+          </div>
+        `).join('');
+      }
+
+      // Update Inclusions list on the right
+      const inclusionsContainer = document.getElementById('selected-inclusions');
+      if (inclusionsContainer) {
+        inclusionsContainer.innerHTML = course.inclusions.map(inc => `
+          <li class="flex items-center gap-3 text-sm font-bold text-brand-secondary animate-fade-in">
+            <span class="w-5 h-5 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xs shrink-0">
+              <i class="fa-solid fa-check"></i>
+            </span>
+            ${inc}
+          </li>
+        `).join('');
+      }
+
+      // Scroll smoothly back up to the top details card
+      const detailsCardLeft = document.getElementById('details-card-left');
+      if (detailsCardLeft) {
+        detailsCardLeft.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-id');
+        if (id) selectCourse(id);
+      });
+    });
+  }
+
+  initCourseNavigator();
+  document.addEventListener('astro:page-load', initCourseNavigator);
+</script>

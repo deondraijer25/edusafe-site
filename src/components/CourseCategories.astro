@@ -1,0 +1,347 @@
+---
+const courses = [
+  // Veiligheidsopleidingen (Type: opleiding)
+  {
+    id: "bhv",
+    type: "opleiding",
+    title: "BHV",
+    description: "Leer adequaat handelen bij brand, ontruiming en eerste hulp op de werkvloer. Zowel basiscursus als herhaling.",
+    isHighlighted: true,
+    tag: "Meest gekozen",
+    link: "/bhv-cursus",
+    // Shield icon
+    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+    </svg>`
+  },
+  {
+    id: "ehbo",
+    type: "opleiding",
+    title: "EHBO",
+    description: "Praktijkgerichte eerste hulp bij ongevallen gecertificeerd door Het Oranje Kruis. Zowel basis als herhaling.",
+    isHighlighted: false,
+    tag: "Oranje Kruis Erkend",
+    link: "/cursusdata?category=EHBO",
+    // Heart/first aid icon
+    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+    </svg>`
+  },
+  {
+    id: "aed",
+    type: "opleiding",
+    title: "Reanimatie & AED",
+    description: "Leer levensreddend handelen en omgaan met een Automatische Externe Defibrillator (AED) in noodsituaties.",
+    isHighlighted: false,
+    tag: "Levensreddend",
+    link: "/cursusdata?category=AED/Reanimatie",
+    // Pulse/heartbeat icon
+    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+    </svg>`
+  },
+  {
+    id: "vca",
+    type: "opleiding",
+    title: "VCA",
+    description: "VCA certificering voor operationele medewerkers en leidinggevenden. Snel en met 100% examenbegeleiding.",
+    isHighlighted: false,
+    tag: "Veiligheidscertificaat",
+    link: "/cursusdata?category=VCA",
+    // Clipboard list check icon
+    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+    </svg>`
+  },
+  {
+    id: "ontruiming",
+    type: "opleiding",
+    title: "Brand & Ontruiming",
+    description: "Bereid uw organisatie en medewerkers voor op noodsituaties met vluchtwegtrainingen en ontruimingsoefeningen.",
+    isHighlighted: false,
+    tag: "Bedrijfsveiligheid",
+    link: "/cursusdata?category=Ontruiming",
+    // Door exit/escape icon
+    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v4M14 4h6m0 0v6m0-6L10 14" />
+    </svg>`
+  },
+  {
+    id: "heftruck",
+    type: "opleiding",
+    title: "Heftruck",
+    description: "Veilig werken met intern transport. Zorg dat je magazijn- en logistiek personeel gecertificeerd is.",
+    isHighlighted: false,
+    tag: "Logistieke cursussen",
+    link: "/cursusdata",
+    // Gear/cog wheel icon
+    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+    </svg>`
+  },
+  {
+    id: "offshore",
+    type: "opleiding",
+    title: "Offshore",
+    description: "Gecertificeerde OPITO & NOGEPA offshore veiligheidstrainingen (o.a. BOSIET en HUET) voor werken op zee en windparken.",
+    isHighlighted: false,
+    tag: "OPITO / NOGEPA",
+    link: "/offshore-cursus",
+    // Lifebuoy icon
+    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 22a10 10 0 100-20 10 10 0 000 20z" />
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V3m0 15v3m-6-9H3m15 0h3m-3-6l-2 2m-8-2l2 2m8 8l-2-2m-8 2l2-2" />
+    </svg>`
+  },
+
+  // Veiligheidsdiensten & Webshop (Type: dienst)
+  {
+    id: "rie",
+    type: "dienst",
+    title: "Risico-Inventarisatie (RI&E)",
+    description: "Breng alle veiligheids- en gezondheidsrisico's binnen uw bedrijf in kaart met een deskundige RI&E en Plan van Aanpak.",
+    isHighlighted: false,
+    tag: "Wettelijk Verplicht",
+    link: "#contact",
+    // Document check list icon
+    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+    </svg>`
+  },
+  {
+    id: "brandveiligheid",
+    type: "dienst",
+    title: "Brandveiligheid & Blusmiddelen",
+    description: "Levering, installatie en jaarlijks onderhoud van gecertificeerde brandblussers, haspels, blusdekens en noodverlichting.",
+    isHighlighted: false,
+    tag: "Veiligheidsadvies",
+    link: "#contact",
+    // Flame icon
+    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 16.121A3 3 0 1012.01 11L11 14l-1.121 2.121z" />
+    </svg>`
+  },
+  {
+    id: "plattegronden",
+    type: "dienst",
+    title: "Ontruimingsplattegronden",
+    description: "Professionele ontruimingsplattegronden en calamiteitenplannen op maat, getekend conform de actuele NEN-normen.",
+    isHighlighted: false,
+    tag: "Preventie & Calamiteiten",
+    link: "#contact",
+    // Map/Plan icon
+    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
+    </svg>`
+  },
+  {
+    id: "webshop",
+    type: "dienst",
+    title: "Veiligheidsmaterialen Webshop",
+    description: "Bestel direct online uw AED's, gecertificeerde verbanddozen, reanimatiepoppen, pictogrammen en overige EHBO-artikelen.",
+    isHighlighted: false,
+    tag: "Webshop Edusafe",
+    link: "#contact",
+    // Shopping cart icon
+    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+    </svg>`
+  },
+  {
+    id: "draglineschotten",
+    type: "dienst",
+    title: "Draglineschotten & Rijplaten",
+    description: "Levering, verhuur en legservice van hardhouten, stalen en kunststof draglineschotten voor stabiele werklocaties.",
+    isHighlighted: false,
+    tag: "Terrein & Infra",
+    link: "#contact",
+    // Grid layers icon
+    icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+    </svg>`
+  }
+];
+---
+<section id="cursussen" class="w-full bg-brand-cream py-20 md:py-28 relative reveal">
+  <div class="max-w-[1280px] mx-auto px-6">
+    
+    <!-- Section Header -->
+    <div class="mb-12">
+      <div class="max-w-2xl">
+        <!-- Sub-tagline -->
+        <div class="inline-flex items-center gap-1.5 text-brand-accent font-display font-black text-sm uppercase tracking-wider mb-3">
+          <svg class="w-4.5 h-4.5" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
+          </svg>
+          Ons Opleidings- & Dienstenaanbod
+        </div>
+        <!-- Title -->
+        <h2 class="font-display text-4xl md:text-5xl font-black tracking-tight text-brand-secondary">
+          Trainingen, Diensten & Producten
+        </h2>
+        <!-- Subtext -->
+        <p class="text-brand-dark/70 text-base md:text-lg mt-3">
+          Verhoog de veiligheid op de werkvloer en voldoe aan alle wettelijke eisen. Bekijk ons complete aanbod.
+        </p>
+      </div>
+    </div>
+
+    <!-- Category Tabs & Slider Controls -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-10 border-b border-brand-dark/5 pb-6">
+      <!-- Tabs Switcher -->
+      <div class="flex flex-wrap gap-3">
+        <button 
+          id="tab-opleidingen" 
+          class="font-display font-black text-sm px-6 py-3.5 rounded-2xl bg-brand-secondary text-white shadow-md transition-all duration-300 cursor-pointer"
+        >
+          <i class="fa-solid fa-graduation-cap mr-2"></i>Cursussen
+        </button>
+        <button 
+          id="tab-diensten" 
+          class="font-display font-black text-sm px-6 py-3.5 rounded-2xl bg-white text-brand-secondary hover:bg-brand-cream border border-brand-dark/10 transition-all duration-300 shadow-sm cursor-pointer"
+        >
+          <i class="fa-solid fa-briefcase mr-2"></i>Diensten
+        </button>
+      </div>
+
+      <!-- Arrow Buttons for Slider -->
+      <div class="flex gap-4">
+        <button id="slider-prev" class="w-12 h-12 rounded-full border border-brand-dark/10 flex items-center justify-center text-brand-secondary hover:bg-brand-primary hover:text-white hover:border-brand-primary transition-all duration-300 shadow-sm cursor-pointer" aria-label="Vorige">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+        </button>
+        <button id="slider-next" class="w-12 h-12 rounded-full bg-brand-secondary text-white flex items-center justify-center hover:bg-brand-primary transition-all duration-300 shadow-md cursor-pointer" aria-label="Volgende">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Cards Slider Container -->
+    <div id="course-slider" class="flex gap-5 overflow-x-auto pb-8 snap-x snap-mandatory scroll-smooth hide-scrollbar -mx-6 px-6 lg:mx-0 lg:px-0 reveal-stagger">
+      
+      {courses.map((course) => (
+        <div 
+          data-type={course.type}
+          class={`course-category-card min-w-[260px] md:min-w-[300px] flex-1 max-w-[340px] snap-start rounded-[24px] p-6 md:p-8 border transition-all duration-500 flex flex-col justify-between group ${
+            course.isHighlighted 
+              ? 'bg-brand-secondary text-white border-brand-secondary/5 shadow-[0_10px_30px_rgba(11,39,33,0.03)] hover:shadow-[0_15px_40px_rgba(11,39,33,0.08)] hover:scale-[1.01]' 
+              : 'bg-white text-brand-dark border-brand-dark/10 hover:border-brand-primary/25 shadow-[0_10px_30px_rgba(0,0,0,0.015)] hover:shadow-[0_15px_40px_rgba(0,0,0,0.04)] hover:scale-[1.01]'
+          }`}
+        >
+          <div>
+            <!-- Top header in card (icon and tag) -->
+            <div class="flex items-center justify-between mb-6">
+              <div class={`w-12 h-12 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-105 duration-300 ${
+                course.isHighlighted ? 'bg-brand-primary text-brand-secondary' : 'bg-brand-cream text-brand-primary'
+              }`}>
+                <Fragment set:html={course.icon} />
+              </div>
+              <span class={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${
+                course.isHighlighted ? 'border-brand-primary/30 text-brand-primary bg-brand-primary/10' : 'border-brand-dark/10 text-brand-dark/50'
+              }`}>
+                {course.tag}
+              </span>
+            </div>
+
+            <!-- Course Title -->
+            <h3 class={`font-display text-xl font-black mb-3 tracking-tight leading-snug ${
+              course.isHighlighted ? 'underline decoration-brand-primary decoration-4 underline-offset-8' : ''
+            }`}>
+              {course.title}
+            </h3>
+
+            <!-- Course Description -->
+            <p class={`text-sm leading-relaxed mb-6 ${
+              course.isHighlighted ? 'text-white/80' : 'text-brand-dark/70'
+            }`}>
+              {course.description}
+            </p>
+          </div>
+
+          <!-- Bottom Button -->
+          <a href={course.link} class={`font-display font-black text-xs py-2.5 px-4 rounded-xl text-center transition-all duration-300 flex items-center justify-center gap-2 shadow-sm hover:shadow-md ${
+            course.isHighlighted 
+              ? 'bg-brand-accent text-white hover:bg-brand-accent-hover hover:-translate-y-0.5' 
+              : 'bg-brand-primary text-white hover:bg-brand-secondary hover:-translate-y-0.5'
+          }`}>
+            {course.type === 'opleiding' ? 'Informatie & Boeken' : 'Meer Informatie'}
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+          </a>
+        </div>
+      ))}
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+  function initCourseSlider() {
+    const slider = document.getElementById('course-slider');
+    const prevBtn = document.getElementById('slider-prev');
+    const nextBtn = document.getElementById('slider-next');
+
+    // Tab buttons
+    const tabOpleidingen = document.getElementById('tab-opleidingen');
+    const tabDiensten = document.getElementById('tab-diensten');
+    
+    // Cards
+    const cards = document.querySelectorAll('.course-category-card');
+
+    if (slider && prevBtn && nextBtn) {
+      prevBtn.addEventListener('click', () => {
+        const visibleCards = slider.querySelectorAll('.course-category-card:not(.hidden)');
+        const cardWidth = visibleCards[0]?.clientWidth || 300;
+        slider.scrollBy({ left: -(cardWidth + 20), behavior: 'smooth' });
+      });
+
+      nextBtn.addEventListener('click', () => {
+        const visibleCards = slider.querySelectorAll('.course-category-card:not(.hidden)');
+        const cardWidth = visibleCards[0]?.clientWidth || 300;
+        slider.scrollBy({ left: cardWidth + 20, behavior: 'smooth' });
+      });
+    }
+
+    if (tabOpleidingen && tabDiensten) {
+      const setTab = (activeTab: HTMLElement, inactiveTab: HTMLElement, filterType: string) => {
+        // Update tab styles
+        activeTab.classList.remove('bg-white', 'text-brand-secondary', 'border', 'border-brand-dark/10');
+        activeTab.classList.add('bg-brand-secondary', 'text-white', 'shadow-md');
+        
+        inactiveTab.classList.remove('bg-brand-secondary', 'text-white', 'shadow-md');
+        inactiveTab.classList.add('bg-white', 'text-brand-secondary', 'border', 'border-brand-dark/10', 'hover:bg-brand-cream');
+
+        // Filter cards with animations
+        cards.forEach((card) => {
+          const htmlCard = card as HTMLElement;
+          if (htmlCard.getAttribute('data-type') === filterType) {
+            htmlCard.classList.remove('hidden');
+            htmlCard.style.opacity = '0';
+            htmlCard.style.transform = 'translateY(15px)';
+            // Fade-in animation
+            setTimeout(() => {
+              htmlCard.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+              htmlCard.style.opacity = '1';
+              htmlCard.style.transform = 'translateY(0)';
+            }, 50);
+          } else {
+            htmlCard.classList.add('hidden');
+          }
+        });
+
+        // Scroll back to beginning
+        if (slider) slider.scrollLeft = 0;
+      };
+
+      tabOpleidingen.addEventListener('click', () => setTab(tabOpleidingen, tabDiensten, 'opleiding'));
+      tabDiensten.addEventListener('click', () => setTab(tabDiensten, tabOpleidingen, 'dienst'));
+
+      // Initial filter state
+      setTab(tabOpleidingen, tabDiensten, 'opleiding');
+    }
+  }
+
+  initCourseSlider();
+  document.addEventListener('astro:page-load', initCourseSlider);
+</script>
