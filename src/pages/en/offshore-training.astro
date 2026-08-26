@@ -1,47 +1,46 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from '../../layouts/Layout.astro';
 
-const offshorePillars = [
+const offshorePillarsEn = [
   {
     icon: "fa-solid fa-oil-well",
     badge: "OPITO & NOGEPA",
-    title: "Offshore Olie & Gas",
-    description: "BOSIET, FOET en HUET met EBS (helikopter ontsnapping) en NOGEPA 0.5A/B voor het Nederlands Continentaal Plat.",
-    status: "Binnenkort beschikbaar"
+    title: "Offshore Oil & Gas",
+    description: "BOSIET, FOET, and HUET with EBS (Helicopter Underwater Escape) and NOGEPA 0.5A/B for North Sea platform operations.",
+    status: "Coming Soon"
   },
   {
     icon: "fa-solid fa-wind",
-    badge: "GWO BST Standaard",
-    title: "Wind op Zee (Offshore Wind)",
-    description: "GWO Basic Safety Training: Werken op hoogte, Sea Survival, First Aid, Fire Awareness en Manual Handling voor windparken.",
-    status: "Binnenkort beschikbaar"
+    badge: "GWO BST Standard",
+    title: "Offshore Wind Energy (GWO)",
+    description: "GWO Basic Safety Training: Working at Heights, Sea Survival, First Aid, Fire Awareness, and Manual Handling for wind parks.",
+    status: "Coming Soon"
   },
   {
     icon: "fa-solid fa-ship",
-    badge: "STCW Zeevaart",
-    title: "Maritiem & Scheepvaart",
-    description: "STCW Basic Safety Training, Advanced Fire Fighting en Medical First Aid voor scheepsbemanning en support vessels.",
-    status: "Binnenkort beschikbaar"
+    badge: "STCW Maritime",
+    title: "Maritime & Shipping (STCW)",
+    description: "STCW Basic Safety Training, Advanced Fire Fighting, and Medical First Aid for crew members and offshore support vessels.",
+    status: "Coming Soon"
   },
   {
     icon: "fa-solid fa-user-doctor",
     badge: "NOGEPA & OEUK",
-    title: "Offshore Medische Keuringen",
-    description: "Officiële medische fit-to-work verklaringen (OEUK / NOGEPA / Scheepvaart) vereist voor vertrek naar offshore installaties.",
-    status: "Binnenkort beschikbaar"
+    title: "Offshore Medical Examinations",
+    description: "Official OEUK / NOGEPA fit-to-work medical certifications mandatory prior to offshore deployment and vessel embarkation.",
+    status: "Coming Soon"
   }
 ];
 ---
 
 <Layout 
-  title="Binnenkort Beschikbaar: Offshore Trainingen | Edusafe" 
-  description="Edusafe breidt binnenkort uit met geaccrediteerde offshore- en maritieme veiligheidstrainingen (OPITO, NOGEPA, GWO en STCW). Schrijf u in voor de wachtlijst."
+  title="Coming Soon: Offshore Safety Training | Edusafe" 
+  description="Edusafe is expanding with internationally accredited offshore and maritime safety training (OPITO, NOGEPA, GWO, and STCW). Join our waitlist today."
 >
   <main class="w-full">
     
-    <!-- Hero Header: Binnenkort beschikbaar: Offshore Trainingen -->
+    <!-- Hero Header: Coming soon: Offshore Training -->
     <section class="relative bg-brand-secondary text-white pt-20 pb-20 sm:pb-24 md:pt-24 md:pb-28 overflow-hidden">
-      <!-- Background Visual with Marine Overlay -->
       <div class="absolute inset-0 z-0 overflow-hidden">
         <img 
           src="https://images.unsplash.com/photo-1544724480-6cc691cf9569?auto=format&fit=crop&q=80&w=1600" 
@@ -53,18 +52,17 @@ const offshorePillars = [
       </div>
       
       <div class="max-w-[1000px] mx-auto px-6 relative z-10 text-center">
-        
         <span class="inline-flex items-center gap-1.5 text-brand-accent font-display font-semibold text-xs uppercase tracking-wider mb-3.5">
           <i class="fa-solid fa-anchor"></i>
-          Maritieme & Offshore Veiligheid
+          Maritime & Offshore Safety
         </span>
 
         <h1 class="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-white mb-5 leading-tight">
-          Binnenkort beschikbaar: <span class="relative inline-block text-white px-4 py-1.5 mx-1 transform -rotate-1"><span class="absolute inset-0 bg-brand-accent rounded-xl z-0"></span><span class="relative z-10">Offshore Trainingen</span></span>
+          Coming Soon: <span class="relative inline-block text-white px-4 py-1.5 mx-1 transform -rotate-1"><span class="absolute inset-0 bg-brand-accent rounded-xl z-0"></span><span class="relative z-10">Offshore Training</span></span>
         </h1>
         
         <p class="text-white/85 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-8 font-normal">
-          Edusafe legt momenteel de laatste hand aan de accreditaties en praktijkfaciliteiten voor internationaal erkende offshore veiligheidsopleidingen conform <strong>OPITO</strong>, <strong>NOGEPA</strong>, <strong>GWO</strong> en <strong>STCW</strong> richtlijnen.
+          Edusafe is currently finalizing the official accreditations and training facilities for internationally certified offshore and maritime safety courses (in accordance with <strong>OPITO</strong>, <strong>NOGEPA</strong>, <strong>GWO</strong>, and <strong>STCW</strong> standards).
         </p>
 
         <!-- Action Buttons -->
@@ -75,7 +73,7 @@ const offshorePillars = [
             class="font-display font-semibold text-sm px-6 py-3.5 rounded-xl bg-brand-accent hover:bg-brand-accent-hover text-white transition-all duration-300 flex items-center justify-center gap-2 shadow-md shadow-brand-accent/20 cursor-pointer whitespace-nowrap hover:scale-[1.01]"
           >
             <i class="fa-solid fa-bell text-xs"></i>
-            <span>Houd mij op de hoogte</span>
+            <span>Join Waitlist Notification</span>
           </button>
           
           <button 
@@ -84,26 +82,25 @@ const offshorePillars = [
             class="font-display font-semibold text-sm px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-md transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap hover:scale-[1.01]"
           >
             <i class="fa-regular fa-file-lines text-xs"></i>
-            <span>Vrijblijvende Groepsofferte</span>
+            <span>Request Corporate Proposal</span>
           </button>
         </div>
       </div>
     </section>
 
-    <!-- Wat kun je binnenkort verwachten? (4 Hoofdpijlers - 50/50 Overlap) -->
+    <!-- Program Preview Grid (4 Main Pillars) -->
     <section class="max-w-[1280px] mx-auto px-6 -mt-10 sm:-mt-12 md:-mt-14 relative z-30 pb-20">
-      
       <div class="bg-white rounded-3xl p-8 sm:p-10 md:p-12 shadow-xl border border-brand-dark/5">
         <div class="text-center max-w-2xl mx-auto mb-10">
-          <span class="text-xs font-semibold uppercase tracking-wider text-brand-primary block mb-1.5">Programma Preview</span>
-          <h2 class="font-display text-2xl sm:text-3xl font-semibold text-brand-secondary">De 4 pijlers van onze offshore opleidingen</h2>
+          <span class="text-xs font-semibold uppercase tracking-wider text-brand-primary block mb-1.5">Curriculum Preview</span>
+          <h2 class="font-display text-2xl sm:text-3xl font-semibold text-brand-secondary">The 4 Pillars of our Offshore Training Academy</h2>
           <p class="text-xs sm:text-sm text-brand-dark/70 font-normal mt-2">
-            Volledig gecertificeerde praktijktrainingen met geavanceerde simulators, zeeoverleving en officiële databaseregistraties.
+            Practical simulations with HUET underwater escape trainers, sea survival pools, and official database registration.
           </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-          {offshorePillars.map((pillar) => (
+          {offshorePillarsEn.map((pillar) => (
             <div class="bg-brand-cream/40 rounded-2xl p-5 sm:p-6 border border-brand-dark/5 hover:border-brand-primary/30 transition-all flex flex-col justify-between group">
               <div>
                 <div class="w-11 h-11 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-3.5 text-lg group-hover:bg-brand-primary group-hover:text-white transition-colors">
@@ -123,19 +120,17 @@ const offshorePillars = [
             </div>
           ))}
         </div>
-
       </div>
-
     </section>
 
-    <!-- Aanvragen & Interesse Banner -->
+    <!-- Inquiries & Corporate Requests Banner -->
     <section class="max-w-[1280px] mx-auto px-6 pb-20">
       <div class="bg-brand-secondary text-white rounded-3xl p-8 sm:p-10 md:p-12 relative overflow-hidden shadow-xl">
         <div class="relative z-10 max-w-2xl">
-          <span class="text-xs font-semibold uppercase tracking-wider text-brand-accent block mb-2">Interesse & Vroegtijdige Aanvragen</span>
-          <h2 class="font-display text-2xl sm:text-3xl font-semibold mb-3 text-white">Alvast interesse in onze offshore opleidingen?</h2>
+          <span class="text-xs font-semibold uppercase tracking-wider text-brand-accent block mb-2">Early Inquiries & Corporate Solutions</span>
+          <h2 class="font-display text-2xl sm:text-3xl font-semibold mb-3 text-white">Interested in our offshore safety training?</h2>
           <p class="text-white/80 text-xs sm:text-sm leading-relaxed mb-6 font-normal">
-            Hoewel we de officiële start voorbereiden, nemen wij nu al aanvragen en opleidingswensen in behandeling. Wij denken graag met u mee over planning, benodigde certificeringen en maatwerk.
+            While we prepare our official launch, we are already accepting early inquiries and corporate requirements. Contact our advisors to discuss tailored training schedules and accreditations.
           </p>
           <div class="flex flex-wrap gap-3.5">
             <button 
@@ -143,7 +138,7 @@ const offshorePillars = [
               data-open-contact-drawer
               class="font-display font-semibold text-sm py-3.5 px-6 rounded-xl bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 shadow-md shadow-brand-accent/20 cursor-pointer inline-flex items-center gap-2"
             >
-              <span>Dien een Aanvraag In</span>
+              <span>Submit Early Inquiry</span>
               <i class="fa-solid fa-arrow-right text-xs"></i>
             </button>
             <a 
@@ -151,62 +146,62 @@ const offshorePillars = [
               class="font-display font-semibold text-sm py-3.5 px-5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all duration-300 inline-flex items-center gap-2"
             >
               <i class="fa-solid fa-phone text-xs text-brand-accent"></i>
-              <span>070 - 444 77 95</span>
+              <span>+31 (0)70 - 444 77 95</span>
             </a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Direct Beschikbare Cursussen -->
+    <!-- Active Courses Links -->
     <section class="max-w-[1280px] mx-auto px-6 pb-24 border-t border-brand-dark/5 pt-14">
       <div class="text-center max-w-xl mx-auto mb-8">
-        <span class="text-xs font-semibold uppercase tracking-wider text-brand-primary block mb-1">Direct Beschikbaar</span>
-        <h2 class="font-display text-xl sm:text-2xl font-semibold text-brand-secondary">Bekijk onze actieve veiligheidsopleidingen</h2>
+        <span class="text-xs font-semibold uppercase tracking-wider text-brand-primary block mb-1">Available Now</span>
+        <h2 class="font-display text-xl sm:text-2xl font-semibold text-brand-secondary">Explore our active training courses</h2>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <a href="/bhv-cursus" class="p-5 rounded-2xl bg-white border border-brand-dark/10 hover:border-brand-primary shadow-xs hover:shadow-md transition-all text-left group">
+        <a href="/en/bhv-course" class="p-5 rounded-2xl bg-white border border-brand-dark/10 hover:border-brand-primary shadow-xs hover:shadow-md transition-all text-left group">
           <div class="w-9 h-9 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-3 group-hover:bg-brand-primary group-hover:text-white transition-colors">
             <i class="fa-solid fa-shield-halved text-sm"></i>
           </div>
-          <h3 class="font-display font-semibold text-sm sm:text-base text-brand-secondary mb-1">BHV Opleidingen</h3>
-          <p class="text-xs text-brand-dark/65 font-normal mb-3">Basis, herhaling en ploegleider.</p>
+          <h3 class="font-display font-semibold text-sm sm:text-base text-brand-secondary mb-1">BHV in English</h3>
+          <p class="text-xs text-brand-dark/65 font-normal mb-3">Basic, refresher and team leader.</p>
           <span class="text-xs font-semibold text-brand-primary flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-            Direct inschrijven <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            Book now <i class="fa-solid fa-arrow-right text-[10px]"></i>
           </span>
         </a>
 
-        <a href="/vca-cursus" class="p-5 rounded-2xl bg-white border border-brand-dark/10 hover:border-brand-primary shadow-xs hover:shadow-md transition-all text-left group">
+        <a href="/en/vca-course" class="p-5 rounded-2xl bg-white border border-brand-dark/10 hover:border-brand-primary shadow-xs hover:shadow-md transition-all text-left group">
           <div class="w-9 h-9 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-3 group-hover:bg-brand-primary group-hover:text-white transition-colors">
             <i class="fa-solid fa-helmet-safety text-sm"></i>
           </div>
-          <h3 class="font-display font-semibold text-sm sm:text-base text-brand-secondary mb-1">VCA Certificering</h3>
-          <p class="text-xs text-brand-dark/65 font-normal mb-3">VCA Basis en VOL-VCA met examen.</p>
+          <h3 class="font-display font-semibold text-sm sm:text-base text-brand-secondary mb-1">VCA Certification</h3>
+          <p class="text-xs text-brand-dark/65 font-normal mb-3">VCA Basic & VOL with SSVV exam.</p>
           <span class="text-xs font-semibold text-brand-primary flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-            Direct inschrijven <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            Book now <i class="fa-solid fa-arrow-right text-[10px]"></i>
           </span>
         </a>
 
-        <a href="/ehbo-cursus" class="p-5 rounded-2xl bg-white border border-brand-dark/10 hover:border-brand-primary shadow-xs hover:shadow-md transition-all text-left group">
+        <a href="/en/first-aid-course" class="p-5 rounded-2xl bg-white border border-brand-dark/10 hover:border-brand-primary shadow-xs hover:shadow-md transition-all text-left group">
           <div class="w-9 h-9 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-3 group-hover:bg-brand-primary group-hover:text-white transition-colors">
             <i class="fa-solid fa-heart-pulse text-sm"></i>
           </div>
-          <h3 class="font-display font-semibold text-sm sm:text-base text-brand-secondary mb-1">EHBO & Reanimatie</h3>
-          <p class="text-xs text-brand-dark/65 font-normal mb-3">Levensreddend handelen & AED.</p>
+          <h3 class="font-display font-semibold text-sm sm:text-base text-brand-secondary mb-1">First Aid & CPR</h3>
+          <p class="text-xs text-brand-dark/65 font-normal mb-3">Life-saving first responder care & AED.</p>
           <span class="text-xs font-semibold text-brand-primary flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-            Direct inschrijven <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            Book now <i class="fa-solid fa-arrow-right text-[10px]"></i>
           </span>
         </a>
 
-        <a href="/cursusdata" class="p-5 rounded-2xl bg-white border border-brand-dark/10 hover:border-brand-primary shadow-xs hover:shadow-md transition-all text-left group">
+        <a href="/en/course-dates" class="p-5 rounded-2xl bg-white border border-brand-dark/10 hover:border-brand-primary shadow-xs hover:shadow-md transition-all text-left group">
           <div class="w-9 h-9 rounded-xl bg-brand-accent/10 flex items-center justify-center text-brand-accent mb-3 group-hover:bg-brand-accent group-hover:text-white transition-colors">
             <i class="fa-regular fa-calendar-days text-sm"></i>
           </div>
-          <h3 class="font-display font-semibold text-sm sm:text-base text-brand-secondary mb-1">Alle Cursusdata</h3>
-          <p class="text-xs text-brand-dark/65 font-normal mb-3">Bekijk actuele data en locaties.</p>
+          <h3 class="font-display font-semibold text-sm sm:text-base text-brand-secondary mb-1">All Course Dates</h3>
+          <p class="text-xs text-brand-dark/65 font-normal mb-3">View live dates & availability.</p>
           <span class="text-xs font-semibold text-brand-accent flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-            Bekijk planning <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            View schedule <i class="fa-solid fa-arrow-right text-[10px]"></i>
           </span>
         </a>
       </div>

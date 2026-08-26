@@ -21,7 +21,7 @@ const courses = [
     description: "Praktijkgerichte eerste hulp bij ongevallen gecertificeerd door Het Oranje Kruis. Zowel basis als herhaling.",
     isHighlighted: false,
     tag: "Oranje Kruis Erkend",
-    link: "/cursusdata?category=EHBO",
+    link: "/ehbo-cursus",
     // Heart/first aid icon
     icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
@@ -34,10 +34,10 @@ const courses = [
     description: "Leer levensreddend handelen en omgaan met een Automatische Externe Defibrillator (AED) in noodsituaties.",
     isHighlighted: false,
     tag: "Levensreddend",
-    link: "/cursusdata?category=AED/Reanimatie",
+    link: "/reanimatie-aed-cursus",
     // Pulse/heartbeat icon
     icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
     </svg>`
   },
   {
@@ -47,7 +47,7 @@ const courses = [
     description: "VCA certificering voor operationele medewerkers en leidinggevenden. Snel en met 100% examenbegeleiding.",
     isHighlighted: false,
     tag: "Veiligheidscertificaat",
-    link: "/cursusdata?category=VCA",
+    link: "/vca-cursus",
     // Clipboard list check icon
     icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
@@ -60,7 +60,7 @@ const courses = [
     description: "Bereid uw organisatie en medewerkers voor op noodsituaties met vluchtwegtrainingen en ontruimingsoefeningen.",
     isHighlighted: false,
     tag: "Bedrijfsveiligheid",
-    link: "/cursusdata?category=Ontruiming",
+    link: "/ontruiming-cursus",
     // Door exit/escape icon
     icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v4M14 4h6m0 0v6m0-6L10 14" />
@@ -73,7 +73,7 @@ const courses = [
     description: "Veilig werken met intern transport. Zorg dat je magazijn- en logistiek personeel gecertificeerd is.",
     isHighlighted: false,
     tag: "Logistieke cursussen",
-    link: "/cursusdata",
+    link: "/heftruck-cursus",
     // Gear/cog wheel icon
     icon: `<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
@@ -170,15 +170,8 @@ const courses = [
     <!-- Section Header -->
     <div class="mb-12">
       <div class="max-w-2xl">
-        <!-- Sub-tagline -->
-        <div class="inline-flex items-center gap-1.5 text-brand-accent font-display font-black text-sm uppercase tracking-wider mb-3">
-          <svg class="w-4.5 h-4.5" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
-          </svg>
-          Ons Opleidings- & Dienstenaanbod
-        </div>
         <!-- Title -->
-        <h2 class="font-display text-4xl md:text-5xl font-black tracking-tight text-brand-secondary">
+        <h2 class="font-display text-3xl md:text-4xl font-semibold tracking-tight text-brand-secondary">
           Trainingen, Diensten & Producten
         </h2>
         <!-- Subtext -->
@@ -194,13 +187,13 @@ const courses = [
       <div class="flex flex-wrap gap-3">
         <button 
           id="tab-opleidingen" 
-          class="font-display font-black text-sm px-6 py-3.5 rounded-2xl bg-brand-secondary text-white shadow-md transition-all duration-300 cursor-pointer"
+          class="font-display font-semibold text-sm px-6 py-3.5 rounded-2xl bg-brand-secondary text-white shadow-md transition-all duration-300 cursor-pointer"
         >
           <i class="fa-solid fa-graduation-cap mr-2"></i>Cursussen
         </button>
         <button 
           id="tab-diensten" 
-          class="font-display font-black text-sm px-6 py-3.5 rounded-2xl bg-white text-brand-secondary hover:bg-brand-cream border border-brand-dark/10 transition-all duration-300 shadow-sm cursor-pointer"
+          class="font-display font-semibold text-sm px-6 py-3.5 rounded-2xl bg-white text-brand-secondary hover:bg-brand-cream border border-brand-dark/10 transition-all duration-300 shadow-sm cursor-pointer"
         >
           <i class="fa-solid fa-briefcase mr-2"></i>Diensten
         </button>
@@ -209,10 +202,10 @@ const courses = [
       <!-- Arrow Buttons for Slider -->
       <div class="flex gap-4">
         <button id="slider-prev" class="w-12 h-12 rounded-full border border-brand-dark/10 flex items-center justify-center text-brand-secondary hover:bg-brand-primary hover:text-white hover:border-brand-primary transition-all duration-300 shadow-sm cursor-pointer" aria-label="Vorige">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
         </button>
         <button id="slider-next" class="w-12 h-12 rounded-full bg-brand-secondary text-white flex items-center justify-center hover:bg-brand-primary transition-all duration-300 shadow-md cursor-pointer" aria-label="Volgende">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
         </button>
       </div>
     </div>
@@ -237,7 +230,7 @@ const courses = [
               }`}>
                 <Fragment set:html={course.icon} />
               </div>
-              <span class={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${
+              <span class={`text-[10px] font-medium px-2.5 py-0.5 rounded-full border ${
                 course.isHighlighted ? 'border-brand-primary/30 text-brand-primary bg-brand-primary/10' : 'border-brand-dark/10 text-brand-dark/50'
               }`}>
                 {course.tag}
@@ -245,8 +238,8 @@ const courses = [
             </div>
 
             <!-- Course Title -->
-            <h3 class={`font-display text-xl font-black mb-3 tracking-tight leading-snug ${
-              course.isHighlighted ? 'underline decoration-brand-primary decoration-4 underline-offset-8' : ''
+            <h3 class={`font-display text-xl font-semibold mb-3 tracking-tight leading-snug ${
+              course.isHighlighted ? 'text-white' : 'text-brand-secondary'
             }`}>
               {course.title}
             </h3>
@@ -260,13 +253,13 @@ const courses = [
           </div>
 
           <!-- Bottom Button -->
-          <a href={course.link} class={`font-display font-black text-xs py-2.5 px-4 rounded-xl text-center transition-all duration-300 flex items-center justify-center gap-2 shadow-sm hover:shadow-md ${
+          <a href={course.link} class={`font-display font-semibold text-xs py-2.5 px-4 rounded-xl text-center transition-all duration-300 flex items-center justify-center gap-2 shadow-sm hover:shadow-md ${
             course.isHighlighted 
               ? 'bg-brand-accent text-white hover:bg-brand-accent-hover hover:-translate-y-0.5' 
               : 'bg-brand-primary text-white hover:bg-brand-secondary hover:-translate-y-0.5'
           }`}>
             {course.type === 'opleiding' ? 'Informatie & Boeken' : 'Meer Informatie'}
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
           </a>
         </div>
       ))}

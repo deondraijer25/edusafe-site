@@ -1,122 +1,209 @@
 ---
+import { getLangFromUrl } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const isEn = lang === 'en';
 ---
-<section class="relative w-full min-h-[95vh] bg-brand-cream pt-[120px] lg:pt-[130px] pb-16 lg:pb-20 overflow-hidden flex items-center">
+<section class="w-full bg-brand-cream pt-6 sm:pt-8 md:pt-10 pb-12 sm:pb-16 overflow-hidden">
   
-  <!-- Right Side gradient background on desktop -->
-  <div class="absolute inset-y-0 right-0 left-[calc(50%+103px)] bg-gradient-to-br from-brand-secondary via-[#142e54] to-brand-primary hidden lg:block z-0"></div>
-  
-  <!-- Top Scribble Doodle above text (Left Side) -->
-  <div class="absolute top-[15%] left-[45%] text-brand-accent/20 pointer-events-none hidden xl:block select-none z-0">
-    <svg class="w-16 h-16 animate-float" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3">
-      <path d="M10,50 Q30,20 50,50 T90,50" />
-      <path d="M20,60 Q40,30 60,60 T100,60" opacity="0.5" />
-    </svg>
-  </div>
-
-  <!-- Background Doodles (Right Side) -->
-  <!-- Top Cloud Doodle -->
-  <div class="absolute top-[15%] right-[8%] text-white/10 pointer-events-none select-none hidden lg:block">
-    <svg class="w-24 h-16" viewBox="0 0 100 60" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M10,40 Q25,20 40,40 T70,40 T90,30" />
-      <path d="M20,48 Q35,30 50,48 T80,48" opacity="0.5" />
-    </svg>
-  </div>
-
-  <!-- Bottom Grid Pattern Circle -->
-  <div class="absolute bottom-[-5%] right-[-5%] w-48 h-48 rounded-full bg-[radial-gradient(#ffffff15_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none hidden lg:block"></div>
-
-  <!-- Centered Content Container -->
-  <div class="max-w-[1280px] mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10">
+  <!-- Outer Container for Floating Hero Frame -->
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6">
     
-    <!-- Left Column (Cream Background area inside max-width container) -->
-    <div class="col-span-1 lg:col-span-7 flex flex-col justify-center">
-      <div class="max-w-[620px] w-full">
+    <!-- Floating Framed Hero Card (Zwevend Kader met volledige video achtergrond) -->
+    <div class="relative rounded-[28px] sm:rounded-[36px] lg:rounded-[40px] overflow-hidden min-h-[560px] sm:min-h-[620px] lg:min-h-[660px] flex flex-col justify-between p-6 sm:p-10 md:p-14 lg:p-16 border border-brand-dark/10 shadow-[0_25px_70px_-15px_rgba(14,34,61,0.25)] ring-1 ring-white/20 bg-brand-secondary">
+      
+      <!-- Video Background (High quality, local loop, fast preload) -->
+      <video 
+        id="hero-video"
+        autoplay 
+        loop 
+        muted 
+        playsinline 
+        webkit-playsinline
+        preload="auto"
+        disablepictureinpicture
+        disableremoteplayback
+        class="absolute inset-0 w-full h-full object-cover z-0 filter brightness-[0.9] contrast-[1.02] pointer-events-none"
+      >
+        <source src="/assets/videos/hero_video.mp4" type="video/mp4" />
+      </video>
+
+      <!-- Multi-Layered Modern Dark Gradient Overlay for Maximum Legibility & High-End B2B Look -->
+      <div class="absolute inset-0 bg-gradient-to-r from-brand-secondary/90 via-brand-secondary/75 to-brand-secondary/35 z-10 pointer-events-none"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-brand-secondary/80 via-transparent to-black/20 z-10 pointer-events-none"></div>
+
+      <!-- Hero Main Content (relative z-20) -->
+      <div class="relative z-20 max-w-[760px] pt-4 sm:pt-6">
         
-        <!-- Title -->
-        <h1 class="font-display text-[clamp(36px,5.2vw,62px)] leading-[1.1] font-black tracking-tight text-brand-secondary mb-6 animate-fade-in-right opacity-0" style="animation-delay: 150ms;">
-          Vergroot de veiligheid op de <span class="relative inline-block text-white px-5 py-2 mx-1 mt-2 transform -rotate-1"><span class="absolute inset-0 bg-brand-accent rounded-2xl z-0"></span><span class="relative z-10">werkvloer</span></span>
+        <!-- Headline with tilted colored background -->
+        <h1 class="font-display text-[34px] sm:text-5xl lg:text-[58px] font-semibold tracking-tight text-white leading-[1.22] mb-6 drop-shadow-sm">
+          {isEn ? (
+            <>
+              Enhance safety across the <span class="relative inline-block text-white px-4 sm:px-5 py-1 sm:py-1.5 mx-1 sm:mx-1.5 my-1 transform -rotate-1 align-baseline"><span class="absolute inset-0 bg-brand-accent rounded-xl sm:rounded-2xl shadow-md z-0"></span><span class="relative z-10 font-semibold">workplace</span></span>
+            </>
+          ) : (
+            <>
+              Vergroot de veiligheid op de <span class="relative inline-block text-white px-4 sm:px-5 py-1 sm:py-1.5 mx-1 sm:mx-1.5 my-1 transform -rotate-1 align-baseline"><span class="absolute inset-0 bg-brand-accent rounded-xl sm:rounded-2xl shadow-md z-0"></span><span class="relative z-10 font-semibold">werkvloer</span></span>
+            </>
+          )}
         </h1>
 
-        <!-- Paragraph -->
-        <p class="text-[17px] md:text-lg text-brand-dark/80 leading-relaxed mb-8 max-w-[540px] animate-fade-in-right opacity-0" style="animation-delay: 300ms;">
-          Volg onze gecertificeerde BHV, EHBO en VCA trainingen. Snel, praktijkgericht en volledig conform de wetgeving. Direct in te plannen incompany of op onze locaties.
+        <!-- Subtitle -->
+        <p class="text-white/85 text-base sm:text-lg lg:text-[19px] leading-relaxed mb-8 sm:mb-10 max-w-[620px] font-normal">
+          {isEn 
+            ? "Practical Emergency Response (BHV), First Aid and VCA safety training compliant with Dutch Arbowet regulations. Book incompany or at our modern training facilities."
+            : "Praktijkgerichte BHV, EHBO en VCA trainingen conform de nieuwste Arbowetgeving. Direct in te plannen incompany of op één van onze opleidingslocaties."}
         </p>
 
         <!-- CTA Buttons -->
-        <div class="flex flex-wrap items-center gap-5 mb-10 animate-fade-in-right opacity-0" style="animation-delay: 450ms;">
-          <a href="#cursussen" class="font-display font-black text-base bg-brand-primary hover:bg-brand-primary-hover text-white px-8 py-4 rounded-2xl transition-all duration-300 shadow-[0_6px_25px_rgba(27,102,177,0.25)] hover:-translate-y-0.5">
-            Bekijk Cursussen
+        <div class="flex flex-wrap items-center gap-4 sm:gap-5">
+          <a 
+            href={isEn ? "#courses" : "#cursussen"} 
+            class="font-display font-semibold text-[15px] sm:text-base bg-brand-accent hover:bg-brand-accent-hover text-white px-7 sm:px-8 py-3.5 sm:py-4 rounded-xl transition-all duration-300 shadow-[0_10px_25px_rgba(255,107,53,0.35)] hover:-translate-y-0.5 flex items-center gap-2.5 group"
+          >
+            <span>{isEn ? "Get Started" : "Direct Starten"}</span>
+            <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
           </a>
           
-          <button id="play-hero-video" class="flex items-center gap-3 text-brand-secondary hover:text-brand-primary font-bold text-base transition-colors group cursor-pointer">
-            <div class="w-12 h-12 rounded-full bg-brand-accent/15 flex items-center justify-center text-brand-accent group-hover:scale-105 transition-transform duration-300">
-              <svg class="w-4 h-4 fill-currentColor ml-0.5" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </div>
-            Bekijk Video
+          <button 
+            type="button"
+            data-open-contact-drawer
+            class="font-display font-semibold text-[15px] sm:text-base bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/25 px-6 sm:px-7 py-3.5 sm:py-4 rounded-xl transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-2.5 cursor-pointer"
+          >
+            <i class="fa-regular fa-comment-dots text-lg text-white"></i>
+            <span>{isEn ? "Request Advice" : "Vraag advies aan"}</span>
           </button>
         </div>
 
-        <!-- Social Proof (Avatars & Counter) -->
-        <div class="flex items-center gap-4 border-t border-brand-dark/10 pt-8 relative animate-fade-in-right opacity-0" style="animation-delay: 600ms;">
-          <!-- Avatars -->
+      </div>
+
+      <!-- Bottom Card Trust Bar / Social Proof (relative z-20) -->
+      <div class="relative z-20 pt-8 sm:pt-10 border-t border-white/15 mt-8 flex flex-wrap items-center justify-between gap-6">
+        
+        <!-- Social Proof: Avatars & Counter (1.761+ Cursisten) -->
+        <div class="flex items-center gap-4">
+          <!-- Avatars Stack -->
           <div class="flex -space-x-3">
-            <img class="w-10 h-10 rounded-full border-2 border-brand-cream object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100&h=100" alt="Cursist" width="40" height="40" />
-            <img class="w-10 h-10 rounded-full border-2 border-brand-cream object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100&h=100" alt="Cursist" width="40" height="40" />
-            <img class="w-10 h-10 rounded-full border-2 border-brand-cream object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100&h=100" alt="Cursist" width="40" height="40" />
-            <img class="w-10 h-10 rounded-full border-2 border-brand-cream object-cover" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=100&h=100" alt="Cursist" width="40" height="40" />
-          </div>
-          
-          <div class="flex flex-col">
-            <span class="font-display font-black text-brand-secondary text-lg leading-tight">15.000+ Cursisten</span>
-            <span class="text-xs text-brand-dark/65 font-semibold">opgeleid en gecertificeerd in heel Nederland</span>
+            <img class="w-10 h-10 rounded-full border-2 border-brand-secondary object-cover shadow-sm" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100&h=100" alt="Cursist" width="40" height="40" />
+            <img class="w-10 h-10 rounded-full border-2 border-brand-secondary object-cover shadow-sm" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100&h=100" alt="Cursist" width="40" height="40" />
+            <img class="w-10 h-10 rounded-full border-2 border-brand-secondary object-cover shadow-sm" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100&h=100" alt="Cursist" width="40" height="40" />
+            <img class="w-10 h-10 rounded-full border-2 border-brand-secondary object-cover shadow-sm" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=100&h=100" alt="Cursist" width="40" height="40" />
           </div>
 
-          <!-- Hand-drawn arrow doodle next to avatars -->
-          <div class="absolute bottom-[20%] right-[-10%] text-brand-accent pointer-events-none hidden xl:block select-none opacity-40">
-            <svg class="w-12 h-12" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round">
-              <path d="M10,80 Q40,70 50,40 T80,20" />
-              <path d="M65,15 L82,18 L80,35" />
-            </svg>
+          <!-- Text -->
+          <div class="flex flex-col">
+            <span class="font-display font-semibold text-white text-base sm:text-lg leading-tight">1.761+ Cursisten</span>
+            <span class="text-xs sm:text-[13px] text-white/70 font-normal">Gecertificeerd in heel Nederland</span>
+          </div>
+        </div>
+
+        <!-- Rating & Badges -->
+        <div class="flex items-center gap-6 text-white/90">
+          <div class="flex items-center gap-2">
+            <div class="flex text-amber-400 text-xs">
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+              <i class="fa-solid fa-star"></i>
+            </div>
+            <span class="font-semibold text-xs sm:text-sm text-white">4.9 / 5</span>
+            <span class="text-xs text-white/60">(250+ reviews)</span>
+          </div>
+
+          <div class="hidden md:flex items-center gap-2 text-xs font-medium text-emerald-300 bg-emerald-950/40 border border-emerald-500/30 px-3 py-1.5 rounded-lg">
+            <i class="fa-solid fa-shield-check"></i>
+            <span>100% Slagingsgarantie</span>
           </div>
         </div>
 
       </div>
+
     </div>
 
-    <!-- Right Column (Navy Background area inside max-width container) -->
-    <div class="col-span-1 lg:col-span-5 flex items-center justify-center lg:justify-end relative">
-      <!-- Image Card Container (Enlarged and translated to overlap left column) -->
-      <div class="relative w-full max-w-[360px] lg:max-w-[480px] lg:-translate-x-16 z-20 animate-fade-in-up opacity-0" style="animation-delay: 300ms;">
+    <!-- Partner & Client Trust Logos Loop Banner (Full color and enlarged) -->
+    <div class="pt-12 sm:pt-14 pb-4">
+      <div class="flex flex-col lg:flex-row items-center gap-6 lg:gap-8 overflow-hidden">
         
-        <!-- Retro Striped Backdrop Card (extends outside the main image) -->
-        <div class="absolute inset-0 bg-[repeating-linear-gradient(45deg,#FAF8F520,#FAF8F520_10px,var(--color-brand-secondary)_10px,var(--color-brand-secondary)_20px)] border-2 border-brand-accent/40 rounded-[32px] translate-x-4 translate-y-4 z-0"></div>
-
-        <!-- Main Image Card -->
-        <div class="relative bg-brand-primary rounded-[32px] overflow-hidden border-4 border-brand-cream shadow-2xl z-10">
-          <img 
-            class="w-full h-auto object-cover block" 
-            src="/assets/images/hero_instructor.png" 
-            alt="Edusafe Safety Instructor" 
-            width="480" 
-            height="580"
-            loading="eager" 
-          />
+        <!-- Left: Fixed Text Badge -->
+        <div class="shrink-0 text-center lg:text-left lg:pr-8 lg:border-r border-brand-dark/10">
+          <span class="font-display font-semibold text-xs sm:text-sm text-brand-dark/70 tracking-tight whitespace-nowrap block">
+            Vertrouwd door 300+ bedrijven:
+          </span>
         </div>
 
-        <!-- Floating Badge -->
-        <div class="absolute bottom-6 left-[-20px] bg-white border border-brand-dark/10 p-4 rounded-2xl shadow-xl z-20 flex items-center gap-3 animate-fade-in-up opacity-0" style="animation-delay: 800ms;">
-          <div class="w-10 h-10 rounded-full bg-brand-primary/20 flex items-center justify-center text-brand-primary">
-            <!-- Graduation Cap or Safety Helm Icon -->
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l9-5-9-5-9 5 9 5z" />
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-            </svg>
-          </div>
-          <div>
-            <div class="font-display font-black text-brand-secondary text-sm">Praktijkgericht</div>
-            <div class="text-[11px] text-brand-dark/60 font-semibold">100% slagingsgarantie</div>
+        <!-- Right: Continuous Infinite Marquee Loop in Full Color -->
+        <div class="relative w-full overflow-hidden flex-1">
+          <div class="partner-marquee flex items-center gap-12 sm:gap-16 whitespace-nowrap">
+            
+            <!-- Track Part 1 -->
+            <div class="flex items-center gap-12 sm:gap-16 shrink-0 marquee-content">
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/ado-den-haag-160x80.svg" alt="ADO Den Haag" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+              </div>
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/cirque-du-soleil-160x80.png" alt="Cirque du Soleil" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+              </div>
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/world-forum-160x80.png" alt="World Forum Den Haag" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+              </div>
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/ronald-mcdonald-den-haag-160x80.png" alt="Ronald McDonald Huis" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+              </div>
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/uithof-160x80.png" alt="De Uithof" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+              </div>
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/paard-160x80.svg" alt="PAARD" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+              </div>
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/bex-beveiliging-160x80.jpg" alt="Bex Beveiliging" class="h-10 sm:h-12 md:h-13 w-auto object-contain rounded-md shadow-xs" />
+              </div>
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/ortec-160x80.jpg" alt="Ortec" class="h-10 sm:h-12 md:h-13 w-auto object-contain rounded-md shadow-xs" />
+              </div>
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/khn-160x80.png" alt="Koninklijke Horeca Nederland" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+              </div>
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/de-maas-160x80.png" alt="De Maas" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+              </div>
+            </div>
+
+            <!-- Track Part 2 (Duplicate for smooth continuous marquee) -->
+            <div class="flex items-center gap-12 sm:gap-16 shrink-0 marquee-content" aria-hidden="true">
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/ado-den-haag-160x80.svg" alt="ADO Den Haag" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+              </div>
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/cirque-du-soleil-160x80.png" alt="Cirque du Soleil" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+              </div>
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/world-forum-160x80.png" alt="World Forum Den Haag" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+              </div>
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/ronald-mcdonald-den-haag-160x80.png" alt="Ronald McDonald Huis" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+              </div>
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/uithof-160x80.png" alt="De Uithof" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+              </div>
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/paard-160x80.svg" alt="PAARD" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+              </div>
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/bex-beveiliging-160x80.jpg" alt="Bex Beveiliging" class="h-10 sm:h-12 md:h-13 w-auto object-contain rounded-md shadow-xs" />
+              </div>
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/ortec-160x80.jpg" alt="Ortec" class="h-10 sm:h-12 md:h-13 w-auto object-contain rounded-md shadow-xs" />
+              </div>
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/khn-160x80.png" alt="Koninklijke Horeca Nederland" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+              </div>
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/de-maas-160x80.png" alt="De Maas" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+              </div>
+            </div>
+
           </div>
         </div>
 
@@ -126,75 +213,57 @@
   </div>
 </section>
 
-<!-- Video Lightbox Modal -->
-<div id="video-modal" class="fixed inset-0 z-[999] hidden items-center justify-center bg-brand-secondary/95 backdrop-blur-xl opacity-0 transition-opacity duration-300">
-  <button id="close-video-btn" class="absolute top-6 right-6 text-white/50 hover:text-white transition-colors p-2 z-[1000] cursor-pointer">
-    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
-  </button>
-  <div class="relative w-full max-w-4xl aspect-video mx-4 rounded-3xl overflow-hidden shadow-[0_0_80px_rgba(255,107,53,0.2)] border border-white/10 ring-1 ring-white/5 scale-95 transition-transform duration-300 flex items-center justify-center bg-brand-secondary" id="video-container">
-    <!-- Placeholder Image Background -->
-    <img 
-      src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=1200" 
-      alt="Edusafe Video Placeholder" 
-      class="absolute inset-0 w-full h-full object-cover opacity-35"
-    />
-    <!-- Overlay Gradient -->
-    <div class="absolute inset-0 bg-gradient-to-t from-brand-secondary via-brand-secondary/40 to-transparent"></div>
-    
-    <!-- Content -->
-    <div class="relative z-10 text-center px-6">
-      <div class="w-20 h-20 bg-brand-accent rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-brand-accent/30 animate-pulse">
-        <i class="fa-solid fa-play text-white text-2xl ml-1.5"></i>
-      </div>
-      <h3 class="font-display font-black text-white text-2xl md:text-3xl lg:text-4xl mb-2">Edusafe Bedrijfsimpressie</h3>
-      <p class="text-white/60 text-sm md:text-base font-semibold max-w-md mx-auto">Deze video wordt momenteel geproduceerd en is binnenkort beschikbaar.</p>
-    </div>
-  </div>
-</div>
+<style>
+  .partner-marquee {
+    display: flex;
+    overflow: hidden;
+    user-select: none;
+    gap: 2.5rem;
+  }
+  .marquee-content {
+    animation: scroll-partner-marquee 30s linear infinite;
+  }
+  .partner-marquee:hover .marquee-content {
+    animation-play-state: paused;
+  }
+  @keyframes scroll-partner-marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - 2.5rem));
+    }
+  }
+</style>
 
 <script>
-  function initVideoModal() {
-    const playBtn = document.getElementById('play-hero-video');
-    const modal = document.getElementById('video-modal');
-    const closeBtn = document.getElementById('close-video-btn');
-    const videoContainer = document.getElementById('video-container');
-
-    if (playBtn && modal && closeBtn && videoContainer) {
+  function initHeroVideo() {
+    const video = document.getElementById('hero-video') as HTMLVideoElement | null;
+    if (video) {
+      video.muted = true;
+      video.defaultMuted = true;
+      video.playsInline = true;
       
-      const openModal = (e: Event) => {
-        e.preventDefault();
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-        requestAnimationFrame(() => {
-          modal.classList.remove('opacity-0');
-          videoContainer.classList.remove('scale-95');
-          videoContainer.classList.add('scale-100');
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          const tryPlay = () => {
+            video.play().catch(() => {});
+            ['click', 'touchstart', 'scroll', 'mousemove'].forEach(ev => {
+              window.removeEventListener(ev, tryPlay);
+            });
+          };
+          ['click', 'touchstart', 'scroll', 'mousemove'].forEach(ev => {
+            window.addEventListener(ev, tryPlay, { once: true, passive: true });
+          });
         });
-      };
-
-      const closeModal = () => {
-        modal.classList.add('opacity-0');
-        videoContainer.classList.remove('scale-100');
-        videoContainer.classList.add('scale-95');
-        setTimeout(() => {
-          modal.classList.remove('flex');
-          modal.classList.add('hidden');
-        }, 300);
-      };
-
-      playBtn.addEventListener('click', openModal);
-      closeBtn.addEventListener('click', closeModal);
-      modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-      });
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-          closeModal();
-        }
-      });
+      }
     }
   }
 
-  initVideoModal();
-  document.addEventListener('astro:page-load', initVideoModal);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeroVideo);
+  } else {
+    initHeroVideo();
+  }
 </script>

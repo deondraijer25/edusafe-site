@@ -1,0 +1,484 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MobileCourseBottomBar from '../components/MobileCourseBottomBar.astro';
+
+const heftruckCourses = [
+  {
+    id: "heftruck-basis",
+    title: "Heftruck Certificaat Basis",
+    tagline: "Wettelijk verplicht deskundigheidscertificaat voor veilig intern transport",
+    price: "€ 195,00",
+    spotsText: "ARBO & CCV Normering",
+    duration: "1 dag (theorie + intensieve praktijk)",
+    target: "Voor magazijn- en logistiek medewerkers die nieuw instappen of nog geen officieel certificaat hebben.",
+    requirements: "Minimaal 16 jaar (onder toezicht) of 18 jaar (zelfstandig). Geen rijbewijs vereist.",
+    exam: "Theorie-examen en praktijkvaardigheidstoets op ons praktijkparcours.",
+    certification: "Officieel Heftruckcertificaat (5 jaar geldig) + fysiek pasje in creditcardformaat.",
+    inclusions: ["Lesmateriaal & oefenvragen", "Gebruik moderne vorkheftrucks", "Theorie- en praktijkexamen", "Officieel pasje", "Koffie, thee & lunch"],
+    modules: [
+      { name: "Arbowetgeving en werkgeversaansprakelijkheid" },
+      { name: "Dagelijkse visuele inspectie en batterij-/gasonderhoud" },
+      { name: "Belastinggrafiek, zwaartepuntbepaling en capaciteit" },
+      { name: "Rijvaardigheid en manoeuvreren in krappe gangpaden" },
+      { name: "Pallets stapelen en inrijden in stellingen op hoogte" },
+      { name: "Laden en lossen van vrachtwagens en laaddocks" }
+    ],
+    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=600",
+    registerLink: "/cursusdata?category=Heftruck"
+  },
+  {
+    id: "heftruck-herhaling",
+    title: "Heftruck Herhaling / Veiligheidstoets",
+    tagline: "Verlenging van uw heftruckpas conform de 5-jaarlijkse richtlijn",
+    price: "€ 135,00",
+    spotsText: "Verlenging 5 jaar",
+    duration: "1 dagdeel (4 uur)",
+    target: "Voor ervaren heftruckchauffeurs met een (recent) verlopen certificaat die hun vaardigheden willen opfrissen.",
+    requirements: "In het bezit van een eerder behaald heftruckcertificaat of ruime rijervaring.",
+    exam: "Praktische veiligheidstoetsing op het parcours.",
+    certification: "Nieuw officieel Heftruckcertificaat (5 jaar geldig) + pasje.",
+    inclusions: ["Praktijktraining en vaardigheidstoets", "Opfrissing veiligheidsregels", "Nieuw pasje", "Koffie & thee"],
+    modules: [
+      { name: "Opfrissen Arbo- en veiligheidsvoorschriften" },
+      { name: "Gevaarlijke situaties en bijna-ongevallen analyseren" },
+      { name: "Praktijkparcours met precisie-opdrachten" },
+      { name: "Controle ergonomie en veilig rijgedrag" }
+    ],
+    image: "https://images.unsplash.com/photo-1580674684081-7617fbf3d745?auto=format&fit=crop&q=80&w=600",
+    registerLink: "/cursusdata?category=Heftruck"
+  },
+  {
+    id: "reachtruck",
+    title: "Reachtruck Certificaat",
+    tagline: "Gespecialiseerd rijden en stellingstapelen in hoogbouwmagazijnen",
+    price: "€ 215,00",
+    spotsText: "Hoogbouw & Precisie",
+    duration: "1 dag",
+    target: "Voor logistiek personeel dat werkzaam is met reachtrucks in smalle gangpaden en hoge magazijnstellingen.",
+    requirements: "Vanaf 16/18 jaar. Enige ervaring met intern transport is een pré.",
+    exam: "Theorie en praktijktoets in hoogbouwstellingen.",
+    certification: "Officieel Reachtruckcertificaat (5 jaar geldig) + pasje.",
+    inclusions: ["Praktijktraining op professionele reachtruck", "Veiligheidsinstructies hoogbouw", "Examen & pasje", "Lunch inbegrepen"],
+    modules: [
+      { name: "Specifieke stuurtechniek en draaicirkel van de reachtruck" },
+      { name: "Mastbediening, sideshift en reachfunctie" },
+      { name: "Plaatsen en uitnemen van goederen tot 10+ meter hoogte" },
+      { name: "Stabiliteit bij uitgeschoven mast en zware lasten" }
+    ],
+    image: "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&q=80&w=600",
+    registerLink: "/cursusdata?category=Heftruck"
+  },
+  {
+    id: "ept-stapelaar",
+    title: "Elektrische Pallettruck (EPT) & Stapelaar",
+    tagline: "Veilig en snel goederen verplaatsen in het magazijn en bij laden/lossen",
+    price: "€ 145,00",
+    spotsText: "Snel & Doeltreffend",
+    duration: "1 dagdeel (4 uur)",
+    target: "Voor magazijnmedewerkers, orderpickers en chauffeurs die dagelijks met een meeloop- of meerijd EPT/stapelaar werken.",
+    requirements: "Geen voorkennis nodig. Vanaf 16 jaar.",
+    exam: "Praktische rij- en veiligheidstoets.",
+    certification: "Certificaat EPT & Stapelaar (5 jaar geldig) + pasje.",
+    inclusions: ["Praktijkoefeningen manoeuvreren & remmen", "Batterijlaadinstructies", "Certificaat & pasje", "Koffie & thee"],
+    modules: [
+      { name: "Veilig rijden, draaien en remmen met een EPT" },
+      { name: "Voet- en beknellingsbeveiliging (veiligheidsschakelaar)" },
+      { name: "Stapelen van pallets met de elektrische stapelaar" },
+      { name: "Veilig laden en lossen in de vrachtwagenlaadbak" }
+    ],
+    image: "https://images.unsplash.com/photo-1616401784845-180882ba9ba8?auto=format&fit=crop&q=80&w=600",
+    registerLink: "/cursusdata?category=Heftruck"
+  },
+  {
+    id: "combi-heftruck-reachtruck",
+    title: "Combicursus Heftruck + Reachtruck",
+    tagline: "Haal beide officiële certificaten in één voordelig 2-daags traject",
+    price: "€ 375,00",
+    spotsText: "Beste Prijs / Dubbel Voordeel",
+    duration: "2 dagen intensieve praktijk",
+    target: "Voor wie breed inzetbaar wil zijn in alle soorten magazijnen, distributiecentra en op overslagterreinen.",
+    requirements: "Vanaf 16/18 jaar. Goede motivatie en leergierigheid.",
+    exam: "Dubbel examen (zowel vorkheftruck als reachtruck praktijktoetsing).",
+    certification: "2 officiële certificaten + dubbel pasje (5 jaar geldig).",
+    inclusions: ["2 dagen praktijktraining op beide machines", "Alle lesmaterialen & examens", "2 officiële pasjes", "Warme lunch op beide dagen"],
+    modules: [
+      { name: "Volledige theorie en praktijk vorkheftruck" },
+      { name: "Volledige praktijktraining reachtruck & hoogbouw" },
+      { name: "Veiligheidsbesef op de magazijnvloer" },
+      { name: "Efficiëntie en schadevrij transporteren" }
+    ],
+    image: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&q=80&w=600",
+    registerLink: "/cursusdata?category=Heftruck"
+  }
+];
+
+const defaultCourse = heftruckCourses[0];
+
+const faqs = [
+  {
+    q: "Is een heftruckcertificaat wettelijk verplicht volgens de Arbowet?",
+    a: "Ja. Volgens artikel 7.17 lid 1 van het Arbobesluit moet de bestuurder van een mobiel arbeidsmiddel met eigen aandrijving (zoals een vorkheftruck of reachtruck) beschikken over 'specifieke deskundigheid'. Met een officieel Edusafe-heftruckcertificaat voldoet uw organisatie aantoonbaar aan deze wettelijke verplichting en bent u gedekt bij de Arbeidsinspectie en verzekeraars."
+  },
+  {
+    q: "Hoe lang is het heftruckcertificaat geldig?",
+    a: "Het certificaat en het fysieke pasje zijn 5 jaar geldig. Na 5 jaar volgt de chauffeur een korte herhalingscursus (veiligheidstoets van 1 dagdeel) om het pasje weer met 5 jaar te verlengen."
+  },
+  {
+    q: "Mogen jongeren onder de 18 jaar op een heftruck rijden?",
+    a: "Jongeren van 16 en 17 jaar mogen met een geldig heftruckcertificaat op een heftruck rijden, mits er sprake is van deskundig toezicht op de werkvloer. Vanaf 18 jaar mag de chauffeur volledig zelfstandig rijden."
+  },
+  {
+    q: "Kunnen jullie de heftruckopleiding incompany bij ons in het magazijn geven?",
+    a: "Ja, zeer graag zelfs! Een incompany heftrucktraining is ideaal omdat uw medewerkers direct getraind worden op uw eigen machines, in uw eigen stellingen en met de specifieke ladingen van uw bedrijf. Vanaf 4 deelnemers is dit al zeer kostenefficiënt."
+  }
+];
+---
+
+<Layout title="Heftruck & Reachtruck Cursussen | Edusafe" description="Haal uw officiële heftruck- of reachtruckcertificaat bij Edusafe. 5 jaar geldig, praktijkgericht en conform ARBO-richtlijnen. Boek nu in Den Haag of incompany!">
+  <main class="w-full">
+    
+    <!-- Hero Header Section (Spacious, Rich Photography & Directional Gradient) -->
+    <section class="relative bg-brand-secondary text-white pt-20 pb-36 md:pt-24 md:pb-44 overflow-hidden">
+      <div class="absolute inset-0 z-0 overflow-hidden">
+        <img 
+          src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=1600" 
+          alt="Heftruck en Reachtruck Opleidingen" 
+          class="w-full h-full object-cover opacity-35 scale-105" 
+        />
+        <div class="absolute inset-0 bg-gradient-to-r from-brand-secondary via-brand-secondary/85 to-brand-secondary/40"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-brand-secondary via-transparent to-black/20"></div>
+      </div>
+      
+      <div class="max-w-[1280px] mx-auto px-6 relative z-10">
+        <div class="max-w-3xl animate-fade-in">
+          <span class="inline-flex items-center gap-1.5 text-brand-accent font-display font-semibold text-xs uppercase tracking-wider mb-3.5">
+            <i class="fa-solid fa-truck-ramp-box animate-pulse"></i>
+            Arbowet & SSVV Conform Certificaat
+          </span>
+          <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-tight mb-4 text-white">
+            Heftruck & <span class="relative inline-block text-white px-5 py-2 mx-1 transform -rotate-1"><span class="absolute inset-0 bg-brand-accent rounded-2xl z-0"></span><span class="relative z-10">Intern Transport</span></span>
+          </h1>
+          <p class="text-white/90 text-base md:text-lg max-w-2xl leading-relaxed mb-6 font-normal">
+            Haal snel uw officiële heftruck-, reachtruck- of stapelaarscertificaat. Voor zowel beginners als ervaren chauffeurs (herhalingscursus), 5 jaar landelijk geldig.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content Grid (Floating overlap) -->
+    <section class="max-w-[1280px] mx-auto px-6 -mt-20 md:-mt-24 relative z-20 pb-24">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
+        
+        <!-- Left Side: Dynamic Grid of Cards + Details (8 columns) -->
+        <div class="lg:col-span-8 space-y-6">
+          
+          <!-- Compact Dynamic Details Card -->
+          <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-md border border-brand-dark/5 reveal" id="details-card-left">
+            
+            <!-- Title Header -->
+            <div class="border-b border-brand-dark/5 pb-3 mb-3.5 flex flex-wrap items-baseline justify-between gap-2">
+              <div>
+                <span id="selected-tagline" class="text-[10px] font-semibold text-brand-primary uppercase tracking-wider block mb-0.5">{defaultCourse.tagline}</span>
+                <h2 id="selected-title" class="font-display text-xl sm:text-2xl font-semibold text-brand-secondary leading-snug">{defaultCourse.title}</h2>
+              </div>
+            </div>
+            
+            <!-- Description -->
+            <div class="mb-4">
+              <p id="selected-target" class="text-brand-dark/75 text-xs sm:text-[13px] leading-relaxed font-normal">
+                {defaultCourse.target}
+              </p>
+            </div>
+            
+            <!-- Modules Checklist -->
+            <div class="mb-4 border-t border-brand-dark/5 pt-3.5">
+              <h3 class="font-display text-[10px] font-semibold uppercase text-brand-dark/40 tracking-widest mb-2.5">Praktijkonderdelen & Vaardigheden</h3>
+              <div id="selected-modules" class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5">
+                {defaultCourse.modules.map(mod => (
+                  <div class="flex items-center gap-2">
+                    <span class="w-4 h-4 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-[10px] shrink-0">
+                      <i class="fa-solid fa-check"></i>
+                    </span>
+                    <span class="font-medium text-brand-secondary text-xs sm:text-[13px]">{mod.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <!-- Specs Table -->
+            <div class="border-t border-brand-dark/5 pt-3.5">
+              <h3 class="font-display text-[10px] font-semibold uppercase text-brand-dark/40 tracking-widest mb-3">Praktische Informatie</h3>
+              <div class="space-y-2 text-xs">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-1">
+                  <span class="font-semibold text-brand-secondary text-[10px] uppercase tracking-wider">Toelatingseisen</span>
+                  <span id="selected-requirements" class="sm:col-span-2 text-brand-dark/75 font-normal leading-relaxed">{defaultCourse.requirements}</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-1 border-t border-brand-dark/5 pt-2">
+                  <span class="font-semibold text-brand-secondary text-[10px] uppercase tracking-wider">Examen & Toetsing</span>
+                  <span id="selected-exam" class="sm:col-span-2 text-brand-dark/75 font-normal leading-relaxed">{defaultCourse.exam}</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-1 border-t border-brand-dark/5 pt-2">
+                  <span class="font-semibold text-brand-secondary text-[10px] uppercase tracking-wider">Certificering</span>
+                  <span id="selected-certification" class="sm:col-span-2 text-brand-dark/75 font-normal leading-relaxed">{defaultCourse.certification}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section Divider/Header for Variations -->
+          <div class="pt-1 reveal">
+            <h3 class="font-display text-lg sm:text-xl font-semibold text-brand-secondary mb-1">Alle Logistieke Certificeringen</h3>
+            <p class="text-xs text-brand-dark/60 font-medium mb-3">Klik op een van de onderstaande trainingen om de details hierboven te bekijken.</p>
+          </div>
+
+          <!-- Cards Grid Section -->
+          <div class="reveal">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {heftruckCourses.map((course, idx) => (
+                <div 
+                  class={`course-card cursor-pointer rounded-2xl border transition-all duration-300 overflow-hidden flex flex-col justify-between group relative bg-white hover:border-brand-primary/40 hover:shadow-md ${idx === 0 ? 'border-brand-primary ring-2 ring-brand-primary/20 shadow-sm' : 'border-brand-dark/5'}`}
+                  data-course-id={course.id}
+                >
+                  <div class="relative h-28 w-full overflow-hidden bg-brand-secondary">
+                    <img src={course.image} alt={course.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-secondary/80 to-transparent"></div>
+                    <div class="absolute top-2.5 left-2.5 bg-white/90 backdrop-blur-sm px-2.5 py-0.5 rounded-lg border border-white/20">
+                      <span class="text-[9px] font-semibold uppercase text-brand-secondary tracking-wider">{course.duration}</span>
+                    </div>
+                  </div>
+                  
+                  <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+                    <div>
+                      <span class="text-[9px] font-semibold text-brand-primary uppercase tracking-wider block mb-1">{course.tagline}</span>
+                      <h3 class="font-display font-semibold text-brand-secondary text-sm sm:text-base leading-tight mb-1.5 group-hover:text-brand-primary transition-colors">
+                        {course.title}
+                      </h3>
+                      <p class="text-brand-dark/70 text-xs line-clamp-2 leading-relaxed mb-3 font-normal">
+                        {course.target}
+                      </p>
+                    </div>
+                    
+                    <div class="pt-2.5 border-t border-brand-dark/5 flex items-center justify-between mt-auto">
+                      <div class="flex flex-col">
+                        <span class="text-[9px] font-semibold uppercase text-brand-dark/40 leading-none mb-0.5">Tarief excl.</span>
+                        <span class="font-display font-semibold text-brand-secondary text-sm leading-none">{course.price}</span>
+                      </div>
+                      <span class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase text-brand-primary tracking-wider group-hover:text-brand-accent transition-colors">
+                        Bekijk details <i class="fa-solid fa-arrow-right text-[9px]"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Incompany / Group Quote Banner -->
+          <div class="rounded-2xl bg-brand-secondary text-white p-6 sm:p-8 relative overflow-hidden shadow-lg reveal">
+            <div class="relative z-10 max-w-xl">
+              <span class="text-xs font-semibold uppercase tracking-wider text-brand-accent block mb-1.5">Voor magazijnen, distributie & logistiek</span>
+              <h3 class="font-display text-xl sm:text-2xl font-semibold mb-2.5">Heftruckopleiding op uw eigen magazijnvloer</h3>
+              <p class="text-white/80 text-xs sm:text-sm leading-relaxed mb-5 font-normal">
+                Laat uw chauffeurs trainen in hun vertrouwde omgeving op uw eigen machines en magazijnstellingen. Veilig, praktijkgericht en direct toepasbaar op de werkvloer.
+              </p>
+              <button 
+                type="button" 
+                data-open-contact-drawer
+                class="font-display font-semibold text-xs sm:text-sm py-3 px-6 rounded-xl bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 w-full sm:w-auto shadow-md shadow-brand-accent/20 cursor-pointer inline-flex items-center justify-center gap-2"
+              >
+                <span>Vrijblijvende Magazijnofferte Aanvragen</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- FAQ Section -->
+          <div class="rounded-2xl bg-white p-5 sm:p-7 border border-brand-dark/5 shadow-sm reveal">
+            <h3 class="font-display text-xl font-semibold text-brand-secondary mb-5">Veelgestelde vragen over Heftruckcertificering</h3>
+            <div class="space-y-3.5">
+              {faqs.map((faq) => (
+                <div class="border-b border-brand-dark/5 pb-3.5 last:border-b-0 last:pb-0">
+                  <h4 class="font-display font-semibold text-sm sm:text-base text-brand-secondary mb-1.5 flex items-start gap-2">
+                    <span class="text-brand-primary">?</span>
+                    <span>{faq.q}</span>
+                  </h4>
+                  <p class="text-xs sm:text-[13px] text-brand-dark/70 leading-relaxed pl-4 font-normal">
+                    {faq.a}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Side: Sticky Booking & Summary Card (Desktop Only: 4 columns) -->
+        <div class="hidden lg:block lg:col-span-4 relative">
+          <div class="sticky top-28 lg:top-[148px] space-y-5 z-20">
+            
+            <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-lg border border-brand-dark/5">
+              <span class="text-[9px] font-semibold uppercase text-brand-dark/40 tracking-wider block mb-1">Geselecteerde training</span>
+              <h3 id="sidebar-title" class="font-display text-xl sm:text-2xl font-semibold text-brand-secondary leading-snug">{defaultCourse.title}</h3>
+              
+              <!-- Pricing -->
+              <div class="mt-4 pt-4 border-t border-brand-dark/5">
+                <div class="flex items-baseline justify-between mb-0.5">
+                  <span class="text-[9px] font-semibold uppercase text-brand-dark/40 tracking-wider">Cursustarief</span>
+                  <span class="text-[10px] text-brand-dark/50">Excl. BTW</span>
+                </div>
+                <div class="flex items-baseline gap-2">
+                  <span id="selected-price" class="font-display text-3xl sm:text-4xl font-semibold text-brand-secondary">{defaultCourse.price}</span>
+                  <span class="text-xs text-brand-dark/60">/ cursist</span>
+                </div>
+              </div>
+
+              <!-- Spots & Duration badge -->
+              <div class="mt-3.5 p-2.5 rounded-xl bg-brand-cream/60 border border-brand-dark/5 space-y-1.5">
+                <div class="flex items-center gap-2 text-xs">
+                  <div class="w-6 h-6 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary shrink-0">
+                    <i class="fa-solid fa-clock text-[10px]"></i>
+                  </div>
+                  <div>
+                    <div class="text-[9px] font-semibold uppercase text-brand-dark/40 leading-none mb-0.5">Duur & Studielast</div>
+                    <span id="selected-duration" class="font-semibold text-brand-secondary text-xs">{defaultCourse.duration}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Inclusions Checklist -->
+              <div class="mt-4 pt-4 border-t border-brand-dark/5">
+                <span class="text-[9px] font-semibold uppercase text-brand-dark/40 tracking-wider block mb-2.5">Wat is inclusief?</span>
+                <ul id="selected-inclusions" class="space-y-2">
+                  {defaultCourse.inclusions.map(item => (
+                    <li class="flex items-center gap-2 text-xs text-brand-dark/80 font-medium">
+                      <i class="fa-solid fa-circle-check text-emerald-500 text-xs shrink-0"></i>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <!-- CTA Buttons -->
+              <div class="mt-6 space-y-2.5">
+                <a 
+                  id="selected-cta"
+                  href={defaultCourse.registerLink}
+                  class="font-display font-semibold text-sm py-3.5 px-5 rounded-xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 w-full block shadow-md shadow-brand-accent/20 cursor-pointer"
+                >
+                  Direct Cursusdata & Inschrijven
+                </a>
+
+                <button 
+                  type="button"
+                  data-open-contact-drawer
+                  class="font-display font-semibold text-xs py-2.5 px-4 rounded-xl text-center bg-white hover:bg-brand-cream text-brand-secondary border border-brand-dark/10 transition-all duration-300 w-full block cursor-pointer"
+                >
+                  Offerte / Vraag stellen
+                </button>
+              </div>
+
+              <!-- Guarantee Tag -->
+              <div class="mt-4 pt-4 border-t border-brand-dark/5 flex items-center justify-center gap-1.5 text-xs font-semibold text-emerald-600">
+                <i class="fa-solid fa-shield-check text-sm"></i>
+                <span>100% Slagingsgarantie</span>
+              </div>
+
+            </div>
+
+            <!-- Direct Contact Box -->
+            <div class="bg-brand-cream/60 rounded-2xl p-4 sm:p-5 border border-brand-dark/5 text-center reveal">
+              <span class="text-[10px] font-semibold uppercase tracking-wider text-brand-dark/50 block mb-1">Persoonlijk advies nodig?</span>
+              <p class="text-xs text-brand-dark/70 mb-3 font-normal">Onze logistieke opleiders helpen u graag bij het inplannen van praktijkdagen.</p>
+              <a href="tel:0704447795" class="font-display font-semibold text-sm text-brand-primary hover:text-brand-primary/80 transition-colors inline-flex items-center gap-2">
+                <i class="fa-solid fa-phone text-xs"></i>
+                <span>070 - 444 77 95</span>
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mobile Bottom Summary & Expand Drawer -->
+    <MobileCourseBottomBar defaultCourse={defaultCourse} advisorText="Persoonlijk advies of planning afstemmen?" />
+
+  </main>
+</Layout>
+
+<script is:inline define:vars={{ heftruckCourses }}>
+  function initCourseSelector() {
+    const cards = document.querySelectorAll('.course-card');
+    const selectedTitle = document.getElementById('selected-title');
+    const selectedTagline = document.getElementById('selected-tagline');
+    const selectedTarget = document.getElementById('selected-target');
+    const selectedModules = document.getElementById('selected-modules');
+    const selectedRequirements = document.getElementById('selected-requirements');
+    const selectedExam = document.getElementById('selected-exam');
+    const selectedCertification = document.getElementById('selected-certification');
+    const selectedPrice = document.getElementById('selected-price');
+    const selectedDuration = document.getElementById('selected-duration');
+    const selectedInclusions = document.getElementById('selected-inclusions');
+    const selectedCta = document.getElementById('selected-cta');
+    const sidebarTitle = document.getElementById('sidebar-title');
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const id = card.getAttribute('data-course-id');
+        const course = heftruckCourses.find(c => c.id === id);
+        if (!course) return;
+
+        cards.forEach(c => {
+          c.classList.remove('border-brand-primary', 'ring-2', 'ring-brand-primary/20', 'shadow-md');
+          c.classList.add('border-brand-dark/5');
+        });
+        card.classList.add('border-brand-primary', 'ring-2', 'ring-brand-primary/20', 'shadow-md');
+        card.classList.remove('border-brand-dark/5');
+
+        if (selectedTitle) selectedTitle.textContent = course.title;
+        if (sidebarTitle) sidebarTitle.textContent = course.title;
+        if (selectedTagline) selectedTagline.textContent = course.tagline;
+        if (selectedTarget) selectedTarget.textContent = course.target;
+        if (selectedRequirements) selectedRequirements.textContent = course.requirements;
+        if (selectedExam) selectedExam.textContent = course.exam;
+        if (selectedCertification) selectedCertification.textContent = course.certification;
+        if (selectedPrice) selectedPrice.textContent = course.price;
+        if (selectedDuration) selectedDuration.textContent = course.duration;
+        if (selectedCta) selectedCta.setAttribute('href', course.registerLink);
+
+        if (selectedModules) {
+          selectedModules.innerHTML = course.modules.map(mod => `
+            <div class="flex items-center gap-2.5">
+              <span class="w-5 h-5 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xs shrink-0">
+                <i class="fa-solid fa-check"></i>
+              </span>
+              <span class="font-display font-semibold text-brand-secondary text-sm">${mod.name}</span>
+            </div>
+          `).join('');
+        }
+
+        if (selectedInclusions) {
+          selectedInclusions.innerHTML = course.inclusions.map(item => `
+            <li class="flex items-center gap-2 text-xs text-brand-dark/80 font-medium">
+              <i class="fa-solid fa-circle-check text-emerald-500 text-xs shrink-0"></i>
+              <span>${item}</span>
+            </li>
+          `).join('');
+        }
+
+        // Sync with mobile bottom drawer
+        if (typeof window.syncMobileCourseDrawer === 'function') {
+          window.syncMobileCourseDrawer(course);
+        }
+
+        const detailsEl = document.getElementById('details-card-left');
+        if (detailsEl) {
+          detailsEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      });
+    });
+  }
+
+  initCourseSelector();
+  document.addEventListener('astro:page-load', initCourseSelector);
+</script>

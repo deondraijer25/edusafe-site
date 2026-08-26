@@ -22,7 +22,7 @@
   --animate-marquee: marquee 40s linear infinite;
   --animate-marquee-reverse: marquee-reverse 40s linear infinite;
   --animate-coin-flip: coin-flip-3d 1.5s infinite ease-in-out;
-  --animate-loader-progress: loader-fill 3s linear forwards;
+  --animate-loader-progress: loader-fill 2s linear forwards;
 
   @keyframes fade-in-up {
     0% {
@@ -98,6 +98,10 @@
 @layer base {
   body {
     @apply bg-brand-cream text-brand-dark font-sans antialiased selection:bg-brand-primary selection:text-white;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-semibold tracking-tight text-brand-secondary;
   }
 }
 

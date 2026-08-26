@@ -1,0 +1,483 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MobileCourseBottomBar from '../components/MobileCourseBottomBar.astro';
+
+const ehboCourses = [
+  {
+    id: "ehbo-basis",
+    title: "EHBO Basis (Het Oranje Kruis)",
+    tagline: "Het officiële en meest complete Eerste Hulp diploma van Nederland",
+    price: "€ 285,00",
+    spotsText: "Oranje Kruis Gecertificeerd",
+    duration: "3 dagen of E-learning + 1 praktijkdag",
+    target: "Voor werknemers, verenigingen en particulieren die allround eerstehulpverlener willen worden.",
+    requirements: "Geen specifieke vooropleiding vereist. Vanaf 16 jaar.",
+    exam: "Officieel theorie- en praktijkexamen afgenomen door een examinator van Het Oranje Kruis.",
+    certification: "Officieel Diploma Eerste Hulp van Het Oranje Kruis (2 jaar geldig) + pasje.",
+    inclusions: ["Officieel Oranje Kruis lesboek", "E-learning licentie", "Examen- & certificeringskosten", "Fysiek pasje", "Koffie, thee & lunch"],
+    modules: [
+      { name: "Stoornissen in vitale functies (reanimatie & AED)" },
+      { name: "Wonden, bloedingen en shockbestrijding" },
+      { name: "Botbreuken, ontwrichtingen en kneuzingen" },
+      { name: "Vergiftigingen, brandwonden en oogletsels" },
+      { name: "Plotseling optredende ziektebeelden (beroerte, epilepsie, hartinfarct)" },
+      { name: "Verband- en hulpmiddelenleer" }
+    ],
+    image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=600",
+    registerLink: "/cursusdata?category=EHBO"
+  },
+  {
+    id: "ehbo-herhaling",
+    title: "EHBO Herhaling",
+    tagline: "Verlenging en competentie-onderhoud voor uw Oranje Kruis diploma",
+    price: "€ 145,00",
+    spotsText: "Tweejaarlijkse verlenging",
+    duration: "1 praktijkdag (of 2 dagdelen)",
+    target: "Voor gediplomeerde eerstehulpverleners die hun vaardigheden op peil houden en diploma willen verlengen.",
+    requirements: "In het bezit van een geldig Diploma Eerste Hulp van Het Oranje Kruis.",
+    exam: "Geen examen; continue praktijkbeoordeling door de gecertificeerde instructeur.",
+    certification: "Officiële verlenging van het Oranje Kruis Diploma (met 2 jaar verlengd).",
+    inclusions: ["Praktijktraining met LOTUS-slachtoffers", "Herhalingsregistratie Oranje Kruis", "Nieuw pasje", "Koffie, thee & lunch"],
+    modules: [
+      { name: "Reanimatie & AED update conform NRR" },
+      { name: "Complexe scenario's & LOTUS casuïstiek" },
+      { name: "Verbandleer & wondbehandeling opfrissing" },
+      { name: "Nieuwe richtlijnen Eerste Hulp" }
+    ],
+    image: "https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&q=80&w=600",
+    registerLink: "/cursusdata?category=EHBO"
+  },
+  {
+    id: "ehak-inbegrepen",
+    title: "Eerste Hulp aan Kinderen (EHAK)",
+    tagline: "Speciaal ontwikkeld voor kinderopvang, gastouders en leerkrachten",
+    price: "€ 145,00",
+    spotsText: "Voldoet 100% aan Wet IKK",
+    duration: "E-learning + 1 praktijkdag",
+    target: "Voor pedagogisch medewerkers, gastouders, leerkrachten en ouders.",
+    requirements: "Geen voorkennis nodig. Direct online starten met theorie.",
+    exam: "Theorietoets via e-learning en praktijkbeoordeling op de lesdag.",
+    certification: "Geregistreerd Certificaat Eerste Hulp aan Kinderen (2 jaar geldig) conform IKK-eisen.",
+    inclusions: ["E-learning module", "Praktijktraining kinderreanimatie", "Officieel IKK geregistreerd certificaat", "Lunch & consumpties"],
+    modules: [
+      { name: "Baby- en kinderreanimatie + AED" },
+      { name: "Verslikking en verstikking bij kinderen" },
+      { name: "Koortsstuipen, valincidenten en hersenschudding" },
+      { name: "Verdrinking, vergiftiging en brandwonden" }
+    ],
+    image: "https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&q=80&w=600",
+    registerLink: "/cursusdata?category=EHAK"
+  },
+  {
+    id: "ehbo-sport",
+    title: "Eerste Hulp bij Sport & Evenementen",
+    tagline: "Gericht op sportverenigingen, trainers, coaches en evenementen",
+    price: "€ 165,00",
+    spotsText: "Sport & Blessures",
+    duration: "1 praktijkdag",
+    target: "Voor trainers, verzorgers, scheidsrechters en sportbegeleiders.",
+    requirements: "Basiskennis EHBO of affiniteit met sportverzorging aanbevolen.",
+    exam: "Praktische scenario-toetsing door sport-EHBO instructeurs.",
+    certification: "Certificaat Eerste Hulp bij Sportongevallen (Oranje Kruis erkend).",
+    inclusions: ["Lesmateriaal sportblessures", "Oefen- en tapematerialen", "Certificaat", "Koffie, thee & lunch"],
+    modules: [
+      { name: "Acuut sportletsel & RICE-principe" },
+      { name: "Spier- en peesscheuringen, ontwrichtingen" },
+      { name: "Hoofd- en nekletsel bij contactsporten" },
+      { name: "Tapen, bandageren en koudetherapie" }
+    ],
+    image: "https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?auto=format&fit=crop&q=80&w=600",
+    registerLink: "/cursusdata?category=EHBO"
+  },
+  {
+    id: "levensreddend-handelen",
+    title: "Levensreddend Handelen (LRH)",
+    tagline: "Compacte basistraining voor levensbedreigende noodsituaties",
+    price: "€ 115,00",
+    spotsText: "Kort & Doeltreffend",
+    duration: "1 dagdeel (4 uur)",
+    target: "Voor medewerkers en particulieren die in een halve dag de belangrijkste levensreddende handelingen willen beheersen.",
+    requirements: "Geen toelatingseisen.",
+    exam: "Praktische vaardigheidstoetsing tijdens de cursus.",
+    certification: "Certificaat Levensreddend Handelen Edusafe (1 jaar geldig).",
+    inclusions: ["Praktijktraining reanimatie & AED", "Stabiele zijligging & verslikking", "Certificaat", "Koffie & thee"],
+    modules: [
+      { name: "Herkenning van een circulatiestilstand" },
+      { name: "Reanimeren en inzet van een AED" },
+      { name: "Verstikking en stabiele zijligging" },
+      { name: "Ernstige bloedingen stelpen" }
+    ],
+    image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=600",
+    registerLink: "/cursusdata?category=EHBO"
+  }
+];
+
+const defaultCourse = ehboCourses[0];
+
+const faqs = [
+  {
+    q: "Wordt een EHBO-cursus vergoed door mijn zorgverzekering?",
+    a: "Ja, veel zorgverzekeraars vergoeden een erkende EHBO-cursus (volledig of gedeeltelijk) vanuit de aanvullende verzekering onder de dekking preventie of cursussen. Omdat onze opleidingen officieel zijn gecertificeerd door Het Oranje Kruis, komt u in aanmerking voor deze vergoeding."
+  },
+  {
+    q: "Hoe lang is het Diploma Eerste Hulp van Het Oranje Kruis geldig?",
+    a: "Het officiële Oranje Kruis Diploma is 2 jaar geldig. Om de geldigheid te behouden, volgt u binnen die 2 jaar herhalingslessen waarin alle competenties (inclusief reanimatie en AED) worden afgetoetst."
+  },
+  {
+    q: "Wat is het verschil tussen een BHV-cursus en een volwaardige EHBO-opleiding?",
+    a: "Bij BHV leert u een compacte combinatie van eerste hulp, brandbestrijding en ontruiming. Een volwaardige EHBO-opleiding (zoals Het Oranje Kruis) gaat veel dieper in op medische handelingen, ziektebeelden, botbreuken, vergiftigingen en wondverzorging."
+  },
+  {
+    q: "Kan deze EHBO-training ook incompany bij ons op het bedrijf georganiseerd worden?",
+    a: "Zeker! Wij verzorgen incompany EHBO-trainingen door heel Nederland, afgestemd op de specifieke risico's binnen uw werkomgeving (bijvoorbeeld kantoor, industrie, logistiek of sport). Vanaf 6 personen is dit al voordeliger dan open inschrijvingen."
+  }
+];
+---
+
+<Layout title="EHBO Cursussen & Opleidingen (Oranje Kruis) | Edusafe" description="Haal uw officiële EHBO diploma van Het Oranje Kruis bij Edusafe. Praktijkgericht, deskundige docenten en 100% slagingsgarantie. Bekijk onze data!">
+  <main class="w-full">
+    
+    <!-- Hero Header Section (Spacious, Rich Photography & Directional Gradient) -->
+    <section class="relative bg-brand-secondary text-white pt-20 pb-36 md:pt-24 md:pb-44 overflow-hidden">
+      <div class="absolute inset-0 z-0 overflow-hidden">
+        <img 
+          src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=1600" 
+          alt="EHBO Opleidingen Praktijk" 
+          class="w-full h-full object-cover opacity-35 scale-105" 
+        />
+        <div class="absolute inset-0 bg-gradient-to-r from-brand-secondary via-brand-secondary/85 to-brand-secondary/40"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-brand-secondary via-transparent to-black/20"></div>
+      </div>
+      
+      <div class="max-w-[1280px] mx-auto px-6 relative z-10">
+        <div class="max-w-3xl animate-fade-in">
+          <span class="inline-flex items-center gap-1.5 text-brand-accent font-display font-semibold text-xs uppercase tracking-wider mb-3.5">
+            <i class="fa-solid fa-heart-pulse animate-pulse"></i>
+            Het Oranje Kruis Gecertificeerd
+          </span>
+          <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-tight mb-4 text-white">
+            EHBO <span class="relative inline-block text-white px-5 py-2 mx-1 transform -rotate-1"><span class="absolute inset-0 bg-brand-accent rounded-2xl z-0"></span><span class="relative z-10">Opleidingen</span></span>
+          </h1>
+          <p class="text-white/90 text-base md:text-lg max-w-2xl leading-relaxed mb-6 font-normal">
+            Leer levensreddend handelen bij ongevallen en acute ziekten. Van het officiële Oranje Kruis basisdiploma tot Eerste Hulp aan Kinderen (IKK) en praktijkgerichte herhaling.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content Grid (Floating overlap) -->
+    <section class="max-w-[1280px] mx-auto px-6 -mt-20 md:-mt-24 relative z-20 pb-24">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
+        
+        <!-- Left Side: Dynamic Master-Detail Card + Variations Grid (8 columns) -->
+        <div class="lg:col-span-8 space-y-6">
+          
+          <!-- Compact Dynamic Details Card -->
+          <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-md border border-brand-dark/5 reveal" id="details-card-left">
+            
+            <!-- Header -->
+            <div class="border-b border-brand-dark/5 pb-3 mb-3.5 flex flex-wrap items-baseline justify-between gap-2">
+              <div>
+                <span id="selected-tagline" class="text-[10px] font-semibold text-brand-primary uppercase tracking-wider block mb-0.5">{defaultCourse.tagline}</span>
+                <h2 id="selected-title" class="font-display text-xl sm:text-2xl font-semibold text-brand-secondary leading-snug">{defaultCourse.title}</h2>
+              </div>
+            </div>
+            
+            <!-- Target Description -->
+            <div class="mb-4">
+              <p id="selected-target" class="text-brand-dark/75 text-xs sm:text-[13px] leading-relaxed font-normal">
+                {defaultCourse.target}
+              </p>
+            </div>
+            
+            <!-- Modules Checklist -->
+            <div class="mb-4 border-t border-brand-dark/5 pt-3.5">
+              <h3 class="font-display text-[10px] font-semibold uppercase text-brand-dark/40 tracking-widest mb-2.5">Cursusprogramma & Vaardigheden</h3>
+              <div id="selected-modules" class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5">
+                {defaultCourse.modules.map(mod => (
+                  <div class="flex items-center gap-2">
+                    <span class="w-4 h-4 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-[10px] shrink-0">
+                      <i class="fa-solid fa-check"></i>
+                    </span>
+                    <span class="font-medium text-brand-secondary text-xs sm:text-[13px]">{mod.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <!-- Specs Table -->
+            <div class="border-t border-brand-dark/5 pt-3.5">
+              <h3 class="font-display text-[10px] font-semibold uppercase text-brand-dark/40 tracking-widest mb-3">Praktische Informatie</h3>
+              <div class="space-y-2 text-xs">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-1">
+                  <span class="font-semibold text-brand-secondary text-[10px] uppercase tracking-wider">Toelatingseisen</span>
+                  <span id="selected-requirements" class="sm:col-span-2 text-brand-dark/75 font-normal leading-relaxed">{defaultCourse.requirements}</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-1 border-t border-brand-dark/5 pt-2">
+                  <span class="font-semibold text-brand-secondary text-[10px] uppercase tracking-wider">Examen & Toetsing</span>
+                  <span id="selected-exam" class="sm:col-span-2 text-brand-dark/75 font-normal leading-relaxed">{defaultCourse.exam}</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-1 border-t border-brand-dark/5 pt-2">
+                  <span class="font-semibold text-brand-secondary text-[10px] uppercase tracking-wider">Certificering</span>
+                  <span id="selected-certification" class="sm:col-span-2 text-brand-dark/75 font-normal leading-relaxed">{defaultCourse.certification}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section Divider/Header for Variations -->
+          <div class="pt-1 reveal">
+            <h3 class="font-display text-lg sm:text-xl font-semibold text-brand-secondary mb-1">Alle EHBO Cursusvarianten</h3>
+            <p class="text-xs text-brand-dark/60 font-medium mb-3">Klik op een van de onderstaande trainingen om de details hierboven te bekijken.</p>
+          </div>
+
+          <!-- Cards Grid Section -->
+          <div class="reveal">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {ehboCourses.map((course, idx) => (
+                <div 
+                  class={`course-card cursor-pointer rounded-2xl border transition-all duration-300 overflow-hidden flex flex-col justify-between group relative bg-white hover:border-brand-primary/40 hover:shadow-md ${idx === 0 ? 'border-brand-primary ring-2 ring-brand-primary/20 shadow-sm' : 'border-brand-dark/5'}`}
+                  data-course-id={course.id}
+                >
+                  <div class="relative h-28 w-full overflow-hidden bg-brand-secondary">
+                    <img src={course.image} alt={course.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-secondary/80 to-transparent"></div>
+                    <div class="absolute top-2.5 left-2.5 bg-white/90 backdrop-blur-sm px-2.5 py-0.5 rounded-lg border border-white/20">
+                      <span class="text-[9px] font-semibold uppercase text-brand-secondary tracking-wider">{course.duration}</span>
+                    </div>
+                  </div>
+                  
+                  <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+                    <div>
+                      <span class="text-[9px] font-semibold text-brand-primary uppercase tracking-wider block mb-1">{course.tagline}</span>
+                      <h3 class="font-display font-semibold text-brand-secondary text-sm sm:text-base leading-tight mb-1.5 group-hover:text-brand-primary transition-colors">
+                        {course.title}
+                      </h3>
+                      <p class="text-brand-dark/70 text-xs line-clamp-2 leading-relaxed mb-3 font-normal">
+                        {course.target}
+                      </p>
+                    </div>
+                    
+                    <div class="pt-2.5 border-t border-brand-dark/5 flex items-center justify-between mt-auto">
+                      <div class="flex flex-col">
+                        <span class="text-[9px] font-semibold uppercase text-brand-dark/40 leading-none mb-0.5">Tarief excl.</span>
+                        <span class="font-display font-semibold text-brand-secondary text-sm leading-none">{course.price}</span>
+                      </div>
+                      <span class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase text-brand-primary tracking-wider group-hover:text-brand-accent transition-colors">
+                        Bekijk details <i class="fa-solid fa-arrow-right text-[9px]"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Incompany Quote Banner -->
+          <div class="rounded-2xl bg-brand-secondary text-white p-6 sm:p-8 relative overflow-hidden shadow-lg reveal">
+            <div class="relative z-10 max-w-xl">
+              <span class="text-xs font-semibold uppercase tracking-wider text-brand-accent block mb-1.5">Groepstraining op locatie</span>
+              <h3 class="font-display text-xl sm:text-2xl font-semibold mb-2.5">EHBO training op uw eigen bedrijfslocatie?</h3>
+              <p class="text-white/80 text-xs sm:text-sm leading-relaxed mb-5 font-normal">
+                Wilt u uw medewerkers trainen op maat? Wij verzorgen praktijkgerichte EHBO-cursussen op uw eigen locatie, inclusief LOTUS-slachtoffers en scenario-oefeningen.
+              </p>
+              <button 
+                type="button" 
+                data-open-contact-drawer
+                class="font-display font-semibold text-xs sm:text-sm py-3 px-6 rounded-xl bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 w-full sm:w-auto shadow-md shadow-brand-accent/20 cursor-pointer inline-flex items-center justify-center gap-2"
+              >
+                <span>Vrijblijvende Incompany Offerte Aanvragen</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- FAQ Section -->
+          <div class="rounded-2xl bg-white p-5 sm:p-7 border border-brand-dark/5 shadow-sm reveal">
+            <h3 class="font-display text-xl font-semibold text-brand-secondary mb-5">Veelgestelde vragen over EHBO</h3>
+            <div class="space-y-3.5">
+              {faqs.map((faq) => (
+                <div class="border-b border-brand-dark/5 pb-3.5 last:border-b-0 last:pb-0">
+                  <h4 class="font-display font-semibold text-sm sm:text-base text-brand-secondary mb-1.5 flex items-start gap-2">
+                    <span class="text-brand-primary">?</span>
+                    <span>{faq.q}</span>
+                  </h4>
+                  <p class="text-xs sm:text-[13px] text-brand-dark/70 leading-relaxed pl-4 font-normal">
+                    {faq.a}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        <!-- Right Side: Sticky Booking & Summary Card (Desktop Only: 4 columns) -->
+        <div class="hidden lg:block lg:col-span-4 relative">
+          <div class="sticky top-28 lg:top-[148px] space-y-5 z-20">
+            
+            <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-lg border border-brand-dark/5">
+              <span class="text-[9px] font-semibold uppercase text-brand-dark/40 tracking-wider block mb-1">Geselecteerde training</span>
+              <h3 id="sidebar-title" class="font-display text-xl sm:text-2xl font-semibold text-brand-secondary leading-snug">{defaultCourse.title}</h3>
+              
+              <!-- Pricing -->
+              <div class="mt-4 pt-4 border-t border-brand-dark/5">
+                <div class="flex items-baseline justify-between mb-0.5">
+                  <span class="text-[9px] font-semibold uppercase text-brand-dark/40 tracking-wider">Cursustarief</span>
+                  <span class="text-[10px] text-brand-dark/50">Excl. BTW</span>
+                </div>
+                <div class="flex items-baseline gap-2">
+                  <span id="selected-price" class="font-display text-3xl sm:text-4xl font-semibold text-brand-secondary">{defaultCourse.price}</span>
+                  <span class="text-xs text-brand-dark/60">/ cursist</span>
+                </div>
+              </div>
+
+              <!-- Spots & Duration badge -->
+              <div class="mt-3.5 p-2.5 rounded-xl bg-brand-cream/60 border border-brand-dark/5 space-y-1.5">
+                <div class="flex items-center gap-2 text-xs">
+                  <div class="w-6 h-6 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary shrink-0">
+                    <i class="fa-solid fa-clock text-[10px]"></i>
+                  </div>
+                  <div>
+                    <div class="text-[9px] font-semibold uppercase text-brand-dark/40 leading-none mb-0.5">Duur & Studielast</div>
+                    <span id="selected-duration" class="font-semibold text-brand-secondary text-xs">{defaultCourse.duration}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Inclusions Checklist -->
+              <div class="mt-4 pt-4 border-t border-brand-dark/5">
+                <span class="text-[9px] font-semibold uppercase text-brand-dark/40 tracking-wider block mb-2.5">Wat is inclusief?</span>
+                <ul id="selected-inclusions" class="space-y-2">
+                  {defaultCourse.inclusions.map(item => (
+                    <li class="flex items-center gap-2 text-xs text-brand-dark/80 font-medium">
+                      <i class="fa-solid fa-circle-check text-emerald-500 text-xs shrink-0"></i>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <!-- CTA Buttons -->
+              <div class="mt-6 space-y-2.5">
+                <a 
+                  id="selected-cta"
+                  href={defaultCourse.registerLink}
+                  class="font-display font-semibold text-sm py-3.5 px-5 rounded-xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 w-full block shadow-md shadow-brand-accent/20 cursor-pointer"
+                >
+                  Direct Cursusdata & Inschrijven
+                </a>
+
+                <button 
+                  type="button" 
+                  data-open-contact-drawer
+                  class="font-display font-semibold text-xs py-2.5 px-4 rounded-xl text-center bg-white hover:bg-brand-cream text-brand-secondary border border-brand-dark/10 transition-all duration-300 w-full block cursor-pointer"
+                >
+                  Offerte / Vraag stellen
+                </button>
+              </div>
+
+              <!-- Guarantee Tag -->
+              <div class="mt-4 pt-4 border-t border-brand-dark/5 flex items-center justify-center gap-1.5 text-xs font-semibold text-emerald-600">
+                <i class="fa-solid fa-shield-check text-sm"></i>
+                <span>100% Slagingsgarantie</span>
+              </div>
+
+            </div>
+
+            <!-- Direct Contact Box -->
+            <div class="bg-brand-cream/60 rounded-2xl p-4 sm:p-5 border border-brand-dark/5 text-center reveal">
+              <span class="text-[10px] font-semibold uppercase tracking-wider text-brand-dark/50 block mb-1">Persoonlijk advies nodig?</span>
+              <p class="text-xs text-brand-dark/70 mb-3 font-normal">Onze opleidingsadviseurs helpen u graag bij het samenstellen van uw cursusprogramma.</p>
+              <a href="tel:0704447795" class="font-display font-semibold text-sm text-brand-primary hover:text-brand-primary/80 transition-colors inline-flex items-center gap-2">
+                <i class="fa-solid fa-phone text-xs"></i>
+                <span>070 - 444 77 95</span>
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Mobile Bottom Summary & Expand Drawer -->
+    <MobileCourseBottomBar defaultCourse={defaultCourse} advisorText="Persoonlijk advies voor uw EHBO-training?" />
+
+  </main>
+</Layout>
+
+<script is:inline define:vars={{ ehboCourses }}>
+  function initCourseSelector() {
+    const cards = document.querySelectorAll('.course-card');
+    const selectedTitle = document.getElementById('selected-title');
+    const selectedTagline = document.getElementById('selected-tagline');
+    const selectedTarget = document.getElementById('selected-target');
+    const selectedModules = document.getElementById('selected-modules');
+    const selectedRequirements = document.getElementById('selected-requirements');
+    const selectedExam = document.getElementById('selected-exam');
+    const selectedCertification = document.getElementById('selected-certification');
+    const selectedPrice = document.getElementById('selected-price');
+    const selectedDuration = document.getElementById('selected-duration');
+    const selectedInclusions = document.getElementById('selected-inclusions');
+    const selectedCta = document.getElementById('selected-cta');
+    const sidebarTitle = document.getElementById('sidebar-title');
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const id = card.getAttribute('data-course-id');
+        const course = ehboCourses.find(c => c.id === id);
+        if (!course) return;
+
+        cards.forEach(c => {
+          c.classList.remove('border-brand-primary', 'ring-2', 'ring-brand-primary/20', 'shadow-sm');
+          c.classList.add('border-brand-dark/5');
+        });
+        card.classList.add('border-brand-primary', 'ring-2', 'ring-brand-primary/20', 'shadow-sm');
+        card.classList.remove('border-brand-dark/5');
+
+        if (selectedTitle) selectedTitle.textContent = course.title;
+        if (sidebarTitle) sidebarTitle.textContent = course.title;
+        if (selectedTagline) selectedTagline.textContent = course.tagline;
+        if (selectedTarget) selectedTarget.textContent = course.target;
+        if (selectedRequirements) selectedRequirements.textContent = course.requirements;
+        if (selectedExam) selectedExam.textContent = course.exam;
+        if (selectedCertification) selectedCertification.textContent = course.certification;
+        if (selectedPrice) selectedPrice.textContent = course.price;
+        if (selectedDuration) selectedDuration.textContent = course.duration;
+        if (selectedCta) selectedCta.setAttribute('href', course.registerLink);
+
+        if (selectedModules) {
+          selectedModules.innerHTML = course.modules.map(mod => `
+            <div class="flex items-center gap-2">
+              <span class="w-4 h-4 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-[10px] shrink-0">
+                <i class="fa-solid fa-check"></i>
+              </span>
+              <span class="font-medium text-brand-secondary text-xs sm:text-[13px]">${mod.name}</span>
+            </div>
+          `).join('');
+        }
+
+        if (selectedInclusions) {
+          selectedInclusions.innerHTML = course.inclusions.map(inc => `
+            <li class="flex items-center gap-2 text-xs text-brand-dark/80 font-medium">
+              <i class="fa-solid fa-circle-check text-emerald-500 text-xs shrink-0"></i>
+              <span>${inc}</span>
+            </li>
+          `).join('');
+        }
+
+        // Sync with mobile bottom drawer
+        if (typeof window.syncMobileCourseDrawer === 'function') {
+          window.syncMobileCourseDrawer(course);
+        }
+
+        const detailsEl = document.getElementById('details-card-left');
+        if (detailsEl) {
+          detailsEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      });
+    });
+  }
+
+  initCourseSelector();
+  document.addEventListener('astro:page-load', initCourseSelector);
+</script>

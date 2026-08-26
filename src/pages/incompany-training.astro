@@ -1,0 +1,523 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MobileCourseBottomBar from '../components/MobileCourseBottomBar.astro';
+
+const incompanyCourses = [
+  {
+    id: "incompany-bhv",
+    title: "Incompany BHV (Basis & Herhaling)",
+    tagline: "Volledige bedrijfshulpverlening op uw eigen locatie",
+    price: "v.a. € 95,00 p.p.",
+    spotsText: "Vanaf 6 personen",
+    duration: "1 dag (of naar wens)",
+    target: "Voor bedrijven die hun eigen BHV-organisatie efficiënt, kostenbesparend en bedrijfsspecifiek willen opleiden.",
+    requirements: "Een geschikte cursusruimte en een veilige buitenplek voor de blusoefening.",
+    exam: "Theorie via e-learning of klassikaal + continue praktijkbeoordeling.",
+    certification: "Officieel erkende BHV-certificaten + pasjes voor alle geslaagde medewerkers.",
+    inclusions: ["Volledige lesmaterialen & e-learning", "Oefenpoppen, trainers-AED's & blusbakken", "Bedrijfsspecifieke ontruimingstoetsing", "Officiële certificaten & pasjes"],
+    modules: [
+      { name: "Levensreddend handelen afgestemd op uw bedrijfstak" },
+      { name: "Reanimeren met uw eigen bedrijf-AED" },
+      { name: "Blusoefening met schuim, CO2 en blusdekens" },
+      { name: "Ontruimingsprocedure in uw eigen pand" }
+    ],
+    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=600",
+    registerLink: "#contact"
+  },
+  {
+    id: "incompany-ehbo",
+    title: "Incompany EHBO & Reanimatie",
+    tagline: "Gecertificeerde eerste hulp training gericht op uw specifieke werkvloer",
+    price: "v.a. € 85,00 p.p.",
+    spotsText: "Oranje Kruis / NRR",
+    duration: "1 of 2 dagdelen",
+    target: "Voor organisaties met specifieke risico's zoals scholen, sportclubs, industrie, horeca of zorg.",
+    requirements: "Geschikte binnenruimte.",
+    exam: "Praktische vaardigheidstoetsing door de instructeur.",
+    certification: "Oranje Kruis / NRR certificaat Eerste Hulp & Reanimatie (2 jaar geldig).",
+    inclusions: ["Lesmateriaal en verbandsets", "Reanimatietraining met AED", "LOTUS-slachtoffer op verzoek", "Certificaten & pasjes"],
+    modules: [
+      { name: "Herkenning van levensbedreigende situaties" },
+      { name: "Reanimatie en inzet van de AED" },
+      { name: "Behandeling van ernstige bloedingen en shock" },
+      { name: "Specifieke bedrijfsongevallen (bijv. chemie, machines of sport)" }
+    ],
+    image: "https://images.unsplash.com/photo-1603398938378-e54eab446dde?auto=format&fit=crop&q=80&w=600",
+    registerLink: "#contact"
+  },
+  {
+    id: "incompany-vca",
+    title: "Incompany VCA Training & Examen",
+    tagline: "Klassikale training + officieel CBT beeldschermexamen op uw eigen locatie",
+    price: "v.a. € 165,00 p.p.",
+    spotsText: "Inclusief examinator",
+    duration: "1 cursusdag (incl. examen)",
+    target: "Voor aannemers, installatiebedrijven en technische diensten die personeel in één keer willen certificeren.",
+    requirements: "Ruimte met tafels, stoelen en goede verlichting.",
+    exam: "Officieel CBT-examen afgenomen door een erkend examenbureau ter plaatse.",
+    certification: "Officieel VCA Basis of VOL-VCA diploma (10 jaar geldig) + CDR registratie.",
+    inclusions: ["Lesboeken en proefexamens", "Examentraining door ervaren docent", "Officieel examen op locatie", "CDR registratie & pasjes"],
+    modules: [
+      { name: "Arbowetgeving en veiligheidsvoorschriften" },
+      { name: "Gevaarlijke stoffen, brand en explosiegevaar" },
+      { name: "Werken op hoogte, besloten ruimten en gereedschappen" },
+      { name: "Examentraining met gerichte vraagtechnieken" }
+    ],
+    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=600",
+    registerLink: "#contact"
+  },
+  {
+    id: "incompany-ontruiming",
+    title: "Incompany Ontruimingsoefening & Audit",
+    tagline: "Realistische ontruimingssimulatie met rook, waarnemers en evaluatie",
+    price: "Vaste staffel v.a. € 650,-",
+    spotsText: "Wettelijke jaarlijkse verplichting",
+    duration: "1 dagdeel (voorbereiding, oefening & evaluatie)",
+    target: "Voor kantoorpanden, zorginstellingen, scholen en magazijnen.",
+    requirements: "Vooraf overleg over het ontruimingsplan en afstemming met de alarmcentrale.",
+    exam: "Beoordeling van de reactiesnelheid, communicatie en ontruimingstijd.",
+    certification: "Officieel evaluatierapport en Arbo-veiligheidsverslag voor de verzekering.",
+    inclusions: ["Voorbereiding en scenario-ontwerp", "Oefenrook en geluidseffecten", "Observatieteam Edusafe", "Uitgebreid fotorapport en aanbevelingen"],
+    modules: [
+      { name: "Procedures testen bij ontruimingssignaal" },
+      { name: "Vluchtwegen en nooduitgangen controle" },
+      { name: "Aansturing door ploegleider en BHV-ers" },
+      { name: "Verzamelplaats registratie en overdracht hulpdiensten" }
+    ],
+    image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=600",
+    registerLink: "#contact"
+  },
+  {
+    id: "veiligheidsdag-carrousel",
+    title: "Veiligheidsdag / Veiligheidscarrousel",
+    tagline: "Interactieve veiligheidsworkshops voor het hele bedrijf",
+    price: "Maatwerk op aanvraag",
+    spotsText: "Voor 15 tot 200+ personen",
+    duration: "1 dagdeel of hele dag",
+    target: "Voor bedrijven die veiligheid levendig onder de aandacht willen brengen bij alle personeelsleden.",
+    requirements: "Locatie met meerdere ruimtes of buitenterrein.",
+    exam: "Geen examen; nadruk op beleving, bewustwording en teambuilding.",
+    certification: "Deelnamecertificaten voor alle deelnemers.",
+    inclusions: ["Roterende workshopstations", "Bluscarrousel, VR-brillen & EHBO spellen", "Volledige begeleiding door veiligheidsexperts", "Feestelijke certificaatuitreiking"],
+    modules: [
+      { name: "Station 1: VR Brandblussen en Vlam in de Pan" },
+      { name: "Station 2: Reanimatiecompetitie met digitale feedback" },
+      { name: "Station 3: Kantelsimulator of ergonomie-check" },
+      { name: "Station 4: Gevaarlijke situaties herkennen (Escape room format)" }
+    ],
+    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=600",
+    registerLink: "#contact"
+  }
+];
+
+const defaultCourse = incompanyCourses[0];
+
+const faqs = [
+  {
+    q: "Wat zijn de voordelen van een incompany training ten opzichte van open inschrijvingen?",
+    a: "Bij een incompany training traint uw team op de eigen vertrouwde locatie, met uw eigen BHV-materialen, vluchtwegen en specifieke bedrijfsrisico's. Bovendien bespaart u aanzienlijk op reistijd en reiskosten van uw personeel, en profiteert u vanaf 6 personen al van scherpe staffelkortingen."
+  },
+  {
+    q: "Aan welke eisen moet onze cursuslocatie voldoen?",
+    a: "Voor een BHV- of EHBO-training hebben we een rustige ruimte nodig met voldoende stoelen en tafels voor de theorie. Voor de praktische blusoefening is een veilige buitenruimte (zoals een parkeerterrein of binnenplaats van ca. 6x6 meter) voldoende. Wij nemen zelf alle benodigde trainingsmaterialen, poppen, AED's en schone milieuvriendelijke blustoestellen mee."
+  },
+  {
+    q: "Kunnen we data en tijdstippen flexibel kiezen?",
+    a: "Ja, wij stemmen de planning volledig af op uw bedrijfsvoering. Trainingen kunnen doordeweeks overdag, maar ook in de avonduren of op zaterdag worden ingepland om werkonderbrekingen te minimaliseren."
+  },
+  {
+    q: "Hoe snel kunnen we een offerte ontvangen?",
+    a: "Wanneer u via onderstaand formulier of via de knop 'Contact Opnemen' uw wensen doorgeeft, ontvangt u binnen 1 werkdag een heldere, vrijblijvende offerte op maat."
+  }
+];
+---
+
+<Layout title="Incompany Veiligheidstrainingen op Maat | Edusafe" description="Boek een praktijkgerichte BHV, EHBO, VCA of ontruimingstraining op uw eigen bedrijfslocatie. Maatwerk, flexibele planning en scherpe staffeltarieven door heel Nederland.">
+  <main class="w-full">
+    
+    <!-- Hero Header Section (Spacious, Rich Photography & Directional Gradient) -->
+    <section class="relative bg-brand-secondary text-white pt-20 pb-36 md:pt-24 md:pb-44 overflow-hidden">
+      <div class="absolute inset-0 z-0 overflow-hidden">
+        <img 
+          src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1600" 
+          alt="Incompany Veiligheidstrainingen op Maat" 
+          class="w-full h-full object-cover opacity-35 scale-105" 
+        />
+        <div class="absolute inset-0 bg-gradient-to-r from-brand-secondary via-brand-secondary/85 to-brand-secondary/40"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-brand-secondary via-transparent to-black/20"></div>
+      </div>
+      
+      <div class="max-w-[1280px] mx-auto px-6 relative z-10">
+        <div class="max-w-3xl animate-fade-in">
+          <span class="inline-flex items-center gap-1.5 text-brand-accent font-display font-semibold text-xs uppercase tracking-wider mb-3.5">
+            <i class="fa-solid fa-building-shield animate-pulse"></i>
+            Maatwerk op uw eigen bedrijfslocatie
+          </span>
+          <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-tight mb-4 text-white">
+            Incompany <span class="relative inline-block text-white px-5 py-2 mx-1 transform -rotate-1"><span class="absolute inset-0 bg-brand-accent rounded-2xl z-0"></span><span class="relative z-10">Trainingen</span></span>
+          </h1>
+          <p class="text-white/90 text-base md:text-lg max-w-2xl leading-relaxed mb-6 font-normal">
+            Geen reistijd voor uw personeel, trainen met uw eigen noodvoorzieningen en maximale relevantie voor uw bedrijf. Vraag direct een vrijblijvende offerte aan.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content Grid (Floating overlap) -->
+    <section class="max-w-[1280px] mx-auto px-6 -mt-20 md:-mt-24 relative z-20 pb-24">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
+        
+        <!-- Left Side: Dynamic Grid of Cards + Details (8 columns) -->
+        <div class="lg:col-span-8 space-y-6">
+          
+          <!-- Compact Dynamic Details Card -->
+          <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-md border border-brand-dark/5 reveal" id="details-card-left">
+            
+            <!-- Title Header -->
+            <div class="border-b border-brand-dark/5 pb-3 mb-3.5 flex flex-wrap items-baseline justify-between gap-2">
+              <div>
+                <span id="selected-tagline" class="text-[10px] font-semibold text-brand-primary uppercase tracking-wider block mb-0.5">{defaultCourse.tagline}</span>
+                <h2 id="selected-title" class="font-display text-xl sm:text-2xl font-semibold text-brand-secondary leading-snug">{defaultCourse.title}</h2>
+              </div>
+            </div>
+            
+            <!-- Description -->
+            <div class="mb-4">
+              <p id="selected-target" class="text-brand-dark/75 text-xs sm:text-[13px] leading-relaxed font-normal">
+                {defaultCourse.target}
+              </p>
+            </div>
+            
+            <!-- Modules Checklist -->
+            <div class="mb-4 border-t border-brand-dark/5 pt-3.5">
+              <h3 class="font-display text-[10px] font-semibold uppercase text-brand-dark/40 tracking-widest mb-2.5">Inbegrepen Trainingselementen</h3>
+              <div id="selected-modules" class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5">
+                {defaultCourse.modules.map(mod => (
+                  <div class="flex items-center gap-2">
+                    <span class="w-4 h-4 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-[10px] shrink-0">
+                      <i class="fa-solid fa-check"></i>
+                    </span>
+                    <span class="font-medium text-brand-secondary text-xs sm:text-[13px]">{mod.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <!-- Specs Table -->
+            <div class="border-t border-brand-dark/5 pt-3.5">
+              <h3 class="font-display text-[10px] font-semibold uppercase text-brand-dark/40 tracking-widest mb-3">Praktische Informatie</h3>
+              <div class="space-y-2 text-xs">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-1">
+                  <span class="font-semibold text-brand-secondary text-[10px] uppercase tracking-wider">Locatie-eisen</span>
+                  <span id="selected-requirements" class="sm:col-span-2 text-brand-dark/75 font-normal leading-relaxed">{defaultCourse.requirements}</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-1 border-t border-brand-dark/5 pt-2">
+                  <span class="font-semibold text-brand-secondary text-[10px] uppercase tracking-wider">Toetsing & Examen</span>
+                  <span id="selected-exam" class="sm:col-span-2 text-brand-dark/75 font-normal leading-relaxed">{defaultCourse.exam}</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-1 border-t border-brand-dark/5 pt-2">
+                  <span class="font-semibold text-brand-secondary text-[10px] uppercase tracking-wider">Certificering</span>
+                  <span id="selected-certification" class="sm:col-span-2 text-brand-dark/75 font-normal leading-relaxed">{defaultCourse.certification}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section Divider/Header for Variations -->
+          <div class="pt-1 reveal">
+            <h3 class="font-display text-lg sm:text-xl font-semibold text-brand-secondary mb-1">Alle Incompany Opleidingsopties</h3>
+            <p class="text-xs text-brand-dark/60 font-medium mb-3">Klik op een van de onderstaande opties om de specifieke details te bekijken.</p>
+          </div>
+
+          <!-- Cards Grid Section -->
+          <div class="reveal">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {incompanyCourses.map((course, idx) => (
+                <div 
+                  class={`course-card cursor-pointer rounded-2xl border transition-all duration-300 overflow-hidden flex flex-col justify-between group relative bg-white hover:border-brand-primary/40 hover:shadow-md ${idx === 0 ? 'border-brand-primary ring-2 ring-brand-primary/20 shadow-sm' : 'border-brand-dark/5'}`}
+                  data-course-id={course.id}
+                >
+                  <div class="relative h-28 w-full overflow-hidden bg-brand-secondary">
+                    <img src={course.image} alt={course.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-secondary/80 to-transparent"></div>
+                    <div class="absolute top-2.5 left-2.5 bg-white/90 backdrop-blur-sm px-2.5 py-0.5 rounded-lg border border-white/20">
+                      <span class="text-[9px] font-semibold uppercase text-brand-secondary tracking-wider">{course.duration}</span>
+                    </div>
+                  </div>
+                  
+                  <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+                    <div>
+                      <span class="text-[9px] font-semibold text-brand-primary uppercase tracking-wider block mb-1">{course.tagline}</span>
+                      <h3 class="font-display font-semibold text-brand-secondary text-sm sm:text-base leading-tight mb-1.5 group-hover:text-brand-primary transition-colors">
+                        {course.title}
+                      </h3>
+                      <p class="text-brand-dark/70 text-xs line-clamp-2 leading-relaxed mb-3 font-normal">
+                        {course.target}
+                      </p>
+                    </div>
+                    
+                    <div class="pt-2.5 border-t border-brand-dark/5 flex items-center justify-between mt-auto">
+                      <div class="flex flex-col">
+                        <span class="text-[9px] font-semibold uppercase text-brand-dark/40 leading-none mb-0.5">Indicatie</span>
+                        <span class="font-display font-semibold text-brand-secondary text-sm leading-none">{course.price}</span>
+                      </div>
+                      <span class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase text-brand-primary tracking-wider group-hover:text-brand-accent transition-colors">
+                        Bekijk details <i class="fa-solid fa-arrow-right text-[9px]"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Direct Incompany Quote Request Form -->
+          <div class="rounded-2xl bg-white p-5 sm:p-7 border border-brand-dark/5 shadow-sm reveal" id="incompany-aanvraag">
+            <span class="text-xs font-semibold uppercase tracking-wider text-brand-primary block mb-1">Directe Offerte Aanvragen</span>
+            <h3 class="font-display text-xl sm:text-2xl font-semibold text-brand-secondary mb-2">Vraag een vrijblijvende incompany offerte aan</h3>
+            <p class="text-xs sm:text-[13px] text-brand-dark/70 leading-relaxed mb-5 font-normal">
+              Vul uw wensen in en ontvang binnen 1 werkdag een heldere prijsopgave inclusief cursusmateriaal, docent en certificering op uw locatie.
+            </p>
+
+            <form class="space-y-4" onsubmit="event.preventDefault(); alert('Bedankt voor uw incompany aanvraag! Wij nemen binnen 1 werkdag contact met u op.');">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-brand-secondary uppercase tracking-wider mb-1.5">Bedrijfsnaam</label>
+                  <input type="text" placeholder="Bijv. Jansen Bouw BV" class="w-full bg-brand-cream border border-brand-dark/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-brand-primary" required />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-brand-secondary uppercase tracking-wider mb-1.5">Contactpersoon</label>
+                  <input type="text" placeholder="Voor- en achternaam" class="w-full bg-brand-cream border border-brand-dark/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-brand-primary" required />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-brand-secondary uppercase tracking-wider mb-1.5">E-mailadres</label>
+                  <input type="email" placeholder="naam@bedrijf.nl" class="w-full bg-brand-cream border border-brand-dark/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-brand-primary" required />
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-brand-secondary uppercase tracking-wider mb-1.5">Telefoonnummer</label>
+                  <input type="tel" placeholder="06 - 12345678" class="w-full bg-brand-cream border border-brand-dark/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-brand-primary" required />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label class="block text-xs font-semibold text-brand-secondary uppercase tracking-wider mb-1.5">Gewenste Training</label>
+                  <select class="w-full bg-brand-cream border border-brand-dark/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-brand-primary cursor-pointer">
+                    <option>Incompany BHV (Basis / Herhaling)</option>
+                    <option>Incompany EHBO & Reanimatie</option>
+                    <option>Incompany VCA Training & Examen</option>
+                    <option>Incompany Ontruimingsoefening</option>
+                    <option>Veiligheidsdag / Carrousel</option>
+                    <option>Maatwerk combinatie</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-xs font-semibold text-brand-secondary uppercase tracking-wider mb-1.5">Aantal Deelnemers</label>
+                  <input type="number" min="1" placeholder="Bijv. 12 medewerkers" class="w-full bg-brand-cream border border-brand-dark/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-brand-primary" />
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-xs font-semibold text-brand-secondary uppercase tracking-wider mb-1.5">Locatie & Specifieke Wensen</label>
+                <textarea rows="3" placeholder="Locatieplaats, gewenste periode of specifieke werkomgeving..." class="w-full bg-brand-cream border border-brand-dark/10 rounded-xl px-4 py-2.5 text-sm resize-none focus:outline-none focus:border-brand-primary"></textarea>
+              </div>
+
+              <button type="submit" class="font-display font-semibold text-sm py-3.5 px-8 rounded-xl bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 w-full shadow-md shadow-brand-accent/20 cursor-pointer text-center">
+                Vrijblijvende Offerte Verzenden
+              </button>
+            </form>
+          </div>
+
+          <!-- FAQ Section -->
+          <div class="rounded-2xl bg-white p-5 sm:p-7 border border-brand-dark/5 shadow-sm reveal">
+            <h3 class="font-display text-xl font-semibold text-brand-secondary mb-5">Veelgestelde vragen over Incompany Trainingen</h3>
+            <div class="space-y-3.5">
+              {faqs.map((faq) => (
+                <div class="border-b border-brand-dark/5 pb-3.5 last:border-b-0 last:pb-0">
+                  <h4 class="font-display font-semibold text-sm sm:text-base text-brand-secondary mb-1.5 flex items-start gap-2">
+                    <span class="text-brand-primary">?</span>
+                    <span>{faq.q}</span>
+                  </h4>
+                  <p class="text-xs sm:text-[13px] text-brand-dark/70 leading-relaxed pl-4 font-normal">
+                    {faq.a}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Side: Sticky Booking & Summary Card (Desktop Only: 4 columns) -->
+        <div class="hidden lg:block lg:col-span-4 relative">
+          <div class="sticky top-28 lg:top-[148px] space-y-5 z-20">
+            
+            <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-lg border border-brand-dark/5">
+              <span class="text-[9px] font-semibold uppercase text-brand-dark/40 tracking-wider block mb-1">Geselecteerde training</span>
+              <h3 id="sidebar-title" class="font-display text-xl sm:text-2xl font-semibold text-brand-secondary leading-snug">{defaultCourse.title}</h3>
+              
+              <!-- Pricing -->
+              <div class="mt-4 pt-4 border-t border-brand-dark/5">
+                <div class="flex items-baseline justify-between mb-0.5">
+                  <span class="text-[9px] font-semibold uppercase text-brand-dark/40 tracking-wider">Tarieven</span>
+                  <span class="text-[10px] text-brand-dark/50">Staffelkortingen</span>
+                </div>
+                <div class="flex items-baseline gap-2">
+                  <span id="selected-price" class="font-display text-2xl sm:text-3xl font-semibold text-brand-secondary">{defaultCourse.price}</span>
+                </div>
+              </div>
+
+              <!-- Spots & Duration badge -->
+              <div class="mt-3.5 p-2.5 rounded-xl bg-brand-cream/60 border border-brand-dark/5 space-y-1.5">
+                <div class="flex items-center gap-2 text-xs">
+                  <div class="w-6 h-6 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary shrink-0">
+                    <i class="fa-solid fa-location-dot text-[10px]"></i>
+                  </div>
+                  <div>
+                    <div class="text-[9px] font-semibold uppercase text-brand-dark/40 leading-none mb-0.5">Locatie</div>
+                    <span id="selected-duration" class="font-semibold text-brand-secondary text-xs">Op uw eigen bedrijfslocatie</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Inclusions Checklist -->
+              <div class="mt-4 pt-4 border-t border-brand-dark/5">
+                <span class="text-[9px] font-semibold uppercase text-brand-dark/40 tracking-wider block mb-2.5">Inbegrepen in offerte</span>
+                <ul id="selected-inclusions" class="space-y-2">
+                  {defaultCourse.inclusions.map(item => (
+                    <li class="flex items-center gap-2 text-xs text-brand-dark/80 font-medium">
+                      <i class="fa-solid fa-circle-check text-emerald-500 text-xs shrink-0"></i>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <!-- CTA Button -->
+              <div class="mt-6 space-y-2.5">
+                <a 
+                  id="selected-cta"
+                  href="#incompany-aanvraag"
+                  class="font-display font-semibold text-sm py-3.5 px-5 rounded-xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 w-full block shadow-md shadow-brand-accent/20 cursor-pointer"
+                >
+                  Direct Offerte Aanvragen
+                </a>
+
+                <button 
+                  type="button" 
+                  data-open-contact-drawer
+                  class="font-display font-semibold text-xs py-2.5 px-4 rounded-xl text-center bg-white hover:bg-brand-cream text-brand-secondary border border-brand-dark/10 transition-all duration-300 w-full block cursor-pointer"
+                >
+                  Bel of Stel een Vraag
+                </button>
+              </div>
+
+              <!-- Guarantee Tag -->
+              <div class="mt-4 pt-4 border-t border-brand-dark/5 flex items-center justify-center gap-1.5 text-xs font-semibold text-emerald-600">
+                <i class="fa-solid fa-shield-check text-sm"></i>
+                <span>Maatwerkgarantie & Erkende Certificaten</span>
+              </div>
+
+            </div>
+
+            <!-- Direct Contact Box -->
+            <div class="bg-brand-cream/60 rounded-2xl p-4 sm:p-5 border border-brand-dark/5 text-center reveal">
+              <span class="text-[10px] font-semibold uppercase tracking-wider text-brand-dark/50 block mb-1">Direct overleg met een adviseur?</span>
+              <p class="text-xs text-brand-dark/70 mb-3 font-normal">Wij maken direct een inschatting van de mogelijkheden en data voor uw locatie.</p>
+              <a href="tel:0704447795" class="font-display font-semibold text-sm text-brand-primary hover:text-brand-primary/80 transition-colors inline-flex items-center gap-2">
+                <i class="fa-solid fa-phone text-xs"></i>
+                <span>070 - 444 77 95</span>
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Mobile Bottom Summary & Expand Drawer -->
+    <MobileCourseBottomBar defaultCourse={defaultCourse} advisorText="Incompany offerte of datum op maat?" />
+
+  </main>
+</Layout>
+
+<script is:inline define:vars={{ incompanyCourses }}>
+  function initCourseSelector() {
+    const cards = document.querySelectorAll('.course-card');
+    const selectedTitle = document.getElementById('selected-title');
+    const selectedTagline = document.getElementById('selected-tagline');
+    const selectedTarget = document.getElementById('selected-target');
+    const selectedModules = document.getElementById('selected-modules');
+    const selectedRequirements = document.getElementById('selected-requirements');
+    const selectedExam = document.getElementById('selected-exam');
+    const selectedCertification = document.getElementById('selected-certification');
+    const selectedPrice = document.getElementById('selected-price');
+    const selectedDuration = document.getElementById('selected-duration');
+    const selectedInclusions = document.getElementById('selected-inclusions');
+    const selectedCta = document.getElementById('selected-cta');
+    const sidebarTitle = document.getElementById('sidebar-title');
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const id = card.getAttribute('data-course-id');
+        const course = incompanyCourses.find(c => c.id === id);
+        if (!course) return;
+
+        cards.forEach(c => {
+          c.classList.remove('border-brand-primary', 'ring-2', 'ring-brand-primary/20', 'shadow-md');
+          c.classList.add('border-brand-dark/5');
+        });
+        card.classList.add('border-brand-primary', 'ring-2', 'ring-brand-primary/20', 'shadow-md');
+        card.classList.remove('border-brand-dark/5');
+
+        if (selectedTitle) selectedTitle.textContent = course.title;
+        if (sidebarTitle) sidebarTitle.textContent = course.title;
+        if (selectedTagline) selectedTagline.textContent = course.tagline;
+        if (selectedTarget) selectedTarget.textContent = course.target;
+        if (selectedRequirements) selectedRequirements.textContent = course.requirements;
+        if (selectedExam) selectedExam.textContent = course.exam;
+        if (selectedCertification) selectedCertification.textContent = course.certification;
+        if (selectedPrice) selectedPrice.textContent = course.price;
+        if (selectedDuration) selectedDuration.textContent = "Op uw eigen bedrijfslocatie";
+        if (selectedCta) selectedCta.setAttribute('href', '#incompany-aanvraag');
+
+        if (selectedModules) {
+          selectedModules.innerHTML = course.modules.map(mod => `
+            <div class="flex items-center gap-2.5">
+              <span class="w-5 h-5 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xs shrink-0">
+                <i class="fa-solid fa-check"></i>
+              </span>
+              <span class="font-display font-semibold text-brand-secondary text-sm">${mod.name}</span>
+            </div>
+          `).join('');
+        }
+
+        if (selectedInclusions) {
+          selectedInclusions.innerHTML = course.inclusions.map(inc => `
+            <li class="flex items-center gap-2 text-xs text-brand-dark/80 font-medium">
+              <i class="fa-solid fa-circle-check text-emerald-500 text-xs shrink-0"></i>
+              <span>${inc}</span>
+            </li>
+          `).join('');
+        }
+
+        // Sync with mobile bottom drawer
+        if (typeof window.syncMobileCourseDrawer === 'function') {
+          window.syncMobileCourseDrawer(course);
+        }
+
+        const detailsEl = document.getElementById('details-card-left');
+        if (detailsEl) {
+          detailsEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      });
+    });
+  }
+
+  initCourseSelector();
+  document.addEventListener('astro:page-load', initCourseSelector);
+</script>

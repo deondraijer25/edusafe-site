@@ -1,0 +1,324 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const elearningCoursesEn = [
+  {
+    id: "bhv-theory",
+    title: "BHV Theory E-learning (English)",
+    category: "BHV",
+    price: "€ 59.00",
+    rawPrice: 59.00,
+    duration: "± 4 hours",
+    description: "Complete online theory preparation for the BHV exam. Study at your own pace on mobile, tablet, or PC.",
+    features: [
+      "Interactive modules with video scenarios",
+      "Mock exams conforming to NIBHV standards",
+      "Digital theory certificate upon completion",
+      "100% pass guarantee"
+    ],
+    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=400"
+  },
+  {
+    id: "vca-basis",
+    title: "VCA Basic Safety E-learning",
+    category: "VCA",
+    price: "€ 49.00",
+    rawPrice: 49.00,
+    duration: "± 6 hours",
+    description: "Comprehensive English online preparation for the official SSVV VCA Basic examination with unlimited practice tests.",
+    features: [
+      "Full English curriculum coverage",
+      "Unlimited mock examinations",
+      "Instant feedback and detailed answers",
+      "Digital completion certificate"
+    ],
+    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=400"
+  },
+  {
+    id: "vca-vol",
+    title: "VCA VOL Management E-learning",
+    category: "VCA",
+    price: "€ 69.00",
+    rawPrice: 69.00,
+    duration: "± 8 hours",
+    description: "Tailored for operational supervisors and contractors in hazardous work environments.",
+    features: [
+      "Supervisory & Arbowet compliance topics",
+      "Risk assessment & incident management",
+      "Extensive question practice bank",
+      "Digital certificate"
+    ],
+    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=400"
+  },
+  {
+    id: "ehbo-theory",
+    title: "First Aid & CPR E-learning",
+    category: "First Aid",
+    price: "€ 39.00",
+    rawPrice: 39.00,
+    duration: "± 3 hours",
+    description: "Learn life-saving first aid, CPR principles and AED defibrillator handling online on any device.",
+    features: [
+      "Recognize cardiac arrest & choking",
+      "Step-by-step life saving procedures",
+      "Official certificate of completion"
+    ],
+    image: "https://images.unsplash.com/photo-1603398938378-e54eab446dde?auto=format&fit=crop&q=80&w=400"
+  }
+];
+---
+
+<Layout 
+  title="Online Safety Academy & E-learning | Edusafe" 
+  description="Start immediately with certified online BHV, VCA, and First Aid theory training. Self-paced e-learning with instant access."
+>
+  <main class="w-full">
+    
+    <!-- Hero Header -->
+    <section class="relative bg-brand-secondary text-white pt-20 pb-20 sm:pb-24 md:pt-24 md:pb-28 overflow-hidden">
+      <div class="absolute inset-0 z-0 overflow-hidden">
+        <img 
+          src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=1600" 
+          alt="E-learning Academy" 
+          class="w-full h-full object-cover opacity-30 scale-105" 
+        />
+        <div class="absolute inset-0 bg-gradient-to-r from-brand-secondary via-brand-secondary/85 to-brand-secondary/40"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-brand-secondary via-transparent to-black/20"></div>
+      </div>
+      
+      <div class="max-w-[1280px] mx-auto px-6 relative z-10">
+        <div class="max-w-3xl animate-fade-in">
+          <span class="inline-flex items-center gap-1.5 text-brand-accent font-display font-semibold text-xs uppercase tracking-wider mb-3.5">
+            <i class="fa-solid fa-graduation-cap animate-pulse"></i>
+            Edusafe Online Academy
+          </span>
+          <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-tight mb-4 text-white">
+            Start directly with <span class="relative inline-block text-white px-5 py-2 mx-1 transform -rotate-1"><span class="absolute inset-0 bg-brand-accent rounded-2xl z-0"></span><span class="relative z-10">e-learning</span></span>
+          </h1>
+          <p class="text-white/90 text-base md:text-lg max-w-2xl mb-6 leading-relaxed font-normal">
+            Prepare yourself or your staff online for official safety certification. Select a theory course, complete your details, and gain instant access.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Content Grid & Checkout -->
+    <section class="max-w-[1280px] mx-auto px-6 -mt-10 sm:-mt-12 md:-mt-14 relative z-30 pb-24">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+        
+        <!-- Left Column: Course Selection & Features (7 cols) -->
+        <div class="lg:col-span-7 space-y-6">
+          
+          <div class="bg-white rounded-2xl p-6 sm:p-7 shadow-lg border border-brand-dark/5 reveal">
+            <h2 class="font-display text-xl sm:text-2xl font-semibold text-brand-secondary mb-1.5">1. Select your E-learning training</h2>
+            <p class="text-xs sm:text-sm text-brand-dark/70 font-normal mb-6">Choose the online theory course you wish to start immediately.</p>
+
+            <div class="space-y-3.5">
+              {elearningCoursesEn.map((course, idx) => (
+                <label 
+                  class={`elearning-option flex items-start justify-between p-4 sm:p-5 rounded-xl border transition-all duration-300 cursor-pointer ${idx === 0 ? 'border-brand-primary bg-brand-cream/15 ring-2 ring-brand-primary/20' : 'border-brand-dark/10 hover:border-brand-primary/30 hover:bg-brand-cream/5'}`}
+                  data-price={course.rawPrice}
+                  data-title={course.title}
+                >
+                  <div class="flex items-start gap-3.5">
+                    <input 
+                      type="radio" 
+                      name="elearning-choice" 
+                      value={course.id} 
+                      checked={idx === 0}
+                      class="mt-1 accent-brand-primary cursor-pointer w-4 h-4"
+                    />
+                    <div>
+                      <div class="flex items-center gap-2 mb-1">
+                        <span class="font-display font-semibold text-base text-brand-secondary">{course.title}</span>
+                        <span class="text-[10px] font-semibold uppercase px-2 py-0.5 rounded bg-brand-secondary/10 text-brand-secondary">{course.category}</span>
+                      </div>
+                      <p class="text-xs text-brand-dark/70 font-normal mb-2.5 max-w-md">{course.description}</p>
+                      
+                      <div class="flex flex-wrap gap-x-4 gap-y-1 text-[11px] text-brand-dark/60">
+                        <span class="flex items-center gap-1 font-medium text-brand-primary">
+                          <i class="fa-solid fa-clock text-[10px]"></i>
+                          {course.duration}
+                        </span>
+                        {course.features.slice(0, 2).map(f => (
+                          <span class="flex items-center gap-1">
+                            <i class="fa-solid fa-check text-emerald-500 text-[10px]"></i>
+                            {f}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="text-right shrink-0 pl-3">
+                    <span class="text-[10px] uppercase font-semibold text-brand-dark/40 block leading-none mb-0.5">Price</span>
+                    <span class="font-display font-semibold text-lg text-brand-secondary">{course.price}</span>
+                  </div>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <!-- Benefits -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="bg-white p-5 rounded-2xl border border-brand-dark/5 shadow-xs flex items-center gap-3.5">
+              <div class="w-10 h-10 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary shrink-0 text-lg">
+                <i class="fa-solid fa-bolt"></i>
+              </div>
+              <div>
+                <h4 class="font-display font-semibold text-xs text-brand-secondary">Instant Access</h4>
+                <p class="text-[11px] text-brand-dark/60 font-normal">Start right after payment</p>
+              </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-brand-dark/5 shadow-xs flex items-center gap-3.5">
+              <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-600 shrink-0 text-lg">
+                <i class="fa-solid fa-certificate"></i>
+              </div>
+              <div>
+                <h4 class="font-display font-semibold text-xs text-brand-secondary">Certificate</h4>
+                <p class="text-[11px] text-brand-dark/60 font-normal">Official digital proof</p>
+              </div>
+            </div>
+
+            <div class="bg-white p-5 rounded-2xl border border-brand-dark/5 shadow-xs flex items-center gap-3.5">
+              <div class="w-10 h-10 rounded-xl bg-brand-accent/10 flex items-center justify-center text-brand-accent shrink-0 text-lg">
+                <i class="fa-solid fa-mobile-screen"></i>
+              </div>
+              <div>
+                <h4 class="font-display font-semibold text-xs text-brand-secondary">Any Device</h4>
+                <p class="text-[11px] text-brand-dark/60 font-normal">Mobile, tablet or PC</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Checkout & Direct iDEAL / Card Simulation (5 cols) -->
+        <div class="lg:col-span-5 flex flex-col">
+          <div class="bg-white rounded-2xl p-6 sm:p-7 shadow-xl border border-brand-dark/5 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="border-b border-brand-dark/5 pb-4 mb-5">
+                <h3 class="font-display text-xl font-semibold text-brand-secondary mb-1">2. Complete Order</h3>
+                <p class="text-xs text-brand-dark/70 font-normal">Enter participant details to receive immediate login credentials.</p>
+              </div>
+
+              <form id="elearning-checkout-form" class="space-y-4">
+                <div>
+                  <label class="block text-xs font-semibold uppercase text-brand-secondary tracking-wider mb-1">Full Name *</label>
+                  <input required type="text" class="w-full rounded-xl border border-brand-dark/10 px-4 py-2.5 text-sm bg-brand-cream/30 focus:outline-none focus:border-brand-primary font-medium text-brand-secondary" placeholder="e.g. Alex Smith" />
+                </div>
+
+                <div>
+                  <label class="block text-xs font-semibold uppercase text-brand-secondary tracking-wider mb-1">Email Address *</label>
+                  <input required type="email" class="w-full rounded-xl border border-brand-dark/10 px-4 py-2.5 text-sm bg-brand-cream/30 focus:outline-none focus:border-brand-primary font-medium text-brand-secondary" placeholder="alex@example.com" />
+                </div>
+
+                <div>
+                  <label class="block text-xs font-semibold uppercase text-brand-secondary tracking-wider mb-1">Payment Method</label>
+                  <select class="w-full rounded-xl border border-brand-dark/10 px-4 py-2.5 text-sm bg-brand-cream/30 focus:outline-none focus:border-brand-primary font-semibold text-brand-secondary">
+                    <option value="ideal">iDEAL (Dutch Banks)</option>
+                    <option value="creditcard">Creditcard (Visa / Mastercard)</option>
+                    <option value="bancontact">Bancontact</option>
+                    <option value="invoice">Corporate Invoice (B2B)</option>
+                  </select>
+                </div>
+
+                <!-- Price Summary -->
+                <div class="bg-brand-cream/50 rounded-xl p-4 border border-brand-dark/5 space-y-2 text-xs">
+                  <div class="flex justify-between items-center text-brand-dark/70">
+                    <span id="summary-course-title">BHV Theory E-learning</span>
+                    <span id="summary-subtotal" class="font-semibold text-brand-secondary">€ 59.00</span>
+                  </div>
+                  <div class="flex justify-between items-center text-brand-dark/70">
+                    <span>VAT (21%)</span>
+                    <span id="summary-tax" class="font-semibold text-brand-secondary">€ 12.39</span>
+                  </div>
+                  <div class="flex justify-between items-center pt-2 border-t border-brand-dark/10 text-sm font-semibold text-brand-secondary">
+                    <span>Total</span>
+                    <span id="summary-total" class="font-display text-lg text-brand-primary">€ 71.39</span>
+                  </div>
+                </div>
+
+                <button 
+                  type="submit" 
+                  class="w-full font-display font-semibold text-base py-3.5 px-6 rounded-xl bg-brand-accent hover:bg-brand-accent-hover text-white transition-all duration-300 shadow-md shadow-brand-accent/25 cursor-pointer flex items-center justify-center gap-2 mt-4"
+                >
+                  <i class="fa-solid fa-lock text-xs"></i>
+                  <span>Pay & Start Learning</span>
+                </button>
+              </form>
+
+              <!-- Success simulation alert -->
+              <div id="checkout-success" class="hidden mt-4 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs">
+                <div class="flex items-center gap-2 mb-1">
+                  <i class="fa-solid fa-circle-check text-emerald-600 text-base"></i>
+                  <span class="font-semibold">Order complete!</span>
+                </div>
+                <p>Login credentials and invoice sent to your email. You can log in right away.</p>
+              </div>
+            </div>
+
+            <div class="pt-4 border-t border-brand-dark/5 mt-4 text-center">
+              <span class="text-[11px] text-brand-dark/50 flex items-center justify-center gap-1.5">
+                <i class="fa-solid fa-shield-check text-emerald-500"></i>
+                Secure SSL 256-bit payment checkout
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+</Layout>
+
+<script>
+  function initElearningCheckout() {
+    const radioButtons = document.querySelectorAll('input[name="elearning-choice"]');
+    const optionLabels = document.querySelectorAll('.elearning-option');
+    const summaryTitle = document.getElementById('summary-course-title');
+    const summarySubtotal = document.getElementById('summary-subtotal');
+    const summaryTax = document.getElementById('summary-tax');
+    const summaryTotal = document.getElementById('summary-total');
+    const form = document.getElementById('elearning-checkout-form');
+    const successMsg = document.getElementById('checkout-success');
+
+    function updateSummary(price: number, title: string) {
+      const tax = price * 0.21;
+      const total = price + tax;
+
+      if (summaryTitle) summaryTitle.textContent = title;
+      if (summarySubtotal) summarySubtotal.textContent = `€ ${price.toFixed(2)}`;
+      if (summaryTax) summaryTax.textContent = `€ ${tax.toFixed(2)}`;
+      if (summaryTotal) summaryTotal.textContent = `€ ${total.toFixed(2)}`;
+    }
+
+    optionLabels.forEach(label => {
+      label.addEventListener('click', () => {
+        optionLabels.forEach(l => {
+          l.classList.remove('border-brand-primary', 'bg-brand-cream/15', 'ring-2', 'ring-brand-primary/20');
+          l.classList.add('border-brand-dark/10');
+        });
+        label.classList.add('border-brand-primary', 'bg-brand-cream/15', 'ring-2', 'ring-brand-primary/20');
+        label.classList.remove('border-brand-dark/10');
+
+        const price = parseFloat(label.getAttribute('data-price') || '59');
+        const title = label.getAttribute('data-title') || 'BHV Theory';
+        updateSummary(price, title);
+      });
+    });
+
+    if (form && successMsg) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        successMsg.classList.remove('hidden');
+        form.classList.add('opacity-50', 'pointer-events-none');
+      });
+    }
+  }
+
+  initElearningCheckout();
+  document.addEventListener('astro:page-load', initElearningCheckout);
+</script>

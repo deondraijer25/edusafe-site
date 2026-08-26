@@ -1,0 +1,255 @@
+---
+interface Props {
+  defaultCourse: {
+    id: string;
+    title: string;
+    tagline?: string;
+    price: string;
+    duration: string;
+    inclusions: string[];
+    registerLink: string;
+  };
+  advisorText?: string;
+  advisorPhone?: string;
+}
+
+const {
+  defaultCourse,
+  advisorText = "Persoonlijk advies of data afstemmen?",
+  advisorPhone = "070 - 444 77 95"
+} = Astro.props;
+---
+
+<!-- Mobile Bottom Summary Bar & Slide-Up Sheet (Visible only on mobile/tablet < lg) -->
+<div class="block lg:hidden">
+  
+  <!-- Backdrop Overlay -->
+  <div 
+    id="mobile-drawer-backdrop" 
+    class="fixed inset-0 bg-brand-secondary/60 backdrop-blur-xs z-50 transition-opacity duration-300 opacity-0 pointer-events-none"
+    aria-hidden="true"
+  ></div>
+
+  <!-- Slide-Up Details Sheet -->
+  <div 
+    id="mobile-drawer-panel" 
+    class="fixed bottom-0 left-0 right-0 z-50 bg-white rounded-t-[28px] max-h-[85vh] overflow-y-auto shadow-2xl transition-transform duration-300 ease-out transform translate-y-full p-5 sm:p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] border-t border-brand-dark/10"
+  >
+    <!-- Drag Handle & Close Header -->
+    <div class="flex items-center justify-between pb-3 mb-3 border-b border-brand-dark/5">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-brand-accent animate-pulse"></span>
+        <span class="text-[10px] font-semibold text-brand-primary uppercase tracking-wider">Overzicht & Tarieven</span>
+      </div>
+      <button 
+        type="button" 
+        id="close-mobile-drawer"
+        class="w-8 h-8 rounded-full bg-brand-cream text-brand-dark/70 hover:text-brand-dark flex items-center justify-center transition-colors cursor-pointer"
+        aria-label="Sluit overzicht"
+      >
+        <i class="fa-solid fa-chevron-down text-xs"></i>
+      </button>
+    </div>
+
+    <!-- Title & Pricing -->
+    <div class="space-y-3">
+      <div>
+        <span id="mobile-drawer-tagline" class="text-[9px] font-semibold uppercase text-brand-dark/40 tracking-wider block mb-0.5">{defaultCourse.tagline || "Geselecteerde training"}</span>
+        <h3 id="mobile-drawer-title" class="font-display text-xl font-semibold text-brand-secondary leading-snug">{defaultCourse.title}</h3>
+      </div>
+
+      <div class="p-3 rounded-2xl bg-brand-cream/60 border border-brand-dark/5 flex items-center justify-between">
+        <div>
+          <span class="text-[9px] font-semibold uppercase text-brand-dark/40 leading-none block mb-1">Cursustarief</span>
+          <div class="flex items-baseline gap-1.5">
+            <span id="mobile-drawer-price" class="font-display text-2xl sm:text-3xl font-semibold text-brand-secondary">{defaultCourse.price}</span>
+            <span class="text-[11px] text-brand-dark/50 font-medium">excl. BTW</span>
+          </div>
+        </div>
+
+        <div class="text-right">
+          <span class="text-[9px] font-semibold uppercase text-brand-dark/40 leading-none block mb-1">Duur</span>
+          <span id="mobile-drawer-duration" class="font-semibold text-brand-secondary text-xs">{defaultCourse.duration}</span>
+        </div>
+      </div>
+
+      <!-- Inclusions -->
+      <div class="pt-2">
+        <span class="text-[10px] font-semibold uppercase text-brand-dark/50 tracking-wider block mb-2">Inclusief bij Edusafe:</span>
+        <ul id="mobile-drawer-inclusions" class="space-y-1.5">
+          {defaultCourse.inclusions.map(inc => (
+            <li class="flex items-center gap-2 text-xs text-brand-dark/80 font-medium">
+              <i class="fa-solid fa-circle-check text-emerald-500 text-xs shrink-0"></i>
+              <span>{inc}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="pt-3 space-y-2">
+        <a 
+          id="mobile-drawer-cta"
+          href={defaultCourse.registerLink}
+          class="font-display font-semibold text-sm py-3 px-5 rounded-xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all w-full block shadow-md shadow-brand-accent/20 cursor-pointer"
+        >
+          Direct Cursusdata & Inschrijven
+        </a>
+
+        <button 
+          type="button" 
+          data-open-contact-drawer
+          class="font-display font-semibold text-xs py-2.5 px-4 rounded-xl text-center bg-white hover:bg-brand-cream text-brand-secondary border border-brand-dark/10 transition-all w-full block cursor-pointer"
+        >
+          Vrijblijvende Offerte / Vraag stellen
+        </button>
+      </div>
+
+      <!-- Guarantee Tag -->
+      <div class="pt-2 flex items-center justify-center gap-1.5 text-xs font-semibold text-emerald-600">
+        <i class="fa-solid fa-shield-check text-sm"></i>
+        <span>100% Slagingsgarantie</span>
+      </div>
+
+      <!-- Direct Phone Call Box -->
+      <div class="p-3 rounded-xl bg-brand-cream border border-brand-dark/5 text-center mt-2">
+        <span class="text-[10px] font-semibold uppercase tracking-wider text-brand-dark/50 block mb-0.5">{advisorText}</span>
+        <a href={`tel:${advisorPhone.replace(/\s+/g, '')}`} class="font-display font-semibold text-xs sm:text-sm text-brand-primary inline-flex items-center gap-1.5">
+          <i class="fa-solid fa-phone text-xs"></i>
+          <span>Bel direct: {advisorPhone}</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Collapsed Sticky Bottom Bar (Always fixed at bottom of screen on mobile) -->
+  <aside 
+    id="mobile-sticky-bottom-bar"
+    class="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-brand-dark/10 shadow-[0_-6px_25px_rgba(0,0,0,0.1)] px-4 py-2.5 pb-[calc(0.65rem+env(safe-area-inset-bottom,0px))]"
+  >
+    <div class="max-w-[1280px] mx-auto flex items-center justify-between gap-3">
+      
+      <!-- Tap to Expand Left Column -->
+      <button 
+        type="button"
+        id="open-mobile-drawer"
+        class="flex-1 text-left flex flex-col justify-center cursor-pointer group focus:outline-none min-w-0 pr-1"
+        aria-label="Open cursusamenvatting en tarieven"
+      >
+        <div class="flex items-center gap-1.5 mb-0.5">
+          <span id="mobile-bar-title" class="font-display font-semibold text-brand-secondary text-xs sm:text-sm truncate block leading-tight">
+            {defaultCourse.title}
+          </span>
+          <span class="text-[10px] text-brand-primary flex items-center gap-1 shrink-0 font-medium">
+            <i class="fa-solid fa-chevron-up text-[9px] group-hover:-translate-y-0.5 transition-transform animate-bounce"></i>
+          </span>
+        </div>
+        <div class="flex items-baseline gap-1">
+          <span id="mobile-bar-price" class="font-display font-semibold text-brand-primary text-xs sm:text-sm leading-none">
+            {defaultCourse.price}
+          </span>
+          <span class="text-[9px] text-brand-dark/50">excl.</span>
+          <span class="text-[9px] text-brand-dark/40 ml-1 underline decoration-brand-dark/20">Bekijk details</span>
+        </div>
+      </button>
+
+      <!-- Right CTA Buttons (Phone call + Inschrijven) -->
+      <div class="flex items-center gap-2 shrink-0">
+        <a 
+          href={`tel:${advisorPhone.replace(/\s+/g, '')}`} 
+          class="w-9 h-9 rounded-xl bg-brand-cream border border-brand-dark/10 flex items-center justify-center text-brand-primary hover:bg-brand-primary hover:text-white transition-colors"
+          title="Direct Bellen"
+          aria-label="Bel opleidingsadviseur"
+        >
+          <i class="fa-solid fa-phone text-xs"></i>
+        </a>
+
+        <a 
+          id="mobile-bar-cta"
+          href={defaultCourse.registerLink}
+          class="font-display font-semibold text-xs py-2.5 px-3.5 sm:px-4 rounded-xl bg-brand-accent text-white hover:bg-brand-accent-hover transition-colors shadow-sm flex items-center gap-1.5"
+        >
+          <span>Inschrijven</span>
+          <i class="fa-solid fa-arrow-right text-[9px]"></i>
+        </a>
+      </div>
+
+    </div>
+  </aside>
+
+</div>
+
+<script>
+  function setupMobileDrawer() {
+    const openBtn = document.getElementById('open-mobile-drawer');
+    const closeBtn = document.getElementById('close-mobile-drawer');
+    const backdrop = document.getElementById('mobile-drawer-backdrop');
+    const panel = document.getElementById('mobile-drawer-panel');
+
+    function openDrawer() {
+      if (backdrop && panel) {
+        backdrop.classList.remove('opacity-0', 'pointer-events-none');
+        backdrop.classList.add('opacity-100', 'pointer-events-auto');
+        panel.classList.remove('translate-y-full');
+        panel.classList.add('translate-y-0');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeDrawer() {
+      if (backdrop && panel) {
+        backdrop.classList.remove('opacity-100', 'pointer-events-auto');
+        backdrop.classList.add('opacity-0', 'pointer-events-none');
+        panel.classList.remove('translate-y-0');
+        panel.classList.add('translate-y-full');
+        document.body.style.overflow = '';
+      }
+    }
+
+    if (openBtn) openBtn.addEventListener('click', openDrawer);
+    if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+    if (backdrop) backdrop.addEventListener('click', closeDrawer);
+
+    // Global synchronizer function accessible by course switcher scripts
+    (window as any).syncMobileCourseDrawer = function(course: any) {
+      if (!course) return;
+      
+      const barTitle = document.getElementById('mobile-bar-title');
+      const barPrice = document.getElementById('mobile-bar-price');
+      const barCta = document.getElementById('mobile-bar-cta');
+
+      const drawerTitle = document.getElementById('mobile-drawer-title');
+      const drawerTagline = document.getElementById('mobile-drawer-tagline');
+      const drawerPrice = document.getElementById('mobile-drawer-price');
+      const drawerDuration = document.getElementById('mobile-drawer-duration');
+      const drawerInclusions = document.getElementById('mobile-drawer-inclusions');
+      const drawerCta = document.getElementById('mobile-drawer-cta');
+
+      if (barTitle) barTitle.textContent = course.title;
+      if (barPrice) barPrice.textContent = course.price;
+      if (barCta) barCta.setAttribute('href', course.registerLink);
+
+      if (drawerTitle) drawerTitle.textContent = course.title;
+      if (drawerTagline) drawerTagline.textContent = course.tagline || '';
+      if (drawerPrice) drawerPrice.textContent = course.price;
+      if (drawerDuration) drawerDuration.textContent = course.duration;
+      if (drawerCta) drawerCta.setAttribute('href', course.registerLink);
+
+      if (drawerInclusions && course.inclusions) {
+        drawerInclusions.innerHTML = course.inclusions.map((inc: string) => `
+          <li class="flex items-center gap-2 text-xs text-brand-dark/80 font-medium">
+            <i class="fa-solid fa-circle-check text-emerald-500 text-xs shrink-0"></i>
+            <span>${inc}</span>
+          </li>
+        `).join('');
+      }
+    };
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupMobileDrawer);
+  } else {
+    setupMobileDrawer();
+  }
+</script>

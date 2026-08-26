@@ -10,17 +10,17 @@ const upcoming = courses.slice(0, 3);
     
     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-14 gap-6">
       <div>
-        <span class="inline-flex items-center gap-1.5 text-brand-accent font-display font-black text-xs uppercase tracking-wider mb-3">
+        <span class="inline-flex items-center gap-1.5 text-brand-accent font-display font-semibold text-xs uppercase tracking-wider mb-3">
           <i class="fa-solid fa-calendar-days"></i>
           Snel starten
         </span>
-        <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-black text-brand-secondary tracking-tight">
+        <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-semibold text-brand-secondary tracking-tight">
           Eerstvolgende Live Trainingen
         </h2>
       </div>
       <a 
         href="/cursusdata" 
-        class="font-display font-black text-sm py-4 px-8 rounded-2xl text-center border-2 border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white transition-all duration-300 shadow-sm shrink-0"
+        class="font-display font-semibold text-sm py-4 px-8 rounded-2xl text-center border-2 border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white transition-all duration-300 shadow-sm shrink-0"
       >
         Bekijk alle cursusdata
       </a>
@@ -33,10 +33,10 @@ const upcoming = courses.slice(0, 3);
           
           <!-- Left: Big Date Block -->
           <div class="flex items-center gap-3 shrink-0">
-            <span class="font-display font-black text-4xl text-brand-secondary leading-none w-10 text-right">
+            <span class="font-display font-semibold text-4xl text-brand-secondary leading-none w-10 text-right">
               {course.date.split(' ')[0]}
             </span>
-            <div class="text-[10px] font-black text-brand-dark/50 leading-tight">
+            <div class="text-[10px] font-medium text-brand-dark/50 leading-tight">
               <div>{course.date.split(' ')[1]}</div>
               <div>{course.date.split(' ')[2]}</div>
             </div>
@@ -45,20 +45,20 @@ const upcoming = courses.slice(0, 3);
           <!-- Middle: Title & Meta -->
           <div class="flex-1 min-w-0">
             <div class="flex flex-wrap items-center gap-2 mb-2">
-              <h3 class="font-display font-black text-lg text-brand-secondary leading-tight truncate">
+              <h3 class="font-display font-semibold text-lg text-brand-secondary leading-tight truncate">
                 {course.title}
               </h3>
-              <span class="inline-flex items-center bg-brand-primary/10 text-brand-primary text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+              <span class="inline-flex items-center bg-brand-primary/10 text-brand-primary text-[10px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                 {course.category}
               </span>
               {course.spotsLeft && (
-                <span class="inline-flex items-center bg-brand-accent/15 text-brand-accent text-[9px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider animate-pulse border border-brand-accent/20">
+                <span class="inline-flex items-center bg-brand-accent/15 text-brand-accent text-[9px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wider animate-pulse border border-brand-accent/20">
                   {course.spotsLeft}
                 </span>
               )}
             </div>
             
-            <div class="flex flex-wrap gap-x-6 gap-y-1 text-xs text-brand-dark/65 font-semibold">
+            <div class="flex flex-wrap gap-x-6 gap-y-1 text-xs text-brand-dark/65 font-medium">
               <span class="flex items-center gap-1.5">
                 <i class="fa-solid fa-location-dot text-brand-primary"></i>
                 {course.location}
@@ -74,7 +74,7 @@ const upcoming = courses.slice(0, 3);
           <div class="shrink-0 w-full md:w-auto">
             <a 
               href={`/inschrijven/${course.id}`} 
-              class="font-display font-black text-sm py-3.5 px-8 rounded-2xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 w-full md:w-auto block shadow-[0_4px_12px_rgba(255,107,53,0.15)]"
+              class="font-display font-semibold text-sm py-3.5 px-8 rounded-2xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 w-full md:w-auto block shadow-[0_4px_12px_rgba(255,107,53,0.15)]"
             >
               Nu Inschrijven
             </a>

@@ -1,0 +1,512 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import MobileCourseBottomBar from '../../components/MobileCourseBottomBar.astro';
+
+const aedCourses = [
+  {
+    id: "aed-basis",
+    title: "CPR & AED Basic (ERC / NRR)",
+    tagline: "Learn life-saving resuscitation and AED operation in 3.5 hours",
+    price: "€ 95.00",
+    spotsText: "NRR / ERC Certified",
+    duration: "Half day (3.5 hours)",
+    target: "For individuals, community responders, sports coaches, and staff who want to act immediately during cardiac arrest.",
+    requirements: "No prior training required. Accessible for everyone from age 14.",
+    exam: "Practical competence check by an accredited ERC / NRR resuscitation instructor.",
+    certification: "Official European recognized NRR Certificate CPR & AED (valid 2 years).",
+    inclusions: ["Basic Resuscitation guide booklet", "Manikins & AED training units", "Official NRR certificate", "Direct community responder registration", "Coffee & tea"],
+    modules: [
+      { name: "Recognizing circulatory arrest & unconsciousness" },
+      { name: "Chest compressions & rescue breathing (30:2)" },
+      { name: "Safe and rapid AED deployment" },
+      { name: "Managing choking & airway blockages" },
+      { name: "Recovery position for unconscious casualties" },
+      { name: "Coordinating with ambulance & 112 dispatch" }
+    ],
+    image: "https://images.unsplash.com/photo-1571772996211-2f02c9727629?auto=format&fit=crop&q=80&w=600",
+    registerLink: "/en/course-dates?category=AED/Reanimatie"
+  },
+  {
+    id: "aed-herhaling",
+    title: "CPR & AED Refresher",
+    tagline: "Annual refresher course to keep life-saving skills razor-sharp",
+    price: "€ 75.00",
+    spotsText: "Annual refresher",
+    duration: "Evening or half day (2.5 hours)",
+    target: "For certificate holders renewing practical skills and maintaining active community first responder status.",
+    requirements: "In possession of a previous NRR CPR & AED certificate.",
+    exam: "Continuous practical assessment by NRR instructor.",
+    certification: "Official extension of your NRR Certificate (valid 2 years).",
+    inclusions: ["Scenario training", "NRR certificate extension", "HartslagNu registry update", "Coffee & tea"],
+    modules: [
+      { name: "Refresh compressions & rescue breaths" },
+      { name: "AED deployment & troubleshooting" },
+      { name: "Choking & recovery position review" },
+      { name: "Latest European Resuscitation Council guidelines" }
+    ],
+    image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=600",
+    registerLink: "/en/course-dates?category=AED/Reanimatie"
+  },
+  {
+    id: "pbls-kinderreanimatie",
+    title: "PBLS - Infant & Child Resuscitation",
+    tagline: "Paediatric Basic Life Support for infants and children",
+    price: "€ 115.00",
+    spotsText: "Paediatric Life Support",
+    duration: "Half day (3.5 hours)",
+    target: "For parents, teachers, day care educators, babysitters, and swimming coaches.",
+    requirements: "No prior training required.",
+    exam: "Hands-on assessment on dedicated baby and child training manikins.",
+    certification: "Official NRR PBLS Certificate Paediatric Resuscitation (valid 2 years).",
+    inclusions: ["Paediatric study materials", "Baby and child manikins practice", "NRR PBLS certificate", "Coffee & tea"],
+    modules: [
+      { name: "Differences between adult and paediatric resuscitation" },
+      { name: "5 initial rescue breaths for children" },
+      { name: "15:2 chest compression ratio for infants" },
+      { name: "AED operation with paediatric pads / child key" },
+      { name: "Severe airway obstruction in babies & toddlers" }
+    ],
+    image: "https://images.unsplash.com/photo-1519689680058-324335c77ebe?auto=format&fit=crop&q=80&w=600",
+    registerLink: "/en/course-dates?category=AED/Reanimatie"
+  },
+  {
+    id: "burgerhulpverlener",
+    title: "Community First Responder Training",
+    tagline: "Be alert and dispatched during cardiac arrests in your neighborhood",
+    price: "€ 85.00",
+    spotsText: "Citizen Responder Partner",
+    duration: "Half day (3 hours)",
+    target: "For local residents and volunteers eager to save lives in their immediate community.",
+    requirements: "Age 18+. No medical background required.",
+    exam: "Practical resuscitation and rapid AED retrieval test.",
+    certification: "NRR Certificate + direct registration with citizen responder networks.",
+    inclusions: ["Course materials", "Dispatch app system walkthrough", "NRR Certificate", "Coffee & tea"],
+    modules: [
+      { name: "The 6-minute zone & chain of survival" },
+      { name: "How the dispatch app & alerting system works" },
+      { name: "Retrieving outdoor AEDs with secure PIN codes" },
+      { name: "Immediate resuscitation until paramedics arrive" }
+    ],
+    image: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&q=80&w=600",
+    registerLink: "/en/course-dates?category=AED/Reanimatie"
+  }
+];
+
+const defaultCourse = aedCourses[0];
+
+const faqs = [
+  {
+    q: "What is the difference between a First Aid course and a CPR/AED course?",
+    a: "A CPR & AED course focuses 100% on the most acute medical emergency: cardiac arrest and choking. In 3.5 hours you intensively master chest compressions, rescue breathing, and AED deployment. A full First Aid course covers fractures, burns, poisonings, and wound care as well."
+  },
+  {
+    q: "Can I be dispatched as a citizen responder after this training?",
+    a: "Yes! With the official NRR certificate earned at Edusafe, you can register directly with citizen responder networks (HartslagNu). When someone nearby experiences cardiac arrest, you receive an app alert to start CPR or retrieve a local AED."
+  },
+  {
+    q: "Is this resuscitation course covered by health insurance?",
+    a: "Yes, many Dutch and international health insurance providers cover resuscitation courses under supplementary prevention benefits."
+  },
+  {
+    q: "How often should I take a refresher course?",
+    a: "The European Resuscitation Council recommends an annual refresher to keep muscle memory sharp. The certificate remains officially valid for 2 years."
+  }
+];
+---
+
+<Layout title="CPR & AED Certification Courses (NRR / ERC) | Edusafe" description="Learn life-saving CPR and AED skills in 3.5 hours in English. Official ERC / NRR certification, small groups, and expert instructors.">
+  <main class="w-full">
+    
+    <!-- Hero Header Section -->
+    <section class="relative bg-brand-secondary text-white pt-20 pb-36 md:pt-24 md:pb-44 overflow-hidden">
+      <div class="absolute inset-0 z-0 overflow-hidden">
+        <img 
+          src="https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&q=80&w=1600" 
+          alt="CPR and AED Training" 
+          class="w-full h-full object-cover opacity-35 scale-105" 
+        />
+        <div class="absolute inset-0 bg-gradient-to-r from-brand-secondary via-brand-secondary/85 to-brand-secondary/40"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-brand-secondary via-transparent to-black/20"></div>
+      </div>
+      
+      <div class="max-w-[1280px] mx-auto px-6 relative z-10">
+        <div class="max-w-3xl animate-fade-in">
+          <span class="inline-flex items-center gap-1.5 text-brand-accent font-display font-semibold text-xs uppercase tracking-wider mb-3.5">
+            <i class="fa-solid fa-bolt animate-pulse"></i>
+            Life-Saving Resuscitation (ERC / NRR Certified)
+          </span>
+          <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-tight mb-4 text-white">
+            CPR & <span class="relative inline-block text-white px-5 py-2 mx-1 transform -rotate-1"><span class="absolute inset-0 bg-brand-accent rounded-2xl z-0"></span><span class="relative z-10">AED Course</span></span>
+          </h1>
+          <p class="text-white/90 text-base md:text-lg max-w-2xl leading-relaxed mb-6 font-normal">
+            Every week hundreds of people suffer sudden cardiac arrest. Learn how to perform effective chest compressions and deploy an AED within a single half-day session.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content Grid (Floating overlap) -->
+    <section class="max-w-[1280px] mx-auto px-6 -mt-20 md:-mt-24 relative z-20 pb-24">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
+        
+        <!-- Left Side: Dynamic Master-Detail Card + Variations Grid (8 columns) -->
+        <div class="lg:col-span-8 space-y-6">
+          
+          <!-- Compact Dynamic Details Card -->
+          <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-md border border-brand-dark/5 reveal" id="details-card-left">
+            
+            <!-- Header -->
+            <div class="border-b border-brand-dark/5 pb-3 mb-3.5 flex flex-wrap items-baseline justify-between gap-2">
+              <div>
+                <span id="selected-tagline" class="text-[10px] font-semibold text-brand-primary uppercase tracking-wider block mb-0.5">{defaultCourse.tagline}</span>
+                <h2 id="selected-title" class="font-display text-xl sm:text-2xl font-semibold text-brand-secondary leading-snug">{defaultCourse.title}</h2>
+              </div>
+            </div>
+            
+            <!-- Target Description -->
+            <div class="mb-4">
+              <p id="selected-target" class="text-brand-dark/75 text-xs sm:text-[13px] leading-relaxed font-normal">
+                {defaultCourse.target}
+              </p>
+            </div>
+            
+            <!-- Modules Checklist -->
+            <div class="mb-4 border-t border-brand-dark/5 pt-3.5">
+              <h3 class="font-display text-[10px] font-semibold uppercase text-brand-dark/40 tracking-widest mb-2.5">Course Modules</h3>
+              <div id="selected-modules" class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5">
+                {defaultCourse.modules.map(mod => (
+                  <div class="flex items-center gap-2">
+                    <span class="w-4 h-4 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-[10px] shrink-0">
+                      <i class="fa-solid fa-check"></i>
+                    </span>
+                    <span class="font-medium text-brand-secondary text-xs sm:text-[13px]">{mod.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <!-- Specs Table -->
+            <div class="border-t border-brand-dark/5 pt-3.5">
+              <h3 class="font-display text-[10px] font-semibold uppercase text-brand-dark/40 tracking-widest mb-3">Practical Information</h3>
+              <div class="space-y-2 text-xs">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-1">
+                  <span class="font-semibold text-brand-secondary text-[10px] uppercase tracking-wider">Prerequisites</span>
+                  <span id="selected-requirements" class="sm:col-span-2 text-brand-dark/75 font-normal leading-relaxed">{defaultCourse.requirements}</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-1 border-t border-brand-dark/5 pt-2">
+                  <span class="font-semibold text-brand-secondary text-[10px] uppercase tracking-wider">Examination & Assessment</span>
+                  <span id="selected-exam" class="sm:col-span-2 text-brand-dark/75 font-normal leading-relaxed">{defaultCourse.exam}</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-1 border-t border-brand-dark/5 pt-2">
+                  <span class="font-semibold text-brand-secondary text-[10px] uppercase tracking-wider">Certification</span>
+                  <span id="selected-certification" class="sm:col-span-2 text-brand-dark/75 font-normal leading-relaxed">{defaultCourse.certification}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section Divider/Header for Variations -->
+          <div class="pt-1 reveal">
+            <h3 class="font-display text-lg sm:text-xl font-semibold text-brand-secondary mb-1">Available Resuscitation Courses</h3>
+            <p class="text-xs text-brand-dark/60 font-medium mb-3">Click on any of the courses below to view full details above.</p>
+          </div>
+
+          <!-- Cards Grid Section -->
+          <div class="reveal">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 reveal-stagger">
+              {aedCourses.map((course, idx) => (
+                <button 
+                  data-id={course.id}
+                  class={`course-card-btn group relative bg-white rounded-[24px] p-3 border transition-all duration-500 cursor-pointer text-left flex flex-col justify-between shadow-[0_10px_30px_rgba(0,0,0,0.015)] hover:shadow-[0_20px_40px_rgba(27,102,177,0.06)] hover:-translate-y-1.5 ${
+                    idx === 0 
+                      ? 'border-brand-primary ring-2 ring-brand-primary/20 bg-brand-cream/5' 
+                      : 'border-brand-dark/5 hover:border-brand-primary/25'
+                  }`}
+                >
+                  <!-- Framed Image Area -->
+                  <div class="relative w-full aspect-[16/10] rounded-[18px] overflow-hidden mb-4 shrink-0 bg-gradient-to-br from-brand-secondary to-brand-primary">
+                    <img 
+                      src={course.image} 
+                      alt={course.title} 
+                      class="absolute inset-0 w-full h-full object-cover grayscale-[30%] opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105" 
+                      onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
+                    />
+                    <div class="absolute inset-0 flex items-center justify-center text-white/30 hidden">
+                      <i class="fa-solid fa-bolt text-4xl animate-pulse"></i>
+                    </div>
+                    
+                    <!-- Duration floating badge -->
+                    <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 shadow-sm flex items-center gap-1.5 z-10">
+                      <span class="w-1.5 h-1.5 rounded-full bg-brand-primary animate-pulse"></span>
+                      <span class="text-[9px] font-black uppercase text-brand-secondary tracking-wider">{course.duration}</span>
+                    </div>
+                  </div>
+
+                  <!-- Content Area -->
+                  <div class="px-2 pb-2 flex-grow flex flex-col justify-between w-full">
+                    <div>
+                      <h3 class="font-display font-black text-brand-secondary text-base lg:text-lg leading-tight mb-2 group-hover:text-brand-primary transition-colors">
+                        {course.title}
+                      </h3>
+                      <p class="text-[11px] text-brand-dark/60 font-semibold leading-relaxed mb-4 line-clamp-2">
+                        {course.target}
+                      </p>
+                    </div>
+
+                    <!-- Bottom Pricing & Action Row -->
+                    <div class="flex items-center justify-between pt-3 border-t border-brand-dark/5 mt-auto w-full">
+                      <div class="flex flex-col">
+                        <span class="text-[9px] font-black uppercase text-brand-dark/40 leading-none mb-0.5">Tariff excl. VAT</span>
+                        <span class="font-display font-black text-brand-secondary text-sm leading-none">{course.price}</span>
+                      </div>
+                      <span class="inline-flex items-center gap-1 text-[10px] font-black uppercase text-brand-primary tracking-wider group-hover:text-brand-accent transition-colors">
+                        View details
+                        <svg class="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <!-- Incompany Quote Form Section -->
+          <div id="offerte" class="bg-brand-secondary text-white rounded-3xl p-8 md:p-10 shadow-xl border border-white/5 relative overflow-hidden scroll-mt-24 reveal">
+            <div class="absolute -right-12 -bottom-12 text-white/5 pointer-events-none">
+              <i class="fa-solid fa-file-invoice-dollar text-[240px]"></i>
+            </div>
+            
+            <div class="relative z-10 max-w-2xl">
+              <h3 class="font-display text-2xl md:text-3xl font-black mb-3 text-white">Request Group Proposal</h3>
+              <p class="text-white/70 text-sm leading-relaxed mb-8">
+                Organize an accredited CPR & AED workshop for your team, company department, or sports association at your preferred date.
+              </p>
+              
+              <form class="space-y-4" onsubmit="event.preventDefault(); alert('Thank you! Your quote request has been sent. We will contact you shortly.'); this.reset();">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <input type="text" placeholder="Company / Organization" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors" required />
+                  <input type="text" placeholder="Contact Person" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors" required />
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <input type="email" placeholder="Email Address" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors" required />
+                  <input type="tel" placeholder="Phone Number" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors" required />
+                </div>
+                <textarea placeholder="Your message or preferred dates & number of participants" rows="3" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors"></textarea>
+                <button type="submit" class="bg-brand-accent hover:bg-brand-accent-hover text-white font-semibold py-3 px-8 rounded-xl transition-colors cursor-pointer">
+                  Request Custom Quote
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <!-- FAQ Section -->
+          <div class="rounded-2xl bg-white p-5 sm:p-7 border border-brand-dark/5 shadow-sm reveal">
+            <h3 class="font-display text-xl font-semibold text-brand-secondary mb-5">Frequently Asked Questions about CPR & AED</h3>
+            <div class="space-y-3.5">
+              {faqs.map((faq) => (
+                <div class="border-b border-brand-dark/5 pb-3.5 last:border-b-0 last:pb-0">
+                  <h4 class="font-display font-semibold text-sm sm:text-base text-brand-secondary mb-1.5 flex items-start gap-2">
+                    <span class="text-brand-primary">?</span>
+                    <span>{faq.q}</span>
+                  </h4>
+                  <p class="text-xs sm:text-[13px] text-brand-dark/70 leading-relaxed pl-4 font-normal">
+                    {faq.a}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Side: Sticky Booking & Summary Card (Desktop Only: 4 columns) -->
+        <div class="hidden lg:block lg:col-span-4 relative">
+          <div class="sticky top-28 lg:top-[148px] space-y-5 z-20">
+            
+            <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-lg border border-brand-dark/5">
+              <span class="text-[9px] font-semibold uppercase text-brand-dark/40 tracking-wider block mb-1">Selected Training</span>
+              <h3 id="sidebar-title" class="font-display text-xl sm:text-2xl font-semibold text-brand-secondary leading-snug">{defaultCourse.title}</h3>
+              
+              <!-- Pricing -->
+              <div class="mt-4 pt-4 border-t border-brand-dark/5">
+                <div class="flex items-baseline justify-between mb-0.5">
+                  <span class="text-[9px] font-semibold uppercase text-brand-dark/40 tracking-wider">Course Rate</span>
+                  <span class="text-[10px] text-brand-dark/50">Excl. VAT</span>
+                </div>
+                <div class="flex items-baseline gap-2">
+                  <span id="selected-price" class="font-display text-3xl sm:text-4xl font-semibold text-brand-secondary">{defaultCourse.price}</span>
+                  <span class="text-xs text-brand-dark/60">/ participant</span>
+                </div>
+              </div>
+
+              <!-- Spots & Duration badge -->
+              <div class="mt-3.5 p-2.5 rounded-xl bg-brand-cream/60 border border-brand-dark/5 space-y-1.5">
+                <div class="flex items-center gap-2 text-xs">
+                  <div class="w-6 h-6 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary shrink-0">
+                    <i class="fa-solid fa-clock text-[10px]"></i>
+                  </div>
+                  <div>
+                    <div class="text-[9px] font-semibold uppercase text-brand-dark/40 leading-none mb-0.5">Duration & Study Load</div>
+                    <span id="selected-duration" class="font-semibold text-brand-secondary text-xs">{defaultCourse.duration}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Inclusions Checklist -->
+              <div class="mt-4 pt-4 border-t border-brand-dark/5">
+                <span class="text-[9px] font-semibold uppercase text-brand-dark/40 tracking-wider block mb-2.5">What is included?</span>
+                <ul id="selected-inclusions" class="space-y-2">
+                  {defaultCourse.inclusions.map(item => (
+                    <li class="flex items-center gap-2 text-xs text-brand-dark/80 font-medium">
+                      <i class="fa-solid fa-circle-check text-emerald-500 text-xs shrink-0"></i>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <!-- CTA Buttons -->
+              <div class="mt-6 space-y-2.5">
+                <a 
+                  id="selected-cta"
+                  href={defaultCourse.registerLink}
+                  class="font-display font-semibold text-sm py-3.5 px-5 rounded-xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 w-full block shadow-md shadow-brand-accent/20 cursor-pointer"
+                >
+                  Direct Course Dates & Register
+                </a>
+                
+                <button 
+                  type="button" 
+                  data-open-contact-drawer
+                  class="font-display font-semibold text-xs py-2.5 px-4 rounded-xl text-center bg-white hover:bg-brand-cream text-brand-secondary border border-brand-dark/10 transition-all duration-300 w-full block cursor-pointer"
+                >
+                  Request Quote / Inquire
+                </button>
+              </div>
+
+              <!-- Guarantee Tag -->
+              <div class="mt-4 pt-4 border-t border-brand-dark/5 flex items-center justify-center gap-1.5 text-xs font-semibold text-emerald-600">
+                <i class="fa-solid fa-shield-check text-sm"></i>
+                <span>100% Pass Guarantee</span>
+              </div>
+
+            </div>
+
+            <!-- Direct Contact Box -->
+            <div class="bg-brand-cream/60 rounded-2xl p-4 sm:p-5 border border-brand-dark/5 text-center reveal">
+              <span class="text-[10px] font-semibold uppercase tracking-wider text-brand-dark/50 block mb-1">Need personal advice?</span>
+              <p class="text-xs text-brand-dark/70 mb-3 font-normal">Our medical safety advisors are happy to help tailor your resuscitation training.</p>
+              <a href="tel:0704447795" class="font-display font-semibold text-sm text-brand-primary hover:text-brand-primary/80 transition-colors inline-flex items-center gap-2">
+                <i class="fa-solid fa-phone text-xs"></i>
+                <span>+31 (0)70 - 444 77 95</span>
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Mobile Bottom Summary & Expand Drawer -->
+    <MobileCourseBottomBar defaultCourse={defaultCourse} advisorText="Personal advice for CPR and AED training?" />
+
+  </main>
+</Layout>
+
+<script define:vars={{ aedCourses }}>
+  function initCourseNavigator() {
+    const buttons = document.querySelectorAll('.course-card-btn');
+    if (!buttons.length) return;
+
+    function selectCourse(courseId) {
+      const course = aedCourses.find(c => c.id === courseId);
+      if (!course) return;
+
+      buttons.forEach(btn => {
+        if (btn.getAttribute('data-id') === courseId) {
+          btn.classList.add('border-brand-primary', 'ring-2', 'ring-brand-primary/20', 'bg-brand-cream/5');
+          btn.classList.remove('border-brand-dark/5', 'hover:border-brand-primary/25');
+        } else {
+          btn.classList.remove('border-brand-primary', 'ring-2', 'ring-brand-primary/20', 'bg-brand-cream/5');
+          btn.classList.add('border-brand-dark/5', 'hover:border-brand-primary/25');
+        }
+      });
+
+      const elements = {
+        title: document.getElementById('selected-title'),
+        tagline: document.getElementById('selected-tagline'),
+        target: document.getElementById('selected-target'),
+        requirements: document.getElementById('selected-requirements'),
+        exam: document.getElementById('selected-exam'),
+        certification: document.getElementById('selected-certification'),
+        sidebarTitle: document.getElementById('sidebar-title'),
+        price: document.getElementById('selected-price'),
+        duration: document.getElementById('selected-duration'),
+        modules: document.getElementById('selected-modules'),
+        inclusions: document.getElementById('selected-inclusions'),
+        cta: document.getElementById('selected-cta')
+      };
+
+      if (elements.title) elements.title.textContent = course.title;
+      if (elements.tagline) elements.tagline.textContent = course.tagline;
+      if (elements.target) elements.target.textContent = course.target;
+      if (elements.requirements) elements.requirements.textContent = course.requirements;
+      if (elements.exam) elements.exam.textContent = course.exam;
+      if (elements.certification) elements.certification.textContent = course.certification;
+      if (elements.sidebarTitle) elements.sidebarTitle.textContent = course.title;
+      if (elements.price) elements.price.textContent = course.price;
+      if (elements.duration) elements.duration.textContent = course.duration;
+      if (elements.cta) elements.cta.setAttribute('href', course.registerLink);
+
+      if (elements.modules && course.modules) {
+        elements.modules.innerHTML = course.modules.map(mod => `
+          <div class="flex items-center gap-2">
+            <span class="w-4 h-4 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-[10px] shrink-0">
+              <i class="fa-solid fa-check"></i>
+            </span>
+            <span class="font-medium text-brand-secondary text-xs sm:text-[13px]">${mod.name}</span>
+          </div>
+        `).join('');
+      }
+
+      if (elements.inclusions && course.inclusions) {
+        elements.inclusions.innerHTML = course.inclusions.map(inc => `
+          <li class="flex items-center gap-2 text-xs text-brand-dark/80 font-medium">
+            <i class="fa-solid fa-circle-check text-emerald-500 text-xs shrink-0"></i>
+            <span>${inc}</span>
+          </li>
+        `).join('');
+      }
+
+      // Mobile Bottom Bar sync
+      const mobileTitle = document.getElementById('mobile-bar-title');
+      const mobilePrice = document.getElementById('mobile-bar-price');
+      const mobileDuration = document.getElementById('mobile-bar-duration');
+      const mobileCta = document.getElementById('mobile-bar-cta');
+
+      if (mobileTitle) mobileTitle.textContent = course.title;
+      if (mobilePrice) mobilePrice.textContent = course.price;
+      if (mobileDuration) mobileDuration.textContent = course.duration;
+      if (mobileCta) mobileCta.setAttribute('href', course.registerLink);
+    }
+
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-id');
+        if (id) selectCourse(id);
+      });
+    });
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialId = urlParams.get('course') || (window.location.hash ? window.location.hash.replace('#', '') : null);
+    if (initialId && aedCourses.some(c => c.id === initialId)) {
+      selectCourse(initialId);
+    }
+  }
+
+  initCourseNavigator();
+  document.addEventListener('astro:page-load', initCourseNavigator);
+</script>

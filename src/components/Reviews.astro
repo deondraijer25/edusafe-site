@@ -66,14 +66,14 @@ const reviewsRow2 = [
   
   <!-- Header Text -->
   <div class="max-w-[1280px] mx-auto px-6 mb-12 text-center animate-fade-in">
-    <span class="text-xs font-display font-black tracking-widest uppercase text-brand-primary block mb-3">Beoordelingen</span>
-    <h2 class="font-display text-4xl md:text-5xl font-black tracking-tight text-brand-secondary">
+    <span class="text-xs font-display font-semibold tracking-widest uppercase text-brand-primary block mb-3">Beoordelingen</span>
+    <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-brand-secondary">
       Wat klanten over Edusafe zeggen
     </h2>
     
     <!-- App Store Rating Badge representation -->
-    <div class="flex items-center justify-center gap-2 mt-4 text-xs font-bold text-brand-dark/70">
-      <span class="font-black text-brand-secondary bg-brand-primary/10 px-2.5 py-0.5 rounded-lg border border-brand-primary/20">4.9</span>
+    <div class="flex items-center justify-center gap-2 mt-4 text-xs font-medium text-brand-dark/70">
+      <span class="font-semibold text-brand-secondary bg-brand-primary/10 px-2.5 py-0.5 rounded-lg border border-brand-primary/20">4.9</span>
       <div class="flex gap-0.5 text-amber-500">
         {Array.from({ length: 5 }).map(() => (
           <svg class="h-3.5 w-3.5 fill-current" viewBox="0 0 20 20">
@@ -104,18 +104,18 @@ const reviewsRow2 = [
                 </div>
                 <span class="text-[10px] text-brand-dark/40 font-medium">{review.date}</span>
               </div>
-              <h4 class="font-display font-black text-brand-secondary text-sm sm:text-base mb-2">{review.title}</h4>
-              <p class="text-xs sm:text-sm text-brand-dark/75 leading-relaxed font-medium mb-6">
+              <h4 class="font-display font-semibold text-brand-secondary text-sm sm:text-base mb-2">{review.title}</h4>
+              <p class="text-xs sm:text-sm text-brand-dark/75 leading-relaxed font-normal mb-6">
                 "{review.text}"
               </p>
             </div>
             <div class="flex items-center gap-3 pt-4 border-t border-brand-dark/5">
               <!-- Initials Avatar Badge -->
-              <div class="w-9 h-9 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xs font-black border border-brand-primary/20 uppercase">
+              <div class="w-9 h-9 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xs font-semibold border border-brand-primary/20 uppercase">
                 {review.author.split(' ').map(n => n[0]).join('')}
               </div>
               <div>
-                <span class="font-display font-black text-brand-secondary text-xs block leading-tight">{review.author}</span>
+                <span class="font-display font-semibold text-brand-secondary text-xs block leading-tight">{review.author}</span>
                 <span class="text-[10px] text-brand-dark/50 font-medium">{review.role}</span>
               </div>
             </div>
@@ -137,18 +137,18 @@ const reviewsRow2 = [
                 </div>
                 <span class="text-[10px] text-brand-dark/40 font-medium">{review.date}</span>
               </div>
-              <h4 class="font-display font-black text-brand-secondary text-sm sm:text-base mb-2">{review.title}</h4>
-              <p class="text-xs sm:text-sm text-brand-dark/75 leading-relaxed font-medium mb-6">
+              <h4 class="font-display font-semibold text-brand-secondary text-sm sm:text-base mb-2">{review.title}</h4>
+              <p class="text-xs sm:text-sm text-brand-dark/75 leading-relaxed font-normal mb-6">
                 "{review.text}"
               </p>
             </div>
             <div class="flex items-center gap-3 pt-4 border-t border-brand-dark/5">
               <!-- Initials Avatar Badge -->
-              <div class="w-9 h-9 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xs font-black border border-brand-primary/20 uppercase">
+              <div class="w-9 h-9 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xs font-semibold border border-brand-primary/20 uppercase">
                 {review.author.split(' ').map(n => n[0]).join('')}
               </div>
               <div>
-                <span class="font-display font-black text-brand-secondary text-xs block leading-tight">{review.author}</span>
+                <span class="font-display font-semibold text-brand-secondary text-xs block leading-tight">{review.author}</span>
                 <span class="text-[10px] text-brand-dark/50 font-medium">{review.role}</span>
               </div>
             </div>
@@ -173,18 +173,18 @@ const reviewsRow2 = [
                 </div>
                 <span class="text-[10px] text-brand-dark/40 font-medium">{review.date}</span>
               </div>
-              <h4 class="font-display font-black text-brand-secondary text-sm sm:text-base mb-2">{review.title}</h4>
-              <p class="text-xs sm:text-sm text-brand-dark/75 leading-relaxed font-medium mb-6">
+              <h4 class="font-display font-semibold text-brand-secondary text-sm sm:text-base mb-2">{review.title}</h4>
+              <p class="text-xs sm:text-sm text-brand-dark/75 leading-relaxed font-normal mb-6">
                 "{review.text}"
               </p>
             </div>
             <div class="flex items-center gap-3 pt-4 border-t border-brand-dark/5">
               <!-- Initials Avatar Badge -->
-              <div class="w-9 h-9 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xs font-black border border-brand-primary/20 uppercase">
+              <div class="w-9 h-9 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xs font-semibold border border-brand-primary/20 uppercase">
                 {review.author.split(' ').map(n => n[0]).join('')}
               </div>
               <div>
-                <span class="font-display font-black text-brand-secondary text-xs block leading-tight">{review.author}</span>
+                <span class="font-display font-semibold text-brand-secondary text-xs block leading-tight">{review.author}</span>
                 <span class="text-[10px] text-brand-dark/50 font-medium">{review.role}</span>
               </div>
             </div>
@@ -206,18 +206,18 @@ const reviewsRow2 = [
                 </div>
                 <span class="text-[10px] text-brand-dark/40 font-medium">{review.date}</span>
               </div>
-              <h4 class="font-display font-black text-brand-secondary text-sm sm:text-base mb-2">{review.title}</h4>
-              <p class="text-xs sm:text-sm text-brand-dark/75 leading-relaxed font-medium mb-6">
+              <h4 class="font-display font-semibold text-brand-secondary text-sm sm:text-base mb-2">{review.title}</h4>
+              <p class="text-xs sm:text-sm text-brand-dark/75 leading-relaxed font-normal mb-6">
                 "{review.text}"
               </p>
             </div>
             <div class="flex items-center gap-3 pt-4 border-t border-brand-dark/5">
               <!-- Initials Avatar Badge -->
-              <div class="w-9 h-9 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xs font-black border border-brand-primary/20 uppercase">
+              <div class="w-9 h-9 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xs font-semibold border border-brand-primary/20 uppercase">
                 {review.author.split(' ').map(n => n[0]).join('')}
               </div>
               <div>
-                <span class="font-display font-black text-brand-secondary text-xs block leading-tight">{review.author}</span>
+                <span class="font-display font-semibold text-brand-secondary text-xs block leading-tight">{review.author}</span>
                 <span class="text-[10px] text-brand-dark/50 font-medium">{review.role}</span>
               </div>
             </div>

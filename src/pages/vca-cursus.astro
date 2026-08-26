@@ -1,0 +1,487 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MobileCourseBottomBar from '../components/MobileCourseBottomBar.astro';
+
+const vcaCourses = [
+  {
+    id: "vca-basis",
+    title: "Basisveiligheid VCA (B-VCA)",
+    tagline: "Het officiële veiligheidscertificaat voor operationele medewerkers",
+    price: "€ 195,00",
+    spotsText: "Inclusief officieel examen",
+    duration: "1 cursusdag + direct examen",
+    target: "Voor operationele medewerkers in de bouw, techniek, industrie, installatie en logistiek die op VCA-verplichte locaties werken.",
+    requirements: "Geen specifieke vooropleiding vereist. Vanaf 16 jaar.",
+    exam: "Officieel digitaal beeldschermexamen (CBT) van 40 meerkeuzevragen (maximaal 60 minuten).",
+    certification: "Officieel SSVV-erkend VCA Basis diploma (10 jaar geldig) + digitaal pasje & CDR registratie.",
+    inclusions: ["Lesmateriaal & oefenvragen", "Klassikale training door veiligheidsexpert", "Officieel VCA examen (PBNA/CBT)", "CDR registratie in Centraal Diploma Register", "Koffie, thee & lunch"],
+    modules: [
+      { name: "Arbowetgeving, rechten en plichten op de werkvloer" },
+      { name: "Risico's, ongevallenpreventie en LMRA (Laatste Minuut Risico Analyse)" },
+      { name: "Gevaarlijke stoffen, etikettering en brand- & explosiegevaar" },
+      { name: "Werken op hoogte, steigers, ladders en valbeveiliging" },
+      { name: "Besloten ruimtes, elektriciteit en handgereedschap" },
+      { name: "Persoonlijke beschermingsmiddelen (PBM's)" }
+    ],
+    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=600",
+    registerLink: "/cursusdata?category=VCA"
+  },
+  {
+    id: "vca-vol",
+    title: "VOL-VCA (Voor Leidinggevenden)",
+    tagline: "Veiligheid voor Operationeel Leidinggevenden VCA",
+    price: "€ 225,00",
+    spotsText: "Voor leidinggevenden & ZZP",
+    duration: "1 cursusdag + direct examen",
+    target: "Voor operationeel leidinggevenden, projectleiders, uitvoerders, werkvoorbereiders en ZZP-ers die als hoofdaannemer werken.",
+    requirements: "Kennis van operationele processen; geen specifiek voorcertificaat verplicht.",
+    exam: "Officieel digitaal examen van 70 meerkeuze- en koppelvragen (maximaal 75 minuten).",
+    certification: "Officieel VOL-VCA diploma (10 jaar geldig) + vermelding in Centraal Diploma Register (CDR).",
+    inclusions: ["Compleet lesboek VOL-VCA", "Proefexamens & examengarantie", "Officieel CBT Examen", "Landelijke registratie", "Koffie, thee & uitgebreide lunch"],
+    modules: [
+      { name: "Arbowetgeving en Europese richtlijnen voor leidinggevenden" },
+      { name: "Taak-Risico-Analyses (TRA) en werkvergunningen" },
+      { name: "Veiligheidsgedrag, toolboxmeetings en inspecties" },
+      { name: "Gevaarlijke stoffen en milieuzorg" },
+      { name: "Noodplannen, calamiteiten en bedrijfshulpverlening" },
+      { name: "Ergonomie en fysieke belasting" }
+    ],
+    image: "https://images.unsplash.com/photo-1581094288338-2314dddb7ecc?auto=format&fit=crop&q=80&w=600",
+    registerLink: "/cursusdata?category=VCA"
+  },
+  {
+    id: "vca-elearning",
+    title: "VCA E-learning + Examen",
+    tagline: "Studeer in eigen tempo online en doe examen op een locatie naar keuze",
+    price: "€ 145,00",
+    spotsText: "Flexibel & Snel",
+    duration: "Zelfstudie online (ca. 6-8 uur) + examen",
+    target: "Voor zelfstandigen en medewerkers die zelfstandig online willen leren en snel examen willen doen.",
+    requirements: "Toegang tot een computer, tablet of smartphone met internetverbinding.",
+    exam: "Officieel CBT beeldschermexamen op één van onze 50+ examenlocaties in Nederland.",
+    certification: "Officieel VCA diploma (B-VCA of VOL-VCA, 10 jaar geldig) met CDR registratie.",
+    inclusions: ["Interactieve online e-learning module", "Onbeperkt officiële proefexamens oefenen", "Examenreservering op datum naar keuze", "Diploma & digitaal pasje"],
+    modules: [
+      { name: "Interactieve videolessen per onderwerp" },
+      { name: "Kennisquizzen na elk hoofdstuk" },
+      { name: "Proefexamens conform exameneisen SSVV" },
+      { name: "Voortgangsrapportage en examenvoorbereiding" }
+    ],
+    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=600",
+    registerLink: "/e-learning"
+  },
+  {
+    id: "vil-vcu",
+    title: "VIL-VCU (Intercedenten & Leidinggevenden)",
+    tagline: "Veiligheid voor Intercedenten en Leidinggevenden VCU",
+    price: "€ 215,00",
+    spotsText: "Voor de uitzendbranche",
+    duration: "1 cursusdag of E-learning + examen",
+    target: "Voor intercedenten, recruiters en leidinggevenden van uitzendbureaus en detacheringsorganisaties die personeel uitzenden naar VCA-gecertificeerde bedrijven.",
+    requirements: "Geen specifieke toelatingseisen.",
+    exam: "Officieel digitaal VIL-VCU examen (70 vragen, 75 minuten).",
+    certification: "Officieel VIL-VCU diploma (10 jaar geldig) + registratie in CDR.",
+    inclusions: ["Lesmateriaal VIL-VCU", "Uitzend-specifieke casuïstiek", "Officieel examen", "CDR registratie", "Koffie, thee & lunch"],
+    modules: [
+      { name: "Arbowetgeving en aansprakelijkheid bij terbeschikkingstelling" },
+      { name: "Functie-eisen en passende PBM-voorziening" },
+      { name: "Risico-inventarisatie bij inlenende bedrijven" },
+      { name: "Monitoring en evaluatie van uitzendkrachten" }
+    ],
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=600",
+    registerLink: "/cursusdata?category=VCA"
+  },
+  {
+    id: "vca-anderstalig",
+    title: "VCA Engels, Pools & Roemeens",
+    tagline: "VCA training en examen in diverse Europese talen",
+    price: "€ 265,00",
+    spotsText: "English, Polish, Romanian & more",
+    duration: "1 cursusdag + anderstalig examen",
+    target: "Voor anderstalige en internationale medewerkers die een officieel Nederlands VCA certificaat nodig hebben.",
+    requirements: "Geen vooropleiding vereist.",
+    exam: "Officieel examen in de gekozen taal (Engels, Pools, Roemeens, Duits, Frans, Arabisch etc.).",
+    certification: "Officieel VCA Diploma (10 jaar geldig) met vermelding van examentaal + CDR registratie.",
+    inclusions: ["Lesmateriaal in examentaal", "Examentraining met vertaalde proefexamens", "Anderstalig examen", "Diploma & pasje", "Lunch inbegrepen"],
+    modules: [
+      { name: "Safety regulations & rights" },
+      { name: "Hazardous substances & firefighting" },
+      { name: "Working at height & confined spaces" },
+      { name: "Personal protective equipment (PPE)" }
+    ],
+    image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=600",
+    registerLink: "/cursusdata?category=VCA"
+  }
+];
+
+const defaultCourse = vcaCourses[0];
+
+const faqs = [
+  {
+    q: "Wat is het verschil tussen Basis VCA (B-VCA) en VOL-VCA?",
+    a: "Basis VCA (B-VCA) is bedoeld voor operationele medewerkers en toetst of zij veilig kunnen werken volgens de Arbowet. VOL-VCA (Veiligheid voor Operationeel Leidinggevenden) is bedoeld voor leidinggevenden, projectleiders en ZZP-ers die als hoofdaannemer optreden. VOL-VCA behandelt naast veilige werkmethoden ook het opstellen van werkvergunningen, Taak-Risico-Analyses (TRA) en het aansturen van medewerkers."
+  },
+  {
+    q: "Hoe lang is een VCA-diploma geldig?",
+    a: "Een officieel VCA-diploma (zowel Basis VCA, VOL-VCA als VIL-VCU) is 10 jaar geldig vanaf de examendatum. Uw diploma wordt direct geregistreerd in het landelijke Centraal Diploma Register (CDR) van de SSVV."
+  },
+  {
+    q: "Wat gebeurt er als ik niet in één keer slaag voor het VCA examen?",
+    a: "Bij Edusafe hanteren we een unieke 100% slagingsgarantie: mocht u onverhoopt de eerste keer niet slagen, dan mag u gratis een extra examentraining bijwonen en betaalt u enkel de directe her-examenkosten van het examenbureau."
+  },
+  {
+    q: "Kan het VCA examen ook in een andere taal worden afgelegd?",
+    a: "Ja, het Basis VCA examen kan worden afgelegd in het Engels, Pools, Roemeens, Arabisch, Turks, Spaans, Portugees, Duits, Frans, Hongaars, Bulgaars, Grieks, Kroatisch, Russisch, Slowaaks en Tsjechisch. VOL-VCA is beschikbaar in het Nederlands, Engels, Duits en Frans."
+  }
+];
+---
+
+<Layout title="VCA Cursussen (Basis & VOL) | Edusafe" description="Haal snel uw officiële VCA certificaat (B-VCA, VOL-VCA of VIL-VCU) bij Edusafe. 100% slagingsgarantie, inclusief officieel CBT examen en CDR registratie.">
+  <main class="w-full">
+    
+    <!-- Hero Header Section (Spacious, Rich Photography & Directional Gradient) -->
+    <section class="relative bg-brand-secondary text-white pt-20 pb-36 md:pt-24 md:pb-44 overflow-hidden">
+      <div class="absolute inset-0 z-0 overflow-hidden">
+        <img 
+          src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=1600" 
+          alt="VCA Opleidingen en Veiligheid" 
+          class="w-full h-full object-cover opacity-35 scale-105" 
+        />
+        <div class="absolute inset-0 bg-gradient-to-r from-brand-secondary via-brand-secondary/85 to-brand-secondary/40"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-brand-secondary via-transparent to-black/20"></div>
+      </div>
+      
+      <div class="max-w-[1280px] mx-auto px-6 relative z-10">
+        <div class="max-w-3xl animate-fade-in">
+          <span class="inline-flex items-center gap-1.5 text-brand-accent font-display font-semibold text-xs uppercase tracking-wider mb-3.5">
+            <i class="fa-solid fa-hard-hat animate-pulse"></i>
+            SSVV Erkend & 100% Slagingsgarantie
+          </span>
+          <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-tight mb-4 text-white">
+            VCA <span class="relative inline-block text-white px-5 py-2 mx-1 transform -rotate-1"><span class="absolute inset-0 bg-brand-accent rounded-2xl z-0"></span><span class="relative z-10">Opleidingen</span></span>
+          </h1>
+          <p class="text-white/90 text-base md:text-lg max-w-2xl leading-relaxed mb-6 font-normal">
+            Haal snel en vakkundig uw officiële VCA-diploma. Keuze uit Basis VCA, VOL VCA voor leidinggevenden en VIL-VCU voor intercedenten, inclusief e-learning en officieel CBT-examen.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content Grid (Floating overlap) -->
+    <section class="max-w-[1280px] mx-auto px-6 -mt-20 md:-mt-24 relative z-20 pb-24">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
+        
+        <!-- Left Side: Dynamic Grid of Cards + Details (8 columns) -->
+        <div class="lg:col-span-8 space-y-6">
+          
+          <!-- Compact Dynamic Details Card -->
+          <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-md border border-brand-dark/5 reveal" id="details-card-left">
+            
+            <!-- Title Header -->
+            <div class="border-b border-brand-dark/5 pb-3 mb-3.5 flex flex-wrap items-baseline justify-between gap-2">
+              <div>
+                <span id="selected-tagline" class="text-[10px] font-semibold text-brand-primary uppercase tracking-wider block mb-0.5">{defaultCourse.tagline}</span>
+                <h2 id="selected-title" class="font-display text-xl sm:text-2xl font-semibold text-brand-secondary leading-snug">{defaultCourse.title}</h2>
+              </div>
+            </div>
+            
+            <!-- Description -->
+            <div class="mb-4">
+              <p id="selected-target" class="text-brand-dark/75 text-xs sm:text-[13px] leading-relaxed font-normal">
+                {defaultCourse.target}
+              </p>
+            </div>
+            
+            <!-- Modules Checklist -->
+            <div class="mb-4 border-t border-brand-dark/5 pt-3.5">
+              <h3 class="font-display text-[10px] font-semibold uppercase text-brand-dark/40 tracking-widest mb-2.5">Examenonderdelen & Kennisgebieden</h3>
+              <div id="selected-modules" class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5">
+                {defaultCourse.modules.map(mod => (
+                  <div class="flex items-center gap-2">
+                    <span class="w-4 h-4 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-[10px] shrink-0">
+                      <i class="fa-solid fa-check"></i>
+                    </span>
+                    <span class="font-medium text-brand-secondary text-xs sm:text-[13px]">{mod.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <!-- Specs Table -->
+            <div class="border-t border-brand-dark/5 pt-3.5">
+              <h3 class="font-display text-[10px] font-semibold uppercase text-brand-dark/40 tracking-widest mb-3">Praktische Informatie</h3>
+              <div class="space-y-2 text-xs">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-1">
+                  <span class="font-semibold text-brand-secondary text-[10px] uppercase tracking-wider">Toelatingseisen</span>
+                  <span id="selected-requirements" class="sm:col-span-2 text-brand-dark/75 font-normal leading-relaxed">{defaultCourse.requirements}</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-1 border-t border-brand-dark/5 pt-2">
+                  <span class="font-semibold text-brand-secondary text-[10px] uppercase tracking-wider">Examen & Toetsing</span>
+                  <span id="selected-exam" class="sm:col-span-2 text-brand-dark/75 font-normal leading-relaxed">{defaultCourse.exam}</span>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-1 border-t border-brand-dark/5 pt-2">
+                  <span class="font-semibold text-brand-secondary text-[10px] uppercase tracking-wider">Certificering</span>
+                  <span id="selected-certification" class="sm:col-span-2 text-brand-dark/75 font-normal leading-relaxed">{defaultCourse.certification}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section Divider/Header for Variations -->
+          <div class="pt-1 reveal">
+            <h3 class="font-display text-lg sm:text-xl font-semibold text-brand-secondary mb-1">Alle VCA Opleidingen & Examentypes</h3>
+            <p class="text-xs text-brand-dark/60 font-medium mb-3">Klik op een van de onderstaande trainingen om de details hierboven te bekijken.</p>
+          </div>
+
+          <!-- Cards Grid Section -->
+          <div class="reveal">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {vcaCourses.map((course, idx) => (
+                <div 
+                  class={`course-card cursor-pointer rounded-2xl border transition-all duration-300 overflow-hidden flex flex-col justify-between group relative bg-white hover:border-brand-primary/40 hover:shadow-md ${idx === 0 ? 'border-brand-primary ring-2 ring-brand-primary/20 shadow-sm' : 'border-brand-dark/5'}`}
+                  data-course-id={course.id}
+                >
+                  <div class="relative h-28 w-full overflow-hidden bg-brand-secondary">
+                    <img src={course.image} alt={course.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-90" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-brand-secondary/80 to-transparent"></div>
+                    <div class="absolute top-2.5 left-2.5 bg-white/90 backdrop-blur-sm px-2.5 py-0.5 rounded-lg border border-white/20">
+                      <span class="text-[9px] font-semibold uppercase text-brand-secondary tracking-wider">{course.duration}</span>
+                    </div>
+                  </div>
+                  
+                  <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+                    <div>
+                      <span class="text-[9px] font-semibold text-brand-primary uppercase tracking-wider block mb-1">{course.tagline}</span>
+                      <h3 class="font-display font-semibold text-brand-secondary text-sm sm:text-base leading-tight mb-1.5 group-hover:text-brand-primary transition-colors">
+                        {course.title}
+                      </h3>
+                      <p class="text-brand-dark/70 text-xs line-clamp-2 leading-relaxed mb-3 font-normal">
+                        {course.target}
+                      </p>
+                    </div>
+                    
+                    <div class="pt-2.5 border-t border-brand-dark/5 flex items-center justify-between mt-auto">
+                      <div class="flex flex-col">
+                        <span class="text-[9px] font-semibold uppercase text-brand-dark/40 leading-none mb-0.5">Tarief excl.</span>
+                        <span class="font-display font-semibold text-brand-secondary text-sm leading-none">{course.price}</span>
+                      </div>
+                      <span class="inline-flex items-center gap-1 text-[10px] font-semibold uppercase text-brand-primary tracking-wider group-hover:text-brand-accent transition-colors">
+                        Bekijk details <i class="fa-solid fa-arrow-right text-[9px]"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Incompany / Group Quote Banner -->
+          <div class="rounded-2xl bg-brand-secondary text-white p-6 sm:p-8 relative overflow-hidden shadow-lg reveal">
+            <div class="relative z-10 max-w-xl">
+              <span class="text-xs font-semibold uppercase tracking-wider text-brand-accent block mb-1.5">Voor aannemers, installateurs & industrie</span>
+              <h3 class="font-display text-xl sm:text-2xl font-semibold mb-2.5">VCA training & examen op uw eigen locatie</h3>
+              <p class="text-white/80 text-xs sm:text-sm leading-relaxed mb-5 font-normal">
+                Wilt u uw hele team of projectploeg in één keer VCA-gecertificeerd hebben? Wij verzorgen de voorbereidende training én laten een gecertificeerd examinator naar uw locatie komen.
+              </p>
+              <button 
+                type="button" 
+                data-open-contact-drawer
+                class="font-display font-semibold text-xs sm:text-sm py-3 px-6 rounded-xl bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 w-full sm:w-auto shadow-md shadow-brand-accent/20 cursor-pointer inline-flex items-center justify-center gap-2"
+              >
+                <span>Vrijblijvende VCA Groepsofferte Aanvragen</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- FAQ Section -->
+          <div class="rounded-2xl bg-white p-5 sm:p-7 border border-brand-dark/5 shadow-sm reveal">
+            <h3 class="font-display text-xl font-semibold text-brand-secondary mb-5">Veelgestelde vragen over VCA</h3>
+            <div class="space-y-3.5">
+              {faqs.map((faq) => (
+                <div class="border-b border-brand-dark/5 pb-3.5 last:border-b-0 last:pb-0">
+                  <h4 class="font-display font-semibold text-sm sm:text-base text-brand-secondary mb-1.5 flex items-start gap-2">
+                    <span class="text-brand-primary">?</span>
+                    <span>{faq.q}</span>
+                  </h4>
+                  <p class="text-xs sm:text-[13px] text-brand-dark/70 leading-relaxed pl-4 font-normal">
+                    {faq.a}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Side: Sticky Booking & Summary Card (Desktop Only: 4 columns) -->
+        <div class="hidden lg:block lg:col-span-4 relative">
+          <div class="sticky top-28 lg:top-[148px] space-y-5 z-20">
+            
+            <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-lg border border-brand-dark/5">
+              <span class="text-[9px] font-semibold uppercase text-brand-dark/40 tracking-wider block mb-1">Geselecteerde training</span>
+              <h3 id="sidebar-title" class="font-display text-xl sm:text-2xl font-semibold text-brand-secondary leading-snug">{defaultCourse.title}</h3>
+              
+              <!-- Pricing -->
+              <div class="mt-4 pt-4 border-t border-brand-dark/5">
+                <div class="flex items-baseline justify-between mb-0.5">
+                  <span class="text-[9px] font-semibold uppercase text-brand-dark/40 tracking-wider">Cursustarief</span>
+                  <span class="text-[10px] text-brand-dark/50">Excl. BTW</span>
+                </div>
+                <div class="flex items-baseline gap-2">
+                  <span id="selected-price" class="font-display text-3xl sm:text-4xl font-semibold text-brand-secondary">{defaultCourse.price}</span>
+                  <span class="text-xs text-brand-dark/60">/ cursist</span>
+                </div>
+              </div>
+
+              <!-- Spots & Duration badge -->
+              <div class="mt-3.5 p-2.5 rounded-xl bg-brand-cream/60 border border-brand-dark/5 space-y-1.5">
+                <div class="flex items-center gap-2 text-xs">
+                  <div class="w-6 h-6 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary shrink-0">
+                    <i class="fa-solid fa-clock text-[10px]"></i>
+                  </div>
+                  <div>
+                    <div class="text-[9px] font-semibold uppercase text-brand-dark/40 leading-none mb-0.5">Duur & Studielast</div>
+                    <span id="selected-duration" class="font-semibold text-brand-secondary text-xs">{defaultCourse.duration}</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Inclusions Checklist -->
+              <div class="mt-4 pt-4 border-t border-brand-dark/5">
+                <span class="text-[9px] font-semibold uppercase text-brand-dark/40 tracking-wider block mb-2.5">Wat is inclusief?</span>
+                <ul id="selected-inclusions" class="space-y-2">
+                  {defaultCourse.inclusions.map(item => (
+                    <li class="flex items-center gap-2 text-xs text-brand-dark/80 font-medium">
+                      <i class="fa-solid fa-circle-check text-emerald-500 text-xs shrink-0"></i>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <!-- CTA Buttons -->
+              <div class="mt-6 space-y-2.5">
+                <a 
+                  id="selected-cta"
+                  href={defaultCourse.registerLink}
+                  class="font-display font-semibold text-sm py-3.5 px-5 rounded-xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 w-full block shadow-md shadow-brand-accent/20 cursor-pointer"
+                >
+                  Direct Cursusdata & Inschrijven
+                </a>
+
+                <button 
+                  type="button" 
+                  data-open-contact-drawer
+                  class="font-display font-semibold text-xs py-2.5 px-4 rounded-xl text-center bg-white hover:bg-brand-cream text-brand-secondary border border-brand-dark/10 transition-all duration-300 w-full block cursor-pointer"
+                >
+                  Offerte / Vraag stellen
+                </button>
+              </div>
+
+              <!-- Guarantee Tag -->
+              <div class="mt-4 pt-4 border-t border-brand-dark/5 flex items-center justify-center gap-1.5 text-xs font-semibold text-emerald-600">
+                <i class="fa-solid fa-shield-check text-sm"></i>
+                <span>100% Slagingsgarantie</span>
+              </div>
+
+            </div>
+
+            <!-- Direct Contact Box -->
+            <div class="bg-brand-cream/60 rounded-2xl p-4 sm:p-5 border border-brand-dark/5 text-center reveal">
+              <span class="text-[10px] font-semibold uppercase tracking-wider text-brand-dark/50 block mb-1">Persoonlijk advies nodig?</span>
+              <p class="text-xs text-brand-dark/70 mb-3 font-normal">Onze opleidingsadviseurs helpen u graag bij het inplannen van uw VCA-examens.</p>
+              <a href="tel:0704447795" class="font-display font-semibold text-sm text-brand-primary hover:text-brand-primary/80 transition-colors inline-flex items-center gap-2">
+                <i class="fa-solid fa-phone text-xs"></i>
+                <span>070 - 444 77 95</span>
+              </a>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Mobile Bottom Summary & Expand Drawer -->
+    <MobileCourseBottomBar defaultCourse={defaultCourse} advisorText="Persoonlijk advies over VCA certificering?" />
+
+  </main>
+</Layout>
+
+<script is:inline define:vars={{ vcaCourses }}>
+  function initCourseSelector() {
+    const cards = document.querySelectorAll('.course-card');
+    const selectedTitle = document.getElementById('selected-title');
+    const selectedTagline = document.getElementById('selected-tagline');
+    const selectedTarget = document.getElementById('selected-target');
+    const selectedModules = document.getElementById('selected-modules');
+    const selectedRequirements = document.getElementById('selected-requirements');
+    const selectedExam = document.getElementById('selected-exam');
+    const selectedCertification = document.getElementById('selected-certification');
+    const selectedPrice = document.getElementById('selected-price');
+    const selectedDuration = document.getElementById('selected-duration');
+    const selectedInclusions = document.getElementById('selected-inclusions');
+    const selectedCta = document.getElementById('selected-cta');
+    const sidebarTitle = document.getElementById('sidebar-title');
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => {
+        const id = card.getAttribute('data-course-id');
+        const course = vcaCourses.find(c => c.id === id);
+        if (!course) return;
+
+        cards.forEach(c => {
+          c.classList.remove('border-brand-primary', 'ring-2', 'ring-brand-primary/20', 'shadow-md');
+          c.classList.add('border-brand-dark/5');
+        });
+        card.classList.add('border-brand-primary', 'ring-2', 'ring-brand-primary/20', 'shadow-md');
+        card.classList.remove('border-brand-dark/5');
+
+        if (selectedTitle) selectedTitle.textContent = course.title;
+        if (sidebarTitle) sidebarTitle.textContent = course.title;
+        if (selectedTagline) selectedTagline.textContent = course.tagline;
+        if (selectedTarget) selectedTarget.textContent = course.target;
+        if (selectedRequirements) selectedRequirements.textContent = course.requirements;
+        if (selectedExam) selectedExam.textContent = course.exam;
+        if (selectedCertification) selectedCertification.textContent = course.certification;
+        if (selectedPrice) selectedPrice.textContent = course.price;
+        if (selectedDuration) selectedDuration.textContent = course.duration;
+        if (selectedCta) selectedCta.setAttribute('href', course.registerLink);
+
+        if (selectedModules) {
+          selectedModules.innerHTML = course.modules.map(mod => `
+            <div class="flex items-center gap-2">
+              <span class="w-4 h-4 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-[10px] shrink-0">
+                <i class="fa-solid fa-check"></i>
+              </span>
+              <span class="font-medium text-brand-secondary text-xs sm:text-[13px]">${mod.name}</span>
+            </div>
+          `).join('');
+        }
+
+        if (selectedInclusions) {
+          selectedInclusions.innerHTML = course.inclusions.map(inc => `
+            <li class="flex items-center gap-2 text-xs text-brand-dark/80 font-medium">
+              <i class="fa-solid fa-circle-check text-emerald-500 text-xs shrink-0"></i>
+              <span>${inc}</span>
+            </li>
+          `).join('');
+        }
+
+        // Sync with mobile bottom drawer
+        if (typeof window.syncMobileCourseDrawer === 'function') {
+          window.syncMobileCourseDrawer(course);
+        }
+
+        const detailsEl = document.getElementById('details-card-left');
+        if (detailsEl) {
+          detailsEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      });
+    });
+  }
+
+  initCourseSelector();
+  document.addEventListener('astro:page-load', initCourseSelector);
+</script>

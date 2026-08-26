@@ -1,0 +1,271 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { courses_en as courses } from '../../../data/courses_en.js';
+
+export async function getStaticPaths() {
+  return courses.map(course => ({
+    params: { id: course.id },
+    props: { course }
+  }));
+}
+
+const { course } = Astro.props;
+---
+
+<Layout 
+  title={`Register for ${course.title} | Edusafe`} 
+  description={`Secure your spot for ${course.title} with Edusafe on ${course.date}. Official certification provided upon completion.`}
+>
+  <main class="w-full">
+    
+    <!-- Hero Detail Header -->
+    <section class="relative bg-brand-secondary text-white pt-20 pb-20 sm:pb-24 md:pt-24 md:pb-28 overflow-hidden">
+      <div class="absolute inset-0 z-0 overflow-hidden">
+        <img src={course.image} alt={course.title} class="w-full h-full object-cover opacity-30 scale-105" />
+        <div class="absolute inset-0 bg-gradient-to-r from-brand-secondary via-brand-secondary/85 to-brand-secondary/40"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-brand-secondary via-transparent to-black/20"></div>
+      </div>
+      
+      <div class="max-w-[1280px] mx-auto px-6 relative z-10">
+        <!-- Back Button -->
+        <a href="/en/course-dates" class="inline-flex items-center gap-2 text-white/85 hover:text-white mb-6 transition-all duration-300 font-semibold bg-white/10 hover:bg-white/20 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/20 text-xs group">
+          <i class="fa-solid fa-arrow-left text-[10px] group-hover:-translate-x-1 transition-transform"></i>
+          <span>Back to all course dates</span>
+        </a>
+
+        <div class="max-w-4xl animate-fade-in">
+          <span class="inline-flex items-center gap-1.5 text-brand-accent font-display font-semibold text-xs uppercase tracking-wider mb-3.5">
+            <i class="fa-solid fa-graduation-cap"></i>
+            {course.category} Certification
+          </span>
+          
+          <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-tight mb-4 text-white">
+            Register <span class="relative inline-block text-white px-5 py-2 mx-1 transform -rotate-1"><span class="absolute inset-0 bg-brand-accent rounded-2xl z-0"></span><span class="relative z-10">directly</span></span> for {course.title}
+          </h1>
+          <p class="text-white/90 text-base md:text-lg max-w-2xl font-normal leading-relaxed">
+            Reserve your seat for this accredited training at Edusafe and receive your official certificate after passing.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Content & Form Area -->
+    <section class="max-w-[1280px] mx-auto px-6 -mt-10 sm:-mt-12 md:-mt-14 relative z-30 pb-24">
+      
+      <!-- Key Details Card (floating 50/50 over hero bottom line) -->
+      <div class="bg-white rounded-2xl shadow-xl shadow-brand-dark/10 border border-brand-dark/5 p-5 sm:p-6 md:p-7 mb-8 grid grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6">
+        <!-- Date -->
+        <div class="flex items-center gap-3.5">
+          <div class="h-11 w-11 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary shrink-0">
+            <i class="fa-solid fa-calendar-days text-lg"></i>
+          </div>
+          <div>
+            <span class="text-[9px] uppercase font-semibold tracking-wider text-brand-dark/40 block mb-0.5">Date</span>
+            <span class="font-display font-semibold text-brand-secondary text-sm md:text-base">{course.date}</span>
+          </div>
+        </div>
+
+        <!-- Time -->
+        <div class="flex items-center gap-3.5">
+          <div class="h-11 w-11 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary shrink-0">
+            <i class="fa-solid fa-clock text-lg"></i>
+          </div>
+          <div>
+            <span class="text-[9px] uppercase font-semibold tracking-wider text-brand-dark/40 block mb-0.5">Schedule</span>
+            <span class="font-display font-semibold text-brand-secondary text-sm md:text-base">{course.time}</span>
+          </div>
+        </div>
+
+        <!-- Location -->
+        <div class="flex items-center gap-3.5 col-span-2 lg:col-span-1">
+          <div class="h-11 w-11 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary shrink-0">
+            <i class="fa-solid fa-location-dot text-lg"></i>
+          </div>
+          <div class="truncate">
+            <span class="text-[9px] uppercase font-semibold tracking-wider text-brand-dark/40 block mb-0.5">Location</span>
+            <span class="font-display font-semibold text-brand-secondary text-sm md:text-base truncate block" title={course.location}>{course.location}</span>
+          </div>
+        </div>
+
+        <!-- Price -->
+        <div class="flex items-center gap-3.5">
+          <div class="h-11 w-11 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary shrink-0">
+            <i class="fa-solid fa-tag text-lg"></i>
+          </div>
+          <div>
+            <span class="text-[9px] uppercase font-semibold tracking-wider text-brand-dark/40 block mb-0.5">Price excl. VAT</span>
+            <span class="font-display font-semibold text-brand-secondary text-sm md:text-base">{course.price}</span>
+          </div>
+        </div>
+
+        <!-- Availability -->
+        <div class="flex items-center gap-3.5">
+          <div class="h-11 w-11 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-600 shrink-0">
+            <i class="fa-solid fa-user-check text-lg"></i>
+          </div>
+          <div>
+            <span class="text-[9px] uppercase font-semibold tracking-wider text-brand-dark/40 block mb-0.5">Availability</span>
+            <span class="font-display font-semibold text-emerald-600 text-sm md:text-base">{course.freeSpots}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Registration Form Card -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Form Left Column (8 cols) -->
+        <div class="lg:col-span-8 bg-white rounded-2xl p-6 sm:p-8 shadow-lg border border-brand-dark/5">
+          <h2 class="font-display text-xl sm:text-2xl font-semibold text-brand-secondary mb-1">Participant Details</h2>
+          <p class="text-xs sm:text-sm text-brand-dark/70 font-normal mb-6">Enter candidate contact details for diploma registration.</p>
+
+          <form id="en-registration-form" class="space-y-5">
+            <!-- Candidate Information -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold uppercase text-brand-secondary tracking-wider mb-1.5">First Name *</label>
+                <input required type="text" class="w-full rounded-xl border border-brand-dark/10 px-4 py-3 text-sm bg-brand-cream/30 focus:outline-none focus:border-brand-primary font-medium text-brand-secondary" placeholder="e.g. John" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold uppercase text-brand-secondary tracking-wider mb-1.5">Last Name *</label>
+                <input required type="text" class="w-full rounded-xl border border-brand-dark/10 px-4 py-3 text-sm bg-brand-cream/30 focus:outline-none focus:border-brand-primary font-medium text-brand-secondary" placeholder="e.g. Doe" />
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold uppercase text-brand-secondary tracking-wider mb-1.5">Email Address *</label>
+                <input required type="email" class="w-full rounded-xl border border-brand-dark/10 px-4 py-3 text-sm bg-brand-cream/30 focus:outline-none focus:border-brand-primary font-medium text-brand-secondary" placeholder="john.doe@example.com" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold uppercase text-brand-secondary tracking-wider mb-1.5">Phone Number *</label>
+                <input required type="tel" class="w-full rounded-xl border border-brand-dark/10 px-4 py-3 text-sm bg-brand-cream/30 focus:outline-none focus:border-brand-primary font-medium text-brand-secondary" placeholder="+31 6 12345678" />
+              </div>
+            </div>
+
+            <!-- Company (Optional) -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-xs font-semibold uppercase text-brand-secondary tracking-wider mb-1.5">Company Name (Optional)</label>
+                <input type="text" class="w-full rounded-xl border border-brand-dark/10 px-4 py-3 text-sm bg-brand-cream/30 focus:outline-none focus:border-brand-primary font-medium text-brand-secondary" placeholder="Your organisation" />
+              </div>
+              <div>
+                <label class="block text-xs font-semibold uppercase text-brand-secondary tracking-wider mb-1.5">Date of Birth (For certificate)</label>
+                <input type="date" class="w-full rounded-xl border border-brand-dark/10 px-4 py-3 text-sm bg-brand-cream/30 focus:outline-none focus:border-brand-primary font-medium text-brand-secondary" />
+              </div>
+            </div>
+
+            <!-- Notes -->
+            <div>
+              <label class="block text-xs font-semibold uppercase text-brand-secondary tracking-wider mb-1.5">Special Requests / Dietary Requirements</label>
+              <textarea rows="3" class="w-full rounded-xl border border-brand-dark/10 px-4 py-3 text-sm bg-brand-cream/30 focus:outline-none focus:border-brand-primary font-medium text-brand-secondary" placeholder="Any dietary wishes or specific notes..."></textarea>
+            </div>
+
+            <!-- Terms agreement -->
+            <div class="flex items-start gap-2.5 pt-2">
+              <input required type="checkbox" id="terms" class="mt-1 accent-brand-primary cursor-pointer" />
+              <label for="terms" class="text-xs text-brand-dark/70 cursor-pointer font-normal">
+                I agree to the <a href="#" class="underline text-brand-primary font-semibold">Terms & Conditions</a> and privacy policy of Edusafe.
+              </label>
+            </div>
+
+            <!-- Submit button -->
+            <div class="pt-4">
+              <button 
+                type="submit" 
+                class="w-full font-display font-semibold text-base py-4 px-6 rounded-xl bg-brand-primary hover:bg-brand-primary-hover text-white transition-all duration-300 shadow-md shadow-brand-primary/25 cursor-pointer flex items-center justify-center gap-2"
+              >
+                <span>Confirm Enrollment</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </button>
+            </div>
+          </form>
+
+          <!-- Success Alert -->
+          <div id="en-form-success" class="hidden mt-6 p-5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800">
+            <div class="flex items-center gap-3">
+              <i class="fa-solid fa-circle-check text-emerald-600 text-xl"></i>
+              <div>
+                <h4 class="font-display font-semibold text-sm">Enrollment successfully received!</h4>
+                <p class="text-xs text-emerald-700 font-normal">We have sent a confirmation email with all course details and directions to your location.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Sidebar Summary (4 cols) -->
+        <div class="lg:col-span-4 space-y-6">
+          <div class="bg-brand-secondary text-white rounded-2xl p-6 shadow-xl border border-white/5 space-y-5">
+            <span class="text-[9px] uppercase font-semibold text-brand-accent tracking-wider block">Booking Summary</span>
+            <h3 class="font-display text-xl font-semibold leading-tight">{course.title}</h3>
+            
+            <div class="space-y-3 pt-3 border-t border-white/10 text-xs text-white/80">
+              <div class="flex justify-between items-center">
+                <span>Date:</span>
+                <span class="font-semibold text-white">{course.date}</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span>Time:</span>
+                <span class="font-semibold text-white">{course.time}</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span>Location:</span>
+                <span class="font-semibold text-white truncate max-w-[150px]">{course.location}</span>
+              </div>
+              <div class="flex justify-between items-center pt-3 border-t border-white/10 text-sm">
+                <span class="font-semibold text-white">Total (excl. VAT):</span>
+                <span class="font-display font-semibold text-lg text-brand-accent">{course.price}</span>
+              </div>
+            </div>
+
+            <!-- Benefits -->
+            <div class="pt-4 border-t border-white/10 space-y-2 text-xs text-white/80">
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-check text-emerald-400 text-xs"></i>
+                <span>Official Safety Certificate included</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-check text-emerald-400 text-xs"></i>
+                <span>Course materials & coffee/lunch provided</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-check text-emerald-400 text-xs"></i>
+                <span>100% Pass Guarantee</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Help Card -->
+          <div class="bg-white rounded-2xl p-5 border border-brand-dark/5 shadow-xs">
+            <h4 class="font-display font-semibold text-sm text-brand-secondary mb-1">Need assistance?</h4>
+            <p class="text-xs text-brand-dark/70 mb-3 font-normal">Our course advisors are ready to assist with group bookings or custom dates.</p>
+            <a href="tel:0704447795" class="inline-flex items-center gap-2 font-semibold text-brand-primary text-xs hover:text-brand-secondary transition-colors">
+              <i class="fa-solid fa-phone"></i>
+              <span>+31 (0)70 - 444 77 95</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+</Layout>
+
+<script>
+  function initEnrollmentForm() {
+    const form = document.getElementById('en-registration-form');
+    const successMsg = document.getElementById('en-form-success');
+    if (form && successMsg) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        successMsg.classList.remove('hidden');
+        form.classList.add('opacity-50', 'pointer-events-none');
+      });
+    }
+  }
+
+  initEnrollmentForm();
+  document.addEventListener('astro:page-load', initEnrollmentForm);
+</script>

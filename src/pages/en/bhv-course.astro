@@ -1,163 +1,104 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import MobileCourseBottomBar from '../components/MobileCourseBottomBar.astro';
+import Layout from '../../layouts/Layout.astro';
+import MobileCourseBottomBar from '../../components/MobileCourseBottomBar.astro';
 
 const bhvCourses = [
   {
     id: "bhv-basis",
-    title: "BHV Basis",
-    tagline: "Volledige basisopleiding inclusief e-learning",
-    price: "€ 195,00",
-    spotsText: "Direct instappen",
-    duration: "E-learning + 1 praktijkdag",
-    target: "Voor werknemers die voor het eerst BHV-er worden en een officieel certificaat willen behalen.",
-    requirements: "Geen vooropleiding of specifieke ervaring vereist. Iedereen kan deelnemen.",
-    exam: "Theorie via e-learning & praktijkbeoordeling op de lesdag.",
-    certification: "Officieel erkend diploma Bedrijfshulpverlener + pasje (1 jaar geldig).",
-    inclusions: ["Lesmateriaal", "E-learning licentie", "Officieel certificaat", "Koffie, thee & lunch"],
+    title: "BHV Basic (Emergency Response)",
+    tagline: "Full basic qualification including English e-learning",
+    price: "€ 195.00",
+    spotsText: "Immediate start",
+    duration: "E-learning + 1 practical day",
+    target: "For employees becoming certified Emergency Response Officers for the first time.",
+    requirements: "No prior training required. Fluent in English.",
+    exam: "Theory via e-learning & continuous practical assessment on the training day.",
+    certification: "Official Dutch BHV Diploma + ID wallet card (valid 1 year).",
+    inclusions: ["English study material", "E-learning license", "Official certificate & card", "Coffee, tea & lunch"],
     modules: [
-      { name: "Spoedeisende Eerste Hulp" },
-      { name: "Niet-spoedeisende Eerste Hulp" },
-      { name: "Brandbestrijding" },
-      { name: "Ontruiming & Communicatie" }
+      { name: "First Aid & CPR / AED" },
+      { name: "Non-urgent First Aid & Bandaging" },
+      { name: "Fire Suppression & Extinguishers" },
+      { name: "Building Evacuation & Emergency Communication" }
     ],
     image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=600",
-    registerLink: "/cursusdata?category=BHV"
+    registerLink: "/en/course-dates?category=BHV"
   },
   {
     id: "bhv-herhaling",
-    title: "BHV Cursus Herhaling",
-    tagline: "Houd uw BHV-certificaat geldig en up-to-date",
-    price: "€ 145,00",
-    spotsText: "Jaarlijkse verplichting",
-    duration: "1 praktijkdag (geen e-learning)",
-    target: "Voor gecertificeerde BHV-ers die hun kennis willen opfrissen en hun diploma willen verlengen.",
-    requirements: "In het bezit van een geldig (of recent verlopen) BHV Basis certificaat.",
-    exam: "Geen examen. De instructeur beoordeelt de praktische vaardigheden doorlopend.",
-    certification: "Verlenging van uw officiële BHV-diploma (1 jaar geldig) + pasje.",
-    inclusions: ["Praktijktraining", "Certificaatverlenging", "Fysiek pasje", "Koffie, thee & lunch"],
+    title: "BHV Refresher Course",
+    tagline: "Maintain your BHV certificate validity and refresh emergency skills",
+    price: "€ 145.00",
+    spotsText: "Annual requirement",
+    duration: "1 practical day (no e-learning)",
+    target: "For certified BHV officers renewing their annual accreditation and refreshing practical drills.",
+    requirements: "In possession of a valid (or recently expired) BHV Basic certificate.",
+    exam: "No written exam. Instructor assesses practical competence throughout the day.",
+    certification: "Renewal of your official BHV Diploma (valid 1 year) + photo pass.",
+    inclusions: ["Hands-on practical training", "Certificate renewal", "Physical ID card", "Coffee, tea & lunch"],
     modules: [
-      { name: "Opfrissen EHBO & Reanimatie" },
-      { name: "Praktische Blusoefeningen" },
-      { name: "Ontruimingsscenario's" }
+      { name: "CPR & AED Skills Refresher" },
+      { name: "Live Firefighting Exercises" },
+      { name: "Evacuation Scenarios" }
     ],
     image: "https://images.unsplash.com/photo-1516738901171-8eb4fc13bd20?auto=format&fit=crop&q=80&w=600",
-    registerLink: "/cursusdata?category=BHV"
+    registerLink: "/en/course-dates?category=BHV"
   },
   {
     id: "bhv-engels",
-    title: "BHV Engels (English)",
-    tagline: "Full BHV Basic course in English for internationals",
-    price: "€ 215,00",
+    title: "BHV Basic in English (Expats)",
+    tagline: "Full BHV Basic course fully delivered in English",
+    price: "€ 215.00",
     spotsText: "English spoken & materials",
     duration: "E-learning + 1 practical day",
-    target: "For expats and non-Dutch speaking employees seeking official safety certification in English.",
+    target: "For expats and international staff requiring certification compliant with Dutch labour law.",
     requirements: "No prior safety training required. Fluent in English.",
-    exam: "English e-learning exam + continuous practical evaluation on the training day.",
-    certification: "Official English BHV Certificate + ID card (valid for 1 year).",
+    exam: "English e-learning exam + practical evaluation on training day.",
+    certification: "Official English BHV Certificate + ID card (valid 1 year).",
     inclusions: ["English study material", "English E-learning", "English certificate", "Coffee, tea & lunch"],
     modules: [
       { name: "First Aid & CPR" },
-      { name: "Fire Fighting" },
-      { name: "Evacuation & Communication" }
+      { name: "Fire Fighting & Safety" },
+      { name: "Evacuation Protocol" },
+      { name: "Communication in English" }
     ],
     image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&q=80&w=600",
-    registerLink: "/cursusdata?category=BHV"
-  },
-  {
-    id: "bhv-herhaling-bo",
-    title: "BHV Herhaling B & O",
-    tagline: "Specifieke herhaling voor Beheer & Onderhoud",
-    price: "€ 155,00",
-    spotsText: "Technische specialisatie",
-    duration: "1 praktijkdag",
-    target: "Voor BHV-ers werkzaam in technische diensten, beheer, onderhoud of bouwomgevingen.",
-    requirements: "Geldig (of recent verlopen) BHV Basis certificaat.",
-    exam: "Praktische scenario-toetsing door gecertificeerde instructeurs.",
-    certification: "BHV herhalingscertificaat met B&O specialisatie + pasje.",
-    inclusions: ["Gerichte praktijktraining", "Certificaatverlenging", "Koffie, thee & lunch"],
-    modules: [
-      { name: "Technische EHBO" },
-      { name: "Brand & Heet Werk" },
-      { name: "Besloten Ruimtes" }
-    ],
-    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=600",
-    registerLink: "/cursusdata?category=BHV"
+    registerLink: "/en/course-dates?category=BHV"
   },
   {
     id: "ploegleider-bhv",
-    title: "Ploegleider BHV",
-    tagline: "Stuur effectief een BHV-inzet aan op de werkvloer",
-    price: "€ 345,00",
-    spotsText: "Leidinggevende rol",
-    duration: "2 praktijkdagen",
-    target: "Voor ervaren BHV-ers die de leiding en coördinatie krijgen over een BHV-ploeg.",
-    requirements: "In het bezit van een geldig BHV Basis of Herhalingscertificaat.",
-    exam: "Praktische inzettoetsing en beoordeling van leidinggevende vaardigheden.",
-    certification: "Officieel diploma Ploegleider BHV (1 jaar geldig).",
-    inclusions: ["Uitgebreid lesmateriaal", "Oefenmaterialen", "Diploma Ploegleider", "Lunch op beide dagen"],
+    title: "BHV Team Leader (Ploegleider)",
+    tagline: "Effectively lead and coordinate an emergency response team",
+    price: "€ 345.00",
+    spotsText: "Supervisory role",
+    duration: "2 practical days",
+    target: "For experienced BHV officers appointed to lead and direct the emergency team.",
+    requirements: "In possession of a valid BHV Basic or Refresher certificate.",
+    exam: "Practical tactical deployment testing and leadership skills evaluation.",
+    certification: "Official Diploma Team Leader BHV (valid 1 year).",
+    inclusions: ["Comprehensive workbook", "Exercise tools", "Team Leader Diploma", "Lunch on both days"],
     modules: [
-      { name: "Leidinggeven & Inzet" },
-      { name: "Verkenning & Communicatie" },
-      { name: "Coördinatie & Evaluatie" }
+      { name: "Command & Control" },
+      { name: "Reconnaissance & Situation Assessment" },
+      { name: "Coordination & Evaluation" }
     ],
     image: "https://images.unsplash.com/photo-1581094288338-2314dddb7ecc?auto=format&fit=crop&q=80&w=600",
-    registerLink: "/cursusdata?category=BHV"
-  },
-  {
-    id: "hoofd-bhv",
-    title: "Hoofd BHV",
-    tagline: "Beleidsmatig opzetten en beheren van de BHV-organisatie",
-    price: "€ 495,00",
-    spotsText: "Beleids- & organisatieniveau",
-    duration: "3 bijeenkomsten / dagen",
-    target: "Voor preventiemedewerkers, HR-managers of veiligheidscoördinatoren die de BHV-organisatie opzetten.",
-    requirements: "Geen specifieke toelatingseisen, affiniteit met veiligheidsbeleid is aanbevolen.",
-    exam: "Projectopdracht (het opstellen van een operationeel BHV-beleidsplan voor uw eigen organisatie).",
-    certification: "Diploma Hoofd BHV / Veiligheidscoördinator.",
-    inclusions: ["Cursusmap & sjablonen", "Persoonlijke feedback", "Diploma Hoofd BHV", "Lunch inbegrepen"],
-    modules: [
-      { name: "Wettelijk Kader & Arbo" },
-      { name: "BHV-Beleidsplan" },
-      { name: "Opleiden & Oefenen" }
-    ],
-    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=600",
-    registerLink: "/cursusdata?category=BHV"
-  },
-  {
-    id: "ws-reanimatie-aed",
-    title: "Reanimatie & AED",
-    tagline: "Gerichte spoedcursus reanimatie en AED",
-    price: "€ 95,00",
-    spotsText: "NRR Gecertificeerd",
-    duration: "1 avond (3 uur)",
-    target: "Voor iedereen die in korte tijd wil leren reanimeren en een AED wil bedienen.",
-    requirements: "Geen voorkennis nodig. Iedereen kan deelnemen.",
-    exam: "Praktische toetsing van reanimatie- en AED-vaardigheden tijdens de workshop.",
-    certification: "Erkend certificaat Reanimatie & AED conform de Nederlandse Reanimatie Raad (NRR).",
-    inclusions: ["Lesboekje", "Gecertificeerde instructeur", "Officieel NRR certificaat", "Koffie & thee"],
-    modules: [
-      { name: "Reanimatietechniek" },
-      { name: "AED bediening" },
-      { name: "Stik- en verslikking" }
-    ],
-    image: "https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&q=80&w=600",
-    registerLink: "/cursusdata?category=AED/Reanimatie"
+    registerLink: "/en/course-dates?category=BHV"
   }
 ];
 
 const defaultCourse = bhvCourses[0];
 ---
 
-<Layout title="BHV Opleidingen Hub | Edusafe" description="Ontdek ons brede aanbod van gecertificeerde BHV trainingen. Van basisopleiding tot Ploegleider en Hoofd BHV, voor elke rol de juiste cursus.">
+<Layout title="BHV Training Courses (English) | Edusafe" description="Accredited Emergency Response Officer (BHV) courses in English. 100% compliant with Dutch Arbowet regulations. Book directly online.">
   <main class="w-full">
     
-    <!-- Hero Header Section (Spacious, Rich Photography & Directional Gradient) -->
+    <!-- Hero Header Section -->
     <section class="relative bg-brand-secondary text-white pt-20 pb-36 md:pt-24 md:pb-44 overflow-hidden">
       <div class="absolute inset-0 z-0 overflow-hidden">
         <img 
           src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=1600" 
-          alt="BHV Opleidingen Praktijk" 
+          alt="BHV Courses in English" 
           class="w-full h-full object-cover opacity-35 scale-105" 
         />
         <div class="absolute inset-0 bg-gradient-to-r from-brand-secondary via-brand-secondary/85 to-brand-secondary/40"></div>
@@ -168,13 +109,13 @@ const defaultCourse = bhvCourses[0];
         <div class="max-w-3xl animate-fade-in">
           <span class="inline-flex items-center gap-1.5 text-brand-accent font-display font-semibold text-xs uppercase tracking-wider mb-3.5">
             <i class="fa-solid fa-shield-halved animate-pulse"></i>
-            Bedrijfshulpverlening Opleidingen
+            Workplace Safety & Compliance (Arbowet)
           </span>
           <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-tight mb-4 text-white">
-            BHV <span class="relative inline-block text-white px-5 py-2 mx-1 transform -rotate-1"><span class="absolute inset-0 bg-brand-accent rounded-2xl z-0"></span><span class="relative z-10">Opleidingen</span></span>
+            BHV <span class="relative inline-block text-white px-5 py-2 mx-1 transform -rotate-1"><span class="absolute inset-0 bg-brand-accent rounded-2xl z-0"></span><span class="relative z-10">Training</span></span> in English
           </h1>
           <p class="text-white/90 text-base md:text-lg max-w-2xl leading-relaxed mb-6 font-normal">
-            Bent u volgens de Arbowet verplicht BHV-ers aan te stellen? Kies hieronder de juiste training voor uw teamleden. Klik op een kaart om de details te bekijken.
+            Under Dutch labour law (Arbowet), every company in the Netherlands is legally required to appoint trained Emergency Response Officers (BHV). Choose your course below and click a card to view full details.
           </p>
         </div>
       </div>
@@ -207,7 +148,7 @@ const defaultCourse = bhvCourses[0];
             
             <!-- Modules Checklist -->
             <div class="mb-4 border-t border-brand-dark/5 pt-3.5">
-              <h3 class="font-display text-[10px] font-semibold uppercase text-brand-dark/40 tracking-widest mb-2.5">Cursusprogramma & Modulen</h3>
+              <h3 class="font-display text-[10px] font-semibold uppercase text-brand-dark/40 tracking-widest mb-2.5">Course Program & Modules</h3>
               <div id="selected-modules" class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5">
                 {defaultCourse.modules.map(mod => (
                   <div class="flex items-center gap-2">
@@ -222,18 +163,18 @@ const defaultCourse = bhvCourses[0];
 
             <!-- Specs Table -->
             <div class="border-t border-brand-dark/5 pt-3.5">
-              <h3 class="font-display text-[10px] font-semibold uppercase text-brand-dark/40 tracking-widest mb-3">Praktische Informatie</h3>
+              <h3 class="font-display text-[10px] font-semibold uppercase text-brand-dark/40 tracking-widest mb-3">Practical Information</h3>
               <div class="space-y-2 text-xs">
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-1">
-                  <span class="font-semibold text-brand-secondary text-[10px] uppercase tracking-wider">Toelatingseisen</span>
+                  <span class="font-semibold text-brand-secondary text-[10px] uppercase tracking-wider">Prerequisites</span>
                   <span id="selected-requirements" class="sm:col-span-2 text-brand-dark/75 font-normal leading-relaxed">{defaultCourse.requirements}</span>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-1 border-t border-brand-dark/5 pt-2">
-                  <span class="font-semibold text-brand-secondary text-[10px] uppercase tracking-wider">Examen & Toetsing</span>
+                  <span class="font-semibold text-brand-secondary text-[10px] uppercase tracking-wider">Examination & Assessment</span>
                   <span id="selected-exam" class="sm:col-span-2 text-brand-dark/75 font-normal leading-relaxed">{defaultCourse.exam}</span>
                 </div>
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-1 border-t border-brand-dark/5 pt-2">
-                  <span class="font-semibold text-brand-secondary text-[10px] uppercase tracking-wider">Certificering</span>
+                  <span class="font-semibold text-brand-secondary text-[10px] uppercase tracking-wider">Certification</span>
                   <span id="selected-certification" class="sm:col-span-2 text-brand-dark/75 font-normal leading-relaxed">{defaultCourse.certification}</span>
                 </div>
               </div>
@@ -242,11 +183,11 @@ const defaultCourse = bhvCourses[0];
 
           <!-- Section Divider/Header for Variations -->
           <div class="pt-1 reveal">
-            <h3 class="font-display text-lg sm:text-xl font-semibold text-brand-secondary mb-1">Andere BHV Cursussen</h3>
-            <p class="text-xs text-brand-dark/60 font-medium mb-3">Klik op een van de onderstaande trainingen om de details hierboven te bekijken.</p>
+            <h3 class="font-display text-lg sm:text-xl font-semibold text-brand-secondary mb-1">Other BHV Courses</h3>
+            <p class="text-xs text-brand-dark/60 font-medium mb-3">Click on any of the courses below to view full details above.</p>
           </div>
 
-          <!-- Cards Grid Section - Now below the details card -->
+          <!-- Cards Grid Section -->
           <div class="reveal">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 reveal-stagger">
               {bhvCourses.map((course, idx) => (
@@ -258,7 +199,7 @@ const defaultCourse = bhvCourses[0];
                       : 'border-brand-dark/5 hover:border-brand-primary/25'
                   }`}
                 >
-                  <!-- Framed Image Area with Fallback support -->
+                  <!-- Framed Image Area -->
                   <div class="relative w-full aspect-[16/10] rounded-[18px] overflow-hidden mb-4 shrink-0 bg-gradient-to-br from-brand-secondary to-brand-primary">
                     <img 
                       src={course.image} 
@@ -266,7 +207,6 @@ const defaultCourse = bhvCourses[0];
                       class="absolute inset-0 w-full h-full object-cover grayscale-[30%] opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105" 
                       onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
                     />
-                    <!-- Fallback placeholder (hidden by default) -->
                     <div class="absolute inset-0 flex items-center justify-center text-white/30 hidden">
                       <i class="fa-solid fa-shield-halved text-4xl animate-pulse"></i>
                     </div>
@@ -292,11 +232,11 @@ const defaultCourse = bhvCourses[0];
                     <!-- Bottom Pricing & Action Row -->
                     <div class="flex items-center justify-between pt-3 border-t border-brand-dark/5 mt-auto w-full">
                       <div class="flex flex-col">
-                        <span class="text-[9px] font-black uppercase text-brand-dark/40 leading-none mb-0.5">Tarief excl.</span>
+                        <span class="text-[9px] font-black uppercase text-brand-dark/40 leading-none mb-0.5">Tariff excl. VAT</span>
                         <span class="font-display font-black text-brand-secondary text-sm leading-none">{course.price}</span>
                       </div>
                       <span class="inline-flex items-center gap-1 text-[10px] font-black uppercase text-brand-primary tracking-wider group-hover:text-brand-accent transition-colors">
-                        Bekijk details
+                        View details
                         <svg class="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                         </svg>
@@ -315,23 +255,23 @@ const defaultCourse = bhvCourses[0];
             </div>
             
             <div class="relative z-10 max-w-2xl">
-              <h3 class="font-display text-2xl md:text-3xl font-black mb-3">Offerte aanvragen voor groepen</h3>
+              <h3 class="font-display text-2xl md:text-3xl font-black mb-3 text-white">Request Group Proposal</h3>
               <p class="text-white/70 text-sm leading-relaxed mb-8">
-                Wilt u een van deze trainingen in-company organiseren bij u op locatie, of met een grotere groep collega's deelnemen? Wij maken graag een aantrekkelijk voorstel op maat.
+                Want to organize one of these courses in-company at your facility, or register a group of colleagues? We gladly create an attractive custom proposal.
               </p>
               
-              <form class="space-y-4" onsubmit="event.preventDefault(); alert('Bedankt! Uw offerteaanvraag is verzonden. Wij nemen zo snel mogelijk contact met u op.'); this.reset();">
+              <form class="space-y-4" onsubmit="event.preventDefault(); alert('Thank you! Your quote request has been sent. We will contact you shortly.'); this.reset();">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input type="text" placeholder="Bedrijfsnaam" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors" required />
-                  <input type="text" placeholder="Contactpersoon" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors" required />
+                  <input type="text" placeholder="Company Name" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors" required />
+                  <input type="text" placeholder="Contact Person" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors" required />
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input type="email" placeholder="E-mailadres" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors" required />
-                  <input type="tel" placeholder="Telefoonnummer" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors" required />
+                  <input type="email" placeholder="Email Address" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors" required />
+                  <input type="tel" placeholder="Phone Number" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors" required />
                 </div>
-                <textarea placeholder="Uw bericht of aantal deelnemers" rows="3" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors"></textarea>
-                <button type="submit" class="bg-brand-accent hover:bg-brand-accent-hover text-white font-semibold py-3 px-8 rounded-xl transition-colors">
-                  Offerte aanvragen
+                <textarea placeholder="Your message or number of participants" rows="3" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors"></textarea>
+                <button type="submit" class="bg-brand-accent hover:bg-brand-accent-hover text-white font-semibold py-3 px-8 rounded-xl transition-colors cursor-pointer">
+                  Request Custom Quote
                 </button>
               </form>
             </div>
@@ -343,18 +283,18 @@ const defaultCourse = bhvCourses[0];
           <div class="sticky top-28 lg:top-[148px] space-y-5 z-20">
             
             <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-lg border border-brand-dark/5">
-              <span class="text-[9px] font-semibold uppercase text-brand-dark/40 tracking-wider block mb-1">Geselecteerde training</span>
+              <span class="text-[9px] font-semibold uppercase text-brand-dark/40 tracking-wider block mb-1">Selected Training</span>
               <h3 id="sidebar-title" class="font-display text-xl sm:text-2xl font-semibold text-brand-secondary leading-snug">{defaultCourse.title}</h3>
               
               <!-- Pricing -->
               <div class="mt-4 pt-4 border-t border-brand-dark/5">
                 <div class="flex items-baseline justify-between mb-0.5">
-                  <span class="text-[9px] font-semibold uppercase text-brand-dark/40 tracking-wider">Cursustarief</span>
-                  <span class="text-[10px] text-brand-dark/50">Excl. BTW</span>
+                  <span class="text-[9px] font-semibold uppercase text-brand-dark/40 tracking-wider">Course Rate</span>
+                  <span class="text-[10px] text-brand-dark/50">Excl. VAT</span>
                 </div>
                 <div class="flex items-baseline gap-2">
                   <span id="selected-price" class="font-display text-3xl sm:text-4xl font-semibold text-brand-secondary">{defaultCourse.price}</span>
-                  <span class="text-xs text-brand-dark/60">/ cursist</span>
+                  <span class="text-xs text-brand-dark/60">/ participant</span>
                 </div>
               </div>
 
@@ -365,7 +305,7 @@ const defaultCourse = bhvCourses[0];
                     <i class="fa-solid fa-clock text-[10px]"></i>
                   </div>
                   <div>
-                    <div class="text-[9px] font-semibold uppercase text-brand-dark/40 leading-none mb-0.5">Duur & Studielast</div>
+                    <div class="text-[9px] font-semibold uppercase text-brand-dark/40 leading-none mb-0.5">Duration & Study Load</div>
                     <span id="selected-duration" class="font-semibold text-brand-secondary text-xs">{defaultCourse.duration}</span>
                   </div>
                 </div>
@@ -373,7 +313,7 @@ const defaultCourse = bhvCourses[0];
 
               <!-- Inclusions Checklist -->
               <div class="mt-4 pt-4 border-t border-brand-dark/5">
-                <span class="text-[9px] font-semibold uppercase text-brand-dark/40 tracking-wider block mb-2.5">Wat is inclusief?</span>
+                <span class="text-[9px] font-semibold uppercase text-brand-dark/40 tracking-wider block mb-2.5">What is included?</span>
                 <ul id="selected-inclusions" class="space-y-2">
                   {defaultCourse.inclusions.map(item => (
                     <li class="flex items-center gap-2 text-xs text-brand-dark/80 font-medium">
@@ -391,7 +331,7 @@ const defaultCourse = bhvCourses[0];
                   href={defaultCourse.registerLink}
                   class="font-display font-semibold text-sm py-3.5 px-5 rounded-xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 w-full block shadow-md shadow-brand-accent/20 cursor-pointer"
                 >
-                  Direct Cursusdata & Inschrijven
+                  Direct Course Dates & Register
                 </a>
                 
                 <button 
@@ -399,25 +339,25 @@ const defaultCourse = bhvCourses[0];
                   data-open-contact-drawer
                   class="font-display font-semibold text-xs py-2.5 px-4 rounded-xl text-center bg-white hover:bg-brand-cream text-brand-secondary border border-brand-dark/10 transition-all duration-300 w-full block cursor-pointer"
                 >
-                  Offerte / Vraag stellen
+                  Request Quote / Inquire
                 </button>
               </div>
 
               <!-- Guarantee Tag -->
               <div class="mt-4 pt-4 border-t border-brand-dark/5 flex items-center justify-center gap-1.5 text-xs font-semibold text-emerald-600">
                 <i class="fa-solid fa-shield-check text-sm"></i>
-                <span>100% Slagingsgarantie</span>
+                <span>100% Pass Guarantee</span>
               </div>
 
             </div>
 
             <!-- Direct Contact Box -->
             <div class="bg-brand-cream/60 rounded-2xl p-4 sm:p-5 border border-brand-dark/5 text-center reveal">
-              <span class="text-[10px] font-semibold uppercase tracking-wider text-brand-dark/50 block mb-1">Persoonlijk advies nodig?</span>
-              <p class="text-xs text-brand-dark/70 mb-3 font-normal">Onze opleidingsadviseurs helpen u graag bij het samenstellen van uw cursusprogramma.</p>
+              <span class="text-[10px] font-semibold uppercase tracking-wider text-brand-dark/50 block mb-1">Need personal advice?</span>
+              <p class="text-xs text-brand-dark/70 mb-3 font-normal">Our training consultants are happy to assist you in designing your safety curriculum.</p>
               <a href="tel:0704447795" class="font-display font-semibold text-sm text-brand-primary hover:text-brand-primary/80 transition-colors inline-flex items-center gap-2">
                 <i class="fa-solid fa-phone text-xs"></i>
-                <span>070 - 444 77 95</span>
+                <span>+31 (0)70 - 444 77 95</span>
               </a>
             </div>
 
@@ -428,7 +368,7 @@ const defaultCourse = bhvCourses[0];
     </section>
 
     <!-- Mobile Bottom Summary & Expand Drawer -->
-    <MobileCourseBottomBar defaultCourse={defaultCourse} advisorText="Persoonlijk advies voor uw BHV-team?" />
+    <MobileCourseBottomBar defaultCourse={defaultCourse} advisorText="Personal advice for your BHV safety team?" />
 
   </main>
 </Layout>
@@ -453,36 +393,24 @@ const defaultCourse = bhvCourses[0];
         }
       });
 
-      // Update details card on the left (Description, Modules, Specifications)
-      const tagline = document.getElementById('selected-tagline');
-      const title = document.getElementById('selected-title');
-      const target = document.getElementById('selected-target');
-      const requirements = document.getElementById('selected-requirements');
-      const exam = document.getElementById('selected-exam');
-      const certification = document.getElementById('selected-certification');
+      // Update left details card
+      const taglineEl = document.getElementById('selected-tagline');
+      const titleEl = document.getElementById('selected-title');
+      const targetEl = document.getElementById('selected-target');
+      const reqEl = document.getElementById('selected-requirements');
+      const examEl = document.getElementById('selected-exam');
+      const certEl = document.getElementById('selected-certification');
+      const modulesEl = document.getElementById('selected-modules');
 
-      if (tagline) tagline.textContent = course.tagline;
-      if (title) title.textContent = course.title;
-      if (target) target.textContent = course.target;
-      if (requirements) requirements.textContent = course.requirements;
-      if (exam) exam.textContent = course.exam;
-      if (certification) certification.textContent = course.certification;
+      if (taglineEl) taglineEl.textContent = course.tagline;
+      if (titleEl) titleEl.textContent = course.title;
+      if (targetEl) targetEl.textContent = course.target;
+      if (reqEl) reqEl.textContent = course.requirements;
+      if (examEl) examEl.textContent = course.exam;
+      if (certEl) certEl.textContent = course.certification;
 
-      // Update details card on the right (Sidebar elements)
-      const sidebarTitle = document.getElementById('sidebar-title');
-      const price = document.getElementById('selected-price');
-      const duration = document.getElementById('selected-duration');
-      const selectedCta = document.getElementById('selected-cta');
-
-      if (sidebarTitle) sidebarTitle.textContent = course.title;
-      if (price) price.textContent = course.price;
-      if (duration) duration.textContent = course.duration;
-      if (selectedCta) selectedCta.setAttribute('href', course.registerLink);
-
-      // Update Modules grid on the left
-      const modulesContainer = document.getElementById('selected-modules');
-      if (modulesContainer) {
-        modulesContainer.innerHTML = course.modules.map(mod => `
+      if (modulesEl && course.modules) {
+        modulesEl.innerHTML = course.modules.map(mod => `
           <div class="flex items-center gap-2">
             <span class="w-4 h-4 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-[10px] shrink-0">
               <i class="fa-solid fa-check"></i>
@@ -492,29 +420,37 @@ const defaultCourse = bhvCourses[0];
         `).join('');
       }
 
-      // Update Inclusions list on the right
-      const inclusionsContainer = document.getElementById('selected-inclusions');
-      if (inclusionsContainer) {
-        inclusionsContainer.innerHTML = course.inclusions.map(inc => `
+      // Update desktop sticky sidebar
+      const sidebarTitle = document.getElementById('sidebar-title');
+      const priceEl = document.getElementById('selected-price');
+      const durationEl = document.getElementById('selected-duration');
+      const ctaEl = document.getElementById('selected-cta');
+      const inclusionsEl = document.getElementById('selected-inclusions');
+
+      if (sidebarTitle) sidebarTitle.textContent = course.title;
+      if (priceEl) priceEl.textContent = course.price;
+      if (durationEl) durationEl.textContent = course.duration;
+      if (ctaEl) ctaEl.setAttribute('href', course.registerLink);
+
+      if (inclusionsEl && course.inclusions) {
+        inclusionsEl.innerHTML = course.inclusions.map(inc => `
           <li class="flex items-center gap-2 text-xs text-brand-dark/80 font-medium">
-            <span class="w-4 h-4 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-[10px] shrink-0">
-              <i class="fa-solid fa-check"></i>
-            </span>
+            <i class="fa-solid fa-circle-check text-emerald-500 text-xs shrink-0"></i>
             <span>${inc}</span>
           </li>
         `).join('');
       }
 
-      // Sync with mobile bottom drawer
-      if (typeof window.syncMobileCourseDrawer === 'function') {
-        window.syncMobileCourseDrawer(course);
-      }
+      // Update mobile bottom bar
+      const mobileTitle = document.getElementById('mobile-bar-title');
+      const mobilePrice = document.getElementById('mobile-bar-price');
+      const mobileDuration = document.getElementById('mobile-bar-duration');
+      const mobileCta = document.getElementById('mobile-bar-cta');
 
-      // Scroll smoothly back up to the top details card when selecting a course
-      const detailsCardLeft = document.getElementById('details-card-left');
-      if (detailsCardLeft) {
-        detailsCardLeft.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      }
+      if (mobileTitle) mobileTitle.textContent = course.title;
+      if (mobilePrice) mobilePrice.textContent = course.price;
+      if (mobileDuration) mobileDuration.textContent = course.duration;
+      if (mobileCta) mobileCta.setAttribute('href', course.registerLink);
     }
 
     buttons.forEach(btn => {
@@ -523,6 +459,12 @@ const defaultCourse = bhvCourses[0];
         if (id) selectCourse(id);
       });
     });
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialId = urlParams.get('course') || (window.location.hash ? window.location.hash.replace('#', '') : null);
+    if (initialId && bhvCourses.some(c => c.id === initialId)) {
+      selectCourse(initialId);
+    }
   }
 
   initCourseNavigator();
