@@ -1,0 +1,236 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import MobileCourseBottomBar from '../../components/MobileCourseBottomBar.astro';
+
+const services = [
+  {
+    id: "rie-complete",
+    title: "Complete Risk Assessment (RI&E) & Audit",
+    tagline: "Comprehensive occupational health & safety evaluation audited by certified experts",
+    price: "Custom quote",
+    spotsText: "Legally mandatory in NL",
+    duration: "Turnaround approx. 1-3 weeks",
+    target: "For all employers in the Netherlands with staff required by the Working Conditions Act (Arbowet) and insurers.",
+    requirements: "Access to the workplace facilities and availability of prevention officer / management.",
+    exam: "Full audit and validation by a certified occupational health core expert (HVK / A&O).",
+    certification: "Officially certified RI&E report + validated Action Plan with statutory compliance status.",
+    inclusions: [
+      "On-site workplace inspection by accredited health & safety specialist",
+      "Survey & assessment of physical hazards and psychosocial work demands (PSA)",
+      "Formulation of the mandatory statutory Action Plan (Plan van Aanpak)",
+      "Formal audit by certified core safety expert (where legally required >25 staff)"
+    ],
+    modules: [
+      { name: "Physical safety: machinery, work tools, fall hazards and fire safety" },
+      { name: "Ergonomics: heavy lifting, repetitive strain and display screen equipment" },
+      { name: "Hazardous chemicals, biological agents and exposure limits" },
+      { name: "Psychosocial workload (stress, aggression) & emergency response organisation (BHV)" }
+    ],
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800",
+    registerLink: "#contact"
+  },
+  {
+    id: "rie-update",
+    title: "Periodic RI&E Update & Audit",
+    tagline: "Keeping your existing Risk Assessment up to date after workplace or process changes",
+    price: "From € 450,-",
+    spotsText: "Annual review",
+    duration: "1 day inspection + report",
+    target: "For organizations that already possess an RI&E but underwent internal restructuring, machine updates or facility moves.",
+    requirements: "Current RI&E documentation and historical Action Plan.",
+    exam: "Progress audit on outstanding safety measures and statutory compliance.",
+    certification: "Updated compliance audit report for the Dutch Labour Inspectorate (Inspectie SZW) and insurers.",
+    inclusions: [
+      "Evaluation of completed mitigation measures from the Action Plan",
+      "Re-evaluation of altered work environments and newly introduced hazards",
+      "Updating health & safety policy and emergency response capacity calculation",
+      "Certificate of audit currency"
+    ],
+    modules: [
+      { name: "Verification of previously formulated remedial measures" },
+      { name: "Implementation of new Dutch & European health and safety regulations" },
+      { name: "Risk reassessment after departmental moves or structural expansions" },
+      { name: "Executive summary for management board and Works Council (OR / PVT)" }
+    ],
+    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=800",
+    registerLink: "#contact"
+  }
+];
+---
+
+<Layout 
+  title="Risk Assessment (RI&E) Audit & Action Plan | Edusafe Netherlands"
+  description="Legally required Risk Assessment and Evaluation (RI&E) for companies in the Netherlands. Practical, cost-effective and compliant with Dutch Arbowet regulations."
+>
+  <!-- Hero Section -->
+  <section class="relative bg-brand-secondary text-white pt-36 pb-20 overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+    <div class="max-w-[1280px] mx-auto px-6 relative z-10">
+      
+      <div class="flex items-center gap-2 text-xs font-semibold text-brand-primary uppercase tracking-wider mb-4">
+        <a href="/en" class="hover:underline">Home</a>
+        <span>/</span>
+        <span>Services</span>
+        <span>/</span>
+        <span class="text-white">RI&E Risk Assessment</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-8">
+          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-primary/20 text-brand-primary border border-brand-primary/30 text-xs font-bold uppercase tracking-wider mb-4">
+            <i class="fa-solid fa-clipboard-check"></i>
+            Mandatory in the Netherlands
+          </span>
+          <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+            Occupational Health &amp; <span class="text-brand-accent">Safety Risk Assessment (RI&E)</span>
+          </h1>
+          <p class="text-lg text-white/80 leading-relaxed max-w-2xl mb-8">
+            Providing a healthy and secure workplace starts with transparent hazard insight. Edusafe assesses all occupational risks and delivers an actionable, legally certified Action Plan.
+          </p>
+
+          <div class="flex flex-wrap gap-4">
+            <button type="button" data-open-contact-drawer class="bg-brand-accent hover:bg-brand-accent-hover text-white font-display font-semibold px-8 py-4 rounded-xl transition-all shadow-lg hover:-translate-y-0.5">
+              Request Free RI&E Proposal
+            </button>
+            <a href="#details" class="bg-white/10 hover:bg-white/20 text-white font-display font-semibold px-8 py-4 rounded-xl border border-white/20 transition-all">
+              Explore Process &amp; Certification
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4 grid grid-cols-2 gap-4">
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-primary mb-1">100%</div>
+            <div class="text-xs text-white/70">Inspectie SZW Compliant</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-accent mb-1">Arbowet</div>
+            <div class="text-xs text-white/70">Certified Experts</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-primary mb-1">&lt; 25 staff</div>
+            <div class="text-xs text-white/70">Audit Exemption Support</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-accent mb-1">Action</div>
+            <div class="text-xs text-white/70">Tailored Plan</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Interactive Master Detail Tabs -->
+  <section id="details" class="py-20 bg-brand-cream relative">
+    <div class="max-w-[1280px] mx-auto px-6">
+      
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="text-brand-accent font-display font-semibold text-xs uppercase tracking-wider mb-2 block">
+          Customized for your workplace
+        </span>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-brand-secondary">
+          Our RI&E Advisory Services
+        </h2>
+        <p class="text-brand-dark/70 text-base mt-3">
+          Select a full initial setup or an annual periodic audit of your existing occupational risk registry.
+        </p>
+      </div>
+
+      <!-- Service Cards Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        {services.map((srv) => (
+          <div class="bg-white rounded-3xl p-8 border border-brand-dark/5 shadow-xl flex flex-col justify-between hover:border-brand-primary/30 transition-all">
+            <div>
+              <div class="flex items-center justify-between gap-4 mb-4">
+                <span class="px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary text-xs font-bold uppercase tracking-wider">
+                  {srv.spotsText}
+                </span>
+                <span class="text-lg font-display font-bold text-brand-accent">
+                  {srv.price}
+                </span>
+              </div>
+              <h3 class="font-display text-2xl font-bold text-brand-secondary mb-2">
+                {srv.title}
+              </h3>
+              <p class="text-brand-dark/70 text-sm mb-6 leading-relaxed">
+                {srv.tagline}
+              </p>
+
+              <div class="space-y-4 mb-8">
+                <div class="flex items-start gap-3">
+                  <i class="fa-solid fa-clock text-brand-primary mt-1"></i>
+                  <div>
+                    <strong class="text-xs text-brand-secondary uppercase tracking-wider block">Turnaround:</strong>
+                    <span class="text-sm text-brand-dark/80">{srv.duration}</span>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <i class="fa-solid fa-shield-halved text-brand-primary mt-1"></i>
+                  <div>
+                    <strong class="text-xs text-brand-secondary uppercase tracking-wider block">Audit &amp; Certification:</strong>
+                    <span class="text-sm text-brand-dark/80">{srv.certification}</span>
+                  </div>
+                </div>
+              </div>
+
+              <h4 class="text-xs font-bold uppercase tracking-wider text-brand-secondary mb-3">Included in this service:</h4>
+              <ul class="space-y-2 mb-8">
+                {srv.inclusions.map((inc) => (
+                  <li class="flex items-center gap-2.5 text-sm text-brand-dark/80">
+                    <i class="fa-solid fa-circle-check text-green-500 text-xs"></i>
+                    <span>{inc}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <button 
+              type="button" 
+              data-open-contact-drawer 
+              class="w-full py-4 rounded-xl bg-brand-primary hover:bg-brand-primary-hover text-white font-display font-semibold text-center transition-all shadow-md"
+            >
+              Request Non-binding Quote
+            </button>
+          </div>
+        ))}
+      </div>
+
+      <!-- Why RI&E is Mandatory section -->
+      <div class="bg-white rounded-3xl p-8 lg:p-12 border border-brand-dark/5 shadow-sm">
+        <h3 class="font-display text-2xl sm:text-3xl font-bold text-brand-secondary mb-6">
+          Why an updated RI&E is vital for your Dutch entity
+        </h3>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-sm text-brand-dark/80 leading-relaxed">
+          <div class="p-5 rounded-2xl bg-brand-cream/50 border border-brand-dark/5">
+            <div class="w-10 h-10 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center mb-4">
+              <i class="fa-solid fa-gavel text-lg"></i>
+            </div>
+            <h4 class="font-display font-bold text-brand-secondary text-base mb-2">Statutory Requirement</h4>
+            <p>Mandatory for all Dutch employers with employees under the Working Conditions Act. The Dutch Labour Inspectorate actively conducts audits with substantial fines for non-compliance.</p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-brand-cream/50 border border-brand-dark/5">
+            <div class="w-10 h-10 rounded-xl bg-brand-accent/10 text-brand-accent flex items-center justify-center mb-4">
+              <i class="fa-solid fa-file-contract text-lg"></i>
+            </div>
+            <h4 class="font-display font-bold text-brand-secondary text-base mb-2">Insurance Compliance</h4>
+            <p>Corporate insurers mandate an active and audited RI&E when underwriting or maintaining business liability and fire insurance policies in the Netherlands.</p>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-brand-cream/50 border border-brand-dark/5">
+            <div class="w-10 h-10 rounded-xl bg-green-500/10 text-green-600 flex items-center justify-center mb-4">
+              <i class="fa-solid fa-heart-pulse text-lg"></i>
+            </div>
+            <h4 class="font-display font-bold text-brand-secondary text-base mb-2">Sick Leave Reduction</h4>
+            <p>Systematic assessment of physical strain, psychosocial workplace stress (PSA) and facility safety directly reduces absenteeism and increases employee satisfaction.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <MobileCourseBottomBar defaultCourse={services[0]} />
+</Layout>

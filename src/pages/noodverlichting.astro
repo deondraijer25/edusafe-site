@@ -1,0 +1,203 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MobileCourseBottomBar from '../components/MobileCourseBottomBar.astro';
+
+const services = [
+  {
+    id: "noodverlichting-inspectie",
+    title: "Jaarlijkse NEN-EN 1838 Inspectie & Onderhoud",
+    tagline: "Wettelijke controle van armaturen, accutests en 1-uurs autonomiemeting",
+    price: "Vaste staffelprijs",
+    spotsText: "Wettelijk verplicht",
+    duration: "Op locatie binnen 1 dagdeel",
+    target: "Voor alle gebouwen waar personeel, gasten of publiek aanwezig zijn conform het Bouwbesluit en de Arbowet.",
+    requirements: "Toegang tot alle noodverlichtingsarmaturen en de hoofdschakelkast.",
+    exam: "Autonomietest (min. 1 uur brandduur bij netspanningsuitval), lux-meting en accutest.",
+    certification: "Officieel NEN-EN 50172 inspectierapport + digitaal logboek voor de brandweer en verzekeraar.",
+    inclusions: [
+      "Controle van vluchtrouteaanduiding en vluchtrouteverlichting",
+      "Functionele test en 1-uurs accutest bij stroomuitval",
+      "Vervanging van defecte lichtbronnen en versleten accu's",
+      "Actualisatie van het wettelijk verplichte noodverlichtingslogboek"
+    ],
+    modules: [
+      { name: "Controle van permanente vluchtrouteaanduiding (groene pictogrammen conform NEN 3011)" },
+      { name: "Inspectie van anti-paniekverlichting en vluchtrouteverlichting (min. 1 lux op de vloer)" },
+      { name: "Preventieve 4-jaars accuwissel om uitval te voorkomen" },
+      { name: "Rapportage met prioriteitenlijst conform NEN-EN 1838 & ISSO 79" }
+    ],
+    image: "https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?auto=format&fit=crop&q=80&w=800",
+    registerLink: "#contact"
+  },
+  {
+    id: "noodverlichting-nieuwbouw",
+    title: "Projectering & LED Noodverlichting Ombouw",
+    tagline: "Vervanging van verouderde TL-armaturen naar energiezuinige LED-noodverlichting",
+    price: "Offerte op maat",
+    spotsText: "Bespaar tot 80% energie",
+    duration: "Binnen 5 werkdagen gemonteerd",
+    target: "Voor bedrijven die hun energiekosten willen verlagen en armaturen willen moderniseren met een langere acculevensduur.",
+    requirements: "Plattegrond van het gebouw of opname ter plaatse.",
+    exam: "Lichtberekening en projectering conform NEN-EN 1838.",
+    certification: "Volledig NEN-gecertificeerde installatie met 5 jaar fabrieksgarantie.",
+    inclusions: [
+      "Lichtplan en projectering conform NEN-EN 1838",
+      "Levering van moderne LED armaturen met automatische zelftest (autotest)",
+      "Vakkundige montage en aansluiting op de noodstroomgroepen",
+      "Inclusief 5 jaar garantie op LED en accu"
+    ],
+    modules: [
+      { name: "Berekening van vluchtweg- en werkplekverlichting" },
+      { name: "Installatie van slimme zelftestende LED-armaturen" },
+      { name: "Milieuvriendelijke afvoer van oude TL-bakken en NiCd batterijen" },
+      { name: "Opleveringscertificaat en plattegrondregistratie" }
+    ],
+    image: "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=800",
+    registerLink: "#contact"
+  }
+];
+---
+
+<Layout 
+  title="Noodverlichting Inspectie & Onderhoud NEN-EN 1838 | Edusafe"
+  description="Wettelijk verplicht onderhoud, inspectie en LED-ombouw van noodverlichting en vluchtrouteaanduiding. Gecertificeerd conform Bouwbesluit en Arbowet."
+>
+  <!-- Hero Section -->
+  <section class="relative bg-brand-secondary text-white pt-36 pb-20 overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+    <div class="max-w-[1280px] mx-auto px-6 relative z-10">
+      
+      <div class="flex items-center gap-2 text-xs font-semibold text-brand-primary uppercase tracking-wider mb-4">
+        <a href="/" class="hover:underline">Home</a>
+        <span>/</span>
+        <span>Diensten</span>
+        <span>/</span>
+        <span class="text-white">Noodverlichting</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-8">
+          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-primary/20 text-brand-primary border border-brand-primary/30 text-xs font-bold uppercase tracking-wider mb-4">
+            <i class="fa-solid fa-lightbulb"></i>
+            NEN-EN 1838 &amp; Bouwbesluit
+          </span>
+          <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+            Noodverlichting &amp; <span class="text-brand-accent">Vluchtwegaanduiding</span>
+          </h1>
+          <p class="text-lg text-white/80 leading-relaxed max-w-2xl mb-8">
+            Bij stroomuitval of calamiteiten moet iedereen uw pand snel en veilig kunnen verlaten. Edusafe verzorgt de jaarlijkse inspectie, accutests en LED-modernisering van uw complete noodverlichtingsinstallatie.
+          </p>
+
+          <div class="flex flex-wrap gap-4">
+            <button type="button" data-open-contact-drawer class="bg-brand-accent hover:bg-brand-accent-hover text-white font-display font-semibold px-8 py-4 rounded-xl transition-all shadow-lg hover:-translate-y-0.5">
+              Inspectie of Offerte Aanvragen
+            </button>
+            <a href="#details" class="bg-white/10 hover:bg-white/20 text-white font-display font-semibold px-8 py-4 rounded-xl border border-white/20 transition-all">
+              Bekijk Normen &amp; Eisen
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4 grid grid-cols-2 gap-4">
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-primary mb-1">60 min</div>
+            <div class="text-xs text-white/70">Wettelijke Autonomie</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-accent mb-1">4 Jaar</div>
+            <div class="text-xs text-white/70">Accu Vervangingscyclus</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-primary mb-1">NEN 1838</div>
+            <div class="text-xs text-white/70">Europese Norm</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-accent mb-1">LED</div>
+            <div class="text-xs text-white/70">Tot 80% Besparing</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Content Section -->
+  <section id="details" class="py-20 bg-brand-cream relative">
+    <div class="max-w-[1280px] mx-auto px-6">
+      
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="text-brand-accent font-display font-semibold text-xs uppercase tracking-wider mb-2 block">
+          Zekerheid bij stroomuitval
+        </span>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-brand-secondary">
+          Onderhoud, Projectering &amp; Ombouw
+        </h2>
+        <p class="text-brand-dark/70 text-base mt-3">
+          Van jaarlijkse accutesten en logboekbeheer tot complete overstap naar slimme, zelftestende LED noodverlichting.
+        </p>
+      </div>
+
+      <!-- Service Cards Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        {services.map((srv) => (
+          <div class="bg-white rounded-3xl p-8 border border-brand-dark/5 shadow-xl flex flex-col justify-between hover:border-brand-primary/30 transition-all">
+            <div>
+              <div class="flex items-center justify-between gap-4 mb-4">
+                <span class="px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary text-xs font-bold uppercase tracking-wider">
+                  {srv.spotsText}
+                </span>
+                <span class="text-lg font-display font-bold text-brand-accent">
+                  {srv.price}
+                </span>
+              </div>
+              <h3 class="font-display text-2xl font-bold text-brand-secondary mb-2">
+                {srv.title}
+              </h3>
+              <p class="text-brand-dark/70 text-sm mb-6 leading-relaxed">
+                {srv.tagline}
+              </p>
+
+              <div class="space-y-4 mb-8">
+                <div class="flex items-start gap-3">
+                  <i class="fa-solid fa-clock text-brand-primary mt-1"></i>
+                  <div>
+                    <strong class="text-xs text-brand-secondary uppercase tracking-wider block">Doorlooptijd:</strong>
+                    <span class="text-sm text-brand-dark/80">{srv.duration}</span>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <i class="fa-solid fa-shield-halved text-brand-primary mt-1"></i>
+                  <div>
+                    <strong class="text-xs text-brand-secondary uppercase tracking-wider block">Certificering &amp; Normen:</strong>
+                    <span class="text-sm text-brand-dark/80">{srv.certification}</span>
+                  </div>
+                </div>
+              </div>
+
+              <h4 class="text-xs font-bold uppercase tracking-wider text-brand-secondary mb-3">Inbegrepen in deze dienst:</h4>
+              <ul class="space-y-2 mb-8">
+                {srv.inclusions.map((inc) => (
+                  <li class="flex items-center gap-2.5 text-sm text-brand-dark/80">
+                    <i class="fa-solid fa-circle-check text-green-500 text-xs"></i>
+                    <span>{inc}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <button 
+              type="button" 
+              data-open-contact-drawer 
+              class="w-full py-4 rounded-xl bg-brand-primary hover:bg-brand-primary-hover text-white font-display font-semibold text-center transition-all shadow-md"
+            >
+              Vrijblijvende Offerte Aanvragen
+            </button>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </section>
+
+  <MobileCourseBottomBar defaultCourse={services[0]} />
+</Layout>

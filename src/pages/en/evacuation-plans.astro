@@ -1,0 +1,203 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import MobileCourseBottomBar from '../../components/MobileCourseBottomBar.astro';
+
+const services = [
+  {
+    id: "evacuation-plans-cad",
+    title: "NEN 1414 Evacuation Floor Plans & Signage",
+    tagline: "Certified escape route mapping conforming to NEN 1414 & NEN 3011 statutory directives",
+    price: "From € 145,- per floor",
+    spotsText: "NEN 1414 Certified",
+    duration: "Delivered within 5 to 10 business days",
+    target: "For commercial facilities, healthcare campuses, schools, and multi-tenant offices requiring statutory evacuation maps.",
+    requirements: "Digital architectural drawings (DWG/PDF) or facility sketches.",
+    exam: "Audited against statutory NEN 1414 standards and local safety region specifications.",
+    certification: "High-resolution NEN 1414 certified vectors, digital files and printed in luxury snap frames.",
+    inclusions: [
+      "Digital conversion and drawing in specialized architectural CAD software",
+      "Mapping escape route paths highlighted with statutory light-green navigation lanes",
+      "Exact location symbols for fire extinguishers, call points, first aid kits, and AEDs",
+      "Delivery in print-ready PDF format + deluxe A3/A4 aluminum snap display frames"
+    ],
+    modules: [
+      { name: "Floor plan view oriented with clear 'You Are Here' markers" },
+      { name: "Designated emergency exit doors and exterior muster points" },
+      { name: "Standardized emergency response action procedures under NEN 3011" },
+      { name: "Full synchronization with your facility emergency evacuation plan" }
+    ],
+    image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=800",
+    registerLink: "#contact"
+  },
+  {
+    id: "emergency-plan-turnkey",
+    title: "Comprehensive Facility Emergency Plan (NTA 8112)",
+    tagline: "Statutory emergency evacuation blueprint including incident protocols and role delegation",
+    price: "Custom proposal",
+    spotsText: "NTA 8112 Compliant",
+    duration: "Turnaround approx. 2 weeks",
+    target: "For entities mandated under the Dutch Building Decree to maintain active fire alarm and evacuation installations.",
+    requirements: "Consultation with facility director / Chief BHV Officer and on-site facility walkthrough.",
+    exam: "Statutory validation under official NTA 8112 directives.",
+    certification: "Officially approved emergency response plan for fire marshals and property insurers.",
+    inclusions: [
+      "Drafting of the full facility emergency plan according to NTA 8112",
+      "Explicit role definitions for company directors, team leaders, and emergency response officers",
+      "Incident response flowcharts and alert protocols across varied disaster scenarios",
+      "Including digital deployment and staff quick-reference instruction cards"
+    ],
+    modules: [
+      { name: "Facility specifications, maximum occupancy, and hazard risk profiling" },
+      { name: "Emergency notification matrix and internal communication channels" },
+      { name: "Dedicated evacuation procedures for mobility-impaired individuals" },
+      { name: "Operational playbook for organizing mandatory annual fire drills" }
+    ],
+    image: "https://images.unsplash.com/photo-1582139329536-e7284fece509?auto=format&fit=crop&q=80&w=800",
+    registerLink: "#contact"
+  }
+];
+---
+
+<Layout 
+  title="NEN 1414 Evacuation Floor Plans & Emergency Blueprints | Edusafe Netherlands"
+  description="Certified NEN 1414 evacuation floor plans, escape route mapping, and NTA 8112 emergency response blueprints for facilities across the Netherlands."
+>
+  <!-- Hero Section -->
+  <section class="relative bg-brand-secondary text-white pt-36 pb-20 overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+    <div class="max-w-[1280px] mx-auto px-6 relative z-10">
+      
+      <div class="flex items-center gap-2 text-xs font-semibold text-brand-primary uppercase tracking-wider mb-4">
+        <a href="/en" class="hover:underline">Home</a>
+        <span>/</span>
+        <span>Services</span>
+        <span>/</span>
+        <span class="text-white">Evacuation Plans</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-8">
+          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-primary/20 text-brand-primary border border-brand-primary/30 text-xs font-bold uppercase tracking-wider mb-4">
+            <i class="fa-solid fa-map-location-dot"></i>
+            NEN 1414 &amp; NEN 3011
+          </span>
+          <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+            NEN 1414 Evacuation Plans &amp; <span class="text-brand-accent">Emergency Blueprints</span>
+          </h1>
+          <p class="text-lg text-white/80 leading-relaxed max-w-2xl mb-8">
+            Evacuation floor plans mounted at critical building intersections instantly guide employees and visitors toward the quickest exit routes during emergencies. Edusafe designs and produces them in strict accordance with Dutch NEN 1414 standards.
+          </p>
+
+          <div class="flex flex-wrap gap-4">
+            <button type="button" data-open-contact-drawer class="bg-brand-accent hover:bg-brand-accent-hover text-white font-display font-semibold px-8 py-4 rounded-xl transition-all shadow-lg hover:-translate-y-0.5">
+              Request Floor Plan Proposal
+            </button>
+            <a href="#details" class="bg-white/10 hover:bg-white/20 text-white font-display font-semibold px-8 py-4 rounded-xl border border-white/20 transition-all">
+              Explore Standards &amp; Pricing
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4 grid grid-cols-2 gap-4">
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-primary mb-1">NEN 1414</div>
+            <div class="text-xs text-white/70">Statutory Norm</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-accent mb-1">CAD</div>
+            <div class="text-xs text-white/70">Precision Vectors</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-primary mb-1">Included</div>
+            <div class="text-xs text-white/70">Snap Frames &amp; PDF</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-accent mb-1">5-10 days</div>
+            <div class="text-xs text-white/70">Rapid Turnaround</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Content Section -->
+  <section id="details" class="py-20 bg-brand-cream relative">
+    <div class="max-w-[1280px] mx-auto px-6">
+      
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="text-brand-accent font-display font-semibold text-xs uppercase tracking-wider mb-2 block">
+          Intuitive spatial navigation in emergencies
+        </span>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-brand-secondary">
+          Floor Plans &amp; Incident Blueprints
+        </h2>
+        <p class="text-brand-dark/70 text-base mt-3">
+          From precise escape route diagrams to comprehensive NTA 8112 statutory emergency evacuation manuals.
+        </p>
+      </div>
+
+      <!-- Service Cards Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        {services.map((srv) => (
+          <div class="bg-white rounded-3xl p-8 border border-brand-dark/5 shadow-xl flex flex-col justify-between hover:border-brand-primary/30 transition-all">
+            <div>
+              <div class="flex items-center justify-between gap-4 mb-4">
+                <span class="px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary text-xs font-bold uppercase tracking-wider">
+                  {srv.spotsText}
+                </span>
+                <span class="text-lg font-display font-bold text-brand-accent">
+                  {srv.price}
+                </span>
+              </div>
+              <h3 class="font-display text-2xl font-bold text-brand-secondary mb-2">
+                {srv.title}
+              </h3>
+              <p class="text-brand-dark/70 text-sm mb-6 leading-relaxed">
+                {srv.tagline}
+              </p>
+
+              <div class="space-y-4 mb-8">
+                <div class="flex items-start gap-3">
+                  <i class="fa-solid fa-clock text-brand-primary mt-1"></i>
+                  <div>
+                    <strong class="text-xs text-brand-secondary uppercase tracking-wider block">Turnaround:</strong>
+                    <span class="text-sm text-brand-dark/80">{srv.duration}</span>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <i class="fa-solid fa-shield-halved text-brand-primary mt-1"></i>
+                  <div>
+                    <strong class="text-xs text-brand-secondary uppercase tracking-wider block">Certification:</strong>
+                    <span class="text-sm text-brand-dark/80">{srv.certification}</span>
+                  </div>
+                </div>
+              </div>
+
+              <h4 class="text-xs font-bold uppercase tracking-wider text-brand-secondary mb-3">Included in this service:</h4>
+              <ul class="space-y-2 mb-8">
+                {srv.inclusions.map((inc) => (
+                  <li class="flex items-center gap-2.5 text-sm text-brand-dark/80">
+                    <i class="fa-solid fa-circle-check text-green-500 text-xs"></i>
+                    <span>{inc}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <button 
+              type="button" 
+              data-open-contact-drawer 
+              class="w-full py-4 rounded-xl bg-brand-primary hover:bg-brand-primary-hover text-white font-display font-semibold text-center transition-all shadow-md"
+            >
+              Request Custom Quote
+            </button>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </section>
+
+  <MobileCourseBottomBar defaultCourse={services[0]} />
+</Layout>

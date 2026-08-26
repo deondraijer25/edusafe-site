@@ -1,0 +1,203 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import MobileCourseBottomBar from '../../components/MobileCourseBottomBar.astro';
+
+const services = [
+  {
+    id: "event-first-aid-team",
+    title: "Certified Event First Aid Responder Teams",
+    tagline: "Professional first responders equipped with AEDs, uniform identification, and emergency medical kits",
+    price: "Hourly corporate rates",
+    spotsText: "From 2 responders",
+    duration: "Deployable per half-day or multi-day",
+    target: "For music festivals, sports championships, public fairs, corporate galas, concerts, and conventions.",
+    requirements: "Consultation regarding expected visitor attendance and event risk classification.",
+    exam: "Certified according to Het Oranje Kruis and Dutch National Event Healthcare Norms.",
+    certification: "Fully compliant with the Dutch Field Norm Event Healthcare (WGBO) and regional GHOR guidelines.",
+    inclusions: [
+      "Certified and professional first aiders in standardized high-visibility apparel",
+      "Comprehensive medical trauma kits, oxygen delivery packs, and portable AEDs",
+      "Two-way encrypted radio communication and seamless coordination with on-site security",
+      "Full digital logging of all patient interactions and medical treatments"
+    ],
+    modules: [
+      { name: "Primary First Aid for trauma, lacerations, sprains, fainting, and fractures" },
+      { name: "Resuscitation (CPR) and rapid deployment of automated external defibrillators" },
+      { name: "Specialized response protocols for alcohol and substance intoxication at dance festivals" },
+      { name: "Triage and streamlined transfer to regional emergency ambulance services" }
+    ],
+    image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80&w=800",
+    registerLink: "#contact"
+  },
+  {
+    id: "mobile-medical-post-ambulance",
+    title: "Mobile Medical Treatment Posts & Dedicated Ambulance",
+    tagline: "Fully equipped mobile treatment tents, medical quad bikes, and on-site ambulance support",
+    price: "Custom proposal",
+    spotsText: "Large-Scale Events",
+    duration: "Turnkey setup & teardown",
+    target: "For major public gatherings, cross-country sports events, and high-density mass gatherings.",
+    requirements: "Designated footprint on event grounds with direct emergency exit access.",
+    exam: "Audited against municipal event permits and GHOR medical safety guidelines.",
+    certification: "Turnkey mobile medical facility fulfilling Dutch health safety directives.",
+    inclusions: [
+      "Deployment of heavy-duty mobile treatment tent(s) with examination beds and surgical lighting",
+      "Dedicated on-site event ambulance for immediate critical patient stabilization",
+      "Rapid response mobile units including medical quad bikes for rugged terrain access",
+      "Senior medical coordinator acting as primary liaison with local authorities"
+    ],
+    modules: [
+      { name: "Erection of climate-controlled mobile first aid treatment facilities" },
+      { name: "Fast dispatch across crowded or difficult-to-navigate terrain via quad bikes" },
+      { name: "Advanced triage and mass casualty management protocols" },
+      { name: "Post-event summary reporting and casualty statistics for local municipalities" }
+    ],
+    image: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&q=80&w=800",
+    registerLink: "#contact"
+  }
+];
+---
+
+<Layout 
+  title="Event First Aid & Medical Support Services | Edusafe Netherlands"
+  description="Hire professional event first aid teams, mobile treatment posts, and ambulance services for festivals, corporate events, and sports tournaments in the Netherlands."
+>
+  <!-- Hero Section -->
+  <section class="relative bg-brand-secondary text-white pt-36 pb-20 overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+    <div class="max-w-[1280px] mx-auto px-6 relative z-10">
+      
+      <div class="flex items-center gap-2 text-xs font-semibold text-brand-primary uppercase tracking-wider mb-4">
+        <a href="/en" class="hover:underline">Home</a>
+        <span>/</span>
+        <span>Services</span>
+        <span>/</span>
+        <span class="text-white">Event First Aid</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-8">
+          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-primary/20 text-brand-primary border border-brand-primary/30 text-xs font-bold uppercase tracking-wider mb-4">
+            <i class="fa-solid fa-kit-medical"></i>
+            Dutch Event Healthcare Standard
+          </span>
+          <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+            Event First Aid &amp; <span class="text-brand-accent">Medical Teams</span>
+          </h1>
+          <p class="text-lg text-white/80 leading-relaxed max-w-2xl mb-8">
+            Hosting a festival, corporate event, or sports championship? Edusafe ensures comprehensive medical support with certified first responder teams, mobile treatment clinics, and ambulance units.
+          </p>
+
+          <div class="flex flex-wrap gap-4">
+            <button type="button" data-open-contact-drawer class="bg-brand-accent hover:bg-brand-accent-hover text-white font-display font-semibold px-8 py-4 rounded-xl transition-all shadow-lg hover:-translate-y-0.5">
+              Hire Event Medical Team
+            </button>
+            <a href="#details" class="bg-white/10 hover:bg-white/20 text-white font-display font-semibold px-8 py-4 rounded-xl border border-white/20 transition-all">
+              Explore Medical Equipment &amp; Rates
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4 grid grid-cols-2 gap-4">
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-primary mb-1">GHOR</div>
+            <div class="text-xs text-white/70">Coordinated Protocols</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-accent mb-1">AED</div>
+            <div class="text-xs text-white/70">Standard Equipment</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-primary mb-1">Mobile</div>
+            <div class="text-xs text-white/70">Quads &amp; Motorbikes</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-accent mb-1">24/7</div>
+            <div class="text-xs text-white/70">Nationwide Coverage</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Content Section -->
+  <section id="details" class="py-20 bg-brand-cream relative">
+    <div class="max-w-[1280px] mx-auto px-6">
+      
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="text-brand-accent font-display font-semibold text-xs uppercase tracking-wider mb-2 block">
+          Medical safety for all event attendees
+        </span>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-brand-secondary">
+          First Aid Units &amp; Mobile Medical Posts
+        </h2>
+        <p class="text-brand-dark/70 text-base mt-3">
+          From professional first responders at local corporate galas to full-scale medical command at major dance festivals.
+        </p>
+      </div>
+
+      <!-- Service Cards Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        {services.map((srv) => (
+          <div class="bg-white rounded-3xl p-8 border border-brand-dark/5 shadow-xl flex flex-col justify-between hover:border-brand-primary/30 transition-all">
+            <div>
+              <div class="flex items-center justify-between gap-4 mb-4">
+                <span class="px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary text-xs font-bold uppercase tracking-wider">
+                  {srv.spotsText}
+                </span>
+                <span class="text-lg font-display font-bold text-brand-accent">
+                  {srv.price}
+                </span>
+              </div>
+              <h3 class="font-display text-2xl font-bold text-brand-secondary mb-2">
+                {srv.title}
+              </h3>
+              <p class="text-brand-dark/70 text-sm mb-6 leading-relaxed">
+                {srv.tagline}
+              </p>
+
+              <div class="space-y-4 mb-8">
+                <div class="flex items-start gap-3">
+                  <i class="fa-solid fa-clock text-brand-primary mt-1"></i>
+                  <div>
+                    <strong class="text-xs text-brand-secondary uppercase tracking-wider block">Deployment:</strong>
+                    <span class="text-sm text-brand-dark/80">{srv.duration}</span>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <i class="fa-solid fa-shield-halved text-brand-primary mt-1"></i>
+                  <div>
+                    <strong class="text-xs text-brand-secondary uppercase tracking-wider block">Quality Standards:</strong>
+                    <span class="text-sm text-brand-dark/80">{srv.certification}</span>
+                  </div>
+                </div>
+              </div>
+
+              <h4 class="text-xs font-bold uppercase tracking-wider text-brand-secondary mb-3">Included in this service:</h4>
+              <ul class="space-y-2 mb-8">
+                {srv.inclusions.map((inc) => (
+                  <li class="flex items-center gap-2.5 text-sm text-brand-dark/80">
+                    <i class="fa-solid fa-circle-check text-green-500 text-xs"></i>
+                    <span>{inc}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <button 
+              type="button" 
+              data-open-contact-drawer 
+              class="w-full py-4 rounded-xl bg-brand-primary hover:bg-brand-primary-hover text-white font-display font-semibold text-center transition-all shadow-md"
+            >
+              Request Custom Event Quote
+            </button>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </section>
+
+  <MobileCourseBottomBar defaultCourse={services[0]} />
+</Layout>

@@ -1,0 +1,203 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MobileCourseBottomBar from '../components/MobileCourseBottomBar.astro';
+
+const services = [
+  {
+    id: "dakveiligheid-inspectie",
+    title: "Jaarlijkse Inspectie & Keuring Valbeveiliging",
+    tagline: "Wettelijke NEN-EN 795 & NEN-EN 365 keuring van ankerpunten, kabelsystemen en hekwerken",
+    price: "Offerte op maat",
+    spotsText: "Wettelijk verplicht",
+    duration: "Op locatie binnen 1 dag",
+    target: "Voor gebouweigenaren, VvE's, vastgoedbeheerders en werkgevers met daktoegang conform Arbowet & Bouwbesluit.",
+    requirements: "Toegang tot het dak en de bestaande valbeveiligingsvoorzieningen.",
+    exam: "Trekproeven en visuele inspectie van ankers, staalkabels, borgpennen en leeflijnen.",
+    certification: "Officieel inspectiecertificaat + dakveiligheidslogboek conform NEN-EN 365.",
+    inclusions: [
+      "Visuele en mechanische keuring van alle aanwezige valbeveiligingssystemen",
+      "Trek- en beproevingstesten op ankerpunten volgens NEN-EN 795",
+      "Aanbrengen van officiële keuringslabels en markeringen",
+      "Uitgebreid fotorapport met conditiebeoordeling en hersteladvies"
+    ],
+    modules: [
+      { name: "Keuring van permanente staalkabelsystemen en leeflijnen" },
+      { name: "Inspectie van individuele dakankers, kooiladders en borstweringen" },
+      { name: "Controle van persoonlijke beschermingsmiddelen (PBM valbeveiliging harnassen)" },
+      { name: "Actualisatie van het wettelijke daktoegangsreglement" }
+    ],
+    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=800",
+    registerLink: "#contact"
+  },
+  {
+    id: "dakveiligheid-advies",
+    title: "Dakveiligheidsplan & Installatie Valbeveiliging",
+    tagline: "Onafhankelijk advies, ontwerp en montage van valbeveiligingssystemen op maat",
+    price: "Projectprijs op aanvraag",
+    spotsText: "Bouwbesluit Conform",
+    duration: "Advies binnen 5 werkdagen",
+    target: "Voor nieuwbouwprojecten, renovaties en bestaande daken waar onderhoud veilig moet kunnen plaatsvinden.",
+    requirements: "Bouwtekeningen of inspectiebezoek op het dak.",
+    exam: "Risico-Inventarisatie Werken op Hoogte en zone-indeling (veilige zone, attentiezone, gevarenzone).",
+    certification: "Compleet Dakveiligheidsplan conform NEN 795 en Arbeidsomstandighedenbesluit.",
+    inclusions: [
+      "Risicoanalyse en zone-indeling van het gehele dakoppervlak",
+      "Ontwerp van het meest efficiënte valbeveiligingsconcept (collectief vs individueel)",
+      "Levering en vakkundige montage van hekwerken, ankers en kabelsystemen",
+      "Oplevering inclusief gebruikersinstructie voor onderhoudspersoneel"
+    ],
+    modules: [
+      { name: "Advies in de ontwerpfase conform Bouwbesluit 2012 / BBL" },
+      { name: "Keuze tussen hekwerken (collectieve bescherming) of lijnsystemen" },
+      { name: "Veilige daktoegang via gevelladders en dakluiken" },
+      { name: "Instructie en training voor veilig werken op hoogte" }
+    ],
+    image: "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=800",
+    registerLink: "#contact"
+  }
+];
+---
+
+<Layout 
+  title="Dakveiligheid & Valbeveiliging Inspectie | Edusafe"
+  description="Onafhankelijk advies, jaarlijkse inspectie en montage van permanente valbeveiliging op daken. Conform Bouwbesluit 2012, NEN-EN 795 en Arbowet."
+>
+  <!-- Hero Section -->
+  <section class="relative bg-brand-secondary text-white pt-36 pb-20 overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+    <div class="max-w-[1280px] mx-auto px-6 relative z-10">
+      
+      <div class="flex items-center gap-2 text-xs font-semibold text-brand-primary uppercase tracking-wider mb-4">
+        <a href="/" class="hover:underline">Home</a>
+        <span>/</span>
+        <span>Diensten</span>
+        <span>/</span>
+        <span class="text-white">Dakveiligheid</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-8">
+          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-primary/20 text-brand-primary border border-brand-primary/30 text-xs font-bold uppercase tracking-wider mb-4">
+            <i class="fa-solid fa-person-falling"></i>
+            Bouwbesluit &amp; NEN-EN 795
+          </span>
+          <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+            Dakveiligheid &amp; <span class="text-brand-accent">Valbeveiliging</span>
+          </h1>
+          <p class="text-lg text-white/80 leading-relaxed max-w-2xl mb-8">
+            Veilig beheer en onderhoud van de gebouwschil en het dak is wettelijk verplicht. Edusafe brengt deskundig advies uit voor zowel nieuwbouw als bestaande bouw en verzorgt de jaarlijkse keuring van al uw valbeveiligingssystemen.
+          </p>
+
+          <div class="flex flex-wrap gap-4">
+            <button type="button" data-open-contact-drawer class="bg-brand-accent hover:bg-brand-accent-hover text-white font-display font-semibold px-8 py-4 rounded-xl transition-all shadow-lg hover:-translate-y-0.5">
+              Direct Dakinspectie Aanvragen
+            </button>
+            <a href="#details" class="bg-white/10 hover:bg-white/20 text-white font-display font-semibold px-8 py-4 rounded-xl border border-white/20 transition-all">
+              Bekijk Diensten &amp; Normen
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4 grid grid-cols-2 gap-4">
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-primary mb-1">NEN 795</div>
+            <div class="text-xs text-white/70">Ankers &amp; Lijnen</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-accent mb-1">Arbowet</div>
+            <div class="text-xs text-white/70">Valgevaar Voorkomen</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-primary mb-1">100%</div>
+            <div class="text-xs text-white/70">Schijnveiligheid Weg</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-accent mb-1">Logboek</div>
+            <div class="text-xs text-white/70">Jaarlijkse Keuring</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Content Section -->
+  <section id="details" class="py-20 bg-brand-cream relative">
+    <div class="max-w-[1280px] mx-auto px-6">
+      
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="text-brand-accent font-display font-semibold text-xs uppercase tracking-wider mb-2 block">
+          Geen risico bij werken op hoogte
+        </span>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-brand-secondary">
+          Inspectie, Advies &amp; Valbeveiliging
+        </h2>
+        <p class="text-brand-dark/70 text-base mt-3">
+          Van de jaarlijkse verplichte keuring van ankerpunten tot complete daktoegangs- en veiligheidsplannen.
+        </p>
+      </div>
+
+      <!-- Service Cards Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        {services.map((srv) => (
+          <div class="bg-white rounded-3xl p-8 border border-brand-dark/5 shadow-xl flex flex-col justify-between hover:border-brand-primary/30 transition-all">
+            <div>
+              <div class="flex items-center justify-between gap-4 mb-4">
+                <span class="px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary text-xs font-bold uppercase tracking-wider">
+                  {srv.spotsText}
+                </span>
+                <span class="text-lg font-display font-bold text-brand-accent">
+                  {srv.price}
+                </span>
+              </div>
+              <h3 class="font-display text-2xl font-bold text-brand-secondary mb-2">
+                {srv.title}
+              </h3>
+              <p class="text-brand-dark/70 text-sm mb-6 leading-relaxed">
+                {srv.tagline}
+              </p>
+
+              <div class="space-y-4 mb-8">
+                <div class="flex items-start gap-3">
+                  <i class="fa-solid fa-clock text-brand-primary mt-1"></i>
+                  <div>
+                    <strong class="text-xs text-brand-secondary uppercase tracking-wider block">Doorlooptijd:</strong>
+                    <span class="text-sm text-brand-dark/80">{srv.duration}</span>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <i class="fa-solid fa-shield-halved text-brand-primary mt-1"></i>
+                  <div>
+                    <strong class="text-xs text-brand-secondary uppercase tracking-wider block">Kwaliteitsnorm:</strong>
+                    <span class="text-sm text-brand-dark/80">{srv.certification}</span>
+                  </div>
+                </div>
+              </div>
+
+              <h4 class="text-xs font-bold uppercase tracking-wider text-brand-secondary mb-3">Inbegrepen:</h4>
+              <ul class="space-y-2 mb-8">
+                {srv.inclusions.map((inc) => (
+                  <li class="flex items-center gap-2.5 text-sm text-brand-dark/80">
+                    <i class="fa-solid fa-circle-check text-green-500 text-xs"></i>
+                    <span>{inc}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <button 
+              type="button" 
+              data-open-contact-drawer 
+              class="w-full py-4 rounded-xl bg-brand-primary hover:bg-brand-primary-hover text-white font-display font-semibold text-center transition-all shadow-md"
+            >
+              Vrijblijvende Offerte Aanvragen
+            </button>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </section>
+
+  <MobileCourseBottomBar defaultCourse={services[0]} />
+</Layout>

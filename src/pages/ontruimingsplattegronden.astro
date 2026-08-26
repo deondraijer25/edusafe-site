@@ -1,0 +1,203 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MobileCourseBottomBar from '../components/MobileCourseBottomBar.astro';
+
+const services = [
+  {
+    id: "plattegronden-tekenen",
+    title: "NEN 1414 Ontruimingsplattegronden op Maat",
+    tagline: "Vluchtwegtekeningen conform NEN 1414 & NEN 3011 met overzichtelijke indeling",
+    price: "Vanaf € 145,- per verdieping",
+    spotsText: "NEN 1414 Gecertificeerd",
+    duration: "Binnen 5 tot 10 werkdagen geleverd",
+    target: "Voor bedrijven, zorginstellingen, scholen en openbare gebouwen met een wettelijke ontruimingsverplichting.",
+    requirements: "Digitale bouwtekening (DWG/PDF) of een schets van het pand.",
+    exam: "Toetsing aan de actuele NEN 1414 norm en de eisen van de veiligheidsregio.",
+    certification: "Hoogwaardige NEN 1414 gecertificeerde tekeningen, digitaal en gedrukt in kliklijst.",
+    inclusions: [
+      "Digitalisering en opmaak in professionele CAD-software",
+      "Intekenen van vluchtwegen met de voorgeschreven lichtgroene banen",
+      "Positionering van blusmiddelen, handbrandmelders, EHBO-posten en AED's",
+      "Levering als high-res PDF + luxe aluminium kliklijsten op A3- of A4-formaat"
+    ],
+    modules: [
+      { name: "Verdiepingsoverzicht met 'U bevindt zich hier' oriëntatie" },
+      { name: "Overzichtelijke nooduitgangen en verzamelplaatsborden" },
+      { name: "Instructies bij brand en ongeval volgens NEN 3011" },
+      { name: "Directe afstemming met uw bedrijfsnoodplan" }
+    ],
+    image: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=800",
+    registerLink: "#contact"
+  },
+  {
+    id: "ontruimingsplan-compleet",
+    title: "Compleet Bedrijfsnoodplan & Ontruimingsplan",
+    tagline: "Wettelijk verplicht ontruimingsplan (NTA 8112) inclusief scenario's en taakverdeling",
+    price: "Offerte op maat",
+    spotsText: "NTA 8112 Conform",
+    duration: "Doorlooptijd ca. 2 weken",
+    target: "Voor organisaties die verplicht zijn een brandmeldinstallatie te hebben conform het Bouwbesluit.",
+    requirements: "Gesprek met de directie / hoofd BHV en inspectie van het gebouw.",
+    exam: "Wettelijke toetsing conform NTA 8112 richtlijnen.",
+    certification: "Officieel goedgekeurd ontruimingsplan voor brandweer en verzekeraars.",
+    inclusions: [
+      "Opstellen van het complete ontruimingsplan volgens NTA 8112",
+      "Duidelijke taakomschrijving voor directie, ploegleiders en BHV'ers",
+      "Alarmerings- en ontruimingsprocedures bij diverse calamiteitenscenario's",
+      "Inclusief digitale oplevering en instructiekaarten voor medewerkers"
+    ],
+    modules: [
+      { name: "Gebouwgegevens, bezetting en risicoanalyse" },
+      { name: "Alarmeringsschema en communicatieprotocollen" },
+      { name: "Ontruimingsprocedure voor minder mobiele personen" },
+      { name: "Draaiboek voor jaarlijkse ontruimingsoefeningen" }
+    ],
+    image: "https://images.unsplash.com/photo-1582139329536-e7284fece509?auto=format&fit=crop&q=80&w=800",
+    registerLink: "#contact"
+  }
+];
+---
+
+<Layout 
+  title="NEN 1414 Ontruimingsplattegronden & Noodplannen | Edusafe"
+  description="Professionele NEN 1414 ontruimingsplattegronden en NTA 8112 ontruimingsplannen laten tekenen. Duidelijke vluchtwegen, betaalbaar en conform Bouwbesluit."
+>
+  <!-- Hero Section -->
+  <section class="relative bg-brand-secondary text-white pt-36 pb-20 overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+    <div class="max-w-[1280px] mx-auto px-6 relative z-10">
+      
+      <div class="flex items-center gap-2 text-xs font-semibold text-brand-primary uppercase tracking-wider mb-4">
+        <a href="/" class="hover:underline">Home</a>
+        <span>/</span>
+        <span>Diensten</span>
+        <span>/</span>
+        <span class="text-white">Ontruimingsplattegronden</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-8">
+          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-primary/20 text-brand-primary border border-brand-primary/30 text-xs font-bold uppercase tracking-wider mb-4">
+            <i class="fa-solid fa-map-location-dot"></i>
+            NEN 1414 &amp; NEN 3011
+          </span>
+          <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+            Ontruimingsplattegronden &amp; <span class="text-brand-accent">Noodplannen</span>
+          </h1>
+          <p class="text-lg text-white/80 leading-relaxed max-w-2xl mb-8">
+            Ontruimingsplattegronden hangen op strategische plekken in het gebouw om medewerkers en bezoekers bij nood direct de snelste en veiligste vluchtweg te wijzen. Edusafe tekent en levert ze exact conform NEN 1414.
+          </p>
+
+          <div class="flex flex-wrap gap-4">
+            <button type="button" data-open-contact-drawer class="bg-brand-accent hover:bg-brand-accent-hover text-white font-display font-semibold px-8 py-4 rounded-xl transition-all shadow-lg hover:-translate-y-0.5">
+              Direct Plattegrond Offerte Aanvragen
+            </button>
+            <a href="#details" class="bg-white/10 hover:bg-white/20 text-white font-display font-semibold px-8 py-4 rounded-xl border border-white/20 transition-all">
+              Bekijk Eisen &amp; Prijzen
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4 grid grid-cols-2 gap-4">
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-primary mb-1">NEN 1414</div>
+            <div class="text-xs text-white/70">Wettelijke Norm</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-accent mb-1">CAD</div>
+            <div class="text-xs text-white/70">Haarscherp Getekend</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-primary mb-1">Inclusief</div>
+            <div class="text-xs text-white/70">Kliklijsten &amp; PDF</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-accent mb-1">5-10 dgn</div>
+            <div class="text-xs text-white/70">Snelle Levering</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Content Section -->
+  <section id="details" class="py-20 bg-brand-cream relative">
+    <div class="max-w-[1280px] mx-auto px-6">
+      
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="text-brand-accent font-display font-semibold text-xs uppercase tracking-wider mb-2 block">
+          Veilige oriëntatie in noodsituaties
+        </span>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-brand-secondary">
+          Plattegronden &amp; Bedrijfsnoodplannen
+        </h2>
+        <p class="text-brand-dark/70 text-base mt-3">
+          Van overzichtelijke vluchtwegtekeningen tot complete NTA 8112 ontruimingsdraaiboeken voor uw organisatie.
+        </p>
+      </div>
+
+      <!-- Service Cards Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        {services.map((srv) => (
+          <div class="bg-white rounded-3xl p-8 border border-brand-dark/5 shadow-xl flex flex-col justify-between hover:border-brand-primary/30 transition-all">
+            <div>
+              <div class="flex items-center justify-between gap-4 mb-4">
+                <span class="px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary text-xs font-bold uppercase tracking-wider">
+                  {srv.spotsText}
+                </span>
+                <span class="text-lg font-display font-bold text-brand-accent">
+                  {srv.price}
+                </span>
+              </div>
+              <h3 class="font-display text-2xl font-bold text-brand-secondary mb-2">
+                {srv.title}
+              </h3>
+              <p class="text-brand-dark/70 text-sm mb-6 leading-relaxed">
+                {srv.tagline}
+              </p>
+
+              <div class="space-y-4 mb-8">
+                <div class="flex items-start gap-3">
+                  <i class="fa-solid fa-clock text-brand-primary mt-1"></i>
+                  <div>
+                    <strong class="text-xs text-brand-secondary uppercase tracking-wider block">Levertijd:</strong>
+                    <span class="text-sm text-brand-dark/80">{srv.duration}</span>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <i class="fa-solid fa-shield-halved text-brand-primary mt-1"></i>
+                  <div>
+                    <strong class="text-xs text-brand-secondary uppercase tracking-wider block">Certificering:</strong>
+                    <span class="text-sm text-brand-dark/80">{srv.certification}</span>
+                  </div>
+                </div>
+              </div>
+
+              <h4 class="text-xs font-bold uppercase tracking-wider text-brand-secondary mb-3">Inbegrepen:</h4>
+              <ul class="space-y-2 mb-8">
+                {srv.inclusions.map((inc) => (
+                  <li class="flex items-center gap-2.5 text-sm text-brand-dark/80">
+                    <i class="fa-solid fa-circle-check text-green-500 text-xs"></i>
+                    <span>{inc}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <button 
+              type="button" 
+              data-open-contact-drawer 
+              class="w-full py-4 rounded-xl bg-brand-primary hover:bg-brand-primary-hover text-white font-display font-semibold text-center transition-all shadow-md"
+            >
+              Vrijblijvende Offerte Aanvragen
+            </button>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </section>
+
+  <MobileCourseBottomBar defaultCourse={services[0]} />
+</Layout>

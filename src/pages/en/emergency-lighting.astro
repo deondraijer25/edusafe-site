@@ -1,0 +1,203 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import MobileCourseBottomBar from '../../components/MobileCourseBottomBar.astro';
+
+const services = [
+  {
+    id: "emergency-inspection",
+    title: "Annual NEN-EN 1838 Inspection & Maintenance",
+    tagline: "Statutory fixture testing, battery performance evaluation, and 1-hour autonomy validation",
+    price: "Tiered corporate rates",
+    spotsText: "Statutory Obligation",
+    duration: "On-site within half a day",
+    target: "For all commercial, healthcare, educational, and public access premises under the Dutch Building Decree.",
+    requirements: "Unobstructed access to emergency fixtures and primary electrical distribution panels.",
+    exam: "Full autonomy testing (minimum 60 minutes operation upon mains failure), lux level check, and battery evaluation.",
+    certification: "Official NEN-EN 50172 compliance inspection certificate + updated digital logbook for fire marshals and insurers.",
+    inclusions: [
+      "Inspection of escape route signage and emergency lighting luminaires",
+      "Functional autonomy testing under simulated power outage conditions",
+      "Replacement of defective light tubes, LEDs, and deteriorated batteries",
+      "Statutory updates to the mandatory facility emergency lighting register"
+    ],
+    modules: [
+      { name: "Testing illuminated exit signage conform NEN 3011 safety standards" },
+      { name: "Inspection of anti-panic area lighting and designated escape route paths (minimum 1 lux at floor level)" },
+      { name: "Preventative 4-year battery module replacement to avoid sudden blackouts" },
+      { name: "Prioritized defect report and compliance summary conforming to NEN-EN 1838 & ISSO 79" }
+    ],
+    image: "https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?auto=format&fit=crop&q=80&w=800",
+    registerLink: "#contact"
+  },
+  {
+    id: "led-upgrade",
+    title: "Emergency Lighting Design & LED Modernization",
+    tagline: "Upgrading outdated fluorescent fittings to intelligent, energy-saving LED emergency luminaires",
+    price: "Custom proposal",
+    spotsText: "Save up to 80% energy",
+    duration: "Installed within 5 business days",
+    target: "For commercial facilities seeking to decrease maintenance expenses while maximizing reliability with self-testing fixtures.",
+    requirements: "Facility floor plans or initial on-site engineering survey.",
+    exam: "Photometric calculation and projection conforming to NEN-EN 1838 standards.",
+    certification: "Full NEN-compliant installation backed by a 5-year manufacturer warranty.",
+    inclusions: [
+      "Illumination layout and projection plan according to European NEN-EN 1838 standards",
+      "Supply of state-of-the-art LED emergency units with integrated automated self-testing",
+      "Professional mounting and electrical connection to emergency circuit groups",
+      "Including comprehensive 5-year warranty on LED fixtures and battery packs"
+    ],
+    modules: [
+      { name: "Calculation of required escape route and open-area light distribution" },
+      { name: "Installation of self-testing smart LED fittings with automated status LEDs" },
+      { name: "Eco-friendly disposal and recycling of hazardous legacy fluorescent ballasts and NiCd batteries" },
+      { name: "Delivery certification and floor plan registry update" }
+    ],
+    image: "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=800",
+    registerLink: "#contact"
+  }
+];
+---
+
+<Layout 
+  title="Emergency & Exit Lighting Inspection NEN-EN 1838 | Edusafe Netherlands"
+  description="Mandatory annual inspection, battery testing, and LED upgrades for emergency lighting and exit signage across the Netherlands."
+>
+  <!-- Hero Section -->
+  <section class="relative bg-brand-secondary text-white pt-36 pb-20 overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+    <div class="max-w-[1280px] mx-auto px-6 relative z-10">
+      
+      <div class="flex items-center gap-2 text-xs font-semibold text-brand-primary uppercase tracking-wider mb-4">
+        <a href="/en" class="hover:underline">Home</a>
+        <span>/</span>
+        <span>Services</span>
+        <span>/</span>
+        <span class="text-white">Emergency Lighting</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-8">
+          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-primary/20 text-brand-primary border border-brand-primary/30 text-xs font-bold uppercase tracking-wider mb-4">
+            <i class="fa-solid fa-lightbulb"></i>
+            NEN-EN 1838 &amp; Dutch Building Decree
+          </span>
+          <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+            Emergency Lighting &amp; <span class="text-brand-accent">Exit Signage Compliance</span>
+          </h1>
+          <p class="text-lg text-white/80 leading-relaxed max-w-2xl mb-8">
+            During power outages or building evacuations, every occupant must be guided safely to safety. Edusafe manages annual compliance inspections, battery testing, and smart LED modernization.
+          </p>
+
+          <div class="flex flex-wrap gap-4">
+            <button type="button" data-open-contact-drawer class="bg-brand-accent hover:bg-brand-accent-hover text-white font-display font-semibold px-8 py-4 rounded-xl transition-all shadow-lg hover:-translate-y-0.5">
+              Request Inspection Proposal
+            </button>
+            <a href="#details" class="bg-white/10 hover:bg-white/20 text-white font-display font-semibold px-8 py-4 rounded-xl border border-white/20 transition-all">
+              Explore Standards &amp; Services
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4 grid grid-cols-2 gap-4">
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-primary mb-1">60 min</div>
+            <div class="text-xs text-white/70">Mandatory Autonomy</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-accent mb-1">4 Years</div>
+            <div class="text-xs text-white/70">Battery Cycle</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-primary mb-1">NEN 1838</div>
+            <div class="text-xs text-white/70">European Norm</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-accent mb-1">LED</div>
+            <div class="text-xs text-white/70">Up to 80% Savings</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Content Section -->
+  <section id="details" class="py-20 bg-brand-cream relative">
+    <div class="max-w-[1280px] mx-auto px-6">
+      
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="text-brand-accent font-display font-semibold text-xs uppercase tracking-wider mb-2 block">
+          Guaranteed reliability when power fails
+        </span>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-brand-secondary">
+          Inspection, Design &amp; Modernization
+        </h2>
+        <p class="text-brand-dark/70 text-base mt-3">
+          From annual testing protocols and digital logbook management to turnkey migrations to self-testing LED fixtures.
+        </p>
+      </div>
+
+      <!-- Service Cards Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        {services.map((srv) => (
+          <div class="bg-white rounded-3xl p-8 border border-brand-dark/5 shadow-xl flex flex-col justify-between hover:border-brand-primary/30 transition-all">
+            <div>
+              <div class="flex items-center justify-between gap-4 mb-4">
+                <span class="px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary text-xs font-bold uppercase tracking-wider">
+                  {srv.spotsText}
+                </span>
+                <span class="text-lg font-display font-bold text-brand-accent">
+                  {srv.price}
+                </span>
+              </div>
+              <h3 class="font-display text-2xl font-bold text-brand-secondary mb-2">
+                {srv.title}
+              </h3>
+              <p class="text-brand-dark/70 text-sm mb-6 leading-relaxed">
+                {srv.tagline}
+              </p>
+
+              <div class="space-y-4 mb-8">
+                <div class="flex items-start gap-3">
+                  <i class="fa-solid fa-clock text-brand-primary mt-1"></i>
+                  <div>
+                    <strong class="text-xs text-brand-secondary uppercase tracking-wider block">Turnaround:</strong>
+                    <span class="text-sm text-brand-dark/80">{srv.duration}</span>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <i class="fa-solid fa-shield-halved text-brand-primary mt-1"></i>
+                  <div>
+                    <strong class="text-xs text-brand-secondary uppercase tracking-wider block">Compliance Standards:</strong>
+                    <span class="text-sm text-brand-dark/80">{srv.certification}</span>
+                  </div>
+                </div>
+              </div>
+
+              <h4 class="text-xs font-bold uppercase tracking-wider text-brand-secondary mb-3">Included in this service:</h4>
+              <ul class="space-y-2 mb-8">
+                {srv.inclusions.map((inc) => (
+                  <li class="flex items-center gap-2.5 text-sm text-brand-dark/80">
+                    <i class="fa-solid fa-circle-check text-green-500 text-xs"></i>
+                    <span>{inc}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <button 
+              type="button" 
+              data-open-contact-drawer 
+              class="w-full py-4 rounded-xl bg-brand-primary hover:bg-brand-primary-hover text-white font-display font-semibold text-center transition-all shadow-md"
+            >
+              Request Custom Quote
+            </button>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </section>
+
+  <MobileCourseBottomBar defaultCourse={services[0]} />
+</Layout>

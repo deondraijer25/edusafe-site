@@ -10,8 +10,21 @@ const homeUrl = lang === 'en' ? '/en' : '/';
 const coursesUrl = lang === 'en' ? '/en/course-dates' : '/cursusdata';
 const elearningUrl = lang === 'en' ? '/en/e-learning' : '/e-learning';
 const offshoreUrl = lang === 'en' ? '/en/offshore-training' : '/offshore-cursus';
-const aboutUrl = lang === 'en' ? '/en#about-us' : '/#over-ons';
 const incompanyUrl = lang === 'en' ? '/en/incompany-training' : '/incompany-training';
+
+// Diensten URLs
+const rieUrl = lang === 'en' ? '/en/risk-assessment-rie' : '/rie-audit';
+const brandveiligheidUrl = lang === 'en' ? '/en/fire-safety-equipment' : '/brandveiligheid';
+const noodverlichtingUrl = lang === 'en' ? '/en/emergency-lighting' : '/noodverlichting';
+const plattegrondenUrl = lang === 'en' ? '/en/evacuation-plans' : '/ontruimingsplattegronden';
+const eventEhboUrl = lang === 'en' ? '/en/event-first-aid' : '/event-ehbo';
+const dakveiligheidUrl = lang === 'en' ? '/en/roof-safety' : '/dakveiligheid';
+
+// About & Legal URLs
+const aboutUrl = lang === 'en' ? '/en/about-us' : '/over-ons';
+const contactUrl = lang === 'en' ? '/en/contact' : '/contact';
+const faqUrl = lang === 'en' ? '/en/faq' : '/faq';
+const termsUrl = lang === 'en' ? '/en/terms-conditions' : '/algemene-voorwaarden';
 ---
 <header class="w-full sticky top-0 left-0 z-50 bg-white/95 backdrop-blur-md border-b border-brand-dark/5 transition-all duration-300">
   
@@ -59,14 +72,13 @@ const incompanyUrl = lang === 'en' ? '/en/incompany-training' : '/incompany-trai
 
         <div class="h-3 w-px bg-brand-dark/10"></div>
 
-        <button 
-          type="button"
-          data-open-contact-drawer
+        <a 
+          href={contactUrl}
           class="flex items-center gap-1.5 text-brand-secondary hover:text-brand-primary transition-colors font-semibold cursor-pointer group whitespace-nowrap"
         >
           <i class="fa-regular fa-envelope text-brand-primary text-xs group-hover:scale-110 transition-transform"></i>
           <span>{t('topbar.contact')}</span>
-        </button>
+        </a>
       </div>
 
     </div>
@@ -75,7 +87,7 @@ const incompanyUrl = lang === 'en' ? '/en/incompany-training' : '/incompany-trai
   <!-- Main Navigation Bar (Clean, Spacious & No Text Wrap) -->
   <div class="max-w-[1280px] mx-auto px-4 sm:px-6 w-full flex items-center justify-between h-[86px] lg:h-[94px] relative">
     
-    <!-- Left: Logo (Precisely aligned with hero and content, slightly larger) -->
+    <!-- Left: Logo -->
     <a href={homeUrl} class="flex items-center group shrink-0 mr-4 xl:mr-8 py-1" aria-label="Edusafe Home">
       <img 
         class="h-13 sm:h-16 lg:h-[70px] w-auto object-contain block transform group-hover:scale-[1.02] transition-transform duration-300" 
@@ -98,17 +110,17 @@ const incompanyUrl = lang === 'en' ? '/en/incompany-training' : '/incompany-trai
           </svg>
         </button>
         
-        <!-- Mega Menu Dropdown Card (Centered relative to the max-w-[1280px] header container) -->
+        <!-- Mega Menu Dropdown Card -->
         <div class="absolute top-[86px] lg:top-[94px] left-1/2 -translate-x-1/2 bg-white border border-brand-dark/8 shadow-2xl rounded-3xl p-7 w-[940px] max-w-[calc(100vw-48px)] transition-all duration-300 transform scale-95 opacity-0 pointer-events-none group-hover:scale-100 group-hover:opacity-100 group-hover:pointer-events-auto flex flex-col text-brand-secondary z-50">
           <div class="absolute -top-6 left-0 w-full h-6 bg-transparent"></div>
           
           <!-- Header -->
           <div class="mb-5 flex items-center justify-between border-b border-brand-dark/5 pb-4">
             <div>
-              <h4 class="font-display font-semibold text-lg text-brand-secondary">Cursussen & Opleidingen</h4>
+              <h4 class="font-display font-semibold text-lg text-brand-secondary">Cursussen &amp; Opleidingen</h4>
               <p class="text-[12px] text-brand-dark/65 font-medium">Praktijkgerichte en gecertificeerde veiligheidstrainingen.</p>
             </div>
-            <a href="/cursusdata" class="text-xs font-semibold text-brand-primary hover:text-brand-secondary flex items-center gap-1">
+            <a href={coursesUrl} class="text-xs font-semibold text-brand-primary hover:text-brand-secondary flex items-center gap-1">
               Bekijk alle cursusdata <i class="fa-solid fa-arrow-right text-[10px]"></i>
             </a>
           </div>
@@ -117,20 +129,20 @@ const incompanyUrl = lang === 'en' ? '/en/incompany-training' : '/incompany-trai
           <div class="grid grid-cols-4 gap-3.5 items-stretch">
             
             <!-- Card 1: BHV -->
-            <a href="/bhv-cursus" class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left">
+            <a href={lang === 'en' ? '/en/bhv-course' : '/bhv-cursus'} class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left">
               <div>
                 <div class="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-3 shrink-0 group-hover/item:bg-brand-primary group-hover/item:text-white transition-colors">
                   <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                   </svg>
                 </div>
-                <span class="font-display font-semibold text-[13.5px] text-brand-secondary mb-1 block leading-tight">BHV Basis & Herhaling</span>
+                <span class="font-display font-semibold text-[13.5px] text-brand-secondary mb-1 block leading-tight">BHV Basis &amp; Herhaling</span>
                 <span class="text-[11px] text-brand-dark/65 leading-tight block">Brand, ontruiming en eerste hulp conform NIBHV.</span>
               </div>
             </a>
 
             <!-- Card 2: EHBO -->
-            <a href="/ehbo-cursus" class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left">
+            <a href={lang === 'en' ? '/en/first-aid-course' : '/ehbo-cursus'} class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left">
               <div>
                 <div class="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-3 shrink-0 group-hover/item:bg-brand-primary group-hover/item:text-white transition-colors">
                   <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -138,51 +150,51 @@ const incompanyUrl = lang === 'en' ? '/en/incompany-training' : '/incompany-trai
                   </svg>
                 </div>
                 <span class="font-display font-semibold text-[13.5px] text-brand-secondary mb-1 block leading-tight">EHBO</span>
-                <span class="text-[11px] text-brand-dark/65 leading-tight block">Erkend door Het Oranje Kruis voor bedrijven & particulier.</span>
+                <span class="text-[11px] text-brand-dark/65 leading-tight block">Erkend door Het Oranje Kruis voor bedrijven &amp; particulier.</span>
               </div>
             </a>
 
             <!-- Card 3: AED & Reanimatie -->
-            <a href="/reanimatie-aed-cursus" class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left">
+            <a href={lang === 'en' ? '/en/cpr-aed-course' : '/reanimatie-aed-cursus'} class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left">
               <div>
                 <div class="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-3 shrink-0 group-hover/item:bg-brand-primary group-hover/item:text-white transition-colors">
                   <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                   </svg>
                 </div>
-                <span class="font-display font-semibold text-[13.5px] text-brand-secondary mb-1 block leading-tight">Reanimatie & AED</span>
+                <span class="font-display font-semibold text-[13.5px] text-brand-secondary mb-1 block leading-tight">Reanimatie &amp; AED</span>
                 <span class="text-[11px] text-brand-dark/65 leading-tight block">Levensreddend handelen met een defibrillator.</span>
               </div>
             </a>
 
             <!-- Card 4: VCA -->
-            <a href="/vca-cursus" class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left">
+            <a href={lang === 'en' ? '/en/vca-course' : '/vca-cursus'} class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left">
               <div>
                 <div class="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-3 shrink-0 group-hover/item:bg-brand-primary group-hover/item:text-white transition-colors">
                   <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
                   </svg>
                 </div>
-                <span class="font-display font-semibold text-[13.5px] text-brand-secondary mb-1 block leading-tight">VCA Basis & VOL</span>
+                <span class="font-display font-semibold text-[13.5px] text-brand-secondary mb-1 block leading-tight">VCA Basis &amp; VOL</span>
                 <span class="text-[11px] text-brand-dark/65 leading-tight block">Veilig werken in bouw, techniek en industrie.</span>
               </div>
             </a>
 
             <!-- Card 5: Ontruiming -->
-            <a href="/ontruiming-cursus" class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left">
+            <a href={lang === 'en' ? '/en/evacuation-course' : '/ontruiming-cursus'} class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left">
               <div>
                 <div class="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-3 shrink-0 group-hover/item:bg-brand-primary group-hover/item:text-white transition-colors">
                   <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v4M14 4h6m0 0v6m0-6L10 14" />
                   </svg>
                 </div>
-                <span class="font-display font-semibold text-[13.5px] text-brand-secondary mb-1 block leading-tight">Brand & Ontruiming</span>
+                <span class="font-display font-semibold text-[13.5px] text-brand-secondary mb-1 block leading-tight">Brand &amp; Ontruiming</span>
                 <span class="text-[11px] text-brand-dark/65 leading-tight block">Ontruimingsoefeningen en noodplannen.</span>
               </div>
             </a>
 
             <!-- Card 6: Heftruck -->
-            <a href="/heftruck-cursus" class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left">
+            <a href={lang === 'en' ? '/en/forklift-course' : '/heftruck-cursus'} class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left">
               <div>
                 <div class="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-3 shrink-0 group-hover/item:bg-brand-primary group-hover/item:text-white transition-colors">
                   <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -196,7 +208,7 @@ const incompanyUrl = lang === 'en' ? '/en/incompany-training' : '/incompany-trai
             </a>
 
             <!-- Card 7: Offshore -->
-            <a href="/offshore-cursus" class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left">
+            <a href={offshoreUrl} class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left">
               <div>
                 <div class="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-3 shrink-0 group-hover/item:bg-brand-primary group-hover/item:text-white transition-colors">
                   <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -205,12 +217,12 @@ const incompanyUrl = lang === 'en' ? '/en/incompany-training' : '/incompany-trai
                   </svg>
                 </div>
                 <span class="font-display font-semibold text-[13.5px] text-brand-secondary mb-1 block leading-tight">Offshore (OPITO)</span>
-                <span class="text-[11px] text-brand-dark/65 leading-tight block">BOSIET & HUET veiligheidstrainingen op zee.</span>
+                <span class="text-[11px] text-brand-dark/65 leading-tight block">BOSIET &amp; HUET veiligheidstrainingen op zee.</span>
               </div>
             </a>
 
             <!-- Card 8: Incompany Promo Card -->
-            <a href="/incompany-training" class="flex flex-col justify-between p-4 rounded-2xl bg-brand-accent/10 border border-brand-accent/30 hover:bg-brand-accent/20 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left">
+            <a href={incompanyUrl} class="flex flex-col justify-between p-4 rounded-2xl bg-brand-accent/10 border border-brand-accent/30 hover:bg-brand-accent/20 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left">
               <div>
                 <div class="w-8 h-8 rounded-lg bg-brand-accent text-white flex items-center justify-center mb-3 shrink-0 shadow-sm">
                   <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -256,16 +268,16 @@ const incompanyUrl = lang === 'en' ? '/en/incompany-training' : '/incompany-trai
               <h4 class="font-display font-semibold text-lg text-brand-secondary">{t('nav.services')}</h4>
               <p class="text-[12px] text-brand-dark/65 font-medium">{t('nav.services_desc')}</p>
             </div>
-            <button type="button" data-open-contact-drawer class="text-xs font-semibold text-brand-primary hover:text-brand-secondary flex items-center gap-1 cursor-pointer">
+            <a href={contactUrl} class="text-xs font-semibold text-brand-primary hover:text-brand-secondary flex items-center gap-1 cursor-pointer">
               Direct advies aanvragen <i class="fa-solid fa-arrow-right text-[10px]"></i>
-            </button>
+            </a>
           </div>
 
-          <!-- 4 Columns Grid -->
+          <!-- 4 Columns Grid (Diensten - Webshop removed, Dakveiligheid added!) -->
           <div class="grid grid-cols-4 gap-3.5 items-stretch">
             
             <!-- Card 1: RI&E Audit -->
-            <button type="button" data-open-contact-drawer class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left cursor-pointer">
+            <a href={rieUrl} class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left">
               <div>
                 <div class="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-3 shrink-0 group-hover/item:bg-brand-primary group-hover/item:text-white transition-colors">
                   <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -273,12 +285,12 @@ const incompanyUrl = lang === 'en' ? '/en/incompany-training' : '/incompany-trai
                   </svg>
                 </div>
                 <span class="font-display font-semibold text-[13.5px] text-brand-secondary mb-1 block leading-tight">RI&E Audit</span>
-                <span class="text-[11px] text-brand-dark/65 leading-tight block">Risico-Inventarisatie en Plan van Aanpak.</span>
+                <span class="text-[11px] text-brand-dark/65 leading-tight block">Risico-Inventarisatie en wettelijk Plan van Aanpak.</span>
               </div>
-            </button>
+            </a>
 
             <!-- Card 2: Brandveiligheid -->
-            <button type="button" data-open-contact-drawer class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left cursor-pointer">
+            <a href={brandveiligheidUrl} class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left">
               <div>
                 <div class="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-3 shrink-0 group-hover/item:bg-brand-primary group-hover/item:text-white transition-colors">
                   <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -286,12 +298,12 @@ const incompanyUrl = lang === 'en' ? '/en/incompany-training' : '/incompany-trai
                   </svg>
                 </div>
                 <span class="font-display font-semibold text-[13.5px] text-brand-secondary mb-1 block leading-tight">Brandveiligheid</span>
-                <span class="text-[11px] text-brand-dark/65 leading-tight block">Onderhoud van blusmiddelen en haspels.</span>
+                <span class="text-[11px] text-brand-dark/65 leading-tight block">NEN 2559 keuring van brandblussers en haspels.</span>
               </div>
-            </button>
+            </a>
 
             <!-- Card 3: Noodverlichting -->
-            <button type="button" data-open-contact-drawer class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left cursor-pointer">
+            <a href={noodverlichtingUrl} class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left">
               <div>
                 <div class="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-3 shrink-0 group-hover/item:bg-brand-primary group-hover/item:text-white transition-colors">
                   <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -299,12 +311,12 @@ const incompanyUrl = lang === 'en' ? '/en/incompany-training' : '/incompany-trai
                   </svg>
                 </div>
                 <span class="font-display font-semibold text-[13.5px] text-brand-secondary mb-1 block leading-tight">Noodverlichting</span>
-                <span class="text-[11px] text-brand-dark/65 leading-tight block">Jaarlijkse inspectie en vervanging van armaturen.</span>
+                <span class="text-[11px] text-brand-dark/65 leading-tight block">NEN-EN 1838 inspectie, accutests en LED-ombouw.</span>
               </div>
-            </button>
+            </a>
 
             <!-- Card 4: Ontruimingsplattegronden -->
-            <button type="button" data-open-contact-drawer class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left cursor-pointer">
+            <a href={plattegrondenUrl} class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left">
               <div>
                 <div class="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-3 shrink-0 group-hover/item:bg-brand-primary group-hover/item:text-white transition-colors">
                   <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -312,12 +324,12 @@ const incompanyUrl = lang === 'en' ? '/en/incompany-training' : '/incompany-trai
                   </svg>
                 </div>
                 <span class="font-display font-semibold text-[13.5px] text-brand-secondary mb-1 block leading-tight">Plattegronden</span>
-                <span class="text-[11px] text-brand-dark/65 leading-tight block">NEN-gecertificeerde vluchtwegtekeningen.</span>
+                <span class="text-[11px] text-brand-dark/65 leading-tight block">NEN 1414 vluchtwegtekeningen op maat.</span>
               </div>
-            </button>
+            </a>
 
             <!-- Card 5: Event EHBO -->
-            <button type="button" data-open-contact-drawer class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left cursor-pointer">
+            <a href={eventEhboUrl} class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left">
               <div>
                 <div class="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-3 shrink-0 group-hover/item:bg-brand-primary group-hover/item:text-white transition-colors">
                   <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -325,11 +337,22 @@ const incompanyUrl = lang === 'en' ? '/en/incompany-training' : '/incompany-trai
                   </svg>
                 </div>
                 <span class="font-display font-semibold text-[13.5px] text-brand-secondary mb-1 block leading-tight">Event EHBO</span>
-                <span class="text-[11px] text-brand-dark/65 leading-tight block">Gecertificeerde hulpverleners op evenementen.</span>
+                <span class="text-[11px] text-brand-dark/65 leading-tight block">Gecertificeerde hulpverleners &amp; mobiele posten.</span>
               </div>
-            </button>
+            </a>
 
-            <!-- Card 6: Draglineschotten -->
+            <!-- Card 6: Dakveiligheid -->
+            <a href={dakveiligheidUrl} class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left">
+              <div>
+                <div class="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-3 shrink-0 group-hover/item:bg-brand-primary group-hover/item:text-white transition-colors">
+                  <i class="fa-solid fa-person-falling text-sm"></i>
+                </div>
+                <span class="font-display font-semibold text-[13.5px] text-brand-secondary mb-1 block leading-tight">Dakveiligheid</span>
+                <span class="text-[11px] text-brand-dark/65 leading-tight block">NEN-EN 795 valbeveiliging &amp; dakinspecties.</span>
+              </div>
+            </a>
+
+            <!-- Card 7: Draglineschotten / Verhuur -->
             <button type="button" data-open-contact-drawer class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left cursor-pointer">
               <div>
                 <div class="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-3 shrink-0 group-hover/item:bg-brand-primary group-hover/item:text-white transition-colors">
@@ -342,21 +365,8 @@ const incompanyUrl = lang === 'en' ? '/en/incompany-training' : '/incompany-trai
               </div>
             </button>
 
-            <!-- Card 7: Webshop -->
-            <button type="button" data-open-contact-drawer class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left cursor-pointer">
-              <div>
-                <div class="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-3 shrink-0 group-hover/item:bg-brand-primary group-hover/item:text-white transition-colors">
-                  <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                </div>
-                <span class="font-display font-semibold text-[13.5px] text-brand-secondary mb-1 block leading-tight">AED & EHBO Webshop</span>
-                <span class="text-[11px] text-brand-dark/65 leading-tight block">Verbanddozen, AED's en veiligheidsartikelen.</span>
-              </div>
-            </button>
-
             <!-- Card 8: Maatwerk Advies -->
-            <button type="button" data-open-contact-drawer class="flex flex-col justify-between p-4 rounded-2xl bg-brand-accent/10 border border-brand-accent/30 hover:bg-brand-accent/20 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left cursor-pointer">
+            <a href={contactUrl} class="flex flex-col justify-between p-4 rounded-2xl bg-brand-accent/10 border border-brand-accent/30 hover:bg-brand-accent/20 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left cursor-pointer">
               <div>
                 <div class="w-8 h-8 rounded-lg bg-brand-accent text-white flex items-center justify-center mb-3 shrink-0 shadow-sm">
                   <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -369,18 +379,18 @@ const incompanyUrl = lang === 'en' ? '/en/incompany-training' : '/incompany-trai
               <span class="inline-flex items-center gap-1 font-display font-semibold text-[11px] text-brand-accent mt-auto">
                 Adviesgesprek <i class="fa-solid fa-arrow-right text-[9px]"></i>
               </span>
-            </button>
+            </a>
 
           </div>
         </div>
       </div>
 
-      <!-- OFFSHORE MENU ITEM (Zonder binnenkort badge voor maximale ruimte) -->
+      <!-- OFFSHORE MENU ITEM -->
       <a href={offshoreUrl} class="font-display font-semibold text-[14px] xl:text-[15px] tracking-wide text-brand-secondary hover:text-brand-primary transition-colors py-4 whitespace-nowrap">
         {t('nav.offshore')}
       </a>
 
-      <!-- Over Ons / Informatie Mega Menu Dropdown (Identieke styling als Cursussen & Diensten) -->
+      <!-- Over Ons / Informatie Mega Menu Dropdown -->
       <div class="group h-full flex items-center">
         <button class="font-display font-semibold text-[14px] xl:text-[15px] tracking-wide text-brand-secondary hover:text-brand-primary transition-colors flex items-center gap-1.5 py-4 focus:outline-none cursor-pointer whitespace-nowrap">
           {t('nav.about_menu')}
@@ -389,22 +399,22 @@ const incompanyUrl = lang === 'en' ? '/en/incompany-training' : '/incompany-trai
           </svg>
         </button>
         
-        <!-- Over Ons Mega Menu Dropdown Card (Centered relative to the header container) -->
+        <!-- Over Ons Mega Menu Dropdown Card -->
         <div class="absolute top-[86px] lg:top-[94px] left-1/2 -translate-x-1/2 bg-white border border-brand-dark/8 shadow-2xl rounded-3xl p-7 w-[940px] max-w-[calc(100vw-48px)] transition-all duration-300 transform scale-95 opacity-0 pointer-events-none group-hover:scale-100 group-hover:opacity-100 group-hover:pointer-events-auto flex flex-col text-brand-secondary z-50">
           <div class="absolute -top-6 left-0 w-full h-6 bg-transparent"></div>
           
           <!-- Header -->
           <div class="mb-5 flex items-center justify-between border-b border-brand-dark/5 pb-4">
             <div>
-              <h4 class="font-display font-semibold text-lg text-brand-secondary">{t('nav.about_menu')} & Contact</h4>
+              <h4 class="font-display font-semibold text-lg text-brand-secondary">{t('nav.about_menu')} &amp; Contact</h4>
               <p class="text-[12px] text-brand-dark/65 font-medium">{t('nav.about_desc')}</p>
             </div>
-            <button type="button" data-open-contact-drawer class="text-xs font-semibold text-brand-primary hover:text-brand-secondary flex items-center gap-1 cursor-pointer">
+            <a href={contactUrl} class="text-xs font-semibold text-brand-primary hover:text-brand-secondary flex items-center gap-1 cursor-pointer">
               Direct contact opnemen <i class="fa-solid fa-arrow-right text-[10px]"></i>
-            </button>
+            </a>
           </div>
 
-          <!-- 4 Columns Grid -->
+          <!-- 4 Columns Grid (Over Ons) -->
           <div class="grid grid-cols-4 gap-3.5 items-stretch">
             
             <!-- Card 1: Over Edusafe -->
@@ -414,48 +424,42 @@ const incompanyUrl = lang === 'en' ? '/en/incompany-training' : '/incompany-trai
                   <i class="fa-solid fa-users text-sm"></i>
                 </div>
                 <span class="font-display font-semibold text-[13.5px] text-brand-secondary mb-1 block leading-tight">{t('nav.about')}</span>
-                <span class="text-[11px] text-brand-dark/65 leading-tight block">Onze missie, gecertificeerde instructeurs en werkwijze.</span>
+                <span class="text-[11px] text-brand-dark/65 leading-tight block">Onze missie, erkende instructeurs en werkwijze.</span>
               </div>
             </a>
 
             <!-- Card 2: Contact & Locatie -->
-            <button type="button" data-open-contact-drawer class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left cursor-pointer">
+            <a href={contactUrl} class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left cursor-pointer">
               <div>
                 <div class="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-3 shrink-0 group-hover/item:bg-brand-primary group-hover/item:text-white transition-colors">
                   <i class="fa-regular fa-envelope text-sm"></i>
                 </div>
                 <span class="font-display font-semibold text-[13.5px] text-brand-secondary mb-1 block leading-tight">{t('nav.contact')}</span>
-                <span class="text-[11px] text-brand-dark/65 leading-tight block">Oude Middenweg 241A Den Haag en openingstijden.</span>
+                <span class="text-[11px] text-brand-dark/65 leading-tight block">Oude Middenweg 241A Den Haag en route.</span>
               </div>
-            </button>
+            </a>
 
-            <!-- Card 3: Veelgestelde Vragen (Binnenkort Beschikbaar) -->
-            <div class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left cursor-default">
+            <!-- Card 3: Veelgestelde Vragen (FAQ) -->
+            <a href={faqUrl} class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left cursor-pointer">
               <div>
                 <div class="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-3 shrink-0 group-hover/item:bg-brand-primary group-hover/item:text-white transition-colors">
                   <i class="fa-solid fa-circle-question text-sm"></i>
                 </div>
                 <span class="font-display font-semibold text-[13.5px] text-brand-secondary mb-1 block leading-tight">{t('nav.faq')}</span>
-                <span class="text-[11px] text-brand-dark/65 leading-tight block">Geldigheid, examens, planning en facturatie.</span>
+                <span class="text-[11px] text-brand-dark/65 leading-tight block">Geldigheid, examens, planning en richtlijnen.</span>
               </div>
-              <span class="text-[9px] font-bold uppercase tracking-wider bg-brand-accent/15 text-brand-accent px-1.5 py-0.5 rounded border border-brand-accent/20 w-fit">
-                {lang === 'nl' ? 'Binnenkort Beschikbaar' : 'Coming Soon'}
-              </span>
-            </div>
+            </a>
 
-            <!-- Card 4: Direct Advies / Maatwerk Promo Card -->
-            <button type="button" data-open-contact-drawer class="flex flex-col justify-between p-4 rounded-2xl bg-brand-accent/10 border border-brand-accent/30 hover:bg-brand-accent/20 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left cursor-pointer">
+            <!-- Card 4: Algemene Voorwaarden -->
+            <a href={termsUrl} class="flex flex-col justify-between p-4 rounded-2xl bg-brand-cream/50 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all group/item duration-300 shadow-sm hover:scale-[1.02] h-[160px] text-left cursor-pointer">
               <div>
-                <div class="w-8 h-8 rounded-lg bg-brand-accent text-white flex items-center justify-center mb-3 shrink-0 shadow-sm">
-                  <i class="fa-solid fa-phone-volume text-sm"></i>
+                <div class="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-3 shrink-0 group-hover/item:bg-brand-primary group-hover/item:text-white transition-colors">
+                  <i class="fa-solid fa-file-shield text-sm"></i>
                 </div>
-                <span class="font-display font-semibold text-[13.5px] text-brand-secondary mb-1 block leading-tight">Persoonlijk Advies</span>
-                <span class="text-[11px] text-brand-dark/80 leading-tight block">Hulp nodig bij uw cursuskeuze of certificering?</span>
+                <span class="font-display font-semibold text-[13.5px] text-brand-secondary mb-1 block leading-tight">Voorwaarden</span>
+                <span class="text-[11px] text-brand-dark/65 leading-tight block">Algemene leverings- en cursusvoorwaarden.</span>
               </div>
-              <span class="inline-flex items-center gap-1 font-display font-semibold text-[11px] text-brand-accent mt-auto">
-                Direct Contact <i class="fa-solid fa-arrow-right text-[9px]"></i>
-              </span>
-            </button>
+            </a>
 
           </div>
         </div>
@@ -522,13 +526,13 @@ const incompanyUrl = lang === 'en' ? '/en/incompany-training' : '/incompany-trai
           <svg class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
         </button>
         <div class="mobile-submenu hidden flex flex-col pl-4 mt-2 gap-2 text-sm border-l-2 border-brand-primary/30">
-          <a href="/bhv-cursus" class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1">BHV Cursussen</a>
-          <a href="/ehbo-cursus" class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1">EHBO Opleidingen</a>
-          <a href="/vca-cursus" class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1">VCA Certificering</a>
-          <a href="/reanimatie-aed-cursus" class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1">Reanimatie & AED</a>
-          <a href="/heftruck-cursus" class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1">Heftruck & Intern Transport</a>
-          <a href="/ontruiming-cursus" class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1">Ontruiming & Brandveiligheid</a>
-          <a href="/ehak-cursus" class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1">EHAK (Eerste Hulp aan Kinderen)</a>
+          <a href={lang === 'en' ? '/en/bhv-course' : '/bhv-cursus'} class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1">BHV Cursussen</a>
+          <a href={lang === 'en' ? '/en/first-aid-course' : '/ehbo-cursus'} class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1">EHBO Opleidingen</a>
+          <a href={lang === 'en' ? '/en/vca-course' : '/vca-cursus'} class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1">VCA Certificering</a>
+          <a href={lang === 'en' ? '/en/cpr-aed-course' : '/reanimatie-aed-cursus'} class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1">Reanimatie &amp; AED</a>
+          <a href={lang === 'en' ? '/en/forklift-course' : '/heftruck-cursus'} class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1">Heftruck &amp; Intern Transport</a>
+          <a href={lang === 'en' ? '/en/evacuation-course' : '/ontruiming-cursus'} class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1">Ontruiming &amp; Brandveiligheid</a>
+          <a href={lang === 'en' ? '/en/first-aid-children' : '/ehak-cursus'} class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1">EHAK (Eerste Hulp aan Kinderen)</a>
           <a href={coursesUrl} class="mobile-nav-link font-semibold text-brand-primary hover:text-brand-secondary py-1.5 border-t border-brand-dark/5 mt-1 block">
             Bekijk alle cursusdata →
           </a>
@@ -552,14 +556,14 @@ const incompanyUrl = lang === 'en' ? '/en/incompany-training' : '/incompany-trai
           <svg class="w-4 h-4 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path></svg>
         </button>
         <div class="mobile-submenu hidden flex flex-col pl-4 mt-2 gap-2 text-sm border-l-2 border-brand-primary/30">
-          <button type="button" data-open-contact-drawer class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1 text-left cursor-pointer">RI&E Audit</button>
-          <button type="button" data-open-contact-drawer class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1 text-left cursor-pointer">Brandveiligheid</button>
-          <button type="button" data-open-contact-drawer class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1 text-left cursor-pointer">Noodverlichting</button>
-          <button type="button" data-open-contact-drawer class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1 text-left cursor-pointer">Ontruimingsplattegronden</button>
-          <button type="button" data-open-contact-drawer class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1 text-left cursor-pointer">Event EHBO</button>
+          <a href={rieUrl} class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1 text-left">RI&E Audit</a>
+          <a href={brandveiligheidUrl} class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1 text-left">Brandveiligheid &amp; Blusmiddelen</a>
+          <a href={noodverlichtingUrl} class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1 text-left">Noodverlichting</a>
+          <a href={plattegrondenUrl} class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1 text-left">Ontruimingsplattegronden</a>
+          <a href={eventEhboUrl} class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1 text-left">Event EHBO</a>
+          <a href={dakveiligheidUrl} class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1 text-left">Dakveiligheid</a>
           <button type="button" data-open-contact-drawer class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1 text-left cursor-pointer">Draglineschotten</button>
-          <button type="button" data-open-contact-drawer class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1 text-left cursor-pointer">Webshop</button>
-          <button type="button" data-open-contact-drawer class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1 text-left cursor-pointer">Maatwerk Advies</button>
+          <a href={contactUrl} class="mobile-nav-link font-semibold text-brand-accent hover:text-brand-secondary py-1 text-left">Maatwerk Advies →</a>
         </div>
       </div>
 
@@ -568,7 +572,7 @@ const incompanyUrl = lang === 'en' ? '/en/incompany-training' : '/incompany-trai
         {t('nav.offshore')}
       </a>
 
-      <!-- Mobile Over Ons Submenu (Over Ons, Contact, FAQ) -->
+      <!-- Mobile Over Ons Submenu -->
       <div class="flex flex-col border-b border-brand-dark/5 pb-3">
         <button class="mobile-submenu-toggle flex items-center justify-between font-display font-semibold text-base text-brand-secondary hover:text-brand-primary cursor-pointer w-full text-left py-1">
           <span>{t('nav.about_menu')}</span>
@@ -576,25 +580,20 @@ const incompanyUrl = lang === 'en' ? '/en/incompany-training' : '/incompany-trai
         </button>
         <div class="mobile-submenu hidden flex flex-col pl-4 mt-2 gap-2 text-sm border-l-2 border-brand-primary/30">
           <a href={aboutUrl} class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1">{t('nav.about')}</a>
-          <button type="button" data-open-contact-drawer class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1 text-left cursor-pointer">{t('nav.contact')}</button>
-          <div class="flex items-center justify-between py-1 text-brand-dark/60">
-            <span>{t('nav.faq')}</span>
-            <span class="text-[9px] bg-brand-accent/15 text-brand-accent px-1.5 py-0.5 rounded font-semibold border border-brand-accent/20">
-              {lang === 'nl' ? 'Binnenkort' : 'Soon'}
-            </span>
-          </div>
+          <a href={contactUrl} class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1">{t('nav.contact')}</a>
+          <a href={faqUrl} class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1">{t('nav.faq')}</a>
+          <a href={termsUrl} class="mobile-nav-link font-medium text-brand-dark/80 hover:text-brand-primary py-1">Algemene Voorwaarden</a>
         </div>
       </div>
       
       <!-- Mobile Contact Drawer Trigger -->
-      <button 
-        type="button"
-        data-open-contact-drawer
+      <a 
+        href={contactUrl}
         class="flex items-center justify-center gap-2 py-3.5 px-4 rounded-xl bg-brand-primary/10 text-brand-primary font-semibold text-sm border border-brand-primary/20 mt-1 cursor-pointer hover:bg-brand-primary/15 transition-colors w-full"
       >
         <i class="fa-regular fa-envelope text-base"></i>
         <span>{t('topbar.contact')}</span>
-      </button>
+      </a>
 
       <!-- Mobile CTA Buttons -->
       <div class="flex flex-col gap-2.5 pt-2">

@@ -1,0 +1,203 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import MobileCourseBottomBar from '../../components/MobileCourseBottomBar.astro';
+
+const services = [
+  {
+    id: "roof-fall-protection-audit",
+    title: "Annual Fall Protection Inspection & Recertification",
+    tagline: "Statutory NEN-EN 795 & NEN-EN 365 testing of roof anchor points, horizontal lifelines, and guardrails",
+    price: "Custom proposal",
+    spotsText: "Statutory Requirement",
+    duration: "On-site within 1 day",
+    target: "For building owners, commercial property managers, and facility directors responsible for safe roof access under Dutch Arbowet regulations.",
+    requirements: "Safe access to the roof and existing fall arrest anchor points.",
+    exam: "Tensile pull testing and mechanical inspection of anchor bolts, steel lifelines, pins, and harnesses.",
+    certification: "Official compliance certificate + facility roof safety logbook conforming to NEN-EN 365.",
+    inclusions: [
+      "Visual and mechanical inspection of all installed fall arrest systems",
+      "Tensile strength testing on structural anchor points under NEN-EN 795 standards",
+      "Application of accredited statutory inspection badges and date labels",
+      "Comprehensive photo audit report with degradation analysis and remedial advice"
+    ],
+    modules: [
+      { name: "Inspection of permanent stainless steel cable lifeline systems" },
+      { name: "Testing of single-point anchor posts, parapets, and caged roof ladders" },
+      { name: "Inspection of personal protective equipment (PPE fall arrest safety harnesses and lanyards)" },
+      { name: "Updating the mandatory statutory facility roof access safety regulations" }
+    ],
+    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=800",
+    registerLink: "#contact"
+  },
+  {
+    id: "roof-safety-engineering",
+    title: "Roof Safety Engineering & System Installation",
+    tagline: "Independent hazard assessment, design, and mounting of collective and personal fall protection systems",
+    price: "Project quote on request",
+    spotsText: "Dutch Building Decree Compliant",
+    duration: "Engineering proposal within 5 days",
+    target: "For newly constructed facilities, major building renovations, and existing rooftops requiring safe HVAC/solar maintenance access.",
+    requirements: "Architectural drawings or an on-site rooftop survey.",
+    exam: "Working at Height Risk Assessment and statutory zoning (safe zone, warning zone, high-risk fall zone).",
+    certification: "Complete Roof Safety Management Plan according to NEN 795 and Dutch Working Conditions decrees.",
+    inclusions: [
+      "Hazard analysis and zoning classification of the entire roof perimeter",
+      "Design of the most cost-effective safety concept (collective perimeter guardrails vs lifeline anchors)",
+      "Supply and certified installation of heavy-duty guardrails, anchors, and horizontal cable systems",
+      "Commissioning including user operating instructions for maintenance contractors"
+    ],
+    modules: [
+      { name: "Consultancy during the architectural design phase conforming to the Dutch Building Decree" },
+      { name: "Comparative selection between perimeter guardrails (collective safety) and anchor lines" },
+      { name: "Safe rooftop access design via facade access ladders and roof hatches" },
+      { name: "Training for facility maintenance personnel on working safely at height" }
+    ],
+    image: "https://images.unsplash.com/photo-1541888946425-d0fbb18086f6?auto=format&fit=crop&q=80&w=800",
+    registerLink: "#contact"
+  }
+];
+---
+
+<Layout 
+  title="Roof Safety & Fall Protection Inspection | Edusafe Netherlands"
+  description="Independent safety advice, annual inspection, and certified installation of permanent rooftop fall protection systems across the Netherlands."
+>
+  <!-- Hero Section -->
+  <section class="relative bg-brand-secondary text-white pt-36 pb-20 overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+    <div class="max-w-[1280px] mx-auto px-6 relative z-10">
+      
+      <div class="flex items-center gap-2 text-xs font-semibold text-brand-primary uppercase tracking-wider mb-4">
+        <a href="/en" class="hover:underline">Home</a>
+        <span>/</span>
+        <span>Services</span>
+        <span>/</span>
+        <span class="text-white">Roof Safety</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-8">
+          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-primary/20 text-brand-primary border border-brand-primary/30 text-xs font-bold uppercase tracking-wider mb-4">
+            <i class="fa-solid fa-person-falling"></i>
+            Building Decree &amp; NEN-EN 795
+          </span>
+          <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+            Roof Safety &amp; <span class="text-brand-accent">Fall Protection</span>
+          </h1>
+          <p class="text-lg text-white/80 leading-relaxed max-w-2xl mb-8">
+            Safe maintenance access for building envelopes and rooftops is a statutory obligation in the Netherlands. Edusafe delivers expert engineering consultancy for both new developments and existing commercial properties.
+          </p>
+
+          <div class="flex flex-wrap gap-4">
+            <button type="button" data-open-contact-drawer class="bg-brand-accent hover:bg-brand-accent-hover text-white font-display font-semibold px-8 py-4 rounded-xl transition-all shadow-lg hover:-translate-y-0.5">
+              Request Rooftop Safety Survey
+            </button>
+            <a href="#details" class="bg-white/10 hover:bg-white/20 text-white font-display font-semibold px-8 py-4 rounded-xl border border-white/20 transition-all">
+              Explore Systems &amp; Standards
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4 grid grid-cols-2 gap-4">
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-primary mb-1">NEN 795</div>
+            <div class="text-xs text-white/70">Anchors &amp; Lines</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-accent mb-1">Arbowet</div>
+            <div class="text-xs text-white/70">Zero Fall Risk</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-primary mb-1">100%</div>
+            <div class="text-xs text-white/70">Certified Systems</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-accent mb-1">Logbook</div>
+            <div class="text-xs text-white/70">Annual Recertification</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Content Section -->
+  <section id="details" class="py-20 bg-brand-cream relative">
+    <div class="max-w-[1280px] mx-auto px-6">
+      
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="text-brand-accent font-display font-semibold text-xs uppercase tracking-wider mb-2 block">
+          Zero compromise when working at height
+        </span>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-brand-secondary">
+          Inspection, Consultancy &amp; Installation
+        </h2>
+        <p class="text-brand-dark/70 text-base mt-3">
+          From mandatory annual tensile testing of anchor points to complete rooftop safety access plans.
+        </p>
+      </div>
+
+      <!-- Service Cards Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        {services.map((srv) => (
+          <div class="bg-white rounded-3xl p-8 border border-brand-dark/5 shadow-xl flex flex-col justify-between hover:border-brand-primary/30 transition-all">
+            <div>
+              <div class="flex items-center justify-between gap-4 mb-4">
+                <span class="px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary text-xs font-bold uppercase tracking-wider">
+                  {srv.spotsText}
+                </span>
+                <span class="text-lg font-display font-bold text-brand-accent">
+                  {srv.price}
+                </span>
+              </div>
+              <h3 class="font-display text-2xl font-bold text-brand-secondary mb-2">
+                {srv.title}
+              </h3>
+              <p class="text-brand-dark/70 text-sm mb-6 leading-relaxed">
+                {srv.tagline}
+              </p>
+
+              <div class="space-y-4 mb-8">
+                <div class="flex items-start gap-3">
+                  <i class="fa-solid fa-clock text-brand-primary mt-1"></i>
+                  <div>
+                    <strong class="text-xs text-brand-secondary uppercase tracking-wider block">Turnaround:</strong>
+                    <span class="text-sm text-brand-dark/80">{srv.duration}</span>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <i class="fa-solid fa-shield-halved text-brand-primary mt-1"></i>
+                  <div>
+                    <strong class="text-xs text-brand-secondary uppercase tracking-wider block">Standards:</strong>
+                    <span class="text-sm text-brand-dark/80">{srv.certification}</span>
+                  </div>
+                </div>
+              </div>
+
+              <h4 class="text-xs font-bold uppercase tracking-wider text-brand-secondary mb-3">Included in this service:</h4>
+              <ul class="space-y-2 mb-8">
+                {srv.inclusions.map((inc) => (
+                  <li class="flex items-center gap-2.5 text-sm text-brand-dark/80">
+                    <i class="fa-solid fa-circle-check text-green-500 text-xs"></i>
+                    <span>{inc}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <button 
+              type="button" 
+              data-open-contact-drawer 
+              class="w-full py-4 rounded-xl bg-brand-primary hover:bg-brand-primary-hover text-white font-display font-semibold text-center transition-all shadow-md"
+            >
+              Request Proposal
+            </button>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </section>
+
+  <MobileCourseBottomBar defaultCourse={services[0]} />
+</Layout>

@@ -1,0 +1,92 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const faqs = [
+  {
+    q: "How long is an Emergency Response Officer (BHV) certificate valid in the Netherlands?",
+    a: "A BHV certificate in the Netherlands is valid for 1 year. To maintain accredited certification and fulfill Dutch Arbowet statutory compliance, an emergency response officer must complete an annual refresher course."
+  },
+  {
+    q: "Where do your public classroom courses take place?",
+    a: "Our public sessions are held at our primary training headquarters in The Hague (Oude Middenweg 241A, with free parking) and at our partner facility at the Golden Tulip Hotel Zoetermeer (Kinderen van Versteegplein 18). Furthermore, we organize on-site incompany courses at any client premises across the Netherlands."
+  },
+  {
+    q: "Are your certifications officially recognized by Het Oranje Kruis and NIBHV?",
+    a: "Yes, Edusafe is an officially accredited Dutch training institution. Our First Aid curricula adhere to Het Oranje Kruis standards, our BHV modules comply with NIBHV guidelines, and our resuscitation workshops are certified by the Dutch Resuscitation Council (NRR)."
+  },
+  {
+    q: "From how many participants is Incompany training cost-effective?",
+    a: "Starting from 6 participants, hosting an incompany course at your corporate facility is usually both more cost-effective and logistically seamless. Our instructors adapt the practical drills directly to your facility's layout and fire exit routes."
+  },
+  {
+    q: "Is a Risk Assessment & Evaluation (RI&E) mandatory for all Dutch entities?",
+    a: "Yes. Under the Dutch Working Conditions Act (Arbowet), every corporate entity with employees (from 1 employee upwards) is legally required to maintain an active RI&E and statutory Action Plan. Entities with over 25 employees must have this formally audited by a certified health & safety expert."
+  },
+  {
+    q: "What happens if an enrolled candidate cannot attend on the course date?",
+    a: "A registered candidate may be substituted by a colleague free of charge at any time. Should rescheduling be necessary, you may do so free of charge up to 14 calendar days prior to the course date."
+  }
+];
+---
+
+<Layout 
+  title="Frequently Asked Questions (FAQ) | Edusafe Netherlands"
+  description="Find answers to common questions regarding BHV validity, First Aid accreditation, RI&E legal mandates, campus locations, and course bookings with Edusafe."
+>
+  <!-- Hero Section -->
+  <section class="relative bg-brand-secondary text-white pt-36 pb-16 overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+    <div class="max-w-[1280px] mx-auto px-6 relative z-10">
+      
+      <div class="flex items-center gap-2 text-xs font-semibold text-brand-primary uppercase tracking-wider mb-4">
+        <a href="/en" class="hover:underline">Home</a>
+        <span>/</span>
+        <span class="text-white">FAQ</span>
+      </div>
+
+      <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
+        Frequently Asked <span class="text-brand-accent">Questions (FAQ)</span>
+      </h1>
+      <p class="text-white/80 text-sm max-w-2xl">
+        Below you will find clear answers to common inquiries regarding our certifications, validity, safety services, and facility policies.
+      </p>
+
+    </div>
+  </section>
+
+  <!-- FAQ Accordion List -->
+  <section class="py-16 bg-brand-cream relative">
+    <div class="max-w-[960px] mx-auto px-6 space-y-4">
+      {faqs.map((faq, index) => (
+        <details class="group bg-white rounded-2xl border border-brand-dark/5 p-6 shadow-sm [&_summary::-webkit-details-marker]:hidden transition-all open:ring-2 open:ring-brand-primary/20">
+          <summary class="flex items-center justify-between cursor-pointer list-none font-display font-bold text-lg text-brand-secondary">
+            <span>{faq.q}</span>
+            <span class="ml-4 transition duration-300 group-open:-rotate-180 text-brand-primary">
+              <i class="fa-solid fa-chevron-down"></i>
+            </span>
+          </summary>
+          <div class="mt-4 pt-4 border-t border-brand-dark/5 text-sm text-brand-dark/75 leading-relaxed">
+            {faq.a}
+          </div>
+        </details>
+      ))}
+
+      <!-- Contact CTA -->
+      <div class="mt-12 text-center bg-white p-8 rounded-3xl border border-brand-dark/5 shadow-sm">
+        <h3 class="font-display font-bold text-xl text-brand-secondary mb-2">
+          Do you have a specific question not covered here?
+        </h3>
+        <p class="text-sm text-brand-dark/70 mb-6">
+          Feel free to reach out to our team directly by phone or email. We are pleased to assist you.
+        </p>
+        <a 
+          href="/en/contact" 
+          class="inline-block py-3.5 px-8 rounded-xl bg-brand-primary hover:bg-brand-primary-hover text-white font-display font-semibold transition-all shadow-md"
+        >
+          Contact Our Team
+        </a>
+      </div>
+
+    </div>
+  </section>
+</Layout>

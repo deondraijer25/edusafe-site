@@ -34,6 +34,16 @@ const routeMapNLtoEN: Record<string, string> = {
   '/ontruiming-cursus': '/en/evacuation-course',
   '/reanimatie-aed-cursus': '/en/cpr-aed-course',
   '/ehak-cursus': '/en/first-aid-children',
+  '/rie-audit': '/en/risk-assessment-rie',
+  '/brandveiligheid': '/en/fire-safety-equipment',
+  '/noodverlichting': '/en/emergency-lighting',
+  '/ontruimingsplattegronden': '/en/evacuation-plans',
+  '/event-ehbo': '/en/event-first-aid',
+  '/dakveiligheid': '/en/roof-safety',
+  '/over-ons': '/en/about-us',
+  '/contact': '/en/contact',
+  '/algemene-voorwaarden': '/en/terms-conditions',
+  '/faq': '/en/faq'
 };
 
 const routeMapENtoNL: Record<string, string> = {
@@ -49,6 +59,16 @@ const routeMapENtoNL: Record<string, string> = {
   '/en/evacuation-course': '/ontruiming-cursus',
   '/en/cpr-aed-course': '/reanimatie-aed-cursus',
   '/en/first-aid-children': '/ehak-cursus',
+  '/en/risk-assessment-rie': '/rie-audit',
+  '/en/fire-safety-equipment': '/brandveiligheid',
+  '/en/emergency-lighting': '/noodverlichting',
+  '/en/evacuation-plans': '/ontruimingsplattegronden',
+  '/en/event-first-aid': '/event-ehbo',
+  '/en/roof-safety': '/dakveiligheid',
+  '/en/about-us': '/over-ons',
+  '/en/contact': '/contact',
+  '/en/terms-conditions': '/algemene-voorwaarden',
+  '/en/faq': '/faq'
 };
 
 export function getOppositeLocaleUrl(currentUrl: URL): { lang: 'nl' | 'en'; url: string; flag: string; label: string } {

@@ -1,0 +1,92 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const faqs = [
+  {
+    q: "Hoe lang is een BHV-diploma of herhalingscertificaat geldig?",
+    a: "Een BHV-certificaat is in Nederland 1 jaar geldig. Om gecertificeerd te blijven en te voldoen aan de eisen van de Arbowet en de verzekering, dient een bedrijfshulpverlener jaarlijks een BHV Herhalingstraining te volgen."
+  },
+  {
+    q: "Waar vinden de openbare trainingen plaats?",
+    a: "Onze openbare trainingen vinden plaats op onze hoofdlocatie in Den Haag (Oude Middenweg 241A, met gratis parkeergelegenheid) en op onze partnerlocatie bij Golden Tulip Hotel Zoetermeer (Kinderen van Versteegplein 18). Daarnaast verzorgen wij incompany trainingen op elke gewenste bedrijfslocatie in Nederland."
+  },
+  {
+    q: "Zijn jullie opleidingen officieel erkend door Het Oranje Kruis en het NIBHV?",
+    a: "Ja, Edusafe is een officieel geregistreerd opleidingsinstituut. Onze EHBO cursussen voldoen aan de strenge eindtermen van Het Oranje Kruis, onze BHV opleidingen aan de NIBHV richtlijnen, en onze reanimatietrainingen aan de Nederlandse Reanimatie Raad (NRR)."
+  },
+  {
+    q: "Vanaf hoeveel personen is een Incompany training voordeliger?",
+    a: "Al vanaf 6 personen is een incompany cursus op uw eigen bedrijfslocatie vaak financieel en logistiek voordeliger. Onze instructeurs passen het praktijkgedeelte direct aan op de specifieke risico's en ontruimingsroutes van uw eigen pand."
+  },
+  {
+    q: "Is een RI&E (Risico-Inventarisatie en -Evaluatie) echt verplicht voor mijn bedrijf?",
+    a: "Ja, volgens de Arbowet is ieder bedrijf met personeel (vanaf 1 werknemer) verplicht om een actuele RI&E inclusief Plan van Aanpak te hebben. Bedrijven met meer dan 25 werknemers moeten deze bovendien laten toetsen door een gecertificeerde kerndeskundige. Ook verzekeraars eisen dit bij het afsluiten van een aansprakelijkheids- of brandverzekering."
+  },
+  {
+    q: "Wat gebeurt er als een medewerker verhinderd is op de cursusdag?",
+    a: "Een ingeschreven medewerker mag te allen tijde kosteloos worden vervangen door een directe collega. Mocht verplaatsing nodig zijn, dan kan dit conform onze annuleringsvoorwaarden kosteloos tot 14 dagen voor aanvang."
+  }
+];
+---
+
+<Layout 
+  title="Veelgestelde Vragen (FAQ) | Edusafe"
+  description="Vind antwoord op de meest gestelde vragen over BHV geldigheid, EHBO erkenning, RI&E verplichtingen, cursuslocaties en inschrijvingen bij Edusafe."
+>
+  <!-- Hero Section -->
+  <section class="relative bg-brand-secondary text-white pt-36 pb-16 overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+    <div class="max-w-[1280px] mx-auto px-6 relative z-10">
+      
+      <div class="flex items-center gap-2 text-xs font-semibold text-brand-primary uppercase tracking-wider mb-4">
+        <a href="/" class="hover:underline">Home</a>
+        <span>/</span>
+        <span class="text-white">Veelgestelde Vragen</span>
+      </div>
+
+      <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
+        Veelgestelde <span class="text-brand-accent">Vragen (FAQ)</span>
+      </h1>
+      <p class="text-white/80 text-sm max-w-2xl">
+        Hieronder vindt u antwoorden op de meest gestelde vragen over onze cursussen, certificaten, geldigheid en veiligheidsdiensten.
+      </p>
+
+    </div>
+  </section>
+
+  <!-- FAQ Accordion List -->
+  <section class="py-16 bg-brand-cream relative">
+    <div class="max-w-[960px] mx-auto px-6 space-y-4">
+      {faqs.map((faq, index) => (
+        <details class="group bg-white rounded-2xl border border-brand-dark/5 p-6 shadow-sm [&_summary::-webkit-details-marker]:hidden transition-all open:ring-2 open:ring-brand-primary/20">
+          <summary class="flex items-center justify-between cursor-pointer list-none font-display font-bold text-lg text-brand-secondary">
+            <span>{faq.q}</span>
+            <span class="ml-4 transition duration-300 group-open:-rotate-180 text-brand-primary">
+              <i class="fa-solid fa-chevron-down"></i>
+            </span>
+          </summary>
+          <div class="mt-4 pt-4 border-t border-brand-dark/5 text-sm text-brand-dark/75 leading-relaxed">
+            {faq.a}
+          </div>
+        </details>
+      ))}
+
+      <!-- Contact CTA -->
+      <div class="mt-12 text-center bg-white p-8 rounded-3xl border border-brand-dark/5 shadow-sm">
+        <h3 class="font-display font-bold text-xl text-brand-secondary mb-2">
+          Staat uw vraag er niet tussen?
+        </h3>
+        <p class="text-sm text-brand-dark/70 mb-6">
+          Neem gerust direct contact met ons op via telefoon of e-mail. Wij helpen u direct verder!
+        </p>
+        <a 
+          href="/contact" 
+          class="inline-block py-3.5 px-8 rounded-xl bg-brand-primary hover:bg-brand-primary-hover text-white font-display font-semibold transition-all shadow-md"
+        >
+          Neem Contact Op
+        </a>
+      </div>
+
+    </div>
+  </section>
+</Layout>

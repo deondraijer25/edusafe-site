@@ -1,0 +1,203 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MobileCourseBottomBar from '../components/MobileCourseBottomBar.astro';
+
+const services = [
+  {
+    id: "event-ehbo-team",
+    title: "Gediplomeerde Evenementen EHBO Teams",
+    tagline: "Professionele eerstehulpverleners met AED, herkenbare kleding en complete uitrusting",
+    price: "Uurtarief op maat",
+    spotsText: "Vanaf 2 hulpverleners",
+    duration: "Inzetbaar per dagdeel of meerdaags",
+    target: "Voor festivals, sportevenementen, braderieën, bedrijfsfeesten, concerten en congressen.",
+    requirements: "Overleg over de aard, bezoekersaantallen en risicoprofiel van het evenement.",
+    exam: "Gecertificeerd volgens Het Oranje Kruis en veldnorm Evenementenzorg.",
+    certification: "Volledig conform Veldnorm Evenementenzorg (WGBO) en GHOR-eisen.",
+    inclusions: [
+      "Gediplomeerde en representatieve EHBO'ers in uniforme kleding",
+      "Complete professionele EHBO-tassen, zuurstofkoffers en AED's",
+      "Onderlinge portofooncommunicatie en coördinatie met beveiliging",
+      "Registratie van alle medische behandelingen in digitaal incidentenjournaal"
+    ],
+    modules: [
+      { name: "Basis Eerste Hulp bij kneuzingen, snijwonden, flauwtes en botbreuken" },
+      { name: "Reanimatie en directe inzet van defibrillators (AED)" },
+      { name: "Expertise bij alcohol- en middelengebruik bij dance & festival events" },
+      { name: "Coördinatie en naadloze overdracht naar de regionale ambulancedienst" }
+    ],
+    image: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?auto=format&fit=crop&q=80&w=800",
+    registerLink: "#contact"
+  },
+  {
+    id: "mobiele-ehbo-post-ambulance",
+    title: "Mobiele Behandelposten & Evenementen Ambulance",
+    tagline: "Volledig ingerichte mastertenten, quads, motoren en ambulancezorg ter plaatse",
+    price: "Offerte op maat",
+    spotsText: "Grootschalige Events",
+    duration: "Turnkey opbouw & afbouw",
+    target: "Voor grootschalige publieksevenementen, sporttoernooien en evenementen met verhoogd risico.",
+    requirements: "Standplaats op het evenemententerrein met toegang tot nooduitgangen.",
+    exam: "Toetsing aan de gemeentelijke evenementenvergunning en GHOR-richtlijnen.",
+    certification: "Professionele mobiele medische voorziening conform NEN- en veiligheidsnormen.",
+    inclusions: [
+      "Inrichting van mobiele mastertent(en) met behandeltafels en verlichting",
+      "Inzet van evenementen-ambulance voor directe medische stabilisatie",
+      "Mobiele surveillance via quads of medische motoren voor snelle bereikbaarheid",
+      "Medisch coördinator als aanspreekpunt voor organisatie en hulpdiensten"
+    ],
+    modules: [
+      { name: "Opbouw van mobiele eerste hulpposten met meerdere behandelplekken" },
+      { name: "Snelle respons op moeilijk begaanbare terreinen via quads/motoren" },
+      { name: "Triage en eerste opvang bij grootschalige incidenten" },
+      { name: "Eindrapportage met statistieken voor de gemeente en vergunningverlener" }
+    ],
+    image: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&q=80&w=800",
+    registerLink: "#contact"
+  }
+];
+---
+
+<Layout 
+  title="Evenementen EHBO & Medische Ondersteuning Huren | Edusafe"
+  description="Professionele evenementen EHBO, mobiele behandelposten en ambulancezorg huren voor festivals, sportevenementen en congressen in heel Nederland."
+>
+  <!-- Hero Section -->
+  <section class="relative bg-brand-secondary text-white pt-36 pb-20 overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
+    <div class="max-w-[1280px] mx-auto px-6 relative z-10">
+      
+      <div class="flex items-center gap-2 text-xs font-semibold text-brand-primary uppercase tracking-wider mb-4">
+        <a href="/" class="hover:underline">Home</a>
+        <span>/</span>
+        <span>Diensten</span>
+        <span>/</span>
+        <span class="text-white">Evenementen EHBO</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-8">
+          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-primary/20 text-brand-primary border border-brand-primary/30 text-xs font-bold uppercase tracking-wider mb-4">
+            <i class="fa-solid fa-kit-medical"></i>
+            Veldnorm Evenementenzorg
+          </span>
+          <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+            Evenementen EHBO &amp; <span class="text-brand-accent">Medische Teams</span>
+          </h1>
+          <p class="text-lg text-white/80 leading-relaxed max-w-2xl mb-8">
+            Organiseert u een festival, sportevenement of congres? Edusafe draagt zorg voor hoogwaardige medische ondersteuning met gediplomeerde EHBO-teams, ingerichte behandelruimtes en ambulancezorg.
+          </p>
+
+          <div class="flex flex-wrap gap-4">
+            <button type="button" data-open-contact-drawer class="bg-brand-accent hover:bg-brand-accent-hover text-white font-display font-semibold px-8 py-4 rounded-xl transition-all shadow-lg hover:-translate-y-0.5">
+              Direct EHBO Hulpverleners Inhuren
+            </button>
+            <a href="#details" class="bg-white/10 hover:bg-white/20 text-white font-display font-semibold px-8 py-4 rounded-xl border border-white/20 transition-all">
+              Bekijk Uitrusting &amp; Mogelijkheden
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-4 grid grid-cols-2 gap-4">
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-primary mb-1">GHOR</div>
+            <div class="text-xs text-white/70">Afgestemd &amp; Conform</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-accent mb-1">AED</div>
+            <div class="text-xs text-white/70">Altijd Uitgerust</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-primary mb-1">Mobiel</div>
+            <div class="text-xs text-white/70">Quads &amp; Motoren</div>
+          </div>
+          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
+            <div class="text-3xl font-display font-bold text-brand-accent mb-1">24/7</div>
+            <div class="text-xs text-white/70">Landelijke Inzet</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Content Section -->
+  <section id="details" class="py-20 bg-brand-cream relative">
+    <div class="max-w-[1280px] mx-auto px-6">
+      
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="text-brand-accent font-display font-semibold text-xs uppercase tracking-wider mb-2 block">
+          Medische zekerheid voor uw bezoekers
+        </span>
+        <h2 class="font-display text-3xl sm:text-4xl font-bold text-brand-secondary">
+          EHBO Teams &amp; Mobiele Behandelposten
+        </h2>
+        <p class="text-brand-dark/70 text-base mt-3">
+          Van representatieve eerstehulpverleners op een braderie tot complete medische coördinatie bij grote dance festivals.
+        </p>
+      </div>
+
+      <!-- Service Cards Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        {services.map((srv) => (
+          <div class="bg-white rounded-3xl p-8 border border-brand-dark/5 shadow-xl flex flex-col justify-between hover:border-brand-primary/30 transition-all">
+            <div>
+              <div class="flex items-center justify-between gap-4 mb-4">
+                <span class="px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary text-xs font-bold uppercase tracking-wider">
+                  {srv.spotsText}
+                </span>
+                <span class="text-lg font-display font-bold text-brand-accent">
+                  {srv.price}
+                </span>
+              </div>
+              <h3 class="font-display text-2xl font-bold text-brand-secondary mb-2">
+                {srv.title}
+              </h3>
+              <p class="text-brand-dark/70 text-sm mb-6 leading-relaxed">
+                {srv.tagline}
+              </p>
+
+              <div class="space-y-4 mb-8">
+                <div class="flex items-start gap-3">
+                  <i class="fa-solid fa-clock text-brand-primary mt-1"></i>
+                  <div>
+                    <strong class="text-xs text-brand-secondary uppercase tracking-wider block">Inzetbaarheid:</strong>
+                    <span class="text-sm text-brand-dark/80">{srv.duration}</span>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <i class="fa-solid fa-shield-halved text-brand-primary mt-1"></i>
+                  <div>
+                    <strong class="text-xs text-brand-secondary uppercase tracking-wider block">Kwaliteitsnorm:</strong>
+                    <span class="text-sm text-brand-dark/80">{srv.certification}</span>
+                  </div>
+                </div>
+              </div>
+
+              <h4 class="text-xs font-bold uppercase tracking-wider text-brand-secondary mb-3">Wat levert Edusafe:</h4>
+              <ul class="space-y-2 mb-8">
+                {srv.inclusions.map((inc) => (
+                  <li class="flex items-center gap-2.5 text-sm text-brand-dark/80">
+                    <i class="fa-solid fa-circle-check text-green-500 text-xs"></i>
+                    <span>{inc}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <button 
+              type="button" 
+              data-open-contact-drawer 
+              class="w-full py-4 rounded-xl bg-brand-primary hover:bg-brand-primary-hover text-white font-display font-semibold text-center transition-all shadow-md"
+            >
+              Vrijblijvende Offerte Aanvragen
+            </button>
+          </div>
+        ))}
+      </div>
+
+    </div>
+  </section>
+
+  <MobileCourseBottomBar defaultCourse={services[0]} />
+</Layout>
