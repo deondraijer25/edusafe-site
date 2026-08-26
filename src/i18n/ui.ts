@@ -29,7 +29,7 @@ export const ui = {
     'nav.course_dates': 'Cursusdata',
     'nav.elearning': 'E-learning',
     'nav.services': 'Diensten',
-    'nav.services_desc': 'Veiligheidsadvies, audits, keuringen en webshop.',
+    'nav.services_desc': 'Veiligheidsadvies, audits, keuringen en ontruiming.',
     'nav.offshore': 'Offshore',
     'nav.offshore_tag': 'Binnenkort',
     'nav.about_menu': 'Over Ons',
@@ -61,6 +61,10 @@ export const ui = {
     'cta.search_placeholder': 'Zoek op cursusnaam...',
     'cta.all_courses': 'Alle Cursussen',
     'cta.all_locations': 'Alle Locaties',
+    'cta.learn_more': 'Meer informatie',
+    'cta.incompany_quote': 'Vraag Incompany Offerte Aan',
+    'cta.open_calendar': 'Bekijk alle data & schrijf in',
+    'cta.download_brochure': 'Download brochure',
 
     // Footer
     'footer.tagline': 'Dé specialist in gecertificeerde veiligheidsopleidingen, BHV, EHBO, VCA en Arbo-advies.',
@@ -70,18 +74,18 @@ export const ui = {
   },
   en: {
     // Topbar
-    'topbar.follow': 'Follow us on:',
+    'topbar.follow': 'Follow us:',
     'topbar.address': 'Oude Middenweg 241A, The Hague',
-    'topbar.contact': 'Contact Us',
+    'topbar.contact': 'Direct Contact',
 
     // Navbar
     'nav.courses': 'Courses',
-    'nav.courses_desc': 'Practical and certified workplace safety training.',
+    'nav.courses_desc': 'Practical and accredited safety certification courses.',
     'nav.all_dates': 'View all course dates',
     'nav.course_dates': 'Course Dates',
     'nav.elearning': 'E-learning',
     'nav.services': 'Services',
-    'nav.services_desc': 'Safety consulting, audits, inspections and webshop.',
+    'nav.services_desc': 'Safety consulting, audits, inspections and emergency plans.',
     'nav.offshore': 'Offshore',
     'nav.offshore_tag': 'Coming Soon',
     'nav.about_menu': 'About Us',
