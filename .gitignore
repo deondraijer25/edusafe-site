@@ -26,3 +26,35 @@ pnpm-debug.log*
 .vscode/
 
 .vercel
+
+# Pre-built static output (for DirectAdmin server only, not for Vercel)
+index.html
+sitemap-0.xml
+sitemap-index.xml
+.htaccess
+/favicon.svg
+/_astro/
+/assets/
+/algemene-voorwaarden/
+/bhv-cursus/
+/brandveiligheid/
+/contact/
+/cursusdata/
+/dakveiligheid/
+/e-learning/
+/ehak-cursus/
+/ehbo-cursus/
+/en/
+/event-ehbo/
+/faq/
+/heftruck-cursus/
+/incompany-training/
+/inschrijven/
+/noodverlichting/
+/offshore-cursus/
+/ontruiming-cursus/
+/ontruimingsplattegronden/
+/over-ons/
+/reanimatie-aed-cursus/
+/rie-audit/
+/vca-cursus/
