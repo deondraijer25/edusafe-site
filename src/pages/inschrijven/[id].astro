@@ -95,7 +95,9 @@ const { course } = Astro.props;
           </div>
           <div>
             <span class="text-[9px] uppercase font-semibold tracking-wider text-brand-dark/40 block mb-0.5">Prijs (excl. BTW)</span>
-            <span class="font-display font-semibold text-brand-accent text-sm md:text-base">{course.price}</span>
+            <span class="font-display font-semibold text-brand-accent text-sm md:text-base">
+              {course.price && course.price !== '€ 0,-' && course.price !== '0' && course.price !== '€0' && course.price !== '€ 0' ? course.price : 'Op aanvraag'}
+            </span>
           </div>
         </div>
 

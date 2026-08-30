@@ -114,18 +114,18 @@ const uniqueLocations = [...new Set(courses.map(c => c.location))];
           <p id="course-count" class="text-xs sm:text-sm text-brand-dark/60 font-normal">{courses.length} cursussen gevonden</p>
         </div>
         
-        <!-- Toggle View (Grid / List) -->
-        <div class="flex bg-white rounded-xl p-1 border border-brand-dark/5 shadow-xs shrink-0">
+        <!-- Toggle View (Grid / List) - Hidden for now, preserved for future toggle -->
+        <div class="hidden items-center bg-white rounded-xl p-1 border border-brand-dark/5 shadow-xs shrink-0">
           <button 
             id="grid-view-btn" 
-            class="p-2 rounded-lg transition-all duration-300 flex items-center justify-center bg-brand-primary text-white shadow-xs cursor-pointer"
+            class="p-2 rounded-lg transition-all duration-300 flex items-center justify-center text-brand-dark/40 hover:text-brand-dark/70 cursor-pointer"
             aria-label="Grid weergave"
           >
             <i class="fa-solid fa-table-cells text-xs"></i>
           </button>
           <button 
             id="list-view-btn" 
-            class="p-2 rounded-lg transition-all duration-300 flex items-center justify-center text-brand-dark/40 hover:text-brand-dark/70 cursor-pointer"
+            class="p-2 rounded-lg transition-all duration-300 flex items-center justify-center bg-brand-primary text-white shadow-xs cursor-pointer"
             aria-label="Lijst weergave"
           >
             <i class="fa-solid fa-list text-xs"></i>
@@ -133,144 +133,168 @@ const uniqueLocations = [...new Set(courses.map(c => c.location))];
         </div>
       </div>
 
-      <!-- VIEW 1: Course Grid Cards (Visible by default) -->
-      <div id="courses-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {courses.map(course => (
-          <div 
-            class="course-card bg-white rounded-2xl overflow-hidden shadow-sm border border-brand-dark/5 hover:shadow-lg hover:border-brand-primary/20 transition-all duration-300 flex flex-col justify-between"
-            data-title={course.title}
-            data-category={course.category}
-            data-location={course.location}
-          >
-            <!-- Card Header Image -->
-            <div class="relative h-44 overflow-hidden bg-brand-cream">
-              <img 
-                src={course.image} 
-                alt={course.title} 
-                class="w-full h-full object-cover"
-                loading="lazy"
-              />
-              
-              <!-- Badges -->
-              <div class="absolute top-3.5 left-3.5 z-10 flex flex-wrap gap-1.5">
-                <span class="inline-flex items-center bg-white/95 backdrop-blur-xs text-brand-primary text-[10px] font-semibold px-3 py-1 rounded-lg shadow-sm uppercase tracking-wider">
-                  {course.category}
-                </span>
-                {course.spotsLeft && (
-                  <span class="inline-flex items-center bg-brand-accent text-white text-[10px] font-semibold px-2.5 py-1 rounded-lg shadow-sm uppercase tracking-wider animate-pulse">
-                    <i class="fa-solid fa-user-clock mr-1 text-[9px]"></i>
-                    {course.spotsLeft}
+      <!-- VIEW 1: Course Grid Cards (Hidden by default, preserved for future use) -->
+      <div id="courses-grid" class="hidden grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {courses.map(course => {
+          const hasPrice = course.price && course.price !== '€ 0,-' && course.price !== '0' && course.price !== '€0' && course.price !== '€ 0';
+          return (
+            <div 
+              class="course-card bg-white rounded-2xl overflow-hidden shadow-sm border border-brand-dark/5 hover:shadow-lg hover:border-brand-primary/20 transition-all duration-300 flex flex-col justify-between"
+              data-title={course.title}
+              data-category={course.category}
+              data-location={course.location}
+            >
+              <!-- Card Header Image -->
+              <div class="relative h-44 overflow-hidden bg-brand-cream">
+                <img 
+                  src={course.image} 
+                  alt={course.title} 
+                  class="w-full h-full object-cover"
+                  loading="lazy"
+                />
+                
+                <!-- Badges -->
+                <div class="absolute top-3.5 left-3.5 z-10 flex flex-wrap gap-1.5">
+                  <span class="inline-flex items-center bg-white/95 backdrop-blur-xs text-brand-primary text-[10px] font-semibold px-3 py-1 rounded-lg shadow-sm uppercase tracking-wider">
+                    {course.category}
                   </span>
-                )}
+                  {course.spotsLeft && (
+                    <span class="inline-flex items-center bg-brand-accent text-white text-[10px] font-semibold px-2.5 py-1 rounded-lg shadow-sm uppercase tracking-wider animate-pulse">
+                      <i class="fa-solid fa-user-clock mr-1 text-[9px]"></i>
+                      {course.spotsLeft}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <!-- Card Content -->
+              <div class="p-5 flex-1 flex flex-col justify-between">
+                <div>
+                  <h3 class="font-display text-lg font-semibold text-brand-secondary mb-3 leading-snug">
+                    {course.title}
+                  </h3>
+                  
+                  <!-- Info List -->
+                  <ul class="space-y-2 mb-5">
+                    <li class="flex items-center text-brand-dark/75 text-xs font-medium">
+                      <i class="fa-solid fa-calendar text-brand-primary w-4 text-center mr-2 text-xs"></i>
+                      <span>{course.date}</span>
+                    </li>
+                    <li class="flex items-center text-brand-dark/75 text-xs font-medium">
+                      <i class="fa-solid fa-clock text-brand-dark/40 w-4 text-center mr-2 text-xs"></i>
+                      <span>{course.time}</span>
+                    </li>
+                    <li class="flex items-start text-brand-dark/75 text-xs font-medium">
+                      <i class="fa-solid fa-location-dot text-brand-primary w-4 text-center mr-2 mt-0.5 text-xs"></i>
+                      <span class="truncate">{course.location}</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <!-- Card Action CTA -->
+                <div class="pt-4 border-t border-brand-dark/5 flex items-center justify-between gap-3">
+                  {hasPrice ? (
+                    <div class="flex items-baseline gap-1">
+                      <span class="font-display font-semibold text-brand-secondary text-base">{course.price}</span>
+                      <span class="text-[10px] text-brand-dark/40">excl.</span>
+                    </div>
+                  ) : (
+                    <span class="text-xs font-medium text-brand-dark/50">Op aanvraag</span>
+                  )}
+                  <a 
+                    href={`/inschrijven/${course.id}`} 
+                    class="font-display font-semibold text-xs py-2 px-4 rounded-xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 flex items-center gap-1.5 shadow-sm"
+                  >
+                    <span>Inschrijven</span>
+                    <i class="fa-solid fa-chevron-right text-[8px]"></i>
+                  </a>
+                </div>
               </div>
             </div>
+          );
+        })}
+      </div>
 
-            <!-- Card Content -->
-            <div class="p-5 flex-1 flex flex-col justify-between">
-              <div>
-                <h3 class="font-display text-lg font-semibold text-brand-secondary mb-3 leading-snug">
-                  {course.title}
-                </h3>
-                
-                <!-- Info List -->
-                <ul class="space-y-2 mb-5">
-                  <li class="flex items-center text-brand-dark/75 text-xs font-medium">
-                    <i class="fa-solid fa-calendar text-brand-primary w-4 text-center mr-2 text-xs"></i>
-                    <span>{course.date}</span>
-                  </li>
-                  <li class="flex items-center text-brand-dark/75 text-xs font-medium">
-                    <i class="fa-solid fa-clock text-brand-dark/40 w-4 text-center mr-2 text-xs"></i>
-                    <span>{course.time}</span>
-                  </li>
-                  <li class="flex items-start text-brand-dark/75 text-xs font-medium">
-                    <i class="fa-solid fa-location-dot text-brand-primary w-4 text-center mr-2 mt-0.5 text-xs"></i>
-                    <span class="truncate">{course.location}</span>
-                  </li>
-                </ul>
+      <!-- VIEW 2: Course List Rows (Active by default) -->
+      <div id="courses-list" class="flex flex-col gap-3.5">
+        {courses.map(course => {
+          const hasPrice = course.price && course.price !== '€ 0,-' && course.price !== '0' && course.price !== '€0' && course.price !== '€ 0';
+          return (
+            <div 
+              class="course-list-item group bg-white p-4 sm:p-5 rounded-2xl border border-brand-dark/8 shadow-2xs hover:shadow-md hover:border-brand-primary/25 transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-6"
+              data-title={course.title}
+              data-category={course.category}
+              data-location={course.location}
+            >
+              <!-- Left: Open Date Typography (Vertically centered) -->
+              <div class="flex items-center gap-3 shrink-0 min-w-[76px] sm:min-w-[88px]">
+                <span class="font-display font-bold text-3xl sm:text-4xl text-brand-secondary leading-none w-10 text-center">
+                  {course.date.split(' ')[0]}
+                </span>
+                <div class="flex flex-col justify-center leading-tight">
+                  <span class="text-xs font-bold text-brand-secondary uppercase tracking-wider">
+                    {course.date.split(' ')[1]}
+                  </span>
+                  <span class="text-[10px] font-medium text-brand-dark/40">
+                    {course.date.split(' ')[2]}
+                  </span>
+                </div>
               </div>
 
-              <!-- Card Action CTA -->
-              <div class="pt-4 border-t border-brand-dark/5 flex items-center justify-between gap-3">
-                <div class="flex items-baseline gap-1">
-                  <span class="font-display font-semibold text-brand-secondary text-base">{course.price}</span>
-                  <span class="text-[10px] text-brand-dark/40">excl.</span>
+              <!-- Middle: Title & Metadata -->
+              <div class="flex-1 min-w-0 flex flex-col justify-center">
+                <!-- Title Row (Clean, no redundant category pill) -->
+                <div class="mb-1.5">
+                  <h3 class="font-display font-semibold text-base sm:text-lg text-brand-secondary leading-snug group-hover:text-brand-primary transition-colors truncate">
+                    {course.title}
+                  </h3>
                 </div>
+                
+                <!-- Info metadata (Location & Time) -->
+                <div class="flex flex-wrap items-center gap-x-5 gap-y-1 text-xs text-brand-dark/65 font-medium">
+                  <span class="inline-flex items-center gap-1.5">
+                    <i class="fa-solid fa-location-dot text-brand-primary/70 text-xs"></i>
+                    <span>{course.location}</span>
+                  </span>
+                  <span class="inline-flex items-center gap-1.5">
+                    <i class="fa-regular fa-clock text-brand-dark/40 text-xs"></i>
+                    <span>{course.time}</span>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Right: Price + Spots Pill + CTA Button -->
+              <div class="shrink-0 w-full md:w-auto flex items-center justify-between md:justify-end gap-3.5 pt-3 md:pt-0 border-t md:border-t-0 border-brand-dark/5">
+                <!-- Price (if available) -->
+                {hasPrice && (
+                  <div class="flex flex-col items-start md:items-end justify-center mr-1">
+                    <span class="font-display font-bold text-base sm:text-lg text-brand-secondary leading-tight">
+                      {course.price}
+                    </span>
+                    <span class="text-[10px] font-medium text-brand-dark/40 -mt-0.5">excl. BTW</span>
+                  </div>
+                )}
+
+                <!-- Super clean participant/spots counter pill -->
+                {course.freeSpots && (
+                  <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50/90 text-emerald-700 rounded-full text-xs font-semibold border border-emerald-200/60 shadow-2xs shrink-0">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                    <span>{course.freeSpots}</span>
+                  </span>
+                )}
+
+                <!-- Inschrijven CTA Button -->
                 <a 
                   href={`/inschrijven/${course.id}`} 
-                  class="font-display font-semibold text-xs py-2 px-4 rounded-xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 flex items-center gap-1.5 shadow-sm"
+                  class="font-display font-semibold text-xs sm:text-sm py-2.5 px-5 sm:px-6 rounded-xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 shrink-0 inline-flex items-center gap-1.5 group/btn"
                 >
                   <span>Inschrijven</span>
-                  <i class="fa-solid fa-chevron-right text-[8px]"></i>
+                  <i class="fa-solid fa-arrow-right text-[10px] group-hover/btn:translate-x-0.5 transition-transform"></i>
                 </a>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
-
-      <!-- VIEW 2: Course List Rows (Hidden by default) -->
-      <div id="courses-list" class="hidden flex-col gap-3">
-        {courses.map(course => (
-          <div 
-            class="course-list-item bg-white p-4 sm:p-5 rounded-2xl border border-brand-dark/5 shadow-xs hover:shadow-md hover:border-brand-primary/20 transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 md:gap-5"
-            data-title={course.title}
-            data-category={course.category}
-            data-location={course.location}
-          >
-            <!-- Left: Big Date Block -->
-            <div class="flex items-center gap-3 shrink-0">
-              <span class="font-display font-semibold text-3xl text-brand-secondary leading-none w-10 text-right">
-                {course.date.split(' ')[0]}
-              </span>
-              <div class="text-[10px] font-semibold text-brand-dark/50 leading-tight">
-                <div>{course.date.split(' ')[1]}</div>
-                <div>{course.date.split(' ')[2]}</div>
-              </div>
-            </div>
-
-            <!-- Middle: Details -->
-            <div class="flex-1 min-w-0">
-              <div class="flex flex-wrap items-center gap-2 mb-1.5">
-                <h3 class="font-display font-semibold text-base sm:text-lg text-brand-secondary leading-tight truncate">
-                  {course.title}
-                </h3>
-                <span class="inline-flex items-center bg-brand-primary/10 text-brand-primary text-[10px] font-semibold px-2.5 py-0.5 rounded-lg uppercase tracking-wider">
-                  {course.category}
-                </span>
-                {course.spotsLeft && (
-                  <span class="inline-flex items-center bg-brand-accent/15 text-brand-accent text-[9px] font-semibold px-2 py-0.5 rounded-lg uppercase tracking-wider animate-pulse border border-brand-accent/20">
-                    {course.spotsLeft}
-                  </span>
-                )}
-              </div>
-              
-              <!-- Info metadata -->
-              <div class="flex flex-wrap gap-x-5 gap-y-1 text-xs text-brand-dark/65 font-medium">
-                <span class="flex items-center gap-1.5">
-                  <i class="fa-solid fa-location-dot text-brand-primary text-xs"></i>
-                  {course.location}
-                </span>
-                <span class="flex items-center gap-1.5">
-                  <i class="fa-solid fa-clock text-brand-dark/40 text-xs"></i>
-                  {course.time}
-                </span>
-                <span class="flex items-center gap-1 text-brand-accent font-semibold">
-                  {course.price} <span class="text-[9px] text-brand-dark/40 font-normal">excl.</span>
-                </span>
-              </div>
-            </div>
-
-            <!-- Right: Action CTA Button -->
-            <div class="shrink-0 w-full md:w-auto">
-              <a 
-                href={`/inschrijven/${course.id}`} 
-                class="font-display font-semibold text-xs py-2.5 px-5 rounded-xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 w-full md:w-auto block shadow-sm"
-              >
-                Inschrijven
-              </a>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
     </section>
@@ -455,7 +479,7 @@ const uniqueLocations = [...new Set(courses.map(c => c.location))];
   const coursesGrid = document.getElementById('courses-grid') as HTMLDivElement;
   const coursesList = document.getElementById('courses-list') as HTMLDivElement;
 
-  let currentLayout = 'grid'; // 'grid' or 'list'
+  let currentLayout = 'list'; // 'list' active by default, 'grid' available
 
   function filterCourses() {
     const query = searchInput.value.toLowerCase().trim();
