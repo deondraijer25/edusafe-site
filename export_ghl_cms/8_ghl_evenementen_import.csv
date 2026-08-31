@@ -1,0 +1,22 @@
+naam,cursustype,datum,starttijd,eindtijd,locatienaam,adres,prijs,max_deelnemers,aantal_inschrijvingen,status
+EHBO basis (Oranje Kruis),EHBO,2026-05-11,09:00,16:30,Edusafe (Ambu Campus),Oeverwallaan 130 Den Haag,185,15,3,Gepubliceerd
+EHAK basis (Eerste Hulp aan Kinderen),EHAK,2026-05-11,09:00,16:30,Edusafe (Ambu Campus),Oeverwallaan 130 Den Haag,145,15,11,Gepubliceerd
+EHAK herhaling,EHAK,2026-05-11,09:00,13:00,Edusafe (Ambu Campus),Oeverwallaan 130 Den Haag,125,15,7,Gepubliceerd
+BHV basis & herhaling,BHV,2026-05-13,09:00,16:30,Golden Tulip Hotel Zoetermeer,Kinderen van Versteegplein 18 Zoetermeer,195,15,10,Gepubliceerd
+BHV herhaling,BHV,2026-05-20,09:00,13:00,Edusafe Hoofdlocatie Den Haag,Oude Middenweg 241A Den Haag,145,15,5,Gepubliceerd
+VCA Basis & VOL,VCA,2026-06-02,09:00,16:30,Golden Tulip Hotel Zoetermeer,Kinderen van Versteegplein 18 Zoetermeer,175,15,1,Gepubliceerd
+EHBO herhaling,EHBO,2026-06-11,09:00,16:30,Edusafe (Ambu Campus),Oeverwallaan 130 Den Haag,145,15,13,Gepubliceerd
+BHV basis & herhaling,BHV,2026-06-16,09:00,16:30,Edusafe Hoofdlocatie Den Haag,Oude Middenweg 241A Den Haag,195,15,3,Gepubliceerd
+EHAK basis,EHAK,2026-06-20,09:00,16:30,Edusafe (Ambu Campus),Oeverwallaan 130 Den Haag,145,15,6,Gepubliceerd
+Reanimatie & AED Basis,AED/Reanimatie,2026-06-25,19:00,22:00,Edusafe Hoofdlocatie Den Haag,Oude Middenweg 241A Den Haag,95,15,11,Gepubliceerd
+BHV herhaling,BHV,2026-07-01,09:00,13:00,Edusafe Hoofdlocatie Den Haag,Oude Middenweg 241A Den Haag,145,15,0,Gepubliceerd
+Heftruck- en Hoogwerkeropleiding Basis,Heftruck,2026-07-15,09:00,16:30,Edusafe Praktijkterrein Den Haag,Den Haag,225,10,2,Gepubliceerd
+BHV basis & herhaling,BHV,2026-09-09,09:00,16:30,Golden Tulip Hotel Zoetermeer,Kinderen van Versteegplein 18 Zoetermeer,195,15,11,Gepubliceerd
+EHBO herhaling,EHBO,2026-09-10,09:00,16:30,Golden Tulip Hotel Zoetermeer,Kinderen van Versteegplein 18 Zoetermeer,145,15,5,Gepubliceerd
+BHV herhaling,BHV,2026-09-24,09:00,13:00,Edusafe Hoofdlocatie Den Haag,Oude Middenweg 241A Den Haag,145,15,10,Gepubliceerd
+BHV basis & herhaling,BHV,2026-10-07,09:00,16:30,Golden Tulip Hotel Zoetermeer,Kinderen van Versteegplein 18 Zoetermeer,195,15,1,Gepubliceerd
+BHV herhaling,BHV,2026-10-28,09:00,13:00,Edusafe Hoofdlocatie Den Haag,Oude Middenweg 241A Den Haag,145,15,4,Gepubliceerd
+BHV herhaling,BHV,2026-11-11,09:00,13:00,Edusafe Hoofdlocatie Den Haag,Oude Middenweg 241A Den Haag,145,15,0,Gepubliceerd
+BHV herhaling,BHV,2026-11-25,09:00,13:00,Edusafe Hoofdlocatie Den Haag,Oude Middenweg 241A Den Haag,145,15,13,Gepubliceerd
+EHBO herhaling,EHBO,2026-12-10,09:00,16:30,Edusafe Hoofdlocatie Den Haag,Oude Middenweg 241A Den Haag,145,15,7,Gepubliceerd
+BHV basis & herhaling,BHV,2026-12-16,09:00,16:30,Golden Tulip Hotel Zoetermeer,Kinderen van Versteegplein 18 Zoetermeer,195,15,0,Gepubliceerd
