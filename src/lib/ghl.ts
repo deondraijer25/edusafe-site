@@ -5,11 +5,28 @@
 
 const GHL_BASE_URL = 'https://services.leadconnectorhq.com';
 
-function getHeaders() {
-  const apiKey = import.meta.env.GHL_API_KEY;
-  if (!apiKey) {
+function getApiKey(): string {
+  const key = (typeof process !== 'undefined' && process.env?.GHL_API_KEY) || import.meta.env.GHL_API_KEY;
+  if (!key) {
     throw new Error('GHL_API_KEY is not configured');
   }
+  return key;
+}
+
+function getLocationId(): string {
+  const locationId = (typeof process !== 'undefined' && process.env?.GHL_LOCATION_ID) || import.meta.env.GHL_LOCATION_ID;
+  if (!locationId) {
+    throw new Error('GHL_LOCATION_ID is not configured');
+  }
+  return locationId;
+}
+
+function getObjectId(): string {
+  return (typeof process !== 'undefined' && process.env?.GHL_OBJECT_ID) || import.meta.env.GHL_OBJECT_ID || '69fb490694debd0adf491703';
+}
+
+function getHeaders() {
+  const apiKey = getApiKey();
   return {
     'Authorization': `Bearer ${apiKey}`,
     'Content-Type': 'application/json',
@@ -17,20 +34,12 @@ function getHeaders() {
   };
 }
 
-function getLocationId(): string {
-  const locationId = import.meta.env.GHL_LOCATION_ID;
-  if (!locationId) {
-    throw new Error('GHL_LOCATION_ID is not configured');
-  }
-  return locationId;
-}
-
 /**
  * Fetch all published events from GHL Custom Object "Evenementen"
  */
 export async function fetchEvents() {
   const locationId = getLocationId();
-  const objectId = import.meta.env.GHL_OBJECT_ID || '69fb490694debd0adf491703';
+  const objectId = getObjectId();
   
   const url = `${GHL_BASE_URL}/objects/${objectId}/records?locationId=${locationId}&limit=100`;
   
