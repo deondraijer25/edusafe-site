@@ -8,7 +8,7 @@
  */
 export const prerender = false;
 
-import { findOrCreateContact, createAssociation, updateEventRegistrations, fetchEventById } from '../../lib/ghl';
+import { findOrCreateContact, createOpportunity, createAssociation, updateEventRegistrations, fetchEventById } from '../../lib/ghl';
 
 export async function POST({ request }: { request: Request }) {
   try {
@@ -65,8 +65,17 @@ export async function POST({ request }: { request: Request }) {
       city: city || '',
     });
 
-    // Step 2: Create Association Contact ↔ Event (parallel with step 3)
-    // Step 3: Update registration count
+    // Step 2: Create Opportunity in pipeline "Cursusbeheer & Trainingsverloop"
+    console.log(`[Inschrijving] Creating opportunity for contact ${contactId}`);
+    const opportunity = await createOpportunity({
+      contactId,
+      courseTitle: event.title,
+      courseDate: event.date,
+      price: event.price,
+    });
+
+    // Step 3: Create Association Contact ↔ Event (parallel with step 4)
+    // Step 4: Update registration count
     console.log(`[Inschrijving] Linking contact ${contactId} to event ${eventId}`);
     const [associationResult, updateResult] = await Promise.all([
       createAssociation(contactId, eventId),

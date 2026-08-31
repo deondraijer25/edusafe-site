@@ -195,28 +195,65 @@ export async function createAssociation(contactId: string, eventRecordId: string
 }
 
 /**
+ * Create an Opportunity in GHL pipeline "Cursusbeheer & Trainingsverloop"
+ */
+export async function createOpportunity(params: {
+  contactId: string;
+  courseTitle: string;
+  courseDate: string;
+  price?: number | string;
+}) {
+  const locationId = getLocationId();
+  const url = `${GHL_BASE_URL}/opportunities/`;
+
+  const priceNum = typeof params.price === 'number' 
+    ? params.price 
+    : parseFloat(String(params.price || '0').replace(/[^0-9.,]/g, '').replace(',', '.')) || 0;
+
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: getHeaders(),
+    body: JSON.stringify({
+      locationId,
+      name: `Inschrijving ${params.courseTitle} — ${params.courseDate}`,
+      contactId: params.contactId,
+      pipelineId: 'ISQKzPugJG0QuVUZQ0XO',
+      pipelineStageId: '45bac17e-d10c-44b0-80cb-9b638a693f05',
+      status: 'open',
+      monetaryValue: priceNum,
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error(`GHL API error (createOpportunity): ${response.status} - ${errorText}`);
+    return null;
+  }
+
+  return await response.json();
+}
+
+/**
  * Update the registration count on an event and optionally set status to "vol"
  */
 export async function updateEventRegistrations(eventRecordId: string, currentRegistrations: number, maxSpots: number) {
   const locationId = getLocationId();
-  const objectId = import.meta.env.GHL_OBJECT_ID || '69fb490694debd0adf491703';
-  const url = `${GHL_BASE_URL}/objects/${objectId}/records/${eventRecordId}`;
+  const url = `${GHL_BASE_URL}/objects/custom_objects.evenement/records/${eventRecordId}?locationId=${locationId}`;
 
   const newCount = currentRegistrations + 1;
   const properties: Record<string, any> = {
-    'custom_objects.evenement.aantal_inschrijvingen': newCount,
+    'aantal_inschrijvingen': newCount,
   };
 
   // Auto-set status to "vol" if capacity is reached
   if (newCount >= maxSpots && maxSpots > 0) {
-    properties['custom_objects.evenement.status'] = 'vol';
+    properties['status'] = 'vol';
   }
 
   const response = await fetch(url, {
     method: 'PUT',
     headers: getHeaders(),
     body: JSON.stringify({
-      locationId,
       properties,
     }),
   });
