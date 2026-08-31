@@ -32,6 +32,9 @@ if (!course) {
   }
   course = { ...localCourse, freeSpotsLabel: localCourse.freeSpots || '0 vrij', spots: 15, registrations: 0 };
 }
+
+const hasPrice = Boolean(course.price && course.price !== '€ 0,-' && course.price !== '0' && course.price !== '€0' && course.price !== '€ 0' && course.price.trim() !== '');
+const hasSpots = Boolean(course.spots && Number(course.spots) > 0);
 ---
 
 <Layout title={`Inschrijven voor ${course.title} | Edusafe`} description={`Reserveer direct uw plek voor de training ${course.title} bij Edusafe op ${course.date}.`}>
@@ -108,29 +111,33 @@ if (!course) {
           </div>
         </div>
 
-        <!-- Prijs -->
-        <div class="flex items-center gap-3.5">
-          <div class="h-11 w-11 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary shrink-0">
-            <i class="fa-solid fa-euro-sign text-lg"></i>
+        <!-- Prijs (alleen als ingevuld) -->
+        {hasPrice && (
+          <div class="flex items-center gap-3.5">
+            <div class="h-11 w-11 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary shrink-0">
+              <i class="fa-solid fa-euro-sign text-lg"></i>
+            </div>
+            <div>
+              <span class="text-[9px] uppercase font-semibold tracking-wider text-brand-dark/40 block mb-0.5">Prijs (excl. BTW)</span>
+              <span class="font-display font-semibold text-brand-accent text-sm md:text-base">
+                {course.price}
+              </span>
+            </div>
           </div>
-          <div>
-            <span class="text-[9px] uppercase font-semibold tracking-wider text-brand-dark/40 block mb-0.5">Prijs (excl. BTW)</span>
-            <span class="font-display font-semibold text-brand-accent text-sm md:text-base">
-              {course.price && course.price !== '€ 0,-' && course.price !== '0' && course.price !== '€0' && course.price !== '€ 0' ? course.price : 'Op aanvraag'}
-            </span>
-          </div>
-        </div>
+        )}
 
-        <!-- Plekken -->
-        <div class="flex items-center gap-3.5">
-          <div class="h-11 w-11 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary shrink-0">
-            <i class="fa-solid fa-users text-lg"></i>
+        <!-- Plekken (alleen als capaciteit is ingesteld in GHL) -->
+        {hasSpots && (
+          <div class="flex items-center gap-3.5">
+            <div class="h-11 w-11 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary shrink-0">
+              <i class="fa-solid fa-users text-lg"></i>
+            </div>
+            <div>
+              <span class="text-[9px] uppercase font-semibold tracking-wider text-brand-dark/40 block mb-0.5">Beschikbaarheid</span>
+              <span class="font-display font-semibold text-brand-secondary text-sm md:text-base">{course.freeSpotsLabel || `${course.freeSpots} vrij`}</span>
+            </div>
           </div>
-          <div>
-            <span class="text-[9px] uppercase font-semibold tracking-wider text-brand-dark/40 block mb-0.5">Beschikbaarheid</span>
-            <span class="font-display font-semibold text-brand-secondary text-sm md:text-base">{course.freeSpots}</span>
-          </div>
-        </div>
+        )}
       </div>
 
       <!-- Main Layout Split -->

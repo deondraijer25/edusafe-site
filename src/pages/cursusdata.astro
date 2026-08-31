@@ -503,9 +503,10 @@ const uniqueLocations = [...new Set(courses.map(c => c.location))];
           const month = dateParts[1] || '';
           const year = dateParts[2] || '';
           
-          // Determine spots display
+          // Determine spots display: ONLY if spots is set in GHL!
+          const hasSpots = Boolean(event.spots && Number(event.spots) > 0);
           const freeSpots = event.freeSpots ?? 0;
-          const isFull = event.status === 'vol' || freeSpots <= 0;
+          const isFull = event.status === 'vol' || (hasSpots && freeSpots <= 0);
           const spotsLabel = isFull ? 'Volgeboekt' : `${freeSpots} vrij`;
           const spotsClass = isFull 
             ? 'bg-red-50/90 text-red-700 border-red-200/60' 
@@ -553,10 +554,12 @@ const uniqueLocations = [...new Set(courses.map(c => c.location))];
                   </div>
                 ` : ''}
                 
-                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 ${spotsClass} rounded-full text-xs font-semibold border shadow-2xs shrink-0">
-                  <span class="w-2 h-2 rounded-full ${dotClass}"></span>
-                  <span>${spotsLabel}</span>
-                </span>
+                ${hasSpots ? `
+                  <span class="inline-flex items-center gap-1.5 px-3 py-1.5 ${spotsClass} rounded-full text-xs font-semibold border shadow-2xs shrink-0">
+                    <span class="w-2 h-2 rounded-full ${dotClass}"></span>
+                    <span>${spotsLabel}</span>
+                  </span>
+                ` : ''}
 
                 ${isFull ? `
                   <span class="font-display font-semibold text-xs sm:text-sm py-2.5 px-5 sm:px-6 rounded-xl text-center bg-gray-300 text-gray-500 cursor-not-allowed shrink-0 inline-flex items-center gap-1.5">
