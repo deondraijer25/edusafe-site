@@ -39,13 +39,16 @@ function getHeaders() {
  */
 export async function fetchEvents() {
   const locationId = getLocationId();
-  const objectId = getObjectId();
-  
-  const url = `${GHL_BASE_URL}/objects/${objectId}/records?locationId=${locationId}&limit=100`;
+  const url = `${GHL_BASE_URL}/objects/custom_objects.evenement/records/search`;
   
   const response = await fetch(url, {
-    method: 'GET',
+    method: 'POST',
     headers: getHeaders(),
+    body: JSON.stringify({
+      locationId,
+      page: 1,
+      pageLimit: 100,
+    }),
   });
 
   if (!response.ok) {
@@ -55,7 +58,7 @@ export async function fetchEvents() {
   }
 
   const data = await response.json();
-  const records = data.records || data.data || [];
+  const records = data.records || [];
 
   // Filter: only published events with date >= today
   const today = new Date();
@@ -64,7 +67,7 @@ export async function fetchEvents() {
   return records
     .filter((record: any) => {
       const props = record.properties || record;
-      const status = (props['custom_objects.evenement.status'] || props.status || '').toLowerCase();
+      const status = (props.status || props['custom_objects.evenement.status'] || '').toLowerCase();
       return status === 'gepubliceerd' || status === 'vol';
     })
     .map((record: any) => mapEventRecord(record))
@@ -87,9 +90,7 @@ export async function fetchEvents() {
  */
 export async function fetchEventById(recordId: string) {
   const locationId = getLocationId();
-  const objectId = import.meta.env.GHL_OBJECT_ID || '69fb490694debd0adf491703';
-  
-  const url = `${GHL_BASE_URL}/objects/${objectId}/records/${recordId}?locationId=${locationId}`;
+  const url = `${GHL_BASE_URL}/objects/custom_objects.evenement/records/${recordId}?locationId=${locationId}`;
   
   const response = await fetch(url, {
     method: 'GET',
@@ -236,18 +237,18 @@ function mapEventRecord(record: any) {
   const props = record.properties || record;
   const id = record.id || props.id;
   
-  // Extract fields (support both webhook format and API format)
-  const title = props['custom_objects.evenement.naam'] || props.title || props.naam || '';
-  const rawDate = props['custom_objects.evenement.datum'] || props.date || props.datum || '';
-  const startTime = props['custom_objects.evenement.starttijd'] || props.startTime || props.starttijd || '';
-  const endTime = props['custom_objects.evenement.eindtijd'] || props.endTime || props.eindtijd || '';
-  const location = props['custom_objects.evenement.locatienaam'] || props.location || props.locatienaam || '';
-  const address = props['custom_objects.evenement.adres'] || props.address || props.adres || '';
-  const category = props['custom_objects.evenement.cursustype'] || props.category || props.cursustype || '';
-  const priceRaw = props['custom_objects.evenement.prijs'] || props.price || props.prijs || '0';
-  const maxSpots = parseInt(props['custom_objects.evenement.max_deelnemers'] || props.spots || props.max_deelnemers || '0', 10);
-  const registrations = parseInt(props['custom_objects.evenement.aantal_inschrijvingen'] || props.registrations || props.aantal_inschrijvingen || '0', 10);
-  const status = props['custom_objects.evenement.status'] || props.status || '';
+  // Extract fields (support GHL search response, single record, and webhook format)
+  const title = props.naam || props['custom_objects.evenement.naam'] || props.title || '';
+  const rawDate = props.datum || props['custom_objects.evenement.datum'] || props.date || '';
+  const startTime = props.starttijd || props['custom_objects.evenement.starttijd'] || props.startTime || '';
+  const endTime = props.eindtijd || props['custom_objects.evenement.eindtijd'] || props.endTime || '';
+  const location = props.locatienaam || props['custom_objects.evenement.locatienaam'] || props.location || '';
+  const address = props.adres || props['custom_objects.evenement.adres'] || props.address || '';
+  const category = (props.cursustype || props['custom_objects.evenement.cursustype'] || props.category || '').toUpperCase();
+  const priceRaw = props.prijs || props['custom_objects.evenement.prijs'] || props.price || '0';
+  const maxSpots = parseInt(props.max_deelnemers || props['custom_objects.evenement.max_deelnemers'] || props.spots || '0', 10);
+  const registrations = parseInt(props.aantal_inschrijvingen || props['custom_objects.evenement.aantal_inschrijvingen'] || props.registrations || '0', 10);
+  const status = (props.status || props['custom_objects.evenement.status'] || '').toLowerCase();
 
   // Calculate free spots
   const freeSpots = Math.max(0, maxSpots - registrations);
