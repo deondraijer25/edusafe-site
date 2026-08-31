@@ -1,17 +1,37 @@
 ---
-import Layout from '../../layouts/Layout.astro';
+export const prerender = false;
 
-// Course data shared with cursusdata.astro
+import Layout from '../../layouts/Layout.astro';
+import { fetchEventById } from '../../lib/ghl';
 import { courses } from '../../data/courses.js';
 
-export async function getStaticPaths() {
-  return courses.map(course => ({
-    params: { id: course.id },
-    props: { course }
-  }));
+const { id } = Astro.params;
+
+// Try to fetch from GHL first, fall back to local courses.js
+let course: any = null;
+let isLive = false;
+
+try {
+  course = await fetchEventById(id!);
+  if (course) {
+    isLive = true;
+    // Ensure freeSpots label exists
+    if (!course.freeSpotsLabel) {
+      course.freeSpotsLabel = course.freeSpots > 0 ? `${course.freeSpots} vrij` : 'Volgeboekt';
+    }
+  }
+} catch (e) {
+  console.error('[Inschrijven] GHL API error, falling back to local data:', e);
 }
 
-const { course } = Astro.props;
+// Fallback to local courses.js data
+if (!course) {
+  const localCourse = courses.find((c: any) => c.id === id);
+  if (!localCourse) {
+    return Astro.redirect('/cursusdata');
+  }
+  course = { ...localCourse, freeSpotsLabel: localCourse.freeSpots || '0 vrij', spots: 15, registrations: 0 };
+}
 ---
 
 <Layout title={`Inschrijven voor ${course.title} | Edusafe`} description={`Reserveer direct uw plek voor de training ${course.title} bij Edusafe op ${course.date}.`}>
@@ -205,9 +225,10 @@ const { course } = Astro.props;
               <p class="text-brand-dark/70 text-xs sm:text-sm font-normal">Vul onderstaand formulier in om uw plek voor deze cursusdatum te reserveren.</p>
             </div>
             
-            <form id="enrollment-form" class="space-y-4 flex-1 flex flex-col justify-between" onsubmit="event.preventDefault(); document.getElementById('success-modal').style.display = 'flex';">
+            <form id="enrollment-form" class="space-y-4 flex-1 flex flex-col justify-between">
               
-              <!-- Geslacht -->
+              <!-- Hidden event ID -->
+              <input type="hidden" name="eventId" value={course.id} />
               <div class="space-y-1.5">
                 <span class="text-xs font-semibold text-brand-secondary uppercase tracking-wider block">Aanhef</span>
                 <div class="flex gap-6">
@@ -346,12 +367,21 @@ const { course } = Astro.props;
               </div>
 
               <!-- Submit Button -->
+              <!-- Submit Button -->
               <button 
                 type="submit" 
+                id="submit-btn"
                 class="font-display font-semibold text-sm sm:text-base py-3.5 px-6 rounded-xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 w-full shadow-md shadow-brand-accent/20 hover:-translate-y-0.5 active:scale-[0.99] cursor-pointer mt-2"
               >
-                Inschrijving Voltooien & Reserveren
+                <span id="submit-text">Inschrijving Voltooien & Reserveren</span>
+                <span id="submit-loading" class="hidden inline-flex items-center gap-2">
+                  <i class="fa-solid fa-spinner animate-spin"></i>
+                  Bezig met verwerken...
+                </span>
               </button>
+
+              <!-- Error message -->
+              <div id="form-error" class="hidden text-red-600 text-xs text-center bg-red-50 p-3 rounded-xl border border-red-200"></div>
 
             </form>
           </div>
@@ -380,5 +410,98 @@ const { course } = Astro.props;
       </div>
     </div>
 
+    <!-- Error Modal popup -->
+    <div id="error-modal" class="fixed inset-0 bg-brand-secondary/60 backdrop-blur-sm z-[999] hidden items-center justify-center p-6">
+      <div class="bg-white rounded-2xl p-6 sm:p-8 max-w-md w-full shadow-2xl text-center border border-brand-dark/5 relative animate-fade-in">
+        <div class="w-14 h-14 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-2xl mx-auto mb-4">
+          <i class="fa-solid fa-circle-xmark"></i>
+        </div>
+        <h3 class="font-display text-xl sm:text-2xl font-semibold text-brand-secondary mb-2">Er ging iets mis</h3>
+        <p id="error-message" class="text-brand-dark/70 text-xs sm:text-sm leading-relaxed mb-6 font-normal">
+          Er is een fout opgetreden bij het verwerken van uw inschrijving. Probeer het opnieuw.
+        </p>
+        <button 
+          onclick="document.getElementById('error-modal').style.display = 'none';" 
+          class="font-display font-semibold text-sm py-3 px-6 rounded-xl bg-brand-primary text-white hover:bg-brand-primary-hover transition-all duration-300 w-full cursor-pointer"
+        >
+          Sluiten
+        </button>
+      </div>
+    </div>
+
   </main>
 </Layout>
+
+<script>
+  const form = document.getElementById('enrollment-form') as HTMLFormElement;
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+  const submitText = document.getElementById('submit-text') as HTMLSpanElement;
+  const submitLoading = document.getElementById('submit-loading') as HTMLSpanElement;
+  const formError = document.getElementById('form-error') as HTMLDivElement;
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // Reset error state
+      formError.classList.add('hidden');
+      formError.textContent = '';
+
+      // Show loading state
+      submitBtn.disabled = true;
+      submitText.classList.add('hidden');
+      submitLoading.classList.remove('hidden');
+
+      try {
+        const formData = new FormData(form);
+        const payload = {
+          eventId: formData.get('eventId'),
+          gender: formData.get('gender'),
+          firstName: formData.get('firstName'),
+          lastName: formData.get('lastName'),
+          email: formData.get('email'),
+          phone: formData.get('phone'),
+          company: formData.get('company'),
+          street: formData.get('street'),
+          postalCode: formData.get('postalCode'),
+          city: formData.get('city'),
+          notes: formData.get('notes'),
+        };
+
+        const response = await fetch('/api/inschrijven', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          // Show success modal
+          const successModal = document.getElementById('success-modal');
+          if (successModal) successModal.style.display = 'flex';
+        } else {
+          // Show error
+          if (response.status === 409) {
+            // Event is full
+            const errorModal = document.getElementById('error-modal');
+            const errorMessage = document.getElementById('error-message');
+            if (errorMessage) errorMessage.textContent = result.error || 'Dit evenement is helaas volgeboekt.';
+            if (errorModal) errorModal.style.display = 'flex';
+          } else {
+            formError.textContent = result.error || 'Er is een fout opgetreden. Probeer het opnieuw.';
+            formError.classList.remove('hidden');
+          }
+        }
+      } catch (error) {
+        formError.textContent = 'Er is een netwerkfout opgetreden. Controleer uw internetverbinding en probeer het opnieuw.';
+        formError.classList.remove('hidden');
+      } finally {
+        // Reset loading state
+        submitBtn.disabled = false;
+        submitText.classList.remove('hidden');
+        submitLoading.classList.add('hidden');
+      }
+    });
+  }
+</script>

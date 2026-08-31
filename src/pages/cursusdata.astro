@@ -466,7 +466,7 @@ const uniqueLocations = [...new Set(courses.map(c => c.location))];
 </Layout>
 
 <script>
-  // Dynamic client-side search & filtering logic
+  // Dynamic client-side search & filtering logic + Live GHL data fetching
   const searchInput = document.getElementById('search-input') as HTMLInputElement;
   const categorySelect = document.getElementById('category-select') as HTMLSelectElement;
   const locationSelect = document.getElementById('location-select') as HTMLSelectElement;
@@ -480,6 +480,139 @@ const uniqueLocations = [...new Set(courses.map(c => c.location))];
   const coursesList = document.getElementById('courses-list') as HTMLDivElement;
 
   let currentLayout = 'list'; // 'list' active by default, 'grid' available
+
+  /**
+   * Fetch live events from GHL API and replace the static list
+   */
+  async function loadLiveEvents() {
+    try {
+      const response = await fetch('/api/events');
+      if (!response.ok) throw new Error(`API error: ${response.status}`);
+      
+      const result = await response.json();
+      if (!result.success || !result.data || result.data.length === 0) return;
+
+      const events = result.data;
+
+      // Update the list view with live data
+      if (coursesList) {
+        coursesList.innerHTML = events.map((event: any) => {
+          const hasPrice = event.price && event.price !== '€ 0,-' && event.price !== '0' && event.price !== '€0' && event.price !== '€ 0' && event.price !== '';
+          const dateParts = (event.date || '').split(' ');
+          const day = dateParts[0] || '';
+          const month = dateParts[1] || '';
+          const year = dateParts[2] || '';
+          
+          // Determine spots display
+          const freeSpots = event.freeSpots ?? 0;
+          const isFull = event.status === 'vol' || freeSpots <= 0;
+          const spotsLabel = isFull ? 'Volgeboekt' : `${freeSpots} vrij`;
+          const spotsClass = isFull 
+            ? 'bg-red-50/90 text-red-700 border-red-200/60' 
+            : 'bg-emerald-50/90 text-emerald-700 border-emerald-200/60';
+          const dotClass = isFull ? 'bg-red-500' : 'bg-emerald-500';
+
+          return `
+            <div class="course-list-item group bg-white p-4 sm:p-5 rounded-2xl border border-brand-dark/8 shadow-2xs hover:shadow-md hover:border-brand-primary/25 transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-6"
+              data-title="${event.title || ''}"
+              data-category="${event.category || ''}"
+              data-location="${event.location || ''}"
+            >
+              <!-- Left: Date -->
+              <div class="flex items-center gap-3 shrink-0 min-w-[76px] sm:min-w-[88px]">
+                <span class="font-display font-bold text-3xl sm:text-4xl text-brand-secondary leading-none w-10 text-center">${day}</span>
+                <div class="flex flex-col justify-center leading-tight">
+                  <span class="text-xs font-bold text-brand-secondary uppercase tracking-wider">${month}</span>
+                  <span class="text-[10px] font-medium text-brand-dark/40">${year}</span>
+                </div>
+              </div>
+
+              <!-- Middle: Title & Metadata -->
+              <div class="flex-1 min-w-0 flex flex-col justify-center">
+                <div class="mb-1.5">
+                  <h3 class="font-display font-semibold text-base sm:text-lg text-brand-secondary leading-snug group-hover:text-brand-primary transition-colors truncate">${event.title || ''}</h3>
+                </div>
+                <div class="flex flex-wrap items-center gap-x-5 gap-y-1 text-xs text-brand-dark/65 font-medium">
+                  <span class="inline-flex items-center gap-1.5">
+                    <i class="fa-solid fa-location-dot text-brand-primary/70 text-xs"></i>
+                    <span>${event.location || ''}</span>
+                  </span>
+                  <span class="inline-flex items-center gap-1.5">
+                    <i class="fa-regular fa-clock text-brand-dark/40 text-xs"></i>
+                    <span>${event.time || ''}</span>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Right: Price + Spots + CTA -->
+              <div class="shrink-0 w-full md:w-auto flex items-center justify-between md:justify-end gap-3.5 pt-3 md:pt-0 border-t md:border-t-0 border-brand-dark/5">
+                ${hasPrice ? `
+                  <div class="flex flex-col items-start md:items-end justify-center mr-1">
+                    <span class="font-display font-bold text-base sm:text-lg text-brand-secondary leading-tight">${event.price}</span>
+                    <span class="text-[10px] font-medium text-brand-dark/40 -mt-0.5">excl. BTW</span>
+                  </div>
+                ` : ''}
+                
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 ${spotsClass} rounded-full text-xs font-semibold border shadow-2xs shrink-0">
+                  <span class="w-2 h-2 rounded-full ${dotClass}"></span>
+                  <span>${spotsLabel}</span>
+                </span>
+
+                ${isFull ? `
+                  <span class="font-display font-semibold text-xs sm:text-sm py-2.5 px-5 sm:px-6 rounded-xl text-center bg-gray-300 text-gray-500 cursor-not-allowed shrink-0 inline-flex items-center gap-1.5">
+                    <span>Volgeboekt</span>
+                  </span>
+                ` : `
+                  <a href="/inschrijven/${event.id}" class="font-display font-semibold text-xs sm:text-sm py-2.5 px-5 sm:px-6 rounded-xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 shrink-0 inline-flex items-center gap-1.5 group/btn">
+                    <span>Inschrijven</span>
+                    <i class="fa-solid fa-arrow-right text-[10px] group-hover/btn:translate-x-0.5 transition-transform"></i>
+                  </a>
+                `}
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // Update the course count
+      if (countText) {
+        countText.textContent = `${events.length} ${events.length === 1 ? 'cursus' : 'cursussen'} gevonden`;
+      }
+
+      // Update filter dropdowns with live categories and locations
+      const liveCategories = [...new Set(events.map((e: any) => e.category).filter(Boolean))] as string[];
+      const liveLocations = [...new Set(events.map((e: any) => e.location).filter(Boolean))] as string[];
+
+      if (categorySelect && liveCategories.length > 0) {
+        const currentCat = categorySelect.value;
+        categorySelect.innerHTML = '<option value="all">Alle Cursussen</option>' + 
+          liveCategories.map(cat => `<option value="${cat}">${cat}</option>`).join('');
+        if (liveCategories.includes(currentCat)) categorySelect.value = currentCat;
+      }
+
+      if (locationSelect && liveLocations.length > 0) {
+        const currentLoc = locationSelect.value;
+        locationSelect.innerHTML = '<option value="all">Alle Locaties</option>' + 
+          liveLocations.map(loc => `<option value="${loc}">${loc}</option>`).join('');
+        if (liveLocations.includes(currentLoc)) locationSelect.value = currentLoc;
+      }
+
+      // Show a subtle indicator that data is live
+      if (result.source === 'ghl') {
+        const header = document.querySelector('h2.font-display');
+        if (header && !header.querySelector('.live-badge')) {
+          header.insertAdjacentHTML('afterend', 
+            '<span class="live-badge inline-flex items-center gap-1.5 text-[10px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full ml-2 border border-emerald-200/50"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Live</span>'
+          );
+        }
+      }
+
+      console.log(`[Edusafe] Loaded ${events.length} events from ${result.source}`);
+    } catch (error) {
+      console.log('[Edusafe] Using static fallback data (API unavailable):', error);
+      // Static data from courses.js is already rendered, so nothing to do
+    }
+  }
 
   function filterCourses() {
     const query = searchInput.value.toLowerCase().trim();
@@ -527,7 +660,6 @@ const uniqueLocations = [...new Set(courses.map(c => c.location))];
       }
     });
 
-    // If query is run, make sure the count reflects the active layout visible items
     if (countText) {
       countText.textContent = `${visibleCount} ${visibleCount === 1 ? 'cursus' : 'cursussen'} gevonden`;
     }
@@ -549,7 +681,6 @@ const uniqueLocations = [...new Set(courses.map(c => c.location))];
       coursesList.classList.remove('flex');
       coursesList.classList.add('hidden');
 
-      // Update button active state styles
       gridViewBtn.classList.add('bg-brand-primary', 'text-white', 'shadow-md');
       gridViewBtn.classList.remove('text-brand-dark/40', 'hover:text-brand-dark/70');
       listViewBtn.classList.remove('bg-brand-primary', 'text-white', 'shadow-md');
@@ -560,7 +691,6 @@ const uniqueLocations = [...new Set(courses.map(c => c.location))];
       coursesList.classList.remove('hidden');
       coursesList.classList.add('flex');
 
-      // Update button active state styles
       listViewBtn.classList.add('bg-brand-primary', 'text-white', 'shadow-md');
       listViewBtn.classList.remove('text-brand-dark/40', 'hover:text-brand-dark/70');
       gridViewBtn.classList.remove('bg-brand-primary', 'text-white', 'shadow-md');
@@ -583,11 +713,14 @@ const uniqueLocations = [...new Set(courses.map(c => c.location))];
   const params = new URLSearchParams(window.location.search);
   const initialCategory = params.get('category');
   if (initialCategory && categorySelect) {
-    // Check if the option exists
     const options = Array.from(categorySelect.options).map(o => o.value);
     if (options.includes(initialCategory)) {
       categorySelect.value = initialCategory;
       filterCourses();
     }
   }
+
+  // Load live events from GHL API (replaces static data seamlessly)
+  loadLiveEvents();
 </script>
+
