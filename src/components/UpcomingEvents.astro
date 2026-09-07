@@ -27,7 +27,7 @@ const upcoming = courses.slice(0, 3);
     </div>
 
     <!-- List rows on Homepage -->
-    <div class="flex flex-col gap-4 reveal-stagger">
+    <div id="upcoming-events-list" class="flex flex-col gap-4 reveal-stagger">
       {upcoming.map(course => (
         <div class="bg-white p-6 rounded-3xl border border-brand-dark/5 shadow-sm hover:shadow-lg hover:border-brand-primary/20 transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           
@@ -86,3 +86,99 @@ const upcoming = courses.slice(0, 3);
 
   </div>
 </section>
+
+<script>
+  async function loadUpcomingLiveEvents() {
+    const listContainer = document.getElementById('upcoming-events-list');
+    if (!listContainer) return;
+
+    try {
+      const response = await fetch('/api/events');
+      if (!response.ok) return; // Silent fail if API fails, leaves static list
+      const result = await response.json();
+      if (!result.success || !result.data || result.data.length === 0) return;
+
+      const upcoming = result.data.slice(0, 3); // Top 3
+
+      listContainer.innerHTML = upcoming.map((course: any) => {
+        const dateParts = (course.date || '').split(' ');
+        const day = dateParts[0] || '';
+        const month = dateParts[1] || '';
+        const year = dateParts[2] || '';
+        
+        // Handle spots info based on live data
+        const hasSpots = Boolean(course.spots && Number(course.spots) > 0);
+        const freeSpots = course.freeSpots ?? 0;
+        const isFull = course.status === 'vol' || (hasSpots && freeSpots <= 0);
+        
+        let spotsLeftBadge = '';
+        if (isFull) {
+          spotsLeftBadge = `<span class="inline-flex items-center bg-red-100 text-red-600 text-[9px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wider border border-red-200">Volgeboekt</span>`;
+        } else if (hasSpots && freeSpots <= 5) {
+          spotsLeftBadge = `<span class="inline-flex items-center bg-brand-accent/15 text-brand-accent text-[9px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wider animate-pulse border border-brand-accent/20">Nog ${freeSpots} plekken</span>`;
+        }
+
+        const buttonClass = isFull 
+          ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
+          : 'bg-brand-accent text-white hover:bg-brand-accent-hover shadow-[0_4px_12px_rgba(255,107,53,0.15)]';
+        
+        const buttonText = isFull ? 'Volgeboekt' : 'Nu Inschrijven';
+        const buttonAction = isFull ? 'onclick="event.preventDefault();"' : '';
+
+        return `
+          <div class="bg-white p-6 rounded-3xl border border-brand-dark/5 shadow-sm hover:shadow-lg hover:border-brand-primary/20 transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div class="flex items-center gap-3 shrink-0">
+              <span class="font-display font-semibold text-4xl text-brand-secondary leading-none w-10 text-right">
+                ${day}
+              </span>
+              <div class="text-[10px] font-medium text-brand-dark/50 leading-tight">
+                <div>${month}</div>
+                <div>${year}</div>
+              </div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex flex-wrap items-center gap-2 mb-2">
+                <h3 class="font-display font-semibold text-lg text-brand-secondary leading-tight truncate">
+                  ${course.title}
+                </h3>
+                <span class="inline-flex items-center bg-brand-primary/10 text-brand-primary text-[10px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                  ${course.category}
+                </span>
+                ${spotsLeftBadge}
+              </div>
+              <div class="flex flex-wrap gap-x-6 gap-y-1 text-xs text-brand-dark/65 font-medium">
+                <span class="flex items-center gap-1.5">
+                  <i class="fa-solid fa-location-dot text-brand-primary"></i>
+                  ${course.location}
+                </span>
+                <span class="flex items-center gap-1.5">
+                  <i class="fa-solid fa-clock text-brand-dark/40"></i>
+                  ${course.time}
+                </span>
+              </div>
+            </div>
+            <div class="shrink-0 w-full md:w-auto">
+              <a 
+                href="/inschrijven/${course.id}" 
+                class="font-display font-semibold text-sm py-3.5 px-8 rounded-2xl text-center ${buttonClass} transition-all duration-300 w-full md:w-auto block"
+                ${buttonAction}
+              >
+                ${buttonText}
+              </a>
+            </div>
+          </div>
+        `;
+      }).join('');
+    } catch (e) {
+      console.error('Error fetching live events for home:', e);
+    }
+  }
+
+  // Fetch on page load (compatible with Astro ViewTransitions)
+  document.addEventListener('astro:page-load', loadUpcomingLiveEvents);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadUpcomingLiveEvents);
+  } else {
+    loadUpcomingLiveEvents();
+  }
+</script>
