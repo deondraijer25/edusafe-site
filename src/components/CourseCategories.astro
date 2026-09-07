@@ -230,11 +230,11 @@ const courses = [
               }`}>
                 <Fragment set:html={course.icon} />
               </div>
-              <span class={`text-[10px] font-medium px-2.5 py-0.5 rounded-full border ${
-                course.isHighlighted ? 'border-brand-primary/30 text-brand-primary bg-brand-primary/10' : 'border-brand-dark/10 text-brand-dark/50'
-              }`}>
-                {course.tag}
-              </span>
+              {course.isHighlighted && course.tag && (
+                <span class="text-[10px] font-semibold px-2.5 py-1 rounded-full border border-brand-primary/30 text-brand-primary bg-brand-primary/10">
+                  {course.tag}
+                </span>
+              )}
             </div>
 
             <!-- Course Title -->

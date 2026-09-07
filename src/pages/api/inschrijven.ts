@@ -65,20 +65,15 @@ export async function POST({ request }: { request: Request }) {
       city: city || '',
     });
 
-    // Step 2: Create Opportunity in pipeline "Cursusbeheer & Trainingsverloop"
-    console.log(`[Inschrijving] Creating opportunity for contact ${contactId}`);
-    const opportunity = await createOpportunity({
-      contactId,
-      courseTitle: event.title,
-      courseDate: event.date,
-      price: event.price,
-    });
-
-    // Step 3: Create Association Contact ↔ Event (parallel with step 4)
-    // Step 4: Update registration count
-    console.log(`[Inschrijving] Linking contact ${contactId} to event ${eventId}`);
-    const [associationResult, updateResult] = await Promise.all([
-      createAssociation(contactId, eventId),
+    // Step 2 & 3 in parallel: Create Opportunity in GHL and update event registrations count
+    console.log(`[Inschrijving] Creating opportunity & updating event for ${firstName} ${lastName}`);
+    await Promise.all([
+      createOpportunity({
+        contactId,
+        courseTitle: event.title,
+        courseDate: event.date,
+        price: event.price,
+      }),
       updateEventRegistrations(eventId, event.registrations, event.spots),
     ]);
 

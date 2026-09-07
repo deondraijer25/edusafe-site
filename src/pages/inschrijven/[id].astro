@@ -369,21 +369,20 @@ const hasSpots = Boolean(course.spots && Number(course.spots) > 0);
               <div class="flex items-start gap-2.5 py-1">
                 <input type="checkbox" id="agree" class="w-4 h-4 accent-brand-primary cursor-pointer mt-0.5" required />
                 <label for="agree" class="text-xs text-brand-dark/70 leading-relaxed cursor-pointer select-none font-normal">
-                  Ik ga akkoord met de <a href="#" class="text-brand-primary font-semibold hover:underline">algemene voorwaarden</a> en het privacybeleid van Edusafe.
+                  Ik ga akkoord met de <a href="/algemene-voorwaarden" target="_blank" class="text-brand-primary font-semibold hover:underline">algemene voorwaarden</a> en het privacybeleid van Edusafe.
                 </label>
               </div>
 
               <!-- Submit Button -->
-              <!-- Submit Button -->
               <button 
                 type="submit" 
                 id="submit-btn"
-                class="font-display font-semibold text-sm sm:text-base py-3.5 px-6 rounded-xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 w-full shadow-md shadow-brand-accent/20 hover:-translate-y-0.5 active:scale-[0.99] cursor-pointer mt-2"
+                class="font-display font-bold text-base py-4 px-6 rounded-xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 w-full shadow-md shadow-brand-accent/20 hover:-translate-y-0.5 active:scale-[0.99] cursor-pointer mt-2"
               >
-                <span id="submit-text">Inschrijving Voltooien & Reserveren</span>
-                <span id="submit-loading" class="hidden inline-flex items-center gap-2">
-                  <i class="fa-solid fa-spinner animate-spin"></i>
-                  Bezig met verwerken...
+                <span id="submit-text">Nu Inschrijven</span>
+                <span id="submit-loading" style="display: none;" class="items-center justify-center gap-2">
+                  <i class="fa-solid fa-circle-notch animate-spin"></i>
+                  Even geduld...
                 </span>
               </button>
 
@@ -409,7 +408,8 @@ const hasSpots = Boolean(course.spots && Number(course.spots) > 0);
           Hartelijk dank voor uw inschrijving. Wij hebben uw reservering voor <strong class="text-brand-secondary font-semibold">{course.title}</strong> op <strong class="text-brand-secondary font-semibold">{course.date}</strong> succesvol ontvangen. U ontvangt binnen enkele minuten een bevestiging per e-mail.
         </p>
         <button 
-          onclick="document.getElementById('success-modal').style.display = 'none'; window.location.href = '/cursusdata';" 
+          type="button"
+          id="close-success-modal"
           class="font-display font-semibold text-sm py-3 px-6 rounded-xl bg-brand-primary text-white hover:bg-brand-primary-hover transition-all duration-300 w-full cursor-pointer"
         >
           Terug naar Cursusdata
@@ -428,7 +428,8 @@ const hasSpots = Boolean(course.spots && Number(course.spots) > 0);
           Er is een fout opgetreden bij het verwerken van uw inschrijving. Probeer het opnieuw.
         </p>
         <button 
-          onclick="document.getElementById('error-modal').style.display = 'none';" 
+          type="button"
+          id="close-error-modal"
           class="font-display font-semibold text-sm py-3 px-6 rounded-xl bg-brand-primary text-white hover:bg-brand-primary-hover transition-all duration-300 w-full cursor-pointer"
         >
           Sluiten
@@ -440,24 +441,29 @@ const hasSpots = Boolean(course.spots && Number(course.spots) > 0);
 </Layout>
 
 <script>
-  const form = document.getElementById('enrollment-form') as HTMLFormElement;
-  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
-  const submitText = document.getElementById('submit-text') as HTMLSpanElement;
-  const submitLoading = document.getElementById('submit-loading') as HTMLSpanElement;
-  const formError = document.getElementById('form-error') as HTMLDivElement;
+  function initEnrollment() {
+    const form = document.getElementById('enrollment-form') as HTMLFormElement;
+    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+    const submitText = document.getElementById('submit-text') as HTMLSpanElement;
+    const submitLoading = document.getElementById('submit-loading') as HTMLSpanElement;
+    const formError = document.getElementById('form-error') as HTMLDivElement;
 
-  if (form) {
+    if (!form || form.dataset.initialized) return;
+    form.dataset.initialized = 'true';
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       
       // Reset error state
-      formError.classList.add('hidden');
-      formError.textContent = '';
+      if (formError) {
+        formError.classList.add('hidden');
+        formError.textContent = '';
+      }
 
       // Show loading state
-      submitBtn.disabled = true;
-      submitText.classList.add('hidden');
-      submitLoading.classList.remove('hidden');
+      if (submitBtn) submitBtn.disabled = true;
+      if (submitText) submitText.style.display = 'none';
+      if (submitLoading) submitLoading.style.display = 'inline-flex';
 
       try {
         const formData = new FormData(form);
@@ -486,7 +492,10 @@ const hasSpots = Boolean(course.spots && Number(course.spots) > 0);
         if (result.success) {
           // Show success modal
           const successModal = document.getElementById('success-modal');
-          if (successModal) successModal.style.display = 'flex';
+          if (successModal) {
+            successModal.classList.remove('hidden');
+            successModal.classList.add('flex');
+          }
         } else {
           // Show error
           if (response.status === 409) {
@@ -494,21 +503,55 @@ const hasSpots = Boolean(course.spots && Number(course.spots) > 0);
             const errorModal = document.getElementById('error-modal');
             const errorMessage = document.getElementById('error-message');
             if (errorMessage) errorMessage.textContent = result.error || 'Dit evenement is helaas volgeboekt.';
-            if (errorModal) errorModal.style.display = 'flex';
+            if (errorModal) {
+              errorModal.classList.remove('hidden');
+              errorModal.classList.add('flex');
+            }
           } else {
-            formError.textContent = result.error || 'Er is een fout opgetreden. Probeer het opnieuw.';
-            formError.classList.remove('hidden');
+            if (formError) {
+              formError.textContent = result.error || 'Er is een fout opgetreden. Probeer het opnieuw.';
+              formError.classList.remove('hidden');
+            }
           }
         }
       } catch (error) {
-        formError.textContent = 'Er is een netwerkfout opgetreden. Controleer uw internetverbinding en probeer het opnieuw.';
-        formError.classList.remove('hidden');
+        if (formError) {
+          formError.textContent = 'Er is een netwerkfout opgetreden. Controleer uw internetverbinding en probeer het opnieuw.';
+          formError.classList.remove('hidden');
+        }
       } finally {
         // Reset loading state
-        submitBtn.disabled = false;
-        submitText.classList.remove('hidden');
-        submitLoading.classList.add('hidden');
+        if (submitBtn) submitBtn.disabled = false;
+        if (submitText) submitText.style.display = 'inline';
+        if (submitLoading) submitLoading.style.display = 'none';
       }
     });
+
+    // Close buttons
+    const closeSuccessBtn = document.getElementById('close-success-modal');
+    if (closeSuccessBtn) {
+      closeSuccessBtn.addEventListener('click', () => {
+        const successModal = document.getElementById('success-modal');
+        if (successModal) {
+          successModal.classList.add('hidden');
+          successModal.classList.remove('flex');
+        }
+        window.location.href = '/cursusdata';
+      });
+    }
+
+    const closeErrorBtn = document.getElementById('close-error-modal');
+    if (closeErrorBtn) {
+      closeErrorBtn.addEventListener('click', () => {
+        const errorModal = document.getElementById('error-modal');
+        if (errorModal) {
+          errorModal.classList.add('hidden');
+          errorModal.classList.remove('flex');
+        }
+      });
+    }
   }
+
+  initEnrollment();
+  document.addEventListener('astro:page-load', initEnrollment);
 </script>
