@@ -5,14 +5,14 @@ import CourseCategories from '../../components/CourseCategories.astro';
 import PortalPromo from '../../components/PortalPromo.astro';
 import UpcomingEvents from '../../components/UpcomingEvents.astro';
 import AboutUs from '../../components/AboutUs.astro';
+import HomeFaq from '../../components/HomeFaq.astro';
 import Reviews from '../../components/Reviews.astro';
 import ContactForm from '../../components/ContactForm.astro';
 ---
 
 <Layout 
-  title="Edusafe | Certified Workplace Safety, BHV & VCA Training" 
-  description="Official Dutch and International safety certifications in English: Emergency Response (BHV), First Aid, VCA, and Offshore safety training."
-  showLoader={false}
+  title="BHV, First Aid, VCA & Workplace Safety | Courses, Inspections & Incompany | Edusafe" 
+  description="Your partner in accredited BHV (ERO), First Aid, VCA, Forklift and Offshore safety training, NEN inspections and RI&E audits. At our training facility or incompany across the Netherlands."
 >
 	<main class="w-full relative">
 		<!-- Hero Section -->
@@ -29,6 +29,9 @@ import ContactForm from '../../components/ContactForm.astro';
 
 		<!-- About Us & Certifications -->
 		<AboutUs />
+
+		<!-- DataForSEO & GEO FAQ Section (Directly Above Reviews) -->
+		<HomeFaq />
 
 		<!-- Reviews Section -->
 		<Reviews />

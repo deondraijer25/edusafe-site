@@ -42,6 +42,8 @@ const routeMapNLtoEN: Record<string, string> = {
   '/dakveiligheid': '/en/roof-safety',
   '/over-ons': '/en/about-us',
   '/contact': '/en/contact',
+  '/persoonlijk-advies': '/en/personal-advice',
+  '/evaluatieformulier': '/en/evaluation-form',
   '/algemene-voorwaarden': '/en/terms-conditions',
   '/faq': '/en/faq'
 };
@@ -67,6 +69,8 @@ const routeMapENtoNL: Record<string, string> = {
   '/en/roof-safety': '/dakveiligheid',
   '/en/about-us': '/over-ons',
   '/en/contact': '/contact',
+  '/en/personal-advice': '/persoonlijk-advies',
+  '/en/evaluation-form': '/evaluatieformulier',
   '/en/terms-conditions': '/algemene-voorwaarden',
   '/en/faq': '/faq'
 };
@@ -87,6 +91,10 @@ export function getOppositeLocaleUrl(currentUrl: URL): { lang: 'nl' | 'en'; url:
     // Dynamic registration routes: /inschrijven/1 -> /en/register/1
     if (pathname.startsWith('/inschrijven/')) {
       targetPath = pathname.replace('/inschrijven/', '/en/register/');
+    } else if (pathname.startsWith('/cursussen/')) {
+      targetPath = pathname.replace('/cursussen/', '/en/courses/');
+    } else if (pathname.startsWith('/diensten/')) {
+      targetPath = pathname.replace('/diensten/', '/en/services/');
     } else if (routeMapNLtoEN[pathname]) {
       targetPath = routeMapNLtoEN[pathname];
     } else {
@@ -97,6 +105,10 @@ export function getOppositeLocaleUrl(currentUrl: URL): { lang: 'nl' | 'en'; url:
     // Dynamic registration routes: /en/register/1 -> /inschrijven/1
     if (pathname.startsWith('/en/register/')) {
       targetPath = pathname.replace('/en/register/', '/inschrijven/');
+    } else if (pathname.startsWith('/en/courses/')) {
+      targetPath = pathname.replace('/en/courses/', '/cursussen/');
+    } else if (pathname.startsWith('/en/services/')) {
+      targetPath = pathname.replace('/en/services/', '/diensten/');
     } else if (routeMapENtoNL[pathname]) {
       targetPath = routeMapENtoNL[pathname];
     } else {

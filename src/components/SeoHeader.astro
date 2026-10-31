@@ -4,6 +4,8 @@
  * Handles the generation of meta tags, Open Graph, and Twitter Cards to ensure optimal SEO
  * and rich link previews across all platforms. Canonical URLs are automatically resolved.
  */
+import { getLangFromUrl } from '../i18n/utils';
+
 interface Props {
   title?: string;
   description?: string;
@@ -11,9 +13,12 @@ interface Props {
   type?: "website" | "article"; // Default "website"
 }
 
+const lang = getLangFromUrl(Astro.url);
+const isEn = lang === 'en';
+
 const { 
-  title = "Edusafe | Expert in Bedrijfsveiligheid, BHV & VCA Trainingen", 
-  description = "Edusafe verzorgt gecertificeerde BHV, EHBO en VCA trainingen in West- en Midden-Nederland. Praktijkgericht en volledig conform wetgeving.", 
+  title = isEn ? "BHV, First Aid, VCA & Workplace Safety | Courses, Inspections & Incompany | Edusafe" : "BHV, EHBO, VCA & Bedrijfsveiligheid | Cursussen, Keuringen & Incompany | Edusafe", 
+  description = isEn ? "Your partner in accredited BHV (ERO), First Aid, VCA, Forklift and Offshore safety training, NEN inspections and RI&E audits. At our training facility in The Hague or incompany across the Netherlands." : "Dé partner in BHV (NL & EN), EHBO, VCA, Heftruck en Offshore trainingen, NEN-keuringen en RI&E. Vaak al binnen 1 dag gecertificeerd op onze hoofdlocatie in Den Haag of landelijk incompany.", 
   image = "/assets/images/edusafe-share.jpg",
   type = "website" 
 } = Astro.props;
@@ -36,7 +41,7 @@ const imageURL = new URL(image, Astro.site);
 <meta property="og:description" content={description} />
 <meta property="og:image" content={imageURL} />
 <meta property="og:site_name" content="Edusafe" />
-<meta property="og:locale" content="nl_NL" />
+<meta property="og:locale" content={isEn ? "en_GB" : "nl_NL"} />
 
 <!-- Twitter / X -->
 <meta property="twitter:card" content="summary_large_image" />

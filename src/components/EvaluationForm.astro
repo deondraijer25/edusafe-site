@@ -1,0 +1,1778 @@
+---
+interface Props {
+  lang?: 'nl' | 'en';
+}
+
+const { lang = 'nl' } = Astro.props;
+const isEn = lang === 'en';
+
+const courses = isEn
+  ? [
+      'BHV Basis (Emergency Response Basic)',
+      'BHV Herhaling (Emergency Response Refresher)',
+      'BHV Ploegleider (Team Leader)',
+      'EHBO (First Aid Basic / Refresher)',
+      'EHAK (Child First Aid)',
+      'Reanimatie & AED (CPR & AED)',
+      'VCA Basis / VCA-VOL',
+      'Heftruck / Reachtruck / Hoogwerker (Forklift / MEWP)',
+      'Offshore (BOSIET / FOET / OPITO)',
+      'Ontruimingsoefening / Anders (Evacuation / Other)',
+    ]
+  : [
+      'BHV Basis',
+      'BHV Herhaling',
+      'BHV Ploegleider',
+      'EHBO (Basis / Herhaling)',
+      'EHAK (Eerste Hulp aan Kinderen)',
+      'Reanimatie & AED',
+      'VCA Basis / VCA-VOL',
+      'Heftruck / Reachtruck / Hoogwerker',
+      'Offshore (BOSIET / FOET / OPITO)',
+      'Ontruimingsoefening / Anders',
+    ];
+
+const scaleLabels = isEn
+  ? [
+      { value: 1, short: 'Dissatisfied' },
+      { value: 2, short: 'Fair' },
+      { value: 3, short: 'Sufficient' },
+      { value: 4, short: 'Satisfied' },
+      { value: 5, short: 'Very satisfied' },
+    ]
+  : [
+      { value: 1, short: 'Ontevreden' },
+      { value: 2, short: 'Matig' },
+      { value: 3, short: 'Voldoende' },
+      { value: 4, short: 'Tevreden' },
+      { value: 5, short: 'Zeer tevreden' },
+    ];
+
+const step2Questions = [
+  {
+    id: 'q1',
+    num: 1,
+    label: isEn
+      ? '1. Overall, regarding the course as a whole I am'
+      : '1. Over de cursus als geheel ben ik',
+  },
+  {
+    id: 'q2',
+    num: 2,
+    label: isEn
+      ? '2. Regarding the training room and training equipment I am'
+      : '2. Over de oefenruimte en oefenmiddelen ben ik',
+  },
+  {
+    id: 'q3',
+    num: 3,
+    label: isEn
+      ? '3. Regarding the lunch I am (if applicable)'
+      : '3. Over de lunch ben ik (indien van toepassing)',
+    optionalHint: isEn ? 'If applicable' : 'Indien van toepassing',
+  },
+];
+
+const step3Questions = [
+  {
+    id: 'q4',
+    num: 4,
+    section: isEn ? 'Content' : 'Inhoud',
+    label: isEn
+      ? '4. My knowledge and skills regarding the topics covered in the course have improved'
+      : '4. Mijn kennis en vaardigheden over de onderwerpen die in de cursus zijn behandeld zijn verbeterd',
+  },
+  {
+    id: 'q5',
+    num: 5,
+    label: isEn
+      ? '5. I can apply the knowledge and skills I have learned in my own practical situation'
+      : '5. Ik kan de kennis en vaardigheden die ik heb geleerd in mijn eigen praktijksituatie toepassen',
+  },
+  {
+    id: 'q6',
+    num: 6,
+    section: isEn ? 'Course Design & Material' : 'Vormgeving',
+    label: isEn
+      ? '6. The course material was clear and understandable'
+      : '6. Het lesmateriaal was duidelijk en begrijpelijk',
+  },
+];
+
+const step4InstructorQuestions = [
+  {
+    id: 'q7',
+    num: 7,
+    label: isEn
+      ? '7. Teaching / explanation of the First Aid module'
+      : '7. Lesgeven / uitleg onderdeel Eerste Hulp',
+  },
+  {
+    id: 'q8',
+    num: 8,
+    label: isEn
+      ? '8. Teaching / explanation of the Fire & Evacuation module'
+      : '8. Lesgeven / uitleg onderdeel Brand & Ontruiming',
+  },
+  {
+    id: 'q9',
+    num: 9,
+    label: isEn
+      ? '9. The topics were presented clearly'
+      : '9. De onderwerpen werden duidelijk gepresenteerd',
+  },
+  {
+    id: 'q10',
+    num: 10,
+    label: isEn
+      ? '10. Questions asked were answered clearly'
+      : '10. De gestelde vragen werden duidelijk beantwoord',
+  },
+  {
+    id: 'q11',
+    num: 11,
+    label: isEn
+      ? '11. Feedback on the performed tasks was sufficient'
+      : '11. De feedback op de uitgevoerde taken was voldoende',
+  },
+];
+
+const step4LotusQuestion = {
+  id: 'q12',
+  num: 12,
+  label: isEn
+    ? '12. Do you find the deployment of a LOTUS casualty actor during refresher classes of added value?'
+    : '12. Vindt u de inzet van een LOTUS tijdens de herhalingslessen van toegevoegde waarde?',
+  optionalHint: isEn ? 'If applicable' : 'Indien van toepassing',
+};
+---
+
+<main class="w-full bg-brand-cream min-h-screen">
+  <!-- Hero Header (Dezelfde stijl en beeldopbouw als Persoonlijk Advies & Homepage) -->
+  <section class="relative bg-[#0C4EA2] text-white pt-10 pb-16 sm:pt-16 sm:pb-24 md:pt-20 md:pb-28 overflow-hidden">
+    <div class="absolute inset-0 z-0 overflow-hidden">
+      <img
+        src="/assets/images/hero_poster.webp"
+        alt={isEn ? 'Edusafe Course Evaluation Form' : 'Edusafe Evaluatieformulier'}
+        class="w-full h-full object-cover object-center filter brightness-[0.98] contrast-[1.03]"
+      />
+      <div
+        class="absolute inset-0"
+        style="background: linear-gradient(90deg, #0C4EA2 0%, #0C4EA2 36%, rgba(12, 78, 162, 0.86) 56%, rgba(12, 78, 162, 0.38) 78%, rgba(12, 78, 162, 0.08) 100%);"
+      ></div>
+      <div class="absolute inset-0 md:hidden bg-gradient-to-b from-[#062856]/75 via-[#0C4EA2]/70 to-[#0C4EA2]/95"></div>
+    </div>
+
+    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 relative z-10">
+      <!-- Back Button -->
+      <a
+        href={isEn ? '/en' : '/'}
+        class="inline-flex items-center gap-2 text-white/85 hover:text-white mb-5 sm:mb-6 transition-all duration-300 font-semibold bg-white/10 hover:bg-white/20 backdrop-blur-md px-3.5 py-2 rounded-xl border border-white/20 text-xs group"
+      >
+        <i class="fa-solid fa-arrow-left text-[10px] group-hover:-translate-x-1 transition-transform"></i>
+        <span>{isEn ? 'Back to homepage' : 'Terug naar overzicht'}</span>
+      </a>
+
+      <div class="max-w-3xl">
+        <span class="inline-flex items-center gap-1.5 text-brand-accent font-display font-semibold text-xs uppercase tracking-wider mb-3">
+          <i class="fa-solid fa-star"></i>
+          {isEn ? 'Course Evaluation & Quality Assurance' : 'Cursusevaluatie & Kwaliteitsbewaking'}
+        </span>
+
+        <h1 class="font-display text-[26px] min-[375px]:text-[30px] sm:text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-tight mb-4 text-white">
+          {isEn ? (
+            <>
+              How did you experience <span class="relative inline-block text-white px-3.5 py-1 sm:px-5 sm:py-1.5 mx-0.5 sm:mx-1 transform -rotate-1"><span class="absolute inset-0 bg-brand-accent rounded-2xl z-0"></span><span class="relative z-10">your training?</span></span>
+            </>
+          ) : (
+            <>
+              Hoe heeft u onze <span class="relative inline-block text-white px-3.5 py-1 sm:px-5 sm:py-1.5 mx-0.5 sm:mx-1 transform -rotate-1"><span class="absolute inset-0 bg-brand-accent rounded-2xl z-0"></span><span class="relative z-10">cursus ervaren?</span></span>
+            </>
+          )}
+        </h1>
+
+        <p class="text-white/90 text-sm sm:text-base md:text-lg max-w-2xl font-normal leading-relaxed">
+          {isEn
+            ? 'Please answer the questions below. Your feedback helps us evaluate our courses and continuously improve our training quality.'
+            : 'Beantwoord a.u.b. onderstaande vragen. Met uw antwoorden kunnen wij de cursus evalueren en waar nodig nog verder verbeteren.'}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content & Evaluation Wizard Area -->
+  <section class="max-w-[1280px] mx-auto px-4 sm:px-6 -mt-8 sm:-mt-12 md:-mt-14 relative z-30 pb-20 sm:pb-24">
+    
+    <!-- Top Progress Bar Card (5 Stappen) -->
+    <div class="bg-white rounded-2xl shadow-xl shadow-brand-dark/10 border border-brand-dark/5 p-3 sm:p-5 md:p-6 mb-6 sm:mb-8">
+      <div class="grid grid-cols-5 sm:grid-cols-3 lg:grid-cols-5 gap-1.5 sm:gap-3.5" id="eval-progress-steps">
+        <!-- Step 1 Indicator -->
+        <button
+          type="button"
+          data-eval-step-nav="1"
+          aria-label={isEn ? 'Step 1: Course & Details' : 'Stap 1: Gegevens & Cursus'}
+          class="eval-step-indicator flex items-center justify-center sm:justify-start gap-2 sm:gap-3 p-1.5 sm:p-3 min-h-[44px] rounded-xl text-left transition-all border border-[#0C4EA2]/35 bg-[#0C4EA2]/6 cursor-pointer"
+        >
+          <span class="eval-step-badge w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#0C4EA2] text-white font-display font-bold text-xs sm:text-sm flex items-center justify-center shrink-0">
+            1
+          </span>
+          <div class="hidden sm:block min-w-0">
+            <span class="block text-[10px] font-bold uppercase tracking-wider text-[#0C4EA2]">
+              {isEn ? 'Step 1' : 'Stap 1'}
+            </span>
+            <span class="block font-display font-semibold text-xs sm:text-sm text-brand-secondary truncate">
+              {isEn ? 'Course & Details' : 'Gegevens & Cursus'}
+            </span>
+          </div>
+        </button>
+
+        <!-- Step 2 Indicator -->
+        <button
+          type="button"
+          data-eval-step-nav="2"
+          disabled
+          aria-label={isEn ? 'Step 2: Organization' : 'Stap 2: Organisatie'}
+          class="eval-step-indicator flex items-center justify-center sm:justify-start gap-2 sm:gap-3 p-1.5 sm:p-3 min-h-[44px] rounded-xl text-left transition-all border border-brand-dark/8 bg-brand-cream/40 opacity-60 cursor-not-allowed"
+        >
+          <span class="eval-step-badge w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-brand-dark/10 text-brand-secondary font-display font-bold text-xs sm:text-sm flex items-center justify-center shrink-0">
+            2
+          </span>
+          <div class="hidden sm:block min-w-0">
+            <span class="block text-[10px] font-bold uppercase tracking-wider text-brand-dark/45">
+              {isEn ? 'Step 2' : 'Stap 2'}
+            </span>
+            <span class="block font-display font-semibold text-xs sm:text-sm text-brand-secondary truncate">
+              {isEn ? 'Organization' : 'Organisatie'}
+            </span>
+          </div>
+        </button>
+
+        <!-- Step 3 Indicator -->
+        <button
+          type="button"
+          data-eval-step-nav="3"
+          disabled
+          aria-label={isEn ? 'Step 3: Content & Material' : 'Stap 3: Inhoud & Vormgeving'}
+          class="eval-step-indicator flex items-center justify-center sm:justify-start gap-2 sm:gap-3 p-1.5 sm:p-3 min-h-[44px] rounded-xl text-left transition-all border border-brand-dark/8 bg-brand-cream/40 opacity-60 cursor-not-allowed"
+        >
+          <span class="eval-step-badge w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-brand-dark/10 text-brand-secondary font-display font-bold text-xs sm:text-sm flex items-center justify-center shrink-0">
+            3
+          </span>
+          <div class="hidden sm:block min-w-0">
+            <span class="block text-[10px] font-bold uppercase tracking-wider text-brand-dark/45">
+              {isEn ? 'Step 3' : 'Stap 3'}
+            </span>
+            <span class="block font-display font-semibold text-xs sm:text-sm text-brand-secondary truncate">
+              {isEn ? 'Content & Material' : 'Inhoud & Vormgeving'}
+            </span>
+          </div>
+        </button>
+
+        <!-- Step 4 Indicator -->
+        <button
+          type="button"
+          data-eval-step-nav="4"
+          disabled
+          aria-label={isEn ? 'Step 4: Instructor & LOTUS' : 'Stap 4: Instructeur & LOTUS'}
+          class="eval-step-indicator flex items-center justify-center sm:justify-start gap-2 sm:gap-3 p-1.5 sm:p-3 min-h-[44px] rounded-xl text-left transition-all border border-brand-dark/8 bg-brand-cream/40 opacity-60 cursor-not-allowed"
+        >
+          <span class="eval-step-badge w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-brand-dark/10 text-brand-secondary font-display font-bold text-xs sm:text-sm flex items-center justify-center shrink-0">
+            4
+          </span>
+          <div class="hidden sm:block min-w-0">
+            <span class="block text-[10px] font-bold uppercase tracking-wider text-brand-dark/45">
+              {isEn ? 'Step 4' : 'Stap 4'}
+            </span>
+            <span class="block font-display font-semibold text-xs sm:text-sm text-brand-secondary truncate">
+              {isEn ? 'Instructor & LOTUS' : 'Instructeur & LOTUS'}
+            </span>
+          </div>
+        </button>
+
+        <!-- Step 5 Indicator -->
+        <button
+          type="button"
+          data-eval-step-nav="5"
+          disabled
+          aria-label={isEn ? 'Step 5: General & Submit' : 'Stap 5: Algemeen & Afronding'}
+          class="eval-step-indicator flex items-center justify-center sm:justify-start gap-2 sm:gap-3 p-1.5 sm:p-3 min-h-[44px] rounded-xl text-left transition-all border border-brand-dark/8 bg-brand-cream/40 opacity-60 cursor-not-allowed"
+        >
+          <span class="eval-step-badge w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-brand-dark/10 text-brand-secondary font-display font-bold text-xs sm:text-sm flex items-center justify-center shrink-0">
+            5
+          </span>
+          <div class="hidden sm:block min-w-0">
+            <span class="block text-[10px] font-bold uppercase tracking-wider text-brand-dark/45">
+              {isEn ? 'Step 5' : 'Stap 5'}
+            </span>
+            <span class="block font-display font-semibold text-xs sm:text-sm text-brand-secondary truncate">
+              {isEn ? 'General & Submit' : 'Algemeen & Afronding'}
+            </span>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main 2-Column Split -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Left 8 Columns: Interactive Evaluation Form Steps -->
+      <div class="lg:col-span-8 flex flex-col">
+        <form id="evaluation-wizard-form" class="bg-white rounded-2xl shadow-lg border border-brand-dark/5 p-4 min-[375px]:p-5 sm:p-8 flex flex-col justify-between" novalidate>
+          
+          <!-- ========================================== -->
+          <!-- STEP 1: GEGEVENS & CURSUS                  -->
+          <!-- ========================================== -->
+          <div id="eval-step-1" class="eval-panel flex flex-col justify-between space-y-6">
+            <div class="space-y-6">
+              <div>
+                <span class="inline-block text-xs font-bold uppercase tracking-wider text-[#0C4EA2] mb-1.5">
+                  {isEn ? 'Step 1 of 5 • Participant & Course Details' : 'Stap 1 van 5 • Gegevens deelnemer & cursus'}
+                </span>
+                <h2 class="font-display text-2xl sm:text-3xl font-semibold text-brand-secondary">
+                  {isEn ? 'Which course did you attend?' : 'Welke cursus heeft u gevolgd?'}
+                </h2>
+                <p class="text-brand-dark/70 text-xs sm:text-sm mt-1.5 leading-relaxed">
+                  {isEn
+                    ? 'Please answer the questions below. With your answers we can evaluate the course and adjust it where necessary. Select the score that best matches your opinion in the next steps.'
+                    : 'Beantwoord a.u.b. onderstaande vragen. Met uw antwoorden kunnen wij de cursus evalueren en eventueel bijstellen. Kies in de volgende stappen de beoordeling die uw mening het dichtst benadert.'}
+                </p>
+              </div>
+
+              <!-- Course Selection Dropdown -->
+              <div class="space-y-2">
+                <label for="eval-course" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary">
+                  {isEn ? 'Attended Course' : 'Gevolgde cursus'} <span class="text-brand-accent">*</span>
+                </label>
+                <div class="relative">
+                  <select
+                    id="eval-course"
+                    name="course"
+                    class="w-full appearance-none px-4 py-3.5 pr-10 rounded-xl bg-brand-cream/40 border border-brand-dark/12 focus:border-[#0C4EA2] focus:bg-white focus:outline-none text-base sm:text-sm font-semibold text-brand-secondary transition-all cursor-pointer"
+                  >
+                    {courses.map((c, idx) => (
+                      <option value={c} selected={idx === 0}>{c}</option>
+                    ))}
+                  </select>
+                  <i class="fa-solid fa-chevron-down text-xs text-brand-dark/50 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <!-- Voor en achternaam (Niet verplicht zoals in GHL) -->
+                <div class="space-y-1.5">
+                  <label for="eval-name" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary">
+                    {isEn ? 'First and last name' : 'Voor- en achternaam'}
+                  </label>
+                  <div class="relative">
+                    <i class="fa-regular fa-user text-brand-dark/40 text-sm absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                    <input
+                      type="text"
+                      id="eval-name"
+                      name="name"
+                      placeholder={isEn ? 'Enter your full name' : 'Voer uw volledige naam in'}
+                      class="w-full pl-10 pr-4 py-3 rounded-xl bg-brand-cream/35 border border-brand-dark/12 focus:border-[#0C4EA2] focus:bg-white focus:outline-none text-base sm:text-sm font-medium text-brand-secondary transition-all"
+                    />
+                  </div>
+                </div>
+
+                <!-- E-mail (Verplicht) -->
+                <div class="space-y-1.5">
+                  <label for="eval-email" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary">
+                    {isEn ? 'Email' : 'E-mail'} <span class="text-brand-accent">*</span>
+                  </label>
+                  <div class="relative">
+                    <i class="fa-regular fa-envelope text-brand-dark/40 text-sm absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                    <input
+                      type="email"
+                      id="eval-email"
+                      name="email"
+                      required
+                      placeholder={isEn ? 'your@email.com' : 'jouw@email.com'}
+                      class="w-full pl-10 pr-4 py-3 rounded-xl bg-brand-cream/35 border border-brand-dark/12 focus:border-[#0C4EA2] focus:bg-white focus:outline-none text-base sm:text-sm font-medium text-brand-secondary transition-all"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <!-- Naam instructeur (Niet verplicht) -->
+                <div class="space-y-1.5">
+                  <label for="eval-instructor" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary">
+                    {isEn ? 'Instructor name:' : 'Naam instructeur:'}
+                  </label>
+                  <div class="relative">
+                    <i class="fa-solid fa-chalkboard-user text-brand-dark/40 text-sm absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                    <input
+                      type="text"
+                      id="eval-instructor"
+                      name="instructor"
+                      placeholder={isEn ? 'Enter instructor name' : 'Voer de naam van de instructeur in'}
+                      class="w-full pl-10 pr-4 py-3 rounded-xl bg-brand-cream/35 border border-brand-dark/12 focus:border-[#0C4EA2] focus:bg-white focus:outline-none text-base sm:text-sm font-medium text-brand-secondary transition-all"
+                    />
+                  </div>
+                </div>
+
+                <!-- Datum (Verplicht) -->
+                <div class="space-y-1.5">
+                  <label for="eval-date" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary">
+                    {isEn ? 'Date:' : 'Datum:'} <span class="text-brand-accent">*</span>
+                  </label>
+                  <div class="relative">
+                    <i class="fa-regular fa-calendar text-brand-dark/40 text-sm absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none"></i>
+                    <input
+                      type="date"
+                      id="eval-date"
+                      name="date"
+                      required
+                      class="w-full pl-10 pr-4 py-3 rounded-xl bg-brand-cream/35 border border-brand-dark/12 focus:border-[#0C4EA2] focus:bg-white focus:outline-none text-base sm:text-sm font-medium text-brand-secondary transition-all"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Validation Error Box Step 1 -->
+              <div id="eval-step1-error" class="hidden p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-semibold flex items-center gap-2.5">
+                <i class="fa-solid fa-circle-exclamation text-red-600"></i>
+                <span id="eval-step1-error-text"></span>
+              </div>
+            </div>
+
+            <!-- Bottom Navigation Bar Step 1 -->
+            <div class="pt-6 mt-6 border-t border-brand-dark/8 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
+              <span class="text-xs text-brand-dark/60 text-center sm:text-left">
+                <i class="fa-regular fa-clock mr-1 text-[#0C4EA2]"></i>
+                {isEn ? 'Takes about 1–2 minutes' : 'Duurt slechts 1 à 2 minuten'}
+              </span>
+              <button
+                type="button"
+                data-next-step="2"
+                class="w-full sm:w-auto min-h-[48px] font-display font-semibold text-sm bg-brand-accent hover:bg-brand-accent-hover text-white px-7 py-3.5 rounded-xl transition-all shadow-xs flex items-center justify-center gap-2.5 cursor-pointer"
+              >
+                <span>{isEn ? 'Next' : 'Volgende'}</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- ========================================== -->
+          <!-- STEP 2: ORGANISATIE (Vraag 1 t/m 3)        -->
+          <!-- ========================================== -->
+          <div id="eval-step-2" class="eval-panel hidden flex-col justify-between space-y-6">
+            <div class="space-y-6">
+              <div class="flex items-center justify-between">
+                <button
+                  type="button"
+                  data-prev-step="1"
+                  class="inline-flex items-center gap-2 text-xs font-bold text-brand-dark/60 hover:text-[#0C4EA2] transition-colors cursor-pointer"
+                >
+                  <i class="fa-solid fa-arrow-left"></i>
+                  <span>{isEn ? 'Back' : 'Terug'}</span>
+                </button>
+                <span class="text-xs font-bold uppercase tracking-wider text-[#0C4EA2]">
+                  {isEn ? 'Step 2 of 5' : 'Stap 2 van 5'}
+                </span>
+              </div>
+
+              <div>
+                <h2 class="font-display text-2xl sm:text-3xl font-semibold text-brand-secondary">
+                  {isEn ? 'Organization' : 'Organisatie'}
+                </h2>
+                <p class="text-brand-dark/70 text-xs sm:text-sm mt-1">
+                  {isEn
+                    ? 'How satisfied are you with the general organization, training facility and catering?'
+                    : 'Hoe tevreden bent u over de cursus in het algemeen, de oefenruimte en de verzorging?'}
+                </p>
+              </div>
+
+              <div class="space-y-4">
+                {step2Questions.map((q) => (
+                  <div class="rating-question-card p-4 sm:p-5 rounded-2xl border border-brand-dark/8 bg-brand-cream/25 space-y-3.5" data-question-card={q.id}>
+                    <div class="flex flex-wrap items-start justify-between gap-2">
+                      <label class="font-display font-semibold text-sm sm:text-base text-brand-secondary leading-snug">
+                        {q.label}
+                      </label>
+                      <span
+                        data-rating-badge={q.id}
+                        class="text-[11px] font-semibold px-2.5 py-0.5 rounded-lg bg-brand-dark/6 text-brand-dark/55 shrink-0"
+                      >
+                        {q.optionalHint || (isEn ? 'Choose 1–5' : 'Kies 1 t/m 5')}
+                      </span>
+                    </div>
+
+                    <input type="hidden" name={q.id} id={`input-${q.id}`} value="" />
+
+                    <div class="grid grid-cols-5 gap-1.5 sm:gap-3" role="radiogroup" aria-label={q.label}>
+                      {scaleLabels.map((s) => (
+                        <button
+                          type="button"
+                          data-rating-btn={q.id}
+                          data-rating-val={s.value}
+                          data-rating-label={s.short}
+                          class="rating-btn group min-h-[48px] flex flex-col items-center justify-center py-2.5 sm:py-3 px-1 sm:px-1.5 rounded-xl border-2 border-brand-dark/10 bg-white hover:border-[#0C4EA2]/50 transition-all cursor-pointer"
+                        >
+                          <div class="flex items-center gap-1 sm:mb-1">
+                            <i class="rating-star fa-solid fa-star text-sm sm:text-base text-brand-dark/20 group-hover:text-amber-400 transition-colors"></i>
+                            <span class="font-display font-bold text-xs sm:text-sm text-brand-secondary">{s.value}</span>
+                          </div>
+                          <span class="hidden sm:block text-[10px] sm:text-[11px] font-medium text-brand-dark/60 text-center leading-tight line-clamp-1">
+                            {s.short}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+
+                    <div class="flex items-center justify-between text-[11px] font-medium text-brand-dark/55 px-1">
+                      <span>1 = {isEn ? 'Dissatisfied' : 'Ontevreden'}</span>
+                      <span>5 = {isEn ? 'Very satisfied' : 'Zeer tevreden'}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div class="pt-6 mt-6 border-t border-brand-dark/8 flex items-center justify-between gap-4">
+              <button
+                type="button"
+                data-prev-step="1"
+                class="min-h-[44px] px-2 inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-brand-dark/65 hover:text-brand-secondary cursor-pointer"
+              >
+                <i class="fa-solid fa-arrow-left text-xs"></i>
+                <span>{isEn ? 'Back' : 'Terug'}</span>
+              </button>
+              <button
+                type="button"
+                data-next-step="3"
+                class="min-h-[48px] font-display font-semibold text-sm bg-brand-accent hover:bg-brand-accent-hover text-white px-7 py-3.5 rounded-xl transition-all shadow-xs flex items-center gap-2.5 cursor-pointer"
+              >
+                <span>{isEn ? 'Next' : 'Volgende'}</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- ========================================== -->
+          <!-- STEP 3: INHOUD & VORMGEVING (Vraag 4 t/m 6)-->
+          <!-- ========================================== -->
+          <div id="eval-step-3" class="eval-panel hidden flex-col justify-between space-y-6">
+            <div class="space-y-6">
+              <div class="flex items-center justify-between">
+                <button
+                  type="button"
+                  data-prev-step="2"
+                  class="inline-flex items-center gap-2 text-xs font-bold text-brand-dark/60 hover:text-[#0C4EA2] transition-colors cursor-pointer"
+                >
+                  <i class="fa-solid fa-arrow-left"></i>
+                  <span>{isEn ? 'Back' : 'Terug'}</span>
+                </button>
+                <span class="text-xs font-bold uppercase tracking-wider text-[#0C4EA2]">
+                  {isEn ? 'Step 3 of 5' : 'Stap 3 van 5'}
+                </span>
+              </div>
+
+              <div>
+                <h2 class="font-display text-2xl sm:text-3xl font-semibold text-brand-secondary">
+                  {isEn ? 'Content & Course Design' : 'Inhoud & Vormgeving'}
+                </h2>
+                <p class="text-brand-dark/70 text-xs sm:text-sm mt-1">
+                  {isEn
+                    ? 'Did the course content and materials match your practical needs?'
+                    : 'Sloten de inhoud van de cursus en het lesmateriaal goed aan op uw praktijk?'}
+                </p>
+              </div>
+
+              <div class="space-y-4">
+                {step3Questions.map((q) => (
+                  <div class="space-y-2.5">
+                    {q.section && (
+                      <div class="pt-1">
+                        <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#0C4EA2]">
+                          <i class="fa-solid fa-book-open text-[10px]"></i>
+                          {q.section}:
+                        </span>
+                      </div>
+                    )}
+                    <div class="rating-question-card p-4 sm:p-5 rounded-2xl border border-brand-dark/8 bg-brand-cream/25 space-y-3.5" data-question-card={q.id}>
+                      <div class="flex flex-wrap items-start justify-between gap-2">
+                        <label class="font-display font-semibold text-sm sm:text-base text-brand-secondary leading-snug">
+                          {q.label}
+                        </label>
+                        <span
+                          data-rating-badge={q.id}
+                          class="text-[11px] font-semibold px-2.5 py-0.5 rounded-lg bg-brand-dark/6 text-brand-dark/55 shrink-0"
+                        >
+                          {isEn ? 'Choose 1–5' : 'Kies 1 t/m 5'}
+                        </span>
+                      </div>
+
+                      <input type="hidden" name={q.id} id={`input-${q.id}`} value="" />
+
+                      <div class="grid grid-cols-5 gap-1.5 sm:gap-3" role="radiogroup" aria-label={q.label}>
+                        {scaleLabels.map((s) => (
+                          <button
+                            type="button"
+                            data-rating-btn={q.id}
+                            data-rating-val={s.value}
+                            data-rating-label={s.short}
+                            class="rating-btn group min-h-[48px] flex flex-col items-center justify-center py-2.5 sm:py-3 px-1 sm:px-1.5 rounded-xl border-2 border-brand-dark/10 bg-white hover:border-[#0C4EA2]/50 transition-all cursor-pointer"
+                          >
+                            <div class="flex items-center gap-1 sm:mb-1">
+                              <i class="rating-star fa-solid fa-star text-sm sm:text-base text-brand-dark/20 group-hover:text-amber-400 transition-colors"></i>
+                              <span class="font-display font-bold text-xs sm:text-sm text-brand-secondary">{s.value}</span>
+                            </div>
+                            <span class="hidden sm:block text-[10px] sm:text-[11px] font-medium text-brand-dark/60 text-center leading-tight line-clamp-1">
+                              {s.short}
+                            </span>
+                          </button>
+                        ))}
+                      </div>
+
+                      <div class="flex items-center justify-between text-[11px] font-medium text-brand-dark/55 px-1">
+                        <span>1 = {isEn ? 'Dissatisfied' : 'Ontevreden'}</span>
+                        <span>5 = {isEn ? 'Very satisfied' : 'Zeer tevreden'}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div class="pt-6 mt-6 border-t border-brand-dark/8 flex items-center justify-between gap-4">
+              <button
+                type="button"
+                data-prev-step="2"
+                class="min-h-[44px] px-2 inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-brand-dark/65 hover:text-brand-secondary cursor-pointer"
+              >
+                <i class="fa-solid fa-arrow-left text-xs"></i>
+                <span>{isEn ? 'Back' : 'Terug'}</span>
+              </button>
+              <button
+                type="button"
+                data-next-step="4"
+                class="min-h-[48px] font-display font-semibold text-sm bg-brand-accent hover:bg-brand-accent-hover text-white px-7 py-3.5 rounded-xl transition-all shadow-xs flex items-center gap-2.5 cursor-pointer"
+              >
+                <span>{isEn ? 'Next' : 'Volgende'}</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- ========================================== -->
+          <!-- STEP 4: INSTRUCTEUR & LOTUS (Vraag 7 t/m 12)-->
+          <!-- ========================================== -->
+          <div id="eval-step-4" class="eval-panel hidden flex-col justify-between space-y-6">
+            <div class="space-y-6">
+              <div class="flex items-center justify-between">
+                <button
+                  type="button"
+                  data-prev-step="3"
+                  class="inline-flex items-center gap-2 text-xs font-bold text-brand-dark/60 hover:text-[#0C4EA2] transition-colors cursor-pointer"
+                >
+                  <i class="fa-solid fa-arrow-left"></i>
+                  <span>{isEn ? 'Back' : 'Terug'}</span>
+                </button>
+                <span class="text-xs font-bold uppercase tracking-wider text-[#0C4EA2]">
+                  {isEn ? 'Step 4 of 5' : 'Stap 4 van 5'}
+                </span>
+              </div>
+
+              <div>
+                <h2 class="font-display text-2xl sm:text-3xl font-semibold text-brand-secondary">
+                  {isEn ? 'Instructor Qualities:' : 'Kwaliteiten instructeur:'}
+                </h2>
+                <p class="text-brand-dark/70 text-xs sm:text-sm mt-1">
+                  {isEn
+                    ? 'How did you experience the explanation, presentation and guidance by the instructor?'
+                    : 'Hoe heeft u de uitleg, presentatie en begeleiding door de instructeur ervaren?'}
+                </p>
+              </div>
+
+              <div class="space-y-4">
+                {step4InstructorQuestions.map((q) => (
+                  <div class="rating-question-card p-4 sm:p-5 rounded-2xl border border-brand-dark/8 bg-brand-cream/25 space-y-3.5" data-question-card={q.id}>
+                    <div class="flex flex-wrap items-start justify-between gap-2">
+                      <label data-question-label={q.id} class="font-display font-semibold text-sm sm:text-base text-brand-secondary leading-snug">
+                        {q.label}
+                      </label>
+                      <span
+                        data-rating-badge={q.id}
+                        class="text-[11px] font-semibold px-2.5 py-0.5 rounded-lg bg-brand-dark/6 text-brand-dark/55 shrink-0"
+                      >
+                        {isEn ? 'Choose 1–5' : 'Kies 1 t/m 5'}
+                      </span>
+                    </div>
+
+                    <input type="hidden" name={q.id} id={`input-${q.id}`} value="" />
+
+                    <div class="grid grid-cols-5 gap-1.5 sm:gap-3" role="radiogroup" aria-label={q.label}>
+                      {scaleLabels.map((s) => (
+                        <button
+                          type="button"
+                          data-rating-btn={q.id}
+                          data-rating-val={s.value}
+                          data-rating-label={s.short}
+                          class="rating-btn group min-h-[48px] flex flex-col items-center justify-center py-2.5 sm:py-3 px-1 sm:px-1.5 rounded-xl border-2 border-brand-dark/10 bg-white hover:border-[#0C4EA2]/50 transition-all cursor-pointer"
+                        >
+                          <div class="flex items-center gap-1 sm:mb-1">
+                            <i class="rating-star fa-solid fa-star text-sm sm:text-base text-brand-dark/20 group-hover:text-amber-400 transition-colors"></i>
+                            <span class="font-display font-bold text-xs sm:text-sm text-brand-secondary">{s.value}</span>
+                          </div>
+                          <span class="hidden sm:block text-[10px] sm:text-[11px] font-medium text-brand-dark/60 text-center leading-tight line-clamp-1">
+                            {s.short}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+
+                    <div class="flex items-center justify-between text-[11px] font-medium text-brand-dark/55 px-1">
+                      <span>1 = {isEn ? 'Dissatisfied' : 'Ontevreden'}</span>
+                      <span>5 = {isEn ? 'Very satisfied' : 'Zeer tevreden'}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <!-- Subkop: Inzet LOTUS (indien van toepassing) -->
+              <div id="eval-lotus-section" class="pt-4 border-t border-brand-dark/8 space-y-4">
+                <div>
+                  <h3 class="font-display text-xl sm:text-2xl font-semibold text-brand-secondary">
+                    {isEn ? 'Deployment of LOTUS actor (if applicable):' : 'Inzet lotus (indien van toepassing):'}
+                  </h3>
+                </div>
+
+                <div class="rating-question-card p-4 sm:p-5 rounded-2xl border border-brand-dark/8 bg-brand-cream/25 space-y-3.5" data-question-card={step4LotusQuestion.id}>
+                  <div class="flex flex-wrap items-start justify-between gap-2">
+                    <label data-question-label={step4LotusQuestion.id} class="font-display font-semibold text-sm sm:text-base text-brand-secondary leading-snug">
+                      {step4LotusQuestion.label}
+                    </label>
+                    <span
+                      data-rating-badge={step4LotusQuestion.id}
+                      class="text-[11px] font-semibold px-2.5 py-0.5 rounded-lg bg-brand-dark/6 text-brand-dark/55 shrink-0"
+                    >
+                      {step4LotusQuestion.optionalHint}
+                    </span>
+                  </div>
+
+                  <input type="hidden" name={step4LotusQuestion.id} id={`input-${step4LotusQuestion.id}`} value="" />
+
+                  <div class="grid grid-cols-5 gap-1.5 sm:gap-3" role="radiogroup" aria-label={step4LotusQuestion.label}>
+                    {scaleLabels.map((s) => (
+                      <button
+                        type="button"
+                        data-rating-btn={step4LotusQuestion.id}
+                        data-rating-val={s.value}
+                        data-rating-label={s.short}
+                        class="rating-btn group min-h-[48px] flex flex-col items-center justify-center py-2.5 sm:py-3 px-1 sm:px-1.5 rounded-xl border-2 border-brand-dark/10 bg-white hover:border-[#0C4EA2]/50 transition-all cursor-pointer"
+                      >
+                        <div class="flex items-center gap-1 sm:mb-1">
+                          <i class="rating-star fa-solid fa-star text-sm sm:text-base text-brand-dark/20 group-hover:text-amber-400 transition-colors"></i>
+                          <span class="font-display font-bold text-xs sm:text-sm text-brand-secondary">{s.value}</span>
+                        </div>
+                        <span class="hidden sm:block text-[10px] sm:text-[11px] font-medium text-brand-dark/60 text-center leading-tight line-clamp-1">
+                          {s.short}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+
+                  <div class="flex items-center justify-between text-[11px] font-medium text-brand-dark/55 px-1">
+                    <span>1 = {isEn ? 'Dissatisfied' : 'Ontevreden'}</span>
+                    <span>5 = {isEn ? 'Very satisfied' : 'Zeer tevreden'}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-6 mt-6 border-t border-brand-dark/8 flex items-center justify-between gap-4">
+              <button
+                type="button"
+                data-prev-step="3"
+                class="min-h-[44px] px-2 inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-brand-dark/65 hover:text-brand-secondary cursor-pointer"
+              >
+                <i class="fa-solid fa-arrow-left text-xs"></i>
+                <span>{isEn ? 'Back' : 'Terug'}</span>
+              </button>
+              <button
+                type="button"
+                data-next-step="5"
+                class="min-h-[48px] font-display font-semibold text-sm bg-brand-accent hover:bg-brand-accent-hover text-white px-7 py-3.5 rounded-xl transition-all shadow-xs flex items-center gap-2.5 cursor-pointer"
+              >
+                <span>{isEn ? 'Next' : 'Volgende'}</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- ========================================== -->
+          <!-- STEP 5: ALGEMEEN (Vraag 13 t/m 15 & Submit)-->
+          <!-- ========================================== -->
+          <div id="eval-step-5" class="eval-panel hidden flex-col justify-between space-y-6">
+            <div id="eval-step-5-form-content" class="space-y-6">
+              <div class="flex items-center justify-between">
+                <button
+                  type="button"
+                  data-prev-step="4"
+                  class="inline-flex items-center gap-2 text-xs font-bold text-brand-dark/60 hover:text-[#0C4EA2] transition-colors cursor-pointer"
+                >
+                  <i class="fa-solid fa-arrow-left"></i>
+                  <span>{isEn ? 'Back' : 'Terug'}</span>
+                </button>
+                <span class="text-xs font-bold uppercase tracking-wider text-[#0C4EA2]">
+                  {isEn ? 'Step 5 of 5 • Final Step' : 'Stap 5 van 5 • Afronding'}
+                </span>
+              </div>
+
+              <div>
+                <h2 class="font-display text-2xl sm:text-3xl font-semibold text-brand-secondary">
+                  {isEn ? 'General:' : 'Algemeen:'}
+                </h2>
+                <p class="text-brand-dark/70 text-xs sm:text-sm mt-1">
+                  {isEn
+                    ? 'Finally, do you have any suggestions or remarks to help us improve the course even further? (Optional)'
+                    : 'Heeft u tot slot nog opmerkingen of suggesties waarmee wij de cursus verder kunnen verbeteren? (Optioneel)'}
+                </p>
+              </div>
+
+              <div class="space-y-5">
+                <!-- Question 13 -->
+                <div class="space-y-2">
+                  <label for="eval-q13" class="block font-display font-semibold text-sm sm:text-base text-brand-secondary">
+                    {isEn
+                      ? '13. Which parts of the course do you consider most important?'
+                      : '13. Welke onderdelen uit de cursus vindt u het belangrijkst?'}
+                  </label>
+                  <textarea
+                    id="eval-q13"
+                    name="q13"
+                    rows="3"
+                    placeholder={isEn ? 'Enter your answer...' : 'Voer uw tekst in'}
+                    class="w-full px-4 py-3 rounded-xl bg-brand-cream/35 border border-brand-dark/12 focus:border-[#0C4EA2] focus:bg-white focus:outline-none text-base sm:text-sm font-medium text-brand-secondary transition-all resize-y"
+                  ></textarea>
+                </div>
+
+                <!-- Question 14 -->
+                <div class="space-y-2">
+                  <label for="eval-q14" class="block font-display font-semibold text-sm sm:text-base text-brand-secondary">
+                    {isEn
+                      ? '14. What suggestions do you have for improving the course?'
+                      : '14. Welke suggesties hebt u voor verbetering van de cursus?'}
+                  </label>
+                  <textarea
+                    id="eval-q14"
+                    name="q14"
+                    rows="3"
+                    placeholder={isEn ? 'Enter your answer...' : 'Voer uw tekst in'}
+                    class="w-full px-4 py-3 rounded-xl bg-brand-cream/35 border border-brand-dark/12 focus:border-[#0C4EA2] focus:bg-white focus:outline-none text-base sm:text-sm font-medium text-brand-secondary transition-all resize-y"
+                  ></textarea>
+                </div>
+
+                <!-- Question 15 -->
+                <div class="space-y-2">
+                  <label for="eval-q15" class="block font-display font-semibold text-sm sm:text-base text-brand-secondary">
+                    {isEn
+                      ? '15. Is there anything that should be added to or removed from the course?'
+                      : '15. Is er iets wat toegevoegd of verwijderd zou moeten worden aan de cursus?'}
+                  </label>
+                  <textarea
+                    id="eval-q15"
+                    name="q15"
+                    rows="3"
+                    placeholder={isEn ? 'Enter your answer...' : 'Voer uw tekst in'}
+                    class="w-full px-4 py-3 rounded-xl bg-brand-cream/35 border border-brand-dark/12 focus:border-[#0C4EA2] focus:bg-white focus:outline-none text-base sm:text-sm font-medium text-brand-secondary transition-all resize-y"
+                  ></textarea>
+                </div>
+              </div>
+
+              <div id="eval-submit-error" class="hidden p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-semibold"></div>
+
+              <div class="pt-6 border-t border-brand-dark/8 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                <button
+                  type="button"
+                  data-prev-step="4"
+                  class="min-h-[40px] inline-flex items-center justify-center sm:justify-start gap-2 text-xs sm:text-sm font-semibold text-brand-dark/65 hover:text-brand-secondary cursor-pointer"
+                >
+                  <i class="fa-solid fa-arrow-left text-xs"></i>
+                  <span>{isEn ? 'Back' : 'Terug'}</span>
+                </button>
+
+                <button
+                  type="submit"
+                  id="eval-submit-btn"
+                  class="w-full sm:w-auto min-h-[48px] font-display font-semibold text-sm sm:text-base bg-brand-accent hover:bg-brand-accent-hover text-white px-8 py-3.5 rounded-xl transition-all shadow-sm flex items-center justify-center gap-2.5 cursor-pointer"
+                >
+                  <span id="eval-submit-label">{isEn ? 'Submit Evaluation' : 'Indienen'}</span>
+                  <i class="fa-solid fa-paper-plane text-xs"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- SUCCESS SCREEN (Enthousiaste geanimeerde bevestiging in Edusafe-stijl) -->
+            <div id="eval-success-screen" class="hidden text-center py-10 px-4 space-y-6 overflow-hidden">
+              <!-- Animated Medallion + Ripples + Floating Sparkles -->
+              <div class="relative w-32 h-32 mx-auto flex items-center justify-center">
+                <!-- Expanding Pulse Ripples -->
+                <span class="eval-ripple-ring absolute inset-2 rounded-full border-2 border-emerald-400/50"></span>
+                <span class="eval-ripple-ring eval-ripple-delay absolute inset-2 rounded-full border-2 border-[#0C4EA2]/35"></span>
+
+                <!-- Orbiting Sparkle Badges -->
+                <span class="eval-sparkle eval-sparkle-1 absolute -top-1 -right-1 w-8 h-8 rounded-xl bg-amber-400/15 border border-amber-400/35 text-amber-500 flex items-center justify-center text-sm shadow-2xs">
+                  <i class="fa-solid fa-star"></i>
+                </span>
+                <span class="eval-sparkle eval-sparkle-2 absolute -bottom-1 -left-2 w-8 h-8 rounded-xl bg-brand-accent/15 border border-brand-accent/35 text-brand-accent flex items-center justify-center text-sm shadow-2xs">
+                  <i class="fa-solid fa-thumbs-up"></i>
+                </span>
+                <span class="eval-sparkle eval-sparkle-3 absolute top-2 -left-3 w-7 h-7 rounded-full bg-[#0C4EA2]/12 border border-[#0C4EA2]/25 text-[#0C4EA2] flex items-center justify-center text-xs">
+                  <i class="fa-solid fa-shield-heart"></i>
+                </span>
+                <span class="eval-sparkle eval-sparkle-4 absolute bottom-1 -right-3 w-7 h-7 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 flex items-center justify-center text-xs">
+                  <i class="fa-solid fa-check"></i>
+                </span>
+
+                <!-- Center Gradient Badge with Self-Drawing Checkmark -->
+                <div class="eval-badge-pop relative z-10 w-22 h-22 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 text-white flex items-center justify-center shadow-xl shadow-emerald-600/25 border-4 border-white">
+                  <svg class="w-11 h-11 text-white" viewBox="0 0 52 52" fill="none">
+                    <path
+                      class="eval-check-path"
+                      d="M14 27L22.5 35.5L38.5 17.5"
+                      stroke="currentColor"
+                      stroke-width="5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </div>
+              </div>
+
+              <!-- 5 Golden Stars Wave Animation -->
+              <div class="flex items-center justify-center gap-2 sm:gap-2.5" id="eval-celebration-stars" aria-hidden="true">
+                <i class="eval-wave-star fa-solid fa-star text-2xl sm:text-3xl text-amber-400 drop-shadow-xs" style="animation-delay: 180ms;"></i>
+                <i class="eval-wave-star fa-solid fa-star text-2xl sm:text-3xl text-amber-400 drop-shadow-xs" style="animation-delay: 280ms;"></i>
+                <i class="eval-wave-star fa-solid fa-star text-3xl sm:text-4xl text-amber-400 drop-shadow-sm" style="animation-delay: 380ms;"></i>
+                <i class="eval-wave-star fa-solid fa-star text-2xl sm:text-3xl text-amber-400 drop-shadow-xs" style="animation-delay: 480ms;"></i>
+                <i class="eval-wave-star fa-solid fa-star text-2xl sm:text-3xl text-amber-400 drop-shadow-xs" style="animation-delay: 580ms;"></i>
+              </div>
+
+              <div class="eval-content-fade space-y-2.5">
+                <span class="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-emerald-700 bg-emerald-500/12 border border-emerald-500/20 px-3.5 py-1 rounded-full">
+                  <i class="fa-solid fa-circle-check text-emerald-600"></i>
+                  {isEn ? 'Evaluation Successfully Sent!' : 'Evaluatie succesvol verzonden!'}
+                </span>
+                <h3 class="font-display text-2xl sm:text-3xl font-semibold text-brand-secondary">
+                  {isEn
+                    ? 'Thank you for completing the Evaluation Form!'
+                    : 'Bedankt voor het invullen van het Evaluatieformulier!'}
+                </h3>
+                <p class="text-brand-dark/75 text-sm sm:text-base max-w-lg mx-auto leading-relaxed">
+                  {isEn
+                    ? 'Super! Your feedback has been shared directly with our training team and helps us keep our courses practical, clear and of the highest quality.'
+                    : 'Ontzettend bedankt voor uw tijd! Uw feedback is direct gedeeld met ons opleidingsteam en helpt ons om onze trainingen praktijkgericht, helder en op topniveau te houden.'}
+                </p>
+              </div>
+
+              <div id="eval-success-score-pill" class="eval-content-fade hidden inline-flex items-center gap-2.5 bg-[#0C4EA2]/8 border border-[#0C4EA2]/20 text-brand-secondary px-5 py-2.5 rounded-2xl text-sm sm:text-base font-bold shadow-2xs">
+                <i class="fa-solid fa-star text-amber-400 text-lg"></i>
+                <span id="eval-success-score-text"></span>
+              </div>
+
+              <div class="eval-content-fade pt-3 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-center gap-3 sm:gap-4">
+                <a
+                  href={isEn ? '/en/course-dates' : '/cursusdata'}
+                  class="w-full sm:w-auto min-h-[48px] font-display font-semibold text-sm bg-[#0C4EA2] hover:bg-[#093D80] text-white px-6 py-3.5 rounded-xl transition-all flex items-center justify-center gap-2"
+                >
+                  <i class="fa-regular fa-calendar-days text-xs"></i>
+                  <span>{isEn ? 'View course schedule' : 'Bekijk onze cursusagenda'}</span>
+                </a>
+                <a
+                  href={isEn ? '/en' : '/'}
+                  class="w-full sm:w-auto min-h-[48px] font-display font-semibold text-sm bg-brand-accent hover:bg-brand-accent-hover text-white px-6 py-3.5 rounded-xl shadow-xs transition-all flex items-center justify-center gap-2"
+                >
+                  <span>{isEn ? 'Back to homepage' : 'Terug naar de homepage'}</span>
+                  <i class="fa-solid fa-arrow-right text-xs"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Right 4 Columns: Live Summary & Edusafe Kwaliteitskaart -->
+      <div class="lg:col-span-4 flex flex-col gap-6 lg:sticky lg:top-28">
+        
+        <!-- Card 1: Live Summary ("Uw evaluatie") -->
+        <div class="bg-white rounded-2xl shadow-lg border border-brand-dark/5 p-5 sm:p-6">
+          <div class="flex items-center justify-between mb-4 pb-3 border-b border-brand-dark/8">
+            <h3 class="font-display font-semibold text-lg text-brand-secondary flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-lg bg-[#0C4EA2]/10 text-[#0C4EA2] flex items-center justify-center text-xs">
+                <i class="fa-solid fa-clipboard-check"></i>
+              </span>
+              <span>{isEn ? 'Your Evaluation' : 'Uw evaluatie'}</span>
+            </h3>
+            <span id="eval-progress-pct" class="text-xs font-bold text-[#0C4EA2] bg-[#0C4EA2]/10 px-2.5 py-1 rounded-lg">
+              Stap 1 / 5
+            </span>
+          </div>
+
+          <div class="space-y-3 text-sm">
+            <div class="flex items-center justify-between gap-3 py-1">
+              <span class="text-xs font-semibold text-brand-dark/50 uppercase tracking-wider">
+                {isEn ? 'Course' : 'Cursus'}
+              </span>
+              <span id="sum-eval-course" class="font-display font-semibold text-brand-secondary text-right text-xs sm:text-sm truncate max-w-[180px]">
+                BHV Basis
+              </span>
+            </div>
+
+            <div class="flex items-center justify-between gap-3 py-2 border-t border-brand-dark/5">
+              <span class="text-xs font-semibold text-brand-dark/50 uppercase tracking-wider">
+                {isEn ? 'Instructor' : 'Instructeur'}
+              </span>
+              <span id="sum-eval-instructor" class="font-display font-semibold text-brand-secondary text-right text-xs sm:text-sm truncate max-w-[180px]">
+                —
+              </span>
+            </div>
+
+            <div class="flex items-center justify-between gap-3 py-2 border-t border-brand-dark/5">
+              <span class="text-xs font-semibold text-brand-dark/50 uppercase tracking-wider">
+                {isEn ? 'Date' : 'Datum'}
+              </span>
+              <span id="sum-eval-date" class="font-display font-semibold text-brand-secondary text-right text-xs sm:text-sm">
+                —
+              </span>
+            </div>
+
+            <div class="py-2.5 border-t border-brand-dark/5 space-y-2">
+              <div class="flex items-center justify-between gap-3">
+                <span class="text-xs font-semibold text-brand-dark/50 uppercase tracking-wider">
+                  {isEn ? 'Rated questions' : 'Beoordeelde vragen'}
+                </span>
+                <span id="sum-eval-count" class="font-display font-semibold text-brand-secondary text-xs sm:text-sm">
+                  0 / 12
+                </span>
+              </div>
+              <div class="w-full h-2 rounded-full bg-brand-dark/8 overflow-hidden">
+                <div id="sum-eval-bar" class="h-full bg-[#0C4EA2] rounded-full transition-all duration-300" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <div class="flex items-center justify-between gap-3 pt-2 border-t border-brand-dark/5">
+              <span class="text-xs font-semibold text-brand-dark/50 uppercase tracking-wider">
+                {isEn ? 'Average rating' : 'Gemiddelde score'}
+              </span>
+              <span id="sum-eval-avg" class="font-display font-bold text-brand-secondary text-right text-xs sm:text-sm flex items-center gap-1.5">
+                <i class="fa-solid fa-star text-amber-400 text-xs"></i>
+                <span>—</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2: Edusafe Kwaliteitsbelofte -->
+        <div class="bg-[#0C4EA2] text-white rounded-2xl p-5 sm:p-6 relative overflow-hidden shadow-lg">
+          <div class="absolute -right-10 -bottom-10 text-white/5 pointer-events-none">
+            <i class="fa-solid fa-award text-[160px]"></i>
+          </div>
+
+          <div class="relative z-10 space-y-3.5">
+            <span class="inline-block text-[10px] font-semibold uppercase tracking-wider text-brand-accent">
+              {isEn ? 'Quality & Certification' : 'Kwaliteit & Erkenning'}
+            </span>
+            <h4 class="font-display text-lg sm:text-xl font-semibold text-white leading-snug">
+              {isEn
+                ? 'Together we keep our safety training at top level'
+                : 'Samen houden we onze trainingen op topniveau'}
+            </h4>
+            <ul class="space-y-2.5 text-xs sm:text-sm text-white/90">
+              <li class="flex items-start gap-2.5">
+                <i class="fa-solid fa-check text-brand-accent mt-1 shrink-0"></i>
+                <span>
+                  {isEn
+                    ? 'Every evaluation is reviewed personally by our training coordinator and instructors'
+                    : 'Elke evaluatie wordt besproken met onze instructeurs en opleidingscoördinator'}
+                </span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <i class="fa-solid fa-check text-brand-accent mt-1 shrink-0"></i>
+                <span>
+                  {isEn
+                    ? 'Helps us continuously improve our training center in The Hague and In-company sessions'
+                    : 'Helpt ons de oefenruimte, lunch en praktijkscenario’s continu te verbeteren'}
+                </span>
+              </li>
+              <li class="flex items-start gap-2.5">
+                <i class="fa-solid fa-check text-brand-accent mt-1 shrink-0"></i>
+                <span>
+                  {isEn
+                    ? 'Part of our NIBHV, Red Cross / Oranje Kruis & VCA quality assurance'
+                    : 'Onderdeel van onze officiële kwaliteitsborging voor certificeringen'}
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="relative z-10 pt-4 mt-4 border-t border-white/15">
+            <span class="block text-[11px] text-white/75">
+              {isEn ? 'Questions about your certificate or course?' : 'Vragen naar aanleiding van uw cursus of certificaat?'}
+            </span>
+            <a
+              href="tel:0704447795"
+              class="inline-flex items-center gap-2 font-display font-semibold text-sm text-white hover:text-brand-accent transition-colors mt-1"
+            >
+              <i class="fa-solid fa-phone text-brand-accent text-xs"></i>
+              <span>070 - 444 77 95</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<style>
+  @keyframes evalBadgePop {
+    0% {
+      opacity: 0;
+      transform: scale(0.3) rotate(-12deg);
+    }
+    65% {
+      opacity: 1;
+      transform: scale(1.12) rotate(4deg);
+    }
+    85% {
+      transform: scale(0.95) rotate(-2deg);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) rotate(0deg);
+    }
+  }
+
+  @keyframes evalCheckDraw {
+    0% {
+      stroke-dashoffset: 48;
+    }
+    100% {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes evalRipple {
+    0% {
+      transform: scale(0.75);
+      opacity: 0.85;
+    }
+    100% {
+      transform: scale(1.55);
+      opacity: 0;
+    }
+  }
+
+  @keyframes evalSparklePop {
+    0% {
+      opacity: 0;
+      transform: scale(0) translateY(10px);
+    }
+    60% {
+      opacity: 1;
+      transform: scale(1.2) translateY(-3px);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  @keyframes evalSparkleFloat {
+    0%, 100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-5px) rotate(6deg);
+    }
+  }
+
+  @keyframes evalStarWave {
+    0% {
+      opacity: 0;
+      transform: translateY(18px) scale(0.2) rotate(-25deg);
+    }
+    65% {
+      opacity: 1;
+      transform: translateY(-6px) scale(1.25) rotate(8deg);
+    }
+    85% {
+      transform: translateY(2px) scale(0.94) rotate(-3deg);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1) rotate(0deg);
+    }
+  }
+
+  @keyframes evalContentFadeUp {
+    0% {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  #eval-success-screen.is-celebrating .eval-badge-pop {
+    animation: evalBadgePop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  #eval-success-screen.is-celebrating .eval-check-path {
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: evalCheckDraw 0.55s cubic-bezier(0.65, 0, 0.35, 1) 0.3s forwards;
+  }
+
+  #eval-success-screen.is-celebrating .eval-ripple-ring {
+    animation: evalRipple 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+  }
+
+  #eval-success-screen.is-celebrating .eval-ripple-delay {
+    animation-delay: 0.7s;
+  }
+
+  #eval-success-screen.is-celebrating .eval-sparkle-1 {
+    opacity: 0;
+    animation: evalSparklePop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 0.25s forwards,
+      evalSparkleFloat 3s ease-in-out 0.8s infinite;
+  }
+
+  #eval-success-screen.is-celebrating .eval-sparkle-2 {
+    opacity: 0;
+    animation: evalSparklePop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 0.38s forwards,
+      evalSparkleFloat 3.4s ease-in-out 0.95s infinite;
+  }
+
+  #eval-success-screen.is-celebrating .eval-sparkle-3 {
+    opacity: 0;
+    animation: evalSparklePop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 0.48s forwards,
+      evalSparkleFloat 2.8s ease-in-out 1.05s infinite;
+  }
+
+  #eval-success-screen.is-celebrating .eval-sparkle-4 {
+    opacity: 0;
+    animation: evalSparklePop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) 0.58s forwards,
+      evalSparkleFloat 3.2s ease-in-out 1.15s infinite;
+  }
+
+  #eval-success-screen.is-celebrating .eval-wave-star {
+    opacity: 0;
+    animation: evalStarWave 0.65s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  #eval-success-screen.is-celebrating .eval-content-fade {
+    opacity: 0;
+    animation: evalContentFadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.45s forwards;
+  }
+</style>
+
+<script is:inline define:vars={{ isEn }}>
+  (function () {
+    const state = {
+      step: 1,
+      maxStepVisited: 1,
+      totalApplicableQuestions: 12,
+      submitted: false,
+      ratings: {},
+    };
+
+    const panels = {
+      1: document.getElementById('eval-step-1'),
+      2: document.getElementById('eval-step-2'),
+      3: document.getElementById('eval-step-3'),
+      4: document.getElementById('eval-step-4'),
+      5: document.getElementById('eval-step-5'),
+    };
+
+    const stepIndicators = document.querySelectorAll('.eval-step-indicator');
+    const courseInput = document.getElementById('eval-course');
+    const nameInput = document.getElementById('eval-name');
+    const emailInput = document.getElementById('eval-email');
+    const instructorInput = document.getElementById('eval-instructor');
+    const dateInput = document.getElementById('eval-date');
+
+    const sumCourse = document.getElementById('sum-eval-course');
+    const sumInstructor = document.getElementById('sum-eval-instructor');
+    const sumDate = document.getElementById('sum-eval-date');
+    const sumCount = document.getElementById('sum-eval-count');
+    const sumBar = document.getElementById('sum-eval-bar');
+    const sumAvg = document.getElementById('sum-eval-avg');
+    const progressPct = document.getElementById('eval-progress-pct');
+
+    // Zet standaarddatum op vandaag en lees eventuele URL-parameters uit (zoals in GHL sticky/query)
+    const todayIso = new Date().toISOString().split('T')[0];
+    if (dateInput && !dateInput.value) {
+      dateInput.value = todayIso;
+    }
+
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const qCourse = params.get('cursus') || params.get('course');
+      const qName = params.get('full_name') || params.get('naam') || params.get('name');
+      const qEmail = params.get('email');
+      const qInstructor = params.get('line_individual_14yss') || params.get('instructeur') || params.get('instructor');
+      const qDate = params.get('datum') || params.get('date');
+
+      if (qCourse && courseInput) {
+        const match = Array.from(courseInput.options).find(
+          (opt) => opt.value.toLowerCase().includes(qCourse.toLowerCase())
+        );
+        if (match) courseInput.value = match.value;
+      }
+      if (qName && nameInput) nameInput.value = qName;
+      if (qEmail && emailInput) emailInput.value = qEmail;
+      if (qInstructor && instructorInput) instructorInput.value = qInstructor;
+      if (qDate && dateInput && /^\d{4}-\d{2}-\d{2}$/.test(qDate)) {
+        dateInput.value = qDate;
+      }
+    } catch (e) {
+      // Negeer URL parse fouten
+    }
+
+    // Pas vraag 7, 8 en 12 slim aan op basis van de gekozen cursus in Stap 1
+    function syncCourseSpecificQuestions() {
+      const courseVal = (courseInput ? courseInput.value : 'BHV Basis').toLowerCase();
+      const q7Label = document.querySelector('[data-question-label="q7"]');
+      const q8Label = document.querySelector('[data-question-label="q8"]');
+      const lotusSection = document.getElementById('eval-lotus-section');
+
+      const isBHV = courseVal.includes('bhv');
+      const isFirstAid =
+        courseVal.includes('ehbo') || courseVal.includes('ehak') || courseVal.includes('reanimatie');
+
+      if (isBHV) {
+        if (q7Label) {
+          q7Label.textContent = isEn
+            ? '7. Teaching / explanation of the First Aid module'
+            : '7. Lesgeven / uitleg onderdeel Eerste Hulp';
+        }
+        if (q8Label) {
+          q8Label.textContent = isEn
+            ? '8. Teaching / explanation of the Fire & Evacuation module'
+            : '8. Lesgeven / uitleg onderdeel Brand & Ontruiming';
+        }
+        lotusSection?.classList.remove('hidden');
+        state.totalApplicableQuestions = 12;
+      } else if (isFirstAid) {
+        if (q7Label) {
+          q7Label.textContent = isEn
+            ? '7. Teaching / explanation of First Aid & CPR theory'
+            : '7. Lesgeven / uitleg theorie Eerste Hulp & Reanimatie';
+        }
+        if (q8Label) {
+          q8Label.textContent = isEn
+            ? '8. Guidance during practical exercises & scenarios'
+            : '8. Begeleiding tijdens de praktijkoefeningen';
+        }
+        lotusSection?.classList.remove('hidden');
+        state.totalApplicableQuestions = 12;
+      } else {
+        // VCA, Heftruck, Offshore, Ontruimingsoefening, etc.
+        if (q7Label) {
+          q7Label.textContent = isEn
+            ? '7. Teaching / explanation of the course theory'
+            : '7. Lesgeven / uitleg van de theorie';
+        }
+        if (q8Label) {
+          q8Label.textContent = isEn
+            ? '8. Guidance during practical exercises (if applicable)'
+            : '8. Begeleiding van de praktijkoefeningen (indien van toepassing)';
+        }
+        lotusSection?.classList.add('hidden');
+        if (state.ratings.q12) {
+          delete state.ratings.q12;
+          const hidden12 = document.getElementById('input-q12');
+          if (hidden12) hidden12.value = '';
+        }
+        state.totalApplicableQuestions = 11;
+      }
+    }
+
+    function formatDisplayDate(isoStr) {
+      if (!isoStr) return '—';
+      const parts = isoStr.split('-');
+      if (parts.length === 3) {
+        return `${parts[2]}-${parts[1]}-${parts[0]}`;
+      }
+      return isoStr;
+    }
+
+    function updateSummary() {
+      syncCourseSpecificQuestions();
+
+      if (sumCourse && courseInput) {
+        sumCourse.textContent = courseInput.value || 'BHV Basis';
+      }
+      if (sumInstructor && instructorInput) {
+        sumInstructor.textContent = instructorInput.value.trim() || '—';
+      }
+      if (sumDate && dateInput) {
+        sumDate.textContent = formatDisplayDate(dateInput.value);
+      }
+      if (progressPct && !state.submitted) {
+        progressPct.textContent = isEn ? `Step ${state.step} / 5` : `Stap ${state.step} / 5`;
+      }
+
+      const values = Object.values(state.ratings).filter((v) => typeof v === 'number' && v >= 1 && v <= 5);
+      const count = values.length;
+      const totalQ = state.totalApplicableQuestions || 12;
+
+      if (sumCount) {
+        sumCount.textContent = `${count} / ${totalQ}`;
+      }
+      if (sumBar && !state.submitted) {
+        sumBar.style.width = `${Math.min(100, Math.round((count / totalQ) * 100))}%`;
+      }
+      if (sumAvg) {
+        if (count > 0) {
+          const avg = (values.reduce((acc, v) => acc + v, 0) / count).toFixed(1);
+          sumAvg.innerHTML = `<i class="fa-solid fa-star text-amber-400 text-xs"></i><span>${avg} / 5.0</span>`;
+        } else {
+          sumAvg.innerHTML = `<i class="fa-solid fa-star text-amber-400 text-xs"></i><span>—</span>`;
+        }
+      }
+    }
+
+    [courseInput, nameInput, emailInput, instructorInput, dateInput].forEach((el) => {
+      el?.addEventListener('input', updateSummary);
+      el?.addEventListener('change', updateSummary);
+    });
+
+    function validateStep1() {
+      const errorBox = document.getElementById('eval-step1-error');
+      const errorText = document.getElementById('eval-step1-error-text');
+      const emailVal = emailInput ? emailInput.value.trim() : '';
+      const dateVal = dateInput ? dateInput.value.trim() : '';
+
+      const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal);
+
+      if (!emailValid) {
+        if (errorBox && errorText) {
+          errorText.textContent = isEn
+            ? 'Please enter a valid email address (*).'
+            : 'Vul a.u.b. een geldig e-mailadres in (*).';
+          errorBox.classList.remove('hidden');
+        }
+        emailInput?.focus();
+        return false;
+      }
+
+      if (!dateVal) {
+        if (errorBox && errorText) {
+          errorText.textContent = isEn
+            ? 'Please select the course date (*).'
+            : 'Datum is verplicht (*). Kies a.u.b. de cursusdatum.';
+          errorBox.classList.remove('hidden');
+        }
+        dateInput?.focus();
+        return false;
+      }
+
+      if (errorBox) errorBox.classList.add('hidden');
+      return true;
+    }
+
+    function goToStep(stepNum) {
+      if (stepNum > 1 && !validateStep1()) {
+        return;
+      }
+
+      state.step = stepNum;
+      if (stepNum > state.maxStepVisited) {
+        state.maxStepVisited = stepNum;
+      }
+
+      Object.keys(panels).forEach((k) => {
+        const panel = panels[k];
+        if (!panel) return;
+        if (Number(k) === stepNum) {
+          panel.classList.remove('hidden');
+          panel.classList.add('flex');
+        } else {
+          panel.classList.add('hidden');
+          panel.classList.remove('flex');
+        }
+      });
+
+      stepIndicators.forEach((btn) => {
+        const s = Number(btn.getAttribute('data-eval-step-nav'));
+        const badge = btn.querySelector('.eval-step-badge');
+        const baseStepBtn = 'eval-step-indicator flex items-center justify-center sm:justify-start gap-2 sm:gap-3 p-1.5 sm:p-3 min-h-[44px] rounded-xl text-left transition-all border';
+
+        if (s < stepNum) {
+          btn.disabled = false;
+          btn.className = `${baseStepBtn} border-emerald-500/30 bg-emerald-500/5 cursor-pointer`;
+          if (badge) {
+            badge.className =
+              'eval-step-badge w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-emerald-600 text-white font-display font-bold text-xs sm:text-sm flex items-center justify-center shrink-0';
+            badge.innerHTML = '<i class="fa-solid fa-check text-xs"></i>';
+          }
+        } else if (s === stepNum) {
+          btn.disabled = false;
+          btn.className = `${baseStepBtn} border-[#0C4EA2]/35 bg-[#0C4EA2]/6 cursor-pointer`;
+          if (badge) {
+            badge.className =
+              'eval-step-badge w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#0C4EA2] text-white font-display font-bold text-xs sm:text-sm flex items-center justify-center shrink-0';
+            badge.textContent = String(s);
+          }
+        } else if (s <= state.maxStepVisited) {
+          btn.disabled = false;
+          btn.className = `${baseStepBtn} border-brand-dark/12 bg-white hover:border-[#0C4EA2]/30 cursor-pointer`;
+          if (badge) {
+            badge.className =
+              'eval-step-badge w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-brand-dark/10 text-brand-secondary font-display font-bold text-xs sm:text-sm flex items-center justify-center shrink-0';
+            badge.textContent = String(s);
+          }
+        } else {
+          btn.disabled = true;
+          btn.className = `${baseStepBtn} border-brand-dark/8 bg-brand-cream/40 opacity-60 cursor-not-allowed`;
+          if (badge) {
+            badge.className =
+              'eval-step-badge w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-brand-dark/10 text-brand-secondary font-display font-bold text-xs sm:text-sm flex items-center justify-center shrink-0';
+            badge.textContent = String(s);
+          }
+        }
+      });
+
+      updateSummary();
+
+      // Scroll rustig naar het begin van de stappenkaart
+      const progressCard = document.getElementById('eval-progress-steps');
+      if (progressCard) {
+        const rect = progressCard.getBoundingClientRect();
+        if (rect.top < 0 || rect.top > window.innerHeight * 0.5) {
+          progressCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    }
+
+    // Interactieve 1 t/m 5 Rating Knoppen
+    function renderRatingState(qId) {
+      const selectedVal = state.ratings[qId] || 0;
+      const hiddenInput = document.getElementById(`input-${qId}`);
+      const badge = document.querySelector(`[data-rating-badge="${qId}"]`);
+      const card = document.querySelector(`[data-question-card="${qId}"]`);
+      const buttons = document.querySelectorAll(`[data-rating-btn="${qId}"]`);
+
+      if (hiddenInput) {
+        hiddenInput.value = selectedVal ? String(selectedVal) : '';
+      }
+
+      let selectedLabel = '';
+      buttons.forEach((btn) => {
+        const val = Number(btn.getAttribute('data-rating-val'));
+        const label = btn.getAttribute('data-rating-label') || '';
+        const star = btn.querySelector('.rating-star');
+
+        if (val === selectedVal) {
+          selectedLabel = label;
+          btn.className =
+            'rating-btn group min-h-[48px] flex flex-col items-center justify-center py-2.5 sm:py-3 px-1 sm:px-1.5 rounded-xl border-2 border-[#0C4EA2] bg-[#0C4EA2]/[0.06] shadow-2xs transition-all cursor-pointer';
+        } else {
+          btn.className =
+            'rating-btn group min-h-[48px] flex flex-col items-center justify-center py-2.5 sm:py-3 px-1 sm:px-1.5 rounded-xl border-2 border-brand-dark/10 bg-white hover:border-[#0C4EA2]/50 transition-all cursor-pointer';
+        }
+
+        if (star) {
+          if (selectedVal > 0 && val <= selectedVal) {
+            star.className = 'rating-star fa-solid fa-star text-sm sm:text-base text-amber-400 transition-colors';
+          } else {
+            star.className =
+              'rating-star fa-solid fa-star text-sm sm:text-base text-brand-dark/20 group-hover:text-amber-400 transition-colors';
+          }
+        }
+      });
+
+      if (badge) {
+        if (selectedVal > 0) {
+          badge.textContent = `${selectedVal} / 5 • ${selectedLabel}`;
+          badge.className =
+            'text-[11px] font-bold px-2.5 py-0.5 rounded-lg bg-[#0C4EA2]/12 text-[#0C4EA2] shrink-0';
+        } else {
+          badge.textContent = isEn ? 'Choose 1–5' : 'Kies 1 t/m 5';
+          badge.className =
+            'text-[11px] font-semibold px-2.5 py-0.5 rounded-lg bg-brand-dark/6 text-brand-dark/55 shrink-0';
+        }
+      }
+
+      if (card) {
+        if (selectedVal > 0) {
+          card.classList.add('border-[#0C4EA2]/25', 'bg-[#0C4EA2]/[0.02]');
+          card.classList.remove('border-brand-dark/8', 'bg-brand-cream/25');
+        } else {
+          card.classList.remove('border-[#0C4EA2]/25', 'bg-[#0C4EA2]/[0.02]');
+          card.classList.add('border-brand-dark/8', 'bg-brand-cream/25');
+        }
+      }
+
+      updateSummary();
+    }
+
+    document.querySelectorAll('[data-rating-btn]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const qId = btn.getAttribute('data-rating-btn');
+        const val = Number(btn.getAttribute('data-rating-val'));
+        if (!qId || !val) return;
+
+        // Opnieuw klikken op dezelfde waarde deselecteert (handig bij 'indien van toepassing')
+        if (state.ratings[qId] === val) {
+          delete state.ratings[qId];
+        } else {
+          state.ratings[qId] = val;
+        }
+        renderRatingState(qId);
+      });
+    });
+
+    // Next & Prev knoppen
+    document.querySelectorAll('[data-next-step]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const target = Number(btn.getAttribute('data-next-step'));
+        if (target >= 1 && target <= 5) {
+          goToStep(target);
+        }
+      });
+    });
+
+    document.querySelectorAll('[data-prev-step]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const target = Number(btn.getAttribute('data-prev-step'));
+        if (target >= 1 && target <= 5) {
+          goToStep(target);
+        }
+      });
+    });
+
+    stepIndicators.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (btn.disabled || state.submitted) return;
+        const target = Number(btn.getAttribute('data-eval-step-nav'));
+        if (target >= 1 && target <= state.maxStepVisited) {
+          goToStep(target);
+        }
+      });
+    });
+
+    function animateScoreCounter(targetStr, el) {
+      const target = parseFloat(targetStr);
+      if (isNaN(target) || !el) return;
+      const duration = 900;
+      const startTime = performance.now();
+
+      function tick(now) {
+        const progress = Math.min(1, (now - startTime) / duration);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = (target * eased).toFixed(1);
+        el.textContent = isEn
+          ? `Your average rating: ${current} / 5.0`
+          : `Uw gemiddelde waardering: ${current} / 5.0`;
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+
+    function markAllStepsCompleted() {
+      state.submitted = true;
+      stepIndicators.forEach((btn) => {
+        const badge = btn.querySelector('.eval-step-badge');
+        btn.disabled = true;
+        btn.className = 'eval-step-indicator flex items-center justify-center sm:justify-start gap-2 sm:gap-3 p-1.5 sm:p-3 min-h-[44px] rounded-xl text-left transition-all border border-emerald-500/35 bg-emerald-500/8';
+        if (badge) {
+          badge.className =
+            'eval-step-badge w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-emerald-600 text-white font-display font-bold text-xs sm:text-sm flex items-center justify-center shrink-0';
+          badge.innerHTML = '<i class="fa-solid fa-check text-xs"></i>';
+        }
+      });
+
+      if (progressPct) {
+        progressPct.className =
+          'text-xs font-bold text-emerald-700 bg-emerald-500/12 px-2.5 py-1 rounded-lg inline-flex items-center gap-1';
+        progressPct.innerHTML = `<i class="fa-solid fa-check text-[10px]"></i><span>${isEn ? 'Completed' : 'Voltooid'}</span>`;
+      }
+      if (sumBar) {
+        sumBar.style.width = '100%';
+        sumBar.classList.remove('bg-[#0C4EA2]');
+        sumBar.classList.add('bg-emerald-500');
+      }
+    }
+
+    // Formulier verzenden naar /api/evaluatie
+    const form = document.getElementById('evaluation-wizard-form');
+    const submitBtn = document.getElementById('eval-submit-btn');
+    const submitLabel = document.getElementById('eval-submit-label');
+    const submitError = document.getElementById('eval-submit-error');
+    const step5FormContent = document.getElementById('eval-step-5-form-content');
+    const successScreen = document.getElementById('eval-success-screen');
+    const scorePill = document.getElementById('eval-success-score-pill');
+    const scoreText = document.getElementById('eval-success-score-text');
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!validateStep1()) {
+        goToStep(1);
+        return;
+      }
+
+      if (submitError) submitError.classList.add('hidden');
+      if (submitBtn) submitBtn.disabled = true;
+      if (submitLabel) {
+        submitLabel.textContent = isEn ? 'Submitting...' : 'Bezig met indienen...';
+      }
+
+      const formData = new FormData(form);
+      const payload = Object.fromEntries(formData.entries());
+
+      try {
+        const res = await fetch('/api/evaluatie', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json();
+
+        if (!res.ok || !data.success) {
+          throw new Error(
+            data.error || (isEn ? 'Could not submit evaluation.' : 'Kon het evaluatieformulier niet versturen.')
+          );
+        }
+
+        if (step5FormContent) step5FormContent.classList.add('hidden');
+        if (successScreen) {
+          successScreen.classList.remove('hidden');
+          // Activeer de feestelijke animaties
+          requestAnimationFrame(() => {
+            successScreen.classList.add('is-celebrating');
+          });
+        }
+
+        markAllStepsCompleted();
+
+        if (data.data?.averageScore && scorePill && scoreText) {
+          scorePill.classList.remove('hidden');
+          animateScoreCounter(data.data.averageScore, scoreText);
+        }
+      } catch (err) {
+        if (submitError) {
+          submitError.textContent = err.message || (isEn ? 'Something went wrong.' : 'Er ging iets mis.');
+          submitError.classList.remove('hidden');
+        }
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+        if (submitLabel) {
+          submitLabel.textContent = isEn ? 'Submit Evaluation' : 'Indienen';
+        }
+      }
+    });
+
+    updateSummary();
+  })();
+</script>

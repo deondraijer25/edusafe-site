@@ -26,6 +26,7 @@ pnpm-debug.log*
 .vscode/
 
 .vercel
+scratch/
 
 # Pre-built static output (for DirectAdmin server only, not for Vercel)
 index.html
@@ -58,3 +59,6 @@ sitemap-index.xml
 /reanimatie-aed-cursus/
 /rie-audit/
 /vca-cursus/
+
+.vercel
+.env*

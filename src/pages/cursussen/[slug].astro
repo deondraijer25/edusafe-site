@@ -1,0 +1,703 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHeroBackdrop from '../../components/PageHeroBackdrop.astro';
+import MobileCourseBottomBar from '../../components/MobileCourseBottomBar.astro';
+import CourseFaq from '../../components/CourseFaq.astro';
+import Reviews from '../../components/Reviews.astro';
+import ContactForm from '../../components/ContactForm.astro';
+import { courseCatalog, type SubCourse } from '../../data/catalog';
+import { courses as staticEvents } from '../../data/courses.js';
+
+export function getStaticPaths() {
+  return courseCatalog.map((course) => ({
+    params: { slug: course.slug },
+    props: { course },
+  }));
+}
+
+interface Props {
+  course: SubCourse;
+}
+
+const { course } = Astro.props;
+
+// Filter static fallback events for this specific course
+function matchesCourseFilter(ev: any, filter: SubCourse['eventFilter']) {
+  const evCat = (ev.category || '').toUpperCase();
+  const evTitle = (ev.title || '').toLowerCase();
+  const catMatch = filter.categories.some((c) => evCat.includes(c.toUpperCase()));
+  if (!catMatch) return false;
+
+  if (filter.titleKeywords && filter.titleKeywords.length > 0) {
+    return filter.titleKeywords.some((kw) => evTitle.includes(kw.toLowerCase()));
+  }
+  return true;
+}
+
+const matchingEvents = staticEvents.filter((ev) => matchesCourseFilter(ev, course.eventFilter));
+const relatedCourses = courseCatalog.filter(
+  (c) => c.category === course.category && c.slug !== course.slug
+);
+
+const mobileCourseObj = {
+  ...course,
+  registerLink: '#beschikbare-data',
+};
+
+const heroBullets = course.heroBullets && course.heroBullets.length > 0
+  ? course.heroBullets
+  : [
+      course.duration,
+      'Erkend Arbowet-certificaat',
+      'Incl. lesmateriaal & lunch',
+      'Den Haag of Incompany'
+    ];
+
+const learningOutcomes = course.learningOutcomes && course.learningOutcomes.length > 0
+  ? course.learningOutcomes
+  : course.modules.map((m) => m.name);
+
+const numericPrice = course.price.replace(/[^0-9,]/g, '').replace(',', '.');
+
+const categoryStatutoryHtmlMap: Record<string, string> = {
+  BHV: 'Volledig erkend conform <strong>Artikel 15 van de Arbowet</strong> voor de Arbeidsinspectie en verzekeraars.',
+  EHBO: 'Erkend conform de richtlijnen van <strong>Het Oranje Kruis / NRR</strong> &amp; Wet IKK (vergoeding zorgverzekering mogelijk).',
+  VCA: 'Officieel <strong>SSVV-erkend VCA-examen</strong> inclusief 10 jaar landelijke registratie in het Centraal Diploma Register (CDR).',
+  Transport: 'Volledig erkend conform <strong>Arbobesluit Artikel 7.17c</strong> voor de Nederlandse Arbeidsinspectie en verzekeraars.',
+  Offshore: 'Officieel <strong>OPITO-geaccrediteerd</strong> inclusief 4 jaar wereldwijde registratie in de centrale Vantage-database.',
+};
+
+const categoryQualityTagMap: Record<string, string> = {
+  BHV: 'Erkend certificaat conform Arbowet',
+  EHBO: 'Erkend conform Het Oranje Kruis / NRR',
+  VCA: 'SSVV-erkend + CDR-registratie',
+  Transport: 'Erkend conform Arbobesluit Art. 7.17c',
+  Offshore: 'OPITO-erkend + Vantage-registratie',
+};
+
+const statutoryCalloutHtml =
+  categoryStatutoryHtmlMap[course.category] ||
+  'Volledig erkend certificaat conform de geldende Nederlandse veiligheidsnormen en Arbowet.';
+
+const qualityTagLabel =
+  categoryQualityTagMap[course.category] || 'Erkend certificaat conform Arbowet';
+
+const courseSchema = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": course.title,
+  "description": `${course.tagline}. ${course.target}`,
+  "provider": {
+    "@type": "EducationalOrganization",
+    "name": "Edusafe",
+    "sameAs": "https://edusafe.nl",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Oude Middenweg 241A",
+      "addressLocality": "Den Haag",
+      "postalCode": "2491 AH",
+      "addressCountry": "NL"
+    }
+  },
+  "availableLanguage": course.languages || ["Nederlands", "Engels"],
+  ...(numericPrice ? {
+    "offers": {
+      "@type": "Offer",
+      "price": numericPrice,
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "url": `https://edusafe.nl/cursussen/${course.slug}`
+    }
+  } : {}),
+  "hasCourseInstance": {
+    "@type": "CourseInstance",
+    "courseMode": course.duration.toLowerCase().includes('e-learning') ? ["Blended", "Onsite"] : ["Onsite"],
+    "location": {
+      "@type": "Place",
+      "name": "Edusafe Opleidingscentrum Den Haag",
+      "address": "Oude Middenweg 241A, 2491 AH Den Haag"
+    }
+  }
+};
+---
+
+<Layout
+  title={`${course.title} | Cursus & Cursusdata | Edusafe`}
+  description={`${course.tagline}. ${course.target} Bekijk direct de beschikbare cursusdata en schrijf u online in bij Edusafe.`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(courseSchema)} />
+
+  <main class="w-full">
+    <!-- 1. HERO HEADER SECTION (Edusafe Typography & Button Styling Guide) -->
+    <section class="relative bg-brand-primary text-white pt-12 pb-20 sm:pt-20 sm:pb-28 md:pt-24 md:pb-36 overflow-hidden">
+      <PageHeroBackdrop image={course.image} alt={course.title} />
+
+      <div class="max-w-[1280px] mx-auto px-4 sm:px-6 relative z-10">
+        <!-- Breadcrumbs (.section-eyebrow) -->
+        <nav aria-label="Breadcrumb" class="section-eyebrow text-brand-primary mb-3 sm:mb-3.5 flex-wrap">
+          <a href="/" class="hover:underline text-white/70 hover:text-white">Home</a>
+          <span class="text-white/40">/</span>
+          <a href={course.categoryUrl} class="hover:underline text-white/70 hover:text-white">{course.categoryTitle}</a>
+          <span class="text-white/40">/</span>
+          <span class="text-brand-accent">{course.shortTitle}</span>
+        </nav>
+
+        <div class="max-w-3xl">
+          <!-- H1 Title (.heading-page) -->
+          <h1 class="heading-page mb-3 text-white">
+            {course.title}
+          </h1>
+
+          <!-- Subtitle (.text-lead) -->
+          <p class="text-lead text-white/85 max-w-2xl mb-5 sm:mb-6">
+            {course.tagline}
+          </p>
+
+          <!-- Compact 2x2 Grid of 4 Ultra-Short Key Facts (.text-card) -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5 max-w-xl mb-6 sm:mb-7 text-card text-white/95 font-medium">
+            {heroBullets.map((bullet) => (
+              <div class="flex items-center gap-2.5">
+                <i class="fa-solid fa-circle-check text-brand-accent text-sm shrink-0"></i>
+                <span>{bullet}</span>
+              </div>
+            ))}
+          </div>
+
+          <!-- 2 Direct Hero CTA Buttons (.btn-hero) -->
+          <div class="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 sm:gap-3.5">
+            <a
+              href={`/persoonlijk-advies?course=${course.slug}`}
+              class="btn-hero w-full sm:w-auto"
+            >
+              <span>Cursus aanvragen</span>
+              <i class="fa-solid fa-arrow-right text-xs"></i>
+            </a>
+            <a
+              href="#beschikbare-data"
+              class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 font-display font-semibold text-[15px] px-7 py-3.5 sm:py-4 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-sm transition-all duration-300"
+            >
+              <i class="fa-regular fa-calendar-check text-brand-accent"></i>
+              <span>Bekijk startdata ↓</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. MAIN CONTENT GRID (8 Cols Left + 4 Cols Truly Sticky & Compact Right Cart) -->
+    <section class="max-w-[1280px] mx-auto px-4 sm:px-6 -mt-12 sm:-mt-14 md:-mt-20 relative z-20 pb-20">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
+
+        <!-- Left Side (8 columns — 2 rustige 1-koloms kaarten: 1. Volledige Cursuskaart met Accordions, 2. Startdata) -->
+        <div class="lg:col-span-8 space-y-6 sm:space-y-7">
+
+          <!-- KAART 1 (BOVENAAN): SAMENGEVOEGDE CURSUSKAART IN LOGISCHE LEESVOLGORDE -->
+          <div class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-brand-dark/5">
+            <!-- Kop + Korte Introductie -->
+            <div class="mb-6">
+              <span class="section-eyebrow text-brand-primary mb-1">
+                <span>Cursusoverzicht & Programma</span>
+              </span>
+              <h2 class="heading-card text-brand-secondary mb-2.5">
+                Over de cursus {course.shortTitle}
+              </h2>
+              <p class="text-body text-brand-dark/75">
+                {course.target}
+              </p>
+            </div>
+
+            <!-- Logische Stappen voor de Bezoeker in 1-Koloms Accordions -->
+            <div class="space-y-3">
+
+              <!-- 1. Voor wie is deze cursus geschikt? -->
+              <details class="group rounded-2xl bg-brand-cream/45 border border-brand-dark/8 open:bg-white open:border-brand-primary/25 open:shadow-sm transition-all duration-200">
+                <summary class="flex items-center justify-between gap-4 p-5 cursor-pointer list-none heading-tile text-brand-secondary select-none">
+                  <span class="inline-flex items-center gap-3.5">
+                    <span class="w-8 h-8 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center shrink-0">
+                      <i class="fa-solid fa-users text-xs"></i>
+                    </span>
+                    <span>Voor wie is {course.shortTitle} geschikt?</span>
+                  </span>
+                  <span class="w-8 h-8 rounded-xl bg-brand-dark/5 text-brand-secondary flex items-center justify-center shrink-0 transition-transform duration-200 group-open:rotate-180 group-open:bg-brand-primary group-open:text-white">
+                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                  </span>
+                </summary>
+                <div class="px-5 pb-6 pt-4 border-t border-brand-dark/6 space-y-3.5 text-body text-brand-dark/80">
+                  {course.suitableForHtml ? (
+                    course.suitableForHtml.map((paragraph) => <p set:html={paragraph} />)
+                  ) : (
+                    <p>{course.target}</p>
+                  )}
+                </div>
+              </details>
+
+              <!-- 2. Wat leert u tijdens de cursus? (Modules + Concrete Leerdoelen samengevoegd) -->
+              <details class="group rounded-2xl bg-brand-cream/45 border border-brand-dark/8 open:bg-white open:border-brand-primary/25 open:shadow-sm transition-all duration-200">
+                <summary class="flex items-center justify-between gap-4 p-5 cursor-pointer list-none heading-tile text-brand-secondary select-none">
+                  <span class="inline-flex items-center gap-3.5">
+                    <span class="w-8 h-8 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center shrink-0">
+                      <i class="fa-solid fa-graduation-cap text-xs"></i>
+                    </span>
+                    <span>Wat leert u tijdens {course.shortTitle}?</span>
+                  </span>
+                  <span class="w-8 h-8 rounded-xl bg-brand-dark/5 text-brand-secondary flex items-center justify-center shrink-0 transition-transform duration-200 group-open:rotate-180 group-open:bg-brand-primary group-open:text-white">
+                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                  </span>
+                </summary>
+                <div class="px-5 pb-6 pt-4 border-t border-brand-dark/6 space-y-5">
+                  <div>
+                    <h3 class="section-eyebrow text-brand-dark/45 mb-3">
+                      <span>Onderwerpen & Praktijkmodules</span>
+                    </h3>
+                    <ul class="divide-y divide-brand-dark/6">
+                      {course.modules.map((mod) => (
+                        <li class="py-3 first:pt-0 last:pb-0 flex items-start gap-3.5">
+                          <span class="w-6 h-6 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xs shrink-0 mt-0.5">
+                            <i class="fa-solid fa-check"></i>
+                          </span>
+                          <div>
+                            <h4 class="heading-tile text-brand-secondary leading-snug">{mod.name}</h4>
+                            {mod.description && (
+                              <p class="text-card text-brand-dark/70 mt-0.5">{mod.description}</p>
+                            )}
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {learningOutcomes && learningOutcomes.length > 0 && (
+                    <div class="pt-4 border-t border-brand-dark/6">
+                      <h3 class="section-eyebrow text-brand-dark/45 mb-3">
+                        <span>Resultaat na afloop</span>
+                      </h3>
+                      <ul class="space-y-2">
+                        {learningOutcomes.map((outcome) => (
+                          <li class="flex items-start gap-3 text-card text-brand-dark/80">
+                            <i class="fa-solid fa-circle-check text-emerald-500 mt-1 text-xs shrink-0"></i>
+                            <span>{outcome}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </details>
+
+              <!-- 3. Hoe verloopt de training stap voor stap? -->
+              {course.programSteps && course.programSteps.length > 0 && (
+                <details class="group rounded-2xl bg-brand-cream/45 border border-brand-dark/8 open:bg-white open:border-brand-primary/25 open:shadow-sm transition-all duration-200">
+                  <summary class="flex items-center justify-between gap-4 p-5 cursor-pointer list-none heading-tile text-brand-secondary select-none">
+                    <span class="inline-flex items-center gap-3.5">
+                      <span class="w-8 h-8 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-list-check text-xs"></i>
+                      </span>
+                      <span>Hoe verloopt de training stap voor stap?</span>
+                    </span>
+                    <span class="w-8 h-8 rounded-xl bg-brand-dark/5 text-brand-secondary flex items-center justify-center shrink-0 transition-transform duration-200 group-open:rotate-180 group-open:bg-brand-primary group-open:text-white">
+                      <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </span>
+                  </summary>
+                  <div class="px-5 pb-6 pt-4 border-t border-brand-dark/6 space-y-5">
+                    {course.programIntro && (
+                      <p class="text-body text-brand-dark/80">{course.programIntro}</p>
+                    )}
+                    <div class="space-y-4">
+                      {course.programSteps.map((step, index) => (
+                        <div class="pl-4 border-l-2 border-brand-primary/30 space-y-1.5">
+                          <h3 class="heading-tile text-brand-secondary">
+                            <span class="text-brand-primary mr-1.5">{index + 1}.</span>
+                            {step.title.replace(/^\d+\.\s*/, '')}
+                          </h3>
+                          <p class="text-body text-brand-dark/75">{step.description}</p>
+                          {step.items && step.items.length > 0 && (
+                            <ul class="space-y-1.5 pt-1">
+                              {step.items.map((subItem) => (
+                                <li class="flex items-start gap-2.5 text-card text-brand-dark/75">
+                                  <i class="fa-solid fa-check text-brand-primary text-xs mt-1 shrink-0"></i>
+                                  <span>{subItem}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </details>
+              )}
+
+              <!-- 4. Praktische informatie, Toetsing & Certificering -->
+              <details class="group rounded-2xl bg-brand-cream/45 border border-brand-dark/8 open:bg-white open:border-brand-primary/25 open:shadow-sm transition-all duration-200">
+                <summary class="flex items-center justify-between gap-4 p-5 cursor-pointer list-none heading-tile text-brand-secondary select-none">
+                  <span class="inline-flex items-center gap-3.5">
+                    <span class="w-8 h-8 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center shrink-0">
+                      <i class="fa-solid fa-clipboard-check text-xs"></i>
+                    </span>
+                    <span>Praktische informatie & Certificering</span>
+                  </span>
+                  <span class="w-8 h-8 rounded-xl bg-brand-dark/5 text-brand-secondary flex items-center justify-center shrink-0 transition-transform duration-200 group-open:rotate-180 group-open:bg-brand-primary group-open:text-white">
+                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                  </span>
+                </summary>
+                <div class="px-5 pb-6 pt-4 border-t border-brand-dark/6 space-y-4">
+                  <dl class="rounded-2xl bg-brand-cream/55 border border-brand-dark/6 px-5 divide-y divide-brand-dark/6 text-card">
+                    <div class="py-3.5 grid grid-cols-1 sm:grid-cols-[190px_1fr] items-center gap-1 sm:gap-6">
+                      <dt class="font-semibold text-brand-secondary inline-flex items-center gap-2.5">
+                        <i class="fa-solid fa-clock text-brand-primary w-4 text-center"></i>
+                        <span>Duur & vorm</span>
+                      </dt>
+                      <dd class="text-brand-dark/80 font-medium">{course.duration}</dd>
+                    </div>
+
+                    <div class="py-3.5 grid grid-cols-1 sm:grid-cols-[190px_1fr] items-center gap-1 sm:gap-6">
+                      <dt class="font-semibold text-brand-secondary inline-flex items-center gap-2.5">
+                        <i class="fa-solid fa-user-check text-brand-primary w-4 text-center"></i>
+                        <span>Toelatingseisen</span>
+                      </dt>
+                      <dd class="text-brand-dark/80 font-medium">{course.requirements}</dd>
+                    </div>
+
+                    <div class="py-3.5 grid grid-cols-1 sm:grid-cols-[190px_1fr] items-center gap-1 sm:gap-6">
+                      <dt class="font-semibold text-brand-secondary inline-flex items-center gap-2.5">
+                        <i class="fa-solid fa-clipboard-check text-brand-primary w-4 text-center"></i>
+                        <span>Examen & toetsing</span>
+                      </dt>
+                      <dd class="text-brand-dark/80 font-medium">{course.exam}</dd>
+                    </div>
+
+                    <div class="py-3.5 grid grid-cols-1 sm:grid-cols-[190px_1fr] items-center gap-1 sm:gap-6">
+                      <dt class="font-semibold text-brand-secondary inline-flex items-center gap-2.5">
+                        <i class="fa-solid fa-award text-brand-primary w-4 text-center"></i>
+                        <span>Certificering</span>
+                      </dt>
+                      <dd class="text-brand-dark/80 font-medium">{course.certification}</dd>
+                    </div>
+                  </dl>
+
+                  <div class="p-4 rounded-xl bg-brand-primary/5 border border-brand-primary/15 flex items-center gap-3 text-card text-brand-secondary">
+                    <i class="fa-solid fa-shield-halved text-brand-primary shrink-0"></i>
+                    <span set:html={statutoryCalloutHtml} />
+                  </div>
+                </div>
+              </details>
+
+              <!-- 5. Overige cursussen binnen dezelfde categorie -->
+              {relatedCourses.length > 0 && (
+                <details class="group rounded-2xl bg-brand-cream/45 border border-brand-dark/8 open:bg-white open:border-brand-primary/25 open:shadow-sm transition-all duration-200">
+                  <summary class="flex items-center justify-between gap-4 p-5 cursor-pointer list-none heading-tile text-brand-secondary select-none">
+                    <span class="inline-flex items-center gap-3.5">
+                      <span class="w-8 h-8 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center shrink-0">
+                        <i class="fa-solid fa-layer-group text-xs"></i>
+                      </span>
+                      <span>Bekijk ook onze overige {course.category}-cursussen ({relatedCourses.length})</span>
+                    </span>
+                    <span class="w-8 h-8 rounded-xl bg-brand-dark/5 text-brand-secondary flex items-center justify-center shrink-0 transition-transform duration-200 group-open:rotate-180 group-open:bg-brand-primary group-open:text-white">
+                      <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </span>
+                  </summary>
+                  <div class="px-5 pb-5 pt-3 border-t border-brand-dark/6 divide-y divide-brand-dark/6">
+                    {relatedCourses.map((rel) => (
+                      <a
+                        href={`/cursussen/${rel.slug}`}
+                        class="py-3.5 flex items-center justify-between gap-4 group/link hover:pl-1 transition-all"
+                      >
+                        <div>
+                          <span class="heading-tile text-brand-secondary group-hover/link:text-brand-primary transition-colors block">
+                            {rel.shortTitle}
+                          </span>
+                          <span class="text-card text-brand-dark/60">{rel.duration} &bull; {rel.price}</span>
+                        </div>
+                        <span class="text-card font-semibold text-brand-primary inline-flex items-center gap-1.5 shrink-0">
+                          <span>Bekijken</span>
+                          <i class="fa-solid fa-arrow-right text-xs group-hover/link:translate-x-1 transition-transform"></i>
+                        </span>
+                      </a>
+                    ))}
+                  </div>
+                </details>
+              )}
+
+            </div>
+          </div>
+
+          <!-- KAART 2 (#beschikbare-data): BESCHIKBARE STARTDATA & DIRECT INSCHRIJVEN -->
+          <div
+            id="beschikbare-data"
+            class="bg-white rounded-3xl p-5 sm:p-8 shadow-md border border-brand-dark/5 scroll-mt-40"
+          >
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-brand-dark/6 pb-4 mb-5">
+              <div>
+                <span class="section-eyebrow text-brand-accent mb-1">
+                  <i class="fa-solid fa-calendar-check"></i>
+                  <span>Aanmelden & Startdata</span>
+                </span>
+                <h2 class="heading-card text-brand-secondary">
+                  Startdata & Direct Inschrijven — {course.shortTitle}
+                </h2>
+              </div>
+              <a
+                href={`/cursusdata?category=${encodeURIComponent(course.category)}`}
+                class="text-card font-semibold text-brand-primary hover:text-brand-secondary inline-flex items-center gap-1.5"
+              >
+                <span>Volledige agenda bekijken</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </a>
+            </div>
+
+            <!-- Live Events Container -->
+            <div id="course-specific-events" class="space-y-3.5">
+              {matchingEvents.length > 0 ? (
+                matchingEvents.map((ev) => (
+                  <div class="p-4 sm:p-5 rounded-2xl bg-brand-cream/40 border border-brand-dark/8 hover:border-brand-primary/30 hover:bg-white transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                      <div class="w-14 h-14 rounded-2xl bg-brand-secondary text-white flex flex-col items-center justify-center shrink-0 shadow-xs">
+                        <span class="font-display font-semibold text-lg leading-none">{ev.date.split(' ')[0]}</span>
+                        <span class="text-xs uppercase text-white/80 font-semibold mt-0.5">{ev.date.split(' ')[1]}</span>
+                      </div>
+                      <div>
+                        <div class="flex flex-wrap items-center gap-2 mb-1">
+                          <h3 class="heading-tile text-brand-secondary">{ev.title}</h3>
+                          {ev.spotsLeft && (
+                            <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-brand-accent/15 text-brand-accent">
+                              {ev.spotsLeft}
+                            </span>
+                          )}
+                        </div>
+                        <div class="flex flex-wrap gap-x-4 gap-y-1 text-card text-brand-dark/70 font-medium">
+                          <span><i class="fa-solid fa-location-dot text-brand-primary mr-1.5"></i>{ev.location}</span>
+                          <span><i class="fa-solid fa-clock text-brand-dark/40 mr-1.5"></i>{ev.time}</span>
+                          {ev.price && <span class="font-semibold text-brand-secondary">{ev.price} excl. BTW</span>}
+                        </div>
+                      </div>
+                    </div>
+                    <a
+                      href={`/persoonlijk-advies?event=${ev.id}`}
+                      class="btn-base w-full sm:w-auto shrink-0"
+                    >
+                      <span>Inschrijven →</span>
+                    </a>
+                  </div>
+                ))
+              ) : (
+                <div class="p-6 rounded-2xl bg-brand-cream/50 border border-brand-dark/8 text-center">
+                  <div class="w-12 h-12 rounded-2xl bg-brand-primary/10 text-brand-primary flex items-center justify-center mx-auto mb-3">
+                    <i class="fa-solid fa-calendar-plus text-lg"></i>
+                  </div>
+                  <h3 class="heading-tile text-brand-secondary mb-1.5">
+                    Data op aanvraag of Incompany op uw locatie
+                  </h3>
+                  <p class="text-card text-brand-dark/70 max-w-lg mx-auto mb-5">
+                    Voor <strong>{course.title}</strong> plannen wij de trainingsdata in overleg met u in (op onze hoofdlocatie in Den Haag of Incompany bij u op locatie).
+                  </p>
+                  <a
+                    href={`/persoonlijk-advies?course=${course.slug}`}
+                    class="btn-base"
+                  >
+                    <span>Cursus aanvragen →</span>
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Right Side: Sticky Booking & Summary Card ("Winkelmandje" — 4 columns, 152px top offset under 136px Navbar) -->
+        <aside class="hidden lg:block lg:col-span-4 lg:sticky lg:top-[152px] self-start z-20">
+          <div class="bg-white rounded-3xl p-6 shadow-lg border border-brand-dark/5">
+            <span class="section-eyebrow text-brand-primary mb-1">
+              <span>Direct regelen</span>
+            </span>
+            <h3 class="heading-card text-brand-secondary">
+              {course.shortTitle}
+            </h3>
+
+            <!-- Pricing -->
+            <div class="mt-4 pt-4 border-t border-brand-dark/5">
+              <div class="flex items-baseline justify-between mb-1">
+                <span class="section-eyebrow text-brand-dark/45">Tarief</span>
+                <span class="text-card text-brand-dark/50">Excl. BTW</span>
+              </div>
+              <div class="flex items-baseline gap-2">
+                <span class="font-display text-3xl font-semibold text-brand-secondary">{course.price}</span>
+                {course.price.startsWith('€') && <span class="text-card text-brand-dark/60">/ cursist</span>}
+              </div>
+            </div>
+
+            <!-- Duration badge -->
+            <div class="mt-4 p-3.5 rounded-xl bg-brand-cream/60 border border-brand-dark/5 flex items-center gap-3 text-card">
+              <div class="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary shrink-0">
+                <i class="fa-solid fa-clock text-xs"></i>
+              </div>
+              <div>
+                <div class="section-eyebrow text-brand-dark/45 mb-0.5">Traject & Duur</div>
+                <span class="font-semibold text-brand-secondary text-card block">{course.duration}</span>
+              </div>
+            </div>
+
+            <!-- Beschikbare talen (met echte SVG-vlaggetjes NL & ENG op 1 regel) -->
+            {course.languages && course.languages.length > 0 && (
+              <div class="mt-2.5 p-3.5 rounded-xl bg-brand-cream/60 border border-brand-dark/5 flex items-center justify-between gap-2 text-card">
+                <span class="font-semibold text-brand-dark/65">Beschikbare talen:</span>
+                <div class="flex items-center gap-1.5">
+                  {course.languages.includes('Nederlands') && (
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-brand-dark/10 font-semibold text-brand-secondary text-xs shadow-2xs">
+                      <svg class="w-4 h-3 rounded-[2px] shrink-0" viewBox="0 0 640 480" aria-hidden="true">
+                        <path fill="#21468b" d="M0 0h640v480H0z"/>
+                        <path fill="#fff" d="M0 0h640v320H0z"/>
+                        <path fill="#ae1c28" d="M0 0h640v160H0z"/>
+                      </svg>
+                      <span>NL</span>
+                    </span>
+                  )}
+                  {course.languages.includes('Engels') && (
+                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-brand-dark/10 font-semibold text-brand-secondary text-xs shadow-2xs">
+                      <svg class="w-4 h-3 rounded-[2px] shrink-0" viewBox="0 0 60 30" aria-hidden="true">
+                        <clipPath id="uk-clip"><path d="M0,0 v30 h60 v-30 z"/></clipPath>
+                        <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
+                        <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6" clip-path="url(#uk-clip)"/>
+                        <path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" stroke-width="4" clip-path="url(#uk-clip)"/>
+                        <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/>
+                        <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/>
+                      </svg>
+                      <span>ENG</span>
+                    </span>
+                  )}
+                </div>
+              </div>
+            )}
+
+            <!-- Inclusions Checklist (Korte 1-regelige bullets) -->
+            <div class="mt-4 pt-4 border-t border-brand-dark/5">
+              <span class="section-eyebrow text-brand-dark/45 mb-2.5">
+                <span>Wat is inbegrepen?</span>
+              </span>
+              <ul class="space-y-2">
+                {course.inclusions.map((item) => (
+                  <li class="flex items-center gap-2.5 text-card text-brand-dark/80 font-medium">
+                    <i class="fa-solid fa-circle-check text-emerald-500 text-xs shrink-0"></i>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="mt-6 space-y-2.5">
+              <a
+                href={`/persoonlijk-advies?course=${course.slug}`}
+                class="btn-base w-full"
+              >
+                <span>Cursus aanvragen →</span>
+              </a>
+
+              <a
+                href={`/persoonlijk-advies?type=zakelijk&course=${course.slug}&mode=incompany`}
+                class="inline-flex items-center justify-center gap-2 font-display font-semibold text-sm px-5 py-3 rounded-xl bg-brand-secondary hover:bg-brand-primary text-white shadow-xs transition-all duration-300 w-full"
+              >
+                <span>Incompany offerte (vanaf 6 pers.) →</span>
+              </a>
+            </div>
+
+            <!-- Quality Tag -->
+            <div class="mt-4 pt-3.5 border-t border-brand-dark/5 flex items-center justify-center gap-2 text-card font-semibold text-brand-primary">
+              <i class="fa-solid fa-certificate text-sm"></i>
+              <span>{qualityTagLabel}</span>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </section>
+
+    <!-- 3. COMPLETE FOOTER STACK: FAQ + GOOGLE REVIEWS + KOFFIE CTA BANNER -->
+    <CourseFaq course={course} lang="nl" />
+    <Reviews />
+    <ContactForm courseSlug={course.slug} />
+
+    <MobileCourseBottomBar defaultCourse={mobileCourseObj} courseSlug={course.slug} advisorText={`Starten met ${course.shortTitle}?`} />
+  </main>
+</Layout>
+
+<script define:vars={{ eventFilter: course.eventFilter, courseTitle: course.title }}>
+  async function loadLiveCourseEvents() {
+    const container = document.getElementById('course-specific-events');
+    if (!container) return;
+
+    try {
+      const res = await fetch('/api/events');
+      if (!res.ok) return;
+      const json = await res.json();
+      if (!json.success || !Array.isArray(json.data)) return;
+
+      const filtered = json.data.filter((ev) => {
+        const evCat = (ev.category || '').toUpperCase();
+        const evTitle = (ev.title || '').toLowerCase();
+        const catMatch = (eventFilter.categories || []).some((c) => evCat.includes(c.toUpperCase()));
+        if (!catMatch) return false;
+        if (eventFilter.titleKeywords && eventFilter.titleKeywords.length > 0) {
+          return eventFilter.titleKeywords.some((kw) => evTitle.includes(kw.toLowerCase()));
+        }
+        return true;
+      });
+
+      if (filtered.length === 0) return; // Keep static fallback or request card
+
+      container.innerHTML = filtered
+        .map((ev) => {
+          const parts = (ev.date || '').split(' ');
+          const day = parts[0] || '';
+          const month = (parts[1] || '').substring(0, 3);
+          const hasSpots = Boolean(ev.spots && Number(ev.spots) > 0);
+          const freeSpots = ev.freeSpots ?? 0;
+          const isFull = ev.status === 'vol' || (hasSpots && freeSpots <= 0);
+
+          const badge = isFull
+            ? `<span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-red-100 text-red-600">Volgeboekt</span>`
+            : hasSpots && freeSpots <= 5
+            ? `<span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-brand-accent/15 text-brand-accent">Nog ${freeSpots} plekken</span>`
+            : '';
+
+          return `
+            <div class="p-4 sm:p-5 rounded-2xl bg-brand-cream/40 border border-brand-dark/8 hover:border-brand-primary/30 hover:bg-white transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div class="flex items-center gap-4">
+                <div class="w-14 h-14 rounded-2xl bg-brand-secondary text-white flex flex-col items-center justify-center shrink-0 shadow-xs">
+                  <span class="font-display font-semibold text-lg leading-none">${day}</span>
+                  <span class="text-xs uppercase text-white/80 font-semibold mt-0.5">${month}</span>
+                </div>
+                <div>
+                  <div class="flex flex-wrap items-center gap-2 mb-1">
+                    <h3 class="heading-tile text-brand-secondary">${ev.title}</h3>
+                    ${badge}
+                  </div>
+                  <div class="flex flex-wrap gap-x-4 gap-y-1 text-card text-brand-dark/70 font-medium">
+                    <span><i class="fa-solid fa-location-dot text-brand-primary mr-1.5"></i>${ev.location || 'Edusafe Hoofdlocatie Den Haag'}</span>
+                    <span><i class="fa-solid fa-clock text-brand-dark/40 mr-1.5"></i>${ev.time || '08:30 - 16:30'}</span>
+                    ${ev.price ? `<span class="font-semibold text-brand-secondary">${ev.price} excl. BTW</span>` : ''}
+                  </div>
+                </div>
+              </div>
+              <a
+                href="${isFull ? '#' : `/persoonlijk-advies?event=${ev.id}`}"
+                ${isFull ? 'onclick="event.preventDefault();"' : ''}
+                class="${
+                  isFull
+                    ? 'inline-flex items-center justify-center font-display font-semibold text-sm px-6 py-3.5 rounded-xl bg-gray-300 text-gray-500 cursor-not-allowed w-full sm:w-auto shrink-0'
+                    : 'btn-base w-full sm:w-auto shrink-0'
+                }"
+              >
+                <span>${isFull ? 'Volgeboekt' : 'Inschrijven →'}</span>
+              </a>
+            </div>
+          `;
+        })
+        .join('');
+    } catch (err) {
+      console.error('Failed to load live events for course:', err);
+    }
+  }
+
+  loadLiveCourseEvents();
+  document.addEventListener('astro:page-load', loadLiveCourseEvents);
+</script>

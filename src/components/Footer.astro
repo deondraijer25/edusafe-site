@@ -1,104 +1,163 @@
 ---
+import { getLangFromUrl } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const isEn = lang === 'en';
 ---
-<footer class="w-full bg-brand-secondary text-white pt-16 pb-8 border-t border-brand-cream/5 relative overflow-hidden">
-  
+<footer
+  class="w-full bg-brand-secondary text-white pt-16 border-t border-brand-cream/5 pb-8 relative overflow-hidden"
+>
   <!-- Subtle Grid Pattern in background -->
   <div class="absolute inset-0 bg-[radial-gradient(#ffffff03_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
 
   <div class="max-w-[1280px] mx-auto px-6 relative z-10">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 mb-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 mb-12">
       
       <!-- Column 1: Brand & Contact Info -->
       <div class="lg:col-span-4">
-        <!-- Logo -->
-        <a href="/" class="group inline-block mb-6">
+        <!-- Logo in clean white badge -->
+        <a href={isEn ? "/en" : "/"} class="group inline-flex items-center bg-white px-4 py-2.5 rounded-2xl shadow-md mb-5 hover:shadow-lg transition-all duration-300">
           <img 
-            class="h-12 w-auto object-contain block transform group-hover:scale-[1.02] transition-transform duration-300 brightness-0 invert" 
+            class="h-10 w-auto object-contain block transform group-hover:scale-[1.02] transition-transform duration-300" 
             src="/assets/images/edusafe_logo.png" 
             alt="Edusafe Logo" 
-            height="48"
-            width="108"
+            height="40"
+            width="90"
           />
         </a>
         
-        <p class="text-white/70 text-sm leading-relaxed mb-6 max-w-sm">
-          Edusafe is uw specialist in bedrijfsveiligheid, opleidingen en Arbo-certificering. Wij verzorgen gecertificeerde trainingen door heel Nederland.
+        <p class="text-white/75 text-sm leading-relaxed mb-6 max-w-sm">
+          {isEn
+            ? "Edusafe is your specialist in workplace safety, training, and Arbowet certification. Hands-on training at our facility in The Hague or incompany across the Netherlands."
+            : "Edusafe is uw specialist in bedrijfsveiligheid, opleidingen en Arbo-certificering. Praktijkgerichte trainingen in Den Haag of op uw eigen locatie door heel Nederland."}
         </p>
 
-        <!-- Direct Contact Details -->
-        <div class="flex flex-col gap-3 text-sm text-white/80">
-          <a href="tel:0704447795" class="flex items-center gap-3 hover:text-brand-primary transition-colors">
-            <svg class="w-4 h-4 text-brand-primary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-            </svg>
-            070 - 444 77 95
+        <!-- Direct Contact & Location Details (High-contrast orange icons) -->
+        <div class="flex flex-col gap-2.5 text-sm text-white/85">
+          <div class="flex items-center gap-3">
+            <i class="fa-solid fa-location-dot text-brand-accent w-4 text-center shrink-0"></i>
+            <span>{isEn ? "Oude Middenweg 241A, 2491 AH The Hague" : "Oude Middenweg 241A, 2491 AH Den Haag"}</span>
+          </div>
+          <a href="tel:0704447795" class="flex items-center gap-3 hover:text-brand-accent transition-colors w-fit">
+            <i class="fa-solid fa-phone text-brand-accent w-4 text-center shrink-0"></i>
+            <span>070 - 444 77 95</span>
           </a>
-          <a href="mailto:info@edusafe.nl" class="flex items-center gap-3 hover:text-brand-primary transition-colors">
-            <svg class="w-4 h-4 text-brand-primary shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-            </svg>
-            info@edusafe.nl
+          <a href="mailto:info@edusafe.nl" class="flex items-center gap-3 hover:text-brand-accent transition-colors w-fit">
+            <i class="fa-solid fa-envelope text-brand-accent w-4 text-center shrink-0"></i>
+            <span>info@edusafe.nl</span>
           </a>
+          <div class="flex items-center gap-3 text-white/65 text-xs pt-1">
+            <i class="fa-regular fa-clock text-brand-accent w-4 text-center shrink-0"></i>
+            <span>{isEn ? "Mon – Fri: 08:30 – 17:00 (Free parking)" : "Ma – Vr: 08:30 – 17:00 (Gratis parkeren voor de deur)"}</span>
+          </div>
         </div>
       </div>
 
-      <!-- Column 2: Opleidingen -->
+      <!-- Column 2: Cursussen / Courses (Kort & Overzichtelijk op 1 regel) -->
       <div class="lg:col-span-3">
-        <h4 class="font-display font-semibold text-white text-[15px] uppercase tracking-wider mb-6">Opleidingen</h4>
-        <nav class="flex flex-col gap-2.5 text-sm text-white/70">
-          <a href="/bhv-cursus" class="hover:text-white transition-colors">BHV Basis &amp; Herhaling</a>
-          <a href="/ehbo-cursus" class="hover:text-white transition-colors">EHBO (Het Oranje Kruis)</a>
-          <a href="/reanimatie-aed-cursus" class="hover:text-white transition-colors">Reanimatie &amp; AED (NRR)</a>
-          <a href="/vca-cursus" class="hover:text-white transition-colors">VCA Basis &amp; VOL</a>
-          <a href="/ontruiming-cursus" class="hover:text-white transition-colors">Brand &amp; Ontruiming</a>
-          <a href="/heftruck-cursus" class="hover:text-white transition-colors">Heftruck &amp; Reachtruck</a>
-          <a href="/ehak-cursus" class="hover:text-white transition-colors">Eerste Hulp aan Kinderen (EHAK)</a>
-          <a href="/offshore-cursus" class="hover:text-white transition-colors">Offshore Veiligheid (OPITO)</a>
+        <h4 class="font-display font-semibold text-white text-sm uppercase tracking-wider mb-5">
+          {isEn ? "Courses" : "Cursussen"}
+        </h4>
+        <nav aria-label={isEn ? "Courses" : "Cursussen"} class="flex flex-col gap-2.5 text-sm text-white/75">
+          <a href={isEn ? "/en/bhv-course" : "/bhv-cursus"} class="hover:text-white transition-colors w-fit">
+            {isEn ? "BHV Courses (NL/EN)" : "BHV Cursussen (NL/EN)"}
+          </a>
+          <a href={isEn ? "/en/first-aid-course" : "/ehbo-cursus"} class="hover:text-white transition-colors w-fit">
+            {isEn ? "First Aid & CPR / AED" : "EHBO & Reanimatie (AED)"}
+          </a>
+          <a href={isEn ? "/en/vca-course" : "/vca-cursus"} class="hover:text-white transition-colors w-fit">
+            {isEn ? "VCA Course & Exam" : "VCA Cursus & Examen"}
+          </a>
+          <a href={isEn ? "/en/forklift-course" : "/heftruck-cursus"} class="hover:text-white transition-colors w-fit">
+            {isEn ? "Forklift & Logistics" : "Heftruck & Logistiek"}
+          </a>
+          <a href={isEn ? "/en/offshore-training" : "/offshore-cursus"} class="hover:text-white transition-colors w-fit">
+            {isEn ? "Offshore Training" : "Offshore Trainingen"}
+          </a>
+          <a href={isEn ? "/en/e-learning" : "/e-learning"} class="hover:text-white transition-colors w-fit">
+            {isEn ? "E-learning Portal" : "E-learning Portaal"}
+          </a>
+          <a href={isEn ? "/en/incompany-training" : "/incompany-training"} class="hover:text-white transition-colors w-fit">
+            {isEn ? "Incompany on Location" : "Incompany op locatie"}
+          </a>
         </nav>
       </div>
 
-      <!-- Column 3: Veiligheidsdiensten -->
+      <!-- Column 3: Diensten / Services (Kort & Consistent met de Navbar) -->
       <div class="lg:col-span-3">
-        <h4 class="font-display font-semibold text-white text-[15px] uppercase tracking-wider mb-6">Diensten</h4>
-        <nav class="flex flex-col gap-2.5 text-sm text-white/70">
-          <a href="/rie-audit" class="hover:text-white transition-colors">RI&E Audit &amp; Plan van Aanpak</a>
-          <a href="/brandveiligheid" class="hover:text-white transition-colors">Brandveiligheid &amp; Blusmiddelen</a>
-          <a href="/noodverlichting" class="hover:text-white transition-colors">Noodverlichting Inspectie</a>
-          <a href="/ontruimingsplattegronden" class="hover:text-white transition-colors">NEN 1414 Plattegronden</a>
-          <a href="/event-ehbo" class="hover:text-white transition-colors">Evenementen EHBO Huren</a>
-          <a href="/dakveiligheid" class="hover:text-white transition-colors">Dakveiligheid &amp; Valbeveiliging</a>
-          <a href="/incompany-training" class="hover:text-white transition-colors">Incompany Maatwerk</a>
+        <h4 class="font-display font-semibold text-white text-sm uppercase tracking-wider mb-5">
+          {isEn ? "Services" : "Diensten"}
+        </h4>
+        <nav aria-label={isEn ? "Services" : "Diensten"} class="flex flex-col gap-2.5 text-sm text-white/75">
+          <a href={isEn ? "/en/services/keuringen" : "/diensten/keuringen"} class="hover:text-white transition-colors w-fit">
+            {isEn ? "Safety Inspections (NEN / Scope)" : "Keuringen & Inspecties"}
+          </a>
+          <a href={isEn ? "/en/services/certificeringen" : "/diensten/certificeringen"} class="hover:text-white transition-colors w-fit">
+            {isEn ? "Company Certifications" : "Bedrijfscertificeringen"}
+          </a>
+          <a href={isEn ? "/en/services/vergunningen" : "/diensten/vergunningen"} class="hover:text-white transition-colors w-fit">
+            {isEn ? "Permits & Compliance" : "Vergunningen & Advies"}
+          </a>
+          <a href={isEn ? "/en/evacuation-plans" : "/ontruimingsplattegronden"} class="hover:text-white transition-colors w-fit">
+            {isEn ? "Evacuation Floor Plans" : "Ontruimingsplattegronden"}
+          </a>
+          <a href={isEn ? "/en/risk-assessment-rie" : "/rie-audit"} class="hover:text-white transition-colors w-fit">
+            {isEn ? "RI&E & Action Plan" : "RI&E & Plan van Aanpak"}
+          </a>
+          <a href={isEn ? "/en/services/detachering" : "/diensten/detachering"} class="hover:text-white transition-colors w-fit">
+            {isEn ? "Safety Staffing" : "Veiligheidsdetachering"}
+          </a>
+          <a href="https://www.firesafebv.nl" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors inline-flex items-center gap-1.5 w-fit">
+            <span>{isEn ? "Fire Safety (FireSafe B.V.)" : "Brandveiligheid (FireSafe B.V.)"}</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-[10px] opacity-75"></i>
+          </a>
         </nav>
       </div>
 
-      <!-- Column 4: Contact details & Openingstijden -->
+      <!-- Column 4: Klantenservice & Over ons / Customer Service & About Us -->
       <div class="lg:col-span-2">
-        <h4 class="font-display font-semibold text-white text-[15px] uppercase tracking-wider mb-6">Informatie</h4>
-        <nav class="flex flex-col gap-2.5 text-sm text-white/70 mb-6">
-          <a href="/over-ons" class="hover:text-white transition-colors">Over Edusafe</a>
-          <a href="/cursusdata" class="hover:text-white transition-colors">Cursusagenda</a>
-          <a href="/e-learning" class="hover:text-white transition-colors">E-learning Portal</a>
-          <a href="/faq" class="hover:text-white transition-colors">Veelgestelde Vragen (FAQ)</a>
-          <a href="/contact" class="hover:text-white transition-colors">Contact &amp; Route</a>
+        <h4 class="font-display font-semibold text-white text-sm uppercase tracking-wider mb-5">
+          {isEn ? "Customer Service" : "Klantenservice"}
+        </h4>
+        <nav aria-label={isEn ? "Customer Service" : "Klantenservice"} class="flex flex-col gap-2.5 text-sm text-white/75">
+          <a href={isEn ? "/en/personal-advice" : "/persoonlijk-advies"} class="text-brand-accent font-semibold hover:text-white transition-colors w-fit">
+            {isEn ? "Personal Advice →" : "Persoonlijk Advies →"}
+          </a>
+          <a href={isEn ? "/en/course-dates" : "/cursusdata"} class="hover:text-white transition-colors w-fit">
+            {isEn ? "Course Schedule" : "Cursusagenda"}
+          </a>
+          <a href={isEn ? "/en/about-us" : "/over-ons"} class="hover:text-white transition-colors w-fit">
+            {isEn ? "About Us & Approach" : "Over ons & Werkwijze"}
+          </a>
+          <a href={isEn ? "/en/faq" : "/faq"} class="hover:text-white transition-colors w-fit">
+            {isEn ? "FAQ" : "Veelgestelde vragen"}
+          </a>
+          <a href={isEn ? "/en/evaluation-form" : "/evaluatieformulier"} class="hover:text-white transition-colors w-fit">
+            {isEn ? "Course Evaluation" : "Evaluatieformulier"}
+          </a>
+          <a href={isEn ? "/en/contact" : "/contact"} class="hover:text-white transition-colors w-fit">
+            {isEn ? "Contact & Locations" : "Contact & Locaties"}
+          </a>
         </nav>
-        <div class="text-xs text-white/50 leading-relaxed border-t border-white/10 pt-4">
-          <strong class="text-white/70 block mb-1">Openingstijden:</strong>
-          Maandag t/m vrijdag:<br />
-          08:30 - 17:00 uur
-        </div>
       </div>
 
     </div>
 
     <!-- Bottom Line (Copyright & Legal) -->
-    <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/50">
+    <div class="border-t border-white/10 pt-7 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-white/50 text-center md:text-left">
       <div>
-        &copy; {new Date().getFullYear()} Edusafe Trainingen en Opleidingen. Alle rechten voorbehouden.
+        &copy; {new Date().getFullYear()} {isEn ? "Edusafe Safety Training & Education. All rights reserved." : "Edusafe Trainingen en Opleidingen. Alle rechten voorbehouden."}
       </div>
-      <div class="flex gap-6">
-        <a href="/algemene-voorwaarden" class="hover:text-white transition-colors">Algemene Voorwaarden</a>
-        <a href="/faq" class="hover:text-white transition-colors">FAQ</a>
-        <a href="/contact" class="hover:text-white transition-colors">Contact</a>
+      <div class="flex flex-wrap items-center justify-center md:justify-end gap-x-5 gap-y-2">
+        <a href={isEn ? "/en/terms-conditions" : "/algemene-voorwaarden"} class="hover:text-white transition-colors py-1">
+          {isEn ? "Terms & Conditions" : "Algemene Voorwaarden"}
+        </a>
+        <a href={isEn ? "/en/faq" : "/faq"} class="hover:text-white transition-colors py-1">
+          {isEn ? "FAQ" : "Veelgestelde vragen"}
+        </a>
+        <a href={isEn ? "/en/contact" : "/contact"} class="hover:text-white transition-colors py-1">
+          {isEn ? "Contact" : "Contact"}
+        </a>
       </div>
     </div>
 

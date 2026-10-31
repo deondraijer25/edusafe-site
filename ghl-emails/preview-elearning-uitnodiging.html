@@ -1,0 +1,948 @@
+﻿<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edusafe GHL E-learning Uitnodiging — Live Preview &amp; Code</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brand-primary: #0C4EA2;
+      --brand-secondary: #062856;
+      --brand-accent: #FF6B35;
+      --brand-accent-hover: #e55620;
+      --brand-cream: #FAF9F6;
+      --brand-dark: #1A202C;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #EEF2F6;
+      color: var(--brand-dark);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Sticky Top Toolbar */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: #FFFFFF;
+      border-bottom: 1px solid rgba(6, 40, 86, 0.1);
+      box-shadow: 0 4px 20px rgba(6, 40, 86, 0.05);
+      padding: 14px 24px;
+    }
+
+    .topbar-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-title img {
+      height: 36px;
+      width: auto;
+    }
+
+    .brand-title h1 {
+      margin: 0;
+      font-family: 'Outfit', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--brand-secondary);
+    }
+
+    .brand-title span {
+      display: block;
+      font-size: 12px;
+      color: #64748B;
+      font-weight: 500;
+    }
+
+    .controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .toggle-group {
+      display: inline-flex;
+      background: var(--brand-cream);
+      border: 1px solid rgba(26, 32, 44, 0.1);
+      border-radius: 12px;
+      padding: 3px;
+    }
+
+    .toggle-btn {
+      border: 0;
+      background: transparent;
+      color: #475569;
+      font-family: 'Outfit', sans-serif;
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 7px 13px;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .toggle-btn.active {
+      background: var(--brand-primary);
+      color: #FFFFFF;
+      box-shadow: 0 2px 6px rgba(12, 78, 162, 0.25);
+    }
+
+    .copy-btn {
+      border: 0;
+      background: var(--brand-accent);
+      color: #FFFFFF;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 10px 18px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(255, 107, 53, 0.25);
+    }
+
+    .copy-btn:hover {
+      background: var(--brand-accent-hover);
+      transform: translateY(-1px);
+    }
+
+    .copy-btn.secondary {
+      background: var(--brand-secondary);
+      box-shadow: 0 4px 12px rgba(6, 40, 86, 0.18);
+    }
+
+    .copy-btn.secondary:hover {
+      background: #093878;
+    }
+
+    /* Main Workspace Layout */
+    .workspace {
+      max-width: 1320px;
+      margin: 24px auto 48px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 1060px) {
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Preview Stage */
+    .stage-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .inbox-preview-bar {
+      width: 100%;
+      max-width: 680px;
+      background: #FFFFFF;
+      border: 1px solid rgba(6, 40, 86, 0.1);
+      border-radius: 16px;
+      padding: 13px 18px;
+      box-shadow: 0 4px 14px rgba(6, 40, 86, 0.04);
+      font-size: 13px;
+    }
+
+    .inbox-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 4px;
+    }
+
+    .inbox-sender {
+      font-weight: 700;
+      color: var(--brand-secondary);
+    }
+
+    .inbox-badge {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--brand-primary);
+      background: #EEF4FB;
+      padding: 3px 8px;
+      border-radius: 999px;
+    }
+
+    .inbox-subject {
+      font-weight: 700;
+      color: #0F172A;
+    }
+
+    .inbox-preheader {
+      color: #64748B;
+      font-weight: 400;
+    }
+
+    .frame-shell {
+      width: 680px;
+      max-width: 100%;
+      background: #FAF9F6;
+      border-radius: 24px;
+      border: 1px solid rgba(6, 40, 86, 0.12);
+      box-shadow: 0 20px 50px rgba(6, 40, 86, 0.1);
+      overflow: hidden;
+      transition: width 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .frame-shell.mobile {
+      width: 375px;
+      border-width: 6px;
+      border-color: #1E293B;
+      border-radius: 32px;
+    }
+
+    iframe#email-preview-frame {
+      display: block;
+      width: 100%;
+      height: 1080px;
+      border: 0;
+      background: #FAF9F6;
+    }
+
+    /* Right Sidebar Instructions */
+    .guide-card {
+      background: #FFFFFF;
+      border: 1px solid rgba(6, 40, 86, 0.1);
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 10px 30px rgba(6, 40, 86, 0.06);
+      position: sticky;
+      top: 90px;
+    }
+
+    .guide-card h2 {
+      margin: 0 0 6px 0;
+      font-family: 'Outfit', sans-serif;
+      font-size: 17px;
+      color: var(--brand-secondary);
+    }
+
+    .guide-card p.lead {
+      margin: 0 0 16px 0;
+      font-size: 13px;
+      color: #475569;
+      line-height: 1.55;
+    }
+
+    .field-copy-box {
+      background: var(--brand-cream);
+      border: 1px solid #E6E3DC;
+      border-radius: 12px;
+      padding: 11px 13px;
+      margin-bottom: 12px;
+    }
+
+    .field-copy-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--brand-primary);
+      margin-bottom: 4px;
+    }
+
+    .mini-copy-link {
+      border: 0;
+      background: none;
+      color: var(--brand-accent);
+      font-weight: 700;
+      font-size: 11px;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .field-copy-val {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--brand-secondary);
+      line-height: 1.4;
+      word-break: break-word;
+    }
+
+    .steps-list {
+      margin: 16px 0 0 0;
+      padding: 16px 0 0 0;
+      border-top: 1px solid #ECE9E2;
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+    .steps-list li {
+      font-size: 12.5px;
+      color: #334155;
+      line-height: 1.5;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      width: 20px;
+      height: 20px;
+      border-radius: 6px;
+      background: #EEF4FB;
+      color: var(--brand-primary);
+      font-family: 'Outfit', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    code.tag {
+      background: #EEF4FB;
+      color: var(--brand-primary);
+      padding: 1px 5px;
+      border-radius: 5px;
+      font-size: 11.5px;
+      font-weight: 600;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #062856;
+      color: #FFFFFF;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13.5px;
+      font-weight: 600;
+      padding: 12px 20px;
+      border-radius: 12px;
+      box-shadow: 0 12px 30px rgba(6, 40, 86, 0.25);
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: all 0.22s ease;
+      z-index: 100;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand-title">
+        <img src="../public/assets/images/edusafe_logo.png" alt="Edusafe" onerror="this.src='https://edusafe-site.vercel.app/assets/images/edusafe_logo.png'">
+        <div>
+          <h1>GHL E-learning Uitnodiging</h1>
+          <span>Aanvraagstraat Design &bull; Magic Link (<code style="font-size:11px;">{{membership_contact.login_url}}</code>)</span>
+        </div>
+      </div>
+
+      <div class="controls-row">
+        <div class="toggle-group" role="group" aria-label="Weergave breedte">
+          <button type="button" class="toggle-btn active" data-viewport="desktop">Desktop (600px)</button>
+          <button type="button" class="toggle-btn" data-viewport="mobile">Mobiel (375px)</button>
+        </div>
+
+        <div class="toggle-group" role="group" aria-label="Variabelen modus">
+          <button type="button" class="toggle-btn active" data-mode="sample">Voorbeeldklant (Jan)</button>
+          <button type="button" class="toggle-btn" data-mode="raw">GHL Merge-Tags</button>
+        </div>
+
+        <button type="button" class="copy-btn" id="copy-full-btn">
+          Kopieer Volledige HTML (Code Editor)
+        </button>
+        <button type="button" class="copy-btn secondary" id="copy-block-btn">
+          Kopieer &lt;/&gt; Blok (Drag &amp; Drop)
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <section class="stage-wrapper">
+      <!-- Gesimuleerde Inbox Regel -->
+      <div class="inbox-preview-bar">
+        <div class="inbox-row">
+          <span class="inbox-sender">Edusafe Trainingen &amp; Opleidingen</span>
+          <span class="inbox-badge">Inbox Voorvertoning</span>
+        </div>
+        <div>
+          <span class="inbox-subject" id="inbox-subj-preview">Welkom bij Edusafe, Jan! Jouw E-learning staat klaar</span>
+          <span class="inbox-preheader"> &mdash; Jouw persoonlijke toegang staat klaar! Log met één klik in en volg de online E-learning op je eigen tempo.</span>
+        </div>
+      </div>
+
+      <!-- Live E-mail Frame -->
+      <div class="frame-shell" id="frame-shell">
+        <iframe id="email-preview-frame" title="E-mail voorvertoning"></iframe>
+      </div>
+    </section>
+
+    <aside class="guide-card">
+      <h2>Inplakken in GoHighLevel</h2>
+      <p class="lead">
+        Kies voor de strakste weergave bij voorkeur de <strong>GHL Code Editor</strong>, of plak het <strong>&lt;/&gt; Code-blok</strong> in jullie huidige template.
+      </p>
+
+      <div class="field-copy-box">
+        <div class="field-copy-label">
+          <span>Aanbevolen Onderwerpregel</span>
+          <button type="button" class="mini-copy-link" data-copy-text="Welkom bij Edusafe, {{contact.first_name}}! Jouw E-learning staat klaar">Kopieer</button>
+        </div>
+        <div class="field-copy-val">Welkom bij Edusafe, {{contact.first_name}}! Jouw E-learning staat klaar</div>
+      </div>
+
+      <div class="field-copy-box">
+        <div class="field-copy-label">
+          <span>Preview Text / Preheader (GHL)</span>
+          <button type="button" class="mini-copy-link" data-copy-text="Jouw persoonlijke toegang staat klaar! Log met één klik in en volg de online E-learning op je eigen tempo.">Kopieer</button>
+        </div>
+        <div class="field-copy-val">Jouw persoonlijke toegang staat klaar! Log met één klik in en volg de online E-learning op je eigen tempo.</div>
+      </div>
+
+      <ul class="steps-list">
+        <li>
+          <span class="step-num">1</span>
+          <div>
+            <strong>Optie A (Aanbevolen &mdash; Code Editor):</strong> Ga in GHL naar <em>Marketing &rarr; Emails &rarr; Templates &rarr; New &rarr; Blank &rarr; Code Editor</em> en plak <strong>Volledige HTML</strong>.
+          </div>
+        </li>
+        <li>
+          <span class="step-num">2</span>
+          <div>
+            <strong>Optie B (Huidige Drag &amp; Drop):</strong> Verwijder het oude blauwe blok &amp; oude logo-blok, zet sectie-padding op <code class="tag">0</code>, sleep een <code class="tag">Code (&lt;/&gt;)</code> element erin en plak <strong>&lt;/&gt; Blok</strong>.
+          </div>
+        </li>
+        <li>
+          <span class="step-num">3</span>
+          <div>
+            <strong>Actieve GHL variabelen:</strong><br>
+            <code class="tag">{{contact.first_name}}</code>, <code class="tag">{{contact.email}}</code> en <code class="tag">{{membership_contact.login_url}}</code>.
+          </div>
+        </li>
+        <li>
+          <span class="step-num">4</span>
+          <div>
+            <strong>Testtip:</strong> Open de magic link uit een testmail altijd in een <em>Incognito / Privévenster</em> zodat je eigen ingelogde GHL-sessie niet botst.
+          </div>
+        </li>
+      </ul>
+    </aside>
+  </main>
+
+  <div class="toast" id="toast">HTML gekopieerd naar klembord!</div>
+
+  <!-- Exacte bron-HTML voor GoHighLevel -->
+  <script type="text/plain" id="ghl-raw-template"><!DOCTYPE html>
+<html lang="nl" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="x-apple-disable-message-reformatting">
+  <meta name="format-detection" content="telephone=no,address=no,email=no,date=no,url=no">
+  <meta name="color-scheme" content="light only">
+  <meta name="supported-color-schemes" content="light only">
+  <title>Welkom in jouw online leeromgeving — Edusafe</title>
+
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:AllowPNG/>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style type="text/css">
+    :root {
+      color-scheme: light only;
+      supported-color-schemes: light only;
+    }
+
+    body, table, td, a {
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+
+    table, td {
+      mso-table-lspace: 0pt;
+      mso-table-rspace: 0pt;
+    }
+
+    img {
+      -ms-interpolation-mode: bicubic;
+      border: 0;
+      outline: none;
+      text-decoration: none;
+    }
+
+    body {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+      background-color: #FAF9F6;
+    }
+
+    .btn-primary-cta:hover {
+      background-color: #e55620 !important;
+    }
+
+    @media only screen and (max-width: 620px) {
+      .outer-pad {
+        padding: 16px 12px 28px 12px !important;
+      }
+      .main-card {
+        border-radius: 18px !important;
+      }
+      .section-pad {
+        padding-left: 22px !important;
+        padding-right: 22px !important;
+      }
+      .hero-pad {
+        padding: 26px 22px 28px 22px !important;
+      }
+      .info-band-pad {
+        padding: 24px 22px !important;
+      }
+      .footer-band-pad {
+        padding: 24px 22px 26px 22px !important;
+      }
+      .hero-title {
+        font-size: 21px !important;
+        line-height: 1.3 !important;
+      }
+      .cta-full-mobile {
+        display: block !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        text-align: center !important;
+      }
+      .spec-label {
+        display: block !important;
+        width: 100% !important;
+        padding-right: 0 !important;
+        padding-bottom: 3px !important;
+      }
+      .spec-val {
+        display: block !important;
+        width: 100% !important;
+      }
+      .spec-val-divided {
+        display: block !important;
+        width: 100% !important;
+        border-top: 0 !important;
+        padding-top: 2px !important;
+      }
+      .contact-col {
+        display: block !important;
+        width: 100% !important;
+        padding-bottom: 12px !important;
+      }
+      .contact-col-last {
+        display: block !important;
+        width: 100% !important;
+        padding-bottom: 0 !important;
+      }
+      .step-text {
+        font-size: 11px !important;
+      }
+    }
+  </style>
+</head>
+<body style="margin:0; padding:0; background-color:#FAF9F6; font-family:'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color:#1A202C; -webkit-font-smoothing:antialiased;">
+
+  <!-- Verborgen Inbox Preheader -->
+  <div style="display:none; font-size:1px; color:#FAF9F6; line-height:1px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; mso-hide:all;">
+    Jouw persoonlijke leeromgeving bij Edusafe staat klaar. Log direct in en volg de modules op je eigen tempo.
+    &#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;
+  </div>
+
+  <!-- Buitenste Canvas (#FAF9F6 Edusafe Cream) -->
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#FAF9F6" style="background-color:#FAF9F6; width:100%;">
+    <tr>
+      <td align="center" class="outer-pad" style="padding:40px 16px 44px 16px;">
+
+        <!--[if mso]>
+        <table role="presentation" align="center" border="0" cellspacing="0" cellpadding="0" width="600">
+        <tr>
+        <td>
+        <![endif]-->
+
+        <!-- ================================================================== -->
+        <!-- HOOFDKAART — 4 RUSTIGE, DUIDELIJK VERDEELDE SECTIES                -->
+        <!-- ================================================================== -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="main-card" bgcolor="#FFFFFF" style="max-width:600px; width:100%; background-color:#FFFFFF; border:1px solid #E6E3DC; border-radius:22px; box-shadow:0 14px 36px rgba(6, 40, 86, 0.06); overflow:hidden;">
+
+          <!-- SECTIE 1: MERKHEADER & STAPPENOVERZICHT -->
+          <tr>
+            <td class="section-pad" style="padding:28px 40px 22px 40px; border-bottom:1px solid #ECE9E2;">
+
+              <!-- Logo + Rustig Sublabel -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td align="left" valign="middle">
+                    <a href="https://www.edusafe.nl" target="_blank" style="text-decoration:none; display:inline-block; background-color:#FFFFFF; background-image:linear-gradient(#FFFFFF,#FFFFFF); padding:2px 6px 2px 0; border-radius:8px;">
+                      <img src="https://edusafe-site.vercel.app/assets/images/edusafe_logo.png" alt="Edusafe" width="126" style="display:block; width:126px; max-width:126px; height:auto; border:0;">
+                    </a>
+                  </td>
+                  <td align="right" valign="middle" style="font-family:'Outfit', 'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif; font-size:12px; font-weight:500; color:#64748B;">
+                    Online Leeromgeving
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Rustige 3-Stappen Voortgangsindicator uit de Aanvraagstraat -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:22px;">
+                <tr>
+                  <td width="32%" valign="top">
+                    <div style="height:4px; background-color:#0C4EA2; border-radius:999px; font-size:0; line-height:0;">&nbsp;</div>
+                    <div class="step-text" style="padding-top:8px; font-family:'Outfit', 'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif; font-size:12px; font-weight:600; color:#0C4EA2; line-height:1.3;">
+                      1. Online theorie
+                    </div>
+                  </td>
+                  <td width="2%" style="font-size:0; line-height:0;">&nbsp;</td>
+                  <td width="32%" valign="top">
+                    <div style="height:4px; background-color:#E8E6E0; border-radius:999px; font-size:0; line-height:0;">&nbsp;</div>
+                    <div class="step-text" style="padding-top:8px; font-family:'Outfit', 'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif; font-size:12px; font-weight:500; color:#94A3B8; line-height:1.3;">
+                      2. Praktijk / examen
+                    </div>
+                  </td>
+                  <td width="2%" style="font-size:0; line-height:0;">&nbsp;</td>
+                  <td width="32%" valign="top">
+                    <div style="height:4px; background-color:#E8E6E0; border-radius:999px; font-size:0; line-height:0;">&nbsp;</div>
+                    <div class="step-text" style="padding-top:8px; font-family:'Outfit', 'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif; font-size:12px; font-weight:500; color:#94A3B8; line-height:1.3;">
+                      3. Certificaat
+                    </div>
+                  </td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+
+          <!-- SECTIE 2: WELKOM & INLOGACTIE -->
+          <tr>
+            <td class="hero-pad" style="padding:34px 40px 36px 40px;">
+
+              <h1 class="hero-title" style="margin:0 0 18px 0; font-family:'Outfit', 'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif; font-size:24px; font-weight:600; color:#062856; line-height:1.28; letter-spacing:-0.015em;">
+                Jouw persoonlijke leeromgeving staat klaar
+              </h1>
+
+              <p style="margin:0 0 12px 0; font-size:15px; color:#1E293B; line-height:1.7;">
+                Beste {{contact.first_name}},
+              </p>
+
+              <p style="margin:0 0 28px 0; font-size:15px; color:#475569; line-height:1.7;">
+                Welkom bij <strong style="color:#062856; font-weight:600;">Edusafe Trainingen &amp; Opleidingen</strong>. Leuk dat je start met een van onze trainingen. Je hebt vanaf nu toegang tot jouw online leeromgeving en kunt direct beginnen met de modules die voor je klaarstaan.
+              </p>
+
+              <!-- Primaire Actieknop (Edusafe Oranje, rustig vrijstaand met witruimte) -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td align="left">
+                    <!--[if mso]>
+                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{membership_contact.login_url}}" style="height:48px;v-text-anchor:middle;width:270px;" arcsize="22%" stroke="f" fillcolor="#FF6B35">
+                      <w:anchorlock/>
+                      <center style="color:#ffffff;font-family:'Segoe UI',Arial,sans-serif;font-size:15px;font-weight:600;">
+                        Inloggen in leeromgeving &rarr;
+                      </center>
+                    </v:roundrect>
+                    <![endif]-->
+                    <!--[if !mso]><!-->
+                    <a href="{{membership_contact.login_url}}" target="_blank" class="btn-primary-cta cta-full-mobile" style="display:inline-block; background-color:#FF6B35; color:#FFFFFF; font-family:'Outfit', 'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif; font-size:15px; font-weight:600; line-height:1.25; text-decoration:none; padding:15px 28px; border-radius:11px;">
+                      Inloggen in leeromgeving&nbsp;&nbsp;&rarr;
+                    </a>
+                    <!--<![endif]-->
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Subtiele Account- & Fallback-regel -->
+              <p style="margin:18px 0 0 0; font-size:13px; color:#64748B; line-height:1.6;">
+                Gekoppeld aan <strong style="color:#062856; font-weight:600;">{{contact.email}}</strong> &nbsp;&middot;&nbsp;
+                <a href="{{membership_contact.login_url}}" target="_blank" style="color:#0C4EA2; font-weight:500; text-decoration:underline;">Open directe link</a>
+              </p>
+
+            </td>
+          </tr>
+
+          <!-- SECTIE 3: PRAKTISCHE INFORMATIE (Rustige #FAF9F6 sectie met gestructureerde rijen) -->
+          <tr>
+            <td class="info-band-pad" bgcolor="#FAF9F6" style="padding:28px 40px; background-color:#FAF9F6; border-top:1px solid #ECE9E2; border-bottom:1px solid #ECE9E2;">
+
+              <div style="margin:0 0 16px 0; font-family:'Outfit', 'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:#0C4EA2;">
+                Goed om te weten
+              </div>
+
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <!-- Rij 1: Eerste keer inloggen -->
+                <tr>
+                  <td width="155" valign="top" class="spec-label" style="padding:0 16px 14px 0; font-family:'Outfit', 'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif; font-size:13.5px; font-weight:600; color:#062856; line-height:1.55;">
+                    Eerste keer inloggen
+                  </td>
+                  <td valign="top" class="spec-val" style="padding:0 0 14px 0; font-size:13.5px; color:#475569; line-height:1.6;">
+                    Via de knop log je direct in. Bij je eerste bezoek kun je een wachtwoord instellen voor vervolgbezoeken via het <a href="https://edusafe.app.clientclub.net/" target="_blank" style="color:#0C4EA2; text-decoration:underline;">leerportaal</a>.
+                  </td>
+                </tr>
+
+                <!-- Rij 2: Op eigen tempo -->
+                <tr>
+                  <td width="155" valign="top" class="spec-label" style="padding:14px 16px 14px 0; border-top:1px solid #E8E4DC; font-family:'Outfit', 'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif; font-size:13.5px; font-weight:600; color:#062856; line-height:1.55;">
+                    Op eigen tempo
+                  </td>
+                  <td valign="top" class="spec-val-divided" style="padding:14px 0 14px 0; border-top:1px solid #E8E4DC; font-size:13.5px; color:#475569; line-height:1.6;">
+                    Te volgen op laptop, tablet en telefoon. Je tussentijdse voortgang wordt automatisch opgeslagen.
+                  </td>
+                </tr>
+
+                <!-- Rij 3: Voor de praktijkdag -->
+                <tr>
+                  <td width="155" valign="top" class="spec-label" style="padding:14px 16px 0 0; border-top:1px solid #E8E4DC; font-family:'Outfit', 'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif; font-size:13.5px; font-weight:600; color:#062856; line-height:1.55;">
+                    Praktijkdag
+                  </td>
+                  <td valign="top" class="spec-val-divided" style="padding:14px 0 0 0; border-top:1px solid #E8E4DC; font-size:13.5px; color:#475569; line-height:1.6;">
+                    Volg je na de theorie ook een praktijkdag? Rond alle online modules dan vóór aanvang van de cursusdag volledig af.
+                  </td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+
+          <!-- SECTIE 4: AFSLUITING & CONTACTGEGEVENS -->
+          <tr>
+            <td class="footer-band-pad" style="padding:28px 40px 32px 40px;">
+
+              <p style="margin:0 0 16px 0; font-size:14.5px; color:#475569; line-height:1.68;">
+                Heb je vragen tijdens de training? Neem gerust contact met ons op, we helpen je graag verder. Veel succes en vooral veel leerplezier!
+              </p>
+
+              <p style="margin:0 0 24px 0; font-size:14.5px; color:#1E293B; line-height:1.6;">
+                Met vriendelijke groet,<br>
+                <strong style="font-family:'Outfit', 'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif; font-weight:600; color:#062856;">Edusafe Trainingen &amp; Opleidingen</strong>
+              </p>
+
+              <!-- Strakke 3-Koloms Contactbalk -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-top:1px solid #ECE9E2;">
+                <tr>
+                  <td width="36%" valign="top" class="contact-col" style="padding-top:18px;">
+                    <div style="font-size:11px; color:#94A3B8; text-transform:uppercase; letter-spacing:0.05em; line-height:1.4;">
+                      Telefoon (08:30 &ndash; 17:00)
+                    </div>
+                    <a href="tel:0704447795" style="font-family:'Outfit', 'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif; font-size:13.5px; font-weight:600; color:#062856; text-decoration:none; display:block; padding-top:3px;">
+                      070 - 444 77 95
+                    </a>
+                  </td>
+                  <td width="34%" valign="top" class="contact-col" style="padding-top:18px;">
+                    <div style="font-size:11px; color:#94A3B8; text-transform:uppercase; letter-spacing:0.05em; line-height:1.4;">
+                      E-mail
+                    </div>
+                    <a href="mailto:info@edusafe.nl" style="font-family:'Outfit', 'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif; font-size:13.5px; font-weight:600; color:#0C4EA2; text-decoration:none; display:block; padding-top:3px;">
+                      info@edusafe.nl
+                    </a>
+                  </td>
+                  <td width="30%" valign="top" class="contact-col-last" style="padding-top:18px;">
+                    <div style="font-size:11px; color:#94A3B8; text-transform:uppercase; letter-spacing:0.05em; line-height:1.4;">
+                      Website
+                    </div>
+                    <a href="https://www.edusafe.nl" target="_blank" style="font-family:'Outfit', 'Plus Jakarta Sans', 'Segoe UI', Arial, sans-serif; font-size:13.5px; font-weight:600; color:#0C4EA2; text-decoration:none; display:block; padding-top:3px;">
+                      www.edusafe.nl
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+
+        </table>
+
+        <!-- Rustige Adresregel onder de kaart -->
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px; width:100%;">
+          <tr>
+            <td align="center" style="padding:18px 16px 0 16px; font-size:12px; color:#94A3B8; line-height:1.6;">
+              Edusafe Trainingen &amp; Opleidingen &nbsp;&middot;&nbsp; Oude Middenweg 241A, 2491 AH Den Haag
+            </td>
+          </tr>
+        </table>
+
+        <!--[if mso]>
+        </td>
+        </tr>
+        </table>
+        <![endif]-->
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html></script>
+
+  <script>
+    (function () {
+      const rawTemplate = document.getElementById('ghl-raw-template').textContent.trim();
+      const frame = document.getElementById('email-preview-frame');
+      const shell = document.getElementById('frame-shell');
+      const subjPreview = document.getElementById('inbox-subj-preview');
+      const toastEl = document.getElementById('toast');
+
+      let currentMode = 'sample';
+      let currentViewport = 'desktop';
+
+      function showToast(msg) {
+        toastEl.textContent = msg;
+        toastEl.classList.add('show');
+        clearTimeout(showToast._t);
+        showToast._t = setTimeout(() => toastEl.classList.remove('show'), 2400);
+      }
+
+      function buildBlockHtml(fullHtml) {
+        const styleMatch = fullHtml.match(/<style[\s\S]*?<\/style>/i);
+        const bodyMatch = fullHtml.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+        const fontLink = '<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">';
+        const styleBlock = styleMatch ? styleMatch[0] : '';
+        const bodyInner = bodyMatch ? bodyMatch[1].trim() : fullHtml;
+        return `${fontLink}\n${styleBlock}\n<div style="background-color:#FAF9F6; font-family:'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color:#1A202C;">\n${bodyInner}\n</div>`;
+      }
+
+      function renderPreview() {
+        let html = rawTemplate;
+
+        if (currentMode === 'sample') {
+          html = html
+            .replace(/\{\{contact\.first_name\}\}/g, 'Jan')
+            .replace(/\{\{contact\.email\}\}/g, 'jan.devries@voorbeeld.nl')
+            .replace(/\{\{membership_contact\.login_url\}\}/g, 'https://edusafe.app.clientclub.net/');
+          subjPreview.textContent = 'Welkom bij Edusafe, Jan! Jouw E-learning staat klaar';
+        } else {
+          subjPreview.textContent = 'Welkom bij Edusafe, {{contact.first_name}}! Jouw E-learning staat klaar';
+        }
+
+        frame.srcdoc = html;
+      }
+
+      frame.addEventListener('load', () => {
+        try {
+          const doc = frame.contentDocument || frame.contentWindow.document;
+          if (doc && doc.body) {
+            setTimeout(() => {
+              const h = Math.max(820, doc.documentElement.scrollHeight);
+              frame.style.height = h + 'px';
+            }, 120);
+          }
+        } catch (e) {}
+      });
+
+      document.querySelectorAll('[data-viewport]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          currentViewport = btn.getAttribute('data-viewport');
+          document.querySelectorAll('[data-viewport]').forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+          shell.classList.toggle('mobile', currentViewport === 'mobile');
+          setTimeout(() => {
+            try {
+              const doc = frame.contentDocument || frame.contentWindow.document;
+              if (doc && doc.documentElement) {
+                frame.style.height = Math.max(820, doc.documentElement.scrollHeight) + 'px';
+              }
+            } catch (e) {}
+          }, 310);
+        });
+      });
+
+      document.querySelectorAll('[data-mode]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          currentMode = btn.getAttribute('data-mode');
+          document.querySelectorAll('[data-mode]').forEach((b) => b.classList.remove('active'));
+          btn.classList.add('active');
+          renderPreview();
+        });
+      });
+
+      async function copyText(text, label) {
+        try {
+          await navigator.clipboard.writeText(text);
+          showToast(label);
+        } catch (err) {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          showToast(label);
+        }
+      }
+
+      document.getElementById('copy-full-btn').addEventListener('click', () => {
+        copyText(rawTemplate, 'Volledige GHL HTML (Code Editor) gekopieerd!');
+      });
+
+      document.getElementById('copy-block-btn').addEventListener('click', () => {
+        copyText(buildBlockHtml(rawTemplate), 'GHL </> Code-Blok HTML gekopieerd!');
+      });
+
+      document.querySelectorAll('[data-copy-text]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          copyText(btn.getAttribute('data-copy-text'), 'Tekst gekopieerd naar klembord!');
+        });
+      });
+
+      renderPreview();
+    })();
+  </script>
+</body>
+</html>
+
+
+

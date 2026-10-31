@@ -1,271 +1,223 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHeroBackdrop from '../components/PageHeroBackdrop.astro';
+import Reviews from '../components/Reviews.astro';
+import ContactForm from '../components/ContactForm.astro';
 import { courses } from '../data/courses.js';
 
 const uniqueCategories = [...new Set(courses.map(c => c.category))];
-const uniqueLocations = [...new Set(courses.map(c => c.location))];
+const uniqueMonths = [
+  ...new Set(
+    courses
+      .map(c => {
+        const parts = (c.date || '').split(' ');
+        return parts.length >= 3 ? `${parts[1]} ${parts[2]}` : null;
+      })
+      .filter(Boolean)
+  )
+];
 ---
 
-<Layout title="Cursusdata & Trainingen | Edusafe" description="Bekijk alle aankomende cursussen en trainingen van Edusafe op diverse locaties. Schrijf u direct online in.">
+<Layout
+  title="Cursusdata & Trainingen | BHV, EHBO, VCA & Heftruck | Edusafe"
+  description="Bekijk alle aankomende cursusdata van Edusafe op onze hoofdlocatie in Den Haag of vraag een incompany training aan. Schrijf u direct online in."
+>
   <main class="w-full">
     
-    <!-- Hero Header Section (Spacious, Rich Photography & Directional Gradient) -->
-    <section class="relative bg-brand-secondary text-white pt-20 pb-20 sm:pb-24 md:pt-24 md:pb-28 overflow-hidden">
-      <!-- Background pattern/image -->
-      <div class="absolute inset-0 z-0 overflow-hidden">
-        <img 
-          src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=1600" 
-          alt="Cursusdata & Opleidingen" 
-          class="w-full h-full object-cover opacity-30 scale-105" 
-        />
-        <div class="absolute inset-0 bg-gradient-to-r from-brand-secondary via-brand-secondary/85 to-brand-secondary/40"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-brand-secondary via-transparent to-black/20"></div>
-      </div>
+    <!-- Hero Header Section -->
+    <section class="relative bg-brand-primary text-white pt-7 pb-12 sm:pt-20 sm:pb-24 md:pt-24 md:pb-28 overflow-hidden">
+      <PageHeroBackdrop
+        image="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80&w=1600"
+        alt="Cursusdata & Opleidingen bij Edusafe"
+      />
       
-      <div class="max-w-[1280px] mx-auto px-6 relative z-10">
+      <div class="max-w-[1280px] mx-auto px-4 sm:px-6 relative z-10">
         <div class="max-w-3xl animate-fade-in">
-          <span class="inline-flex items-center gap-1.5 text-brand-accent font-display font-semibold text-xs uppercase tracking-wider mb-3.5">
-            <i class="fa-solid fa-calendar-days animate-pulse"></i>
+          <span class="inline-flex items-center gap-1.5 text-brand-accent font-display font-semibold text-xs uppercase tracking-wider mb-2 sm:mb-3">
+            <i class="fa-solid fa-calendar-days"></i>
             Actuele Cursusplanning
           </span>
-          <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-tight mb-4 text-white">
-            Kies een datum <br class="hidden sm:inline" />en start met <span class="relative inline-block text-white px-5 py-2 mx-1 transform -rotate-1"><span class="absolute inset-0 bg-brand-accent rounded-2xl z-0"></span><span class="relative z-10">leren</span></span>
+          <h1 class="heading-page mb-2.5 sm:mb-4 text-white">
+            Kies een datum <br class="hidden sm:inline" />en start met <span class="relative inline-block text-white px-3.5 py-1 sm:px-5 sm:py-2 mx-1 transform -rotate-1"><span class="absolute inset-0 bg-brand-accent rounded-2xl z-0"></span><span class="relative z-10">trainen</span></span>
           </h1>
-          <p class="text-white/90 text-base md:text-lg max-w-2xl leading-relaxed mb-6 font-normal">
-            Vind de perfecte cursus op een datum en locatie bij u in de buurt. Schrijf u direct online in voor onze praktijkgerichte veiligheidstrainingen.
+          <p class="text-white/90 text-sm sm:text-base md:text-lg max-w-2xl leading-relaxed mb-3.5 sm:mb-6 font-normal">
+            Bekijk hieronder alle geplande open inschrijvingen op onze hoofdlocatie in Den Haag of klik op een opleiding voor alle cursusdetails. Liever op uw eigen bedrijfslocatie? Wij verzorgen alle trainingen ook landelijk Incompany.
           </p>
           
-          <ul class="flex flex-wrap gap-4 sm:gap-6 text-xs sm:text-sm font-normal text-white/90">
+          <ul class="flex flex-wrap gap-x-4 gap-y-1.5 sm:gap-6 text-xs sm:text-sm font-normal text-white/90">
             <li class="flex items-center gap-2">
               <i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
-              <span>Praktijkgerichte trainingen</span>
+              <span>Praktijkgerichte certificering</span>
             </li>
             <li class="flex items-center gap-2">
               <i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
-              <span>Gecertificeerde instructeurs</span>
+              <span>Hoofdlocatie Den Haag (gratis parkeren)</span>
             </li>
-            <li class="flex items-center gap-2">
+            <li class="hidden sm:flex items-center gap-2">
               <i class="fa-solid fa-circle-check text-emerald-400 text-sm"></i>
-              <span>Landelijk dekkend netwerk</span>
+              <span>Ook landelijk Incompany mogelijk</span>
             </li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- Search & Filter Bar (Floating Container perfectly straddling hero bottom) -->
-    <section class="max-w-[1280px] mx-auto px-6 -mt-10 sm:-mt-12 md:-mt-14 relative z-30 mb-12">
-      <div class="bg-white rounded-2xl shadow-xl shadow-brand-dark/10 border border-brand-dark/5 p-4 sm:p-5 flex flex-col lg:flex-row gap-3 sm:gap-4 items-stretch lg:items-center">
+    <!-- Search & Filter Bar (Overlapping Hero Bottom) -->
+    <section class="max-w-[1280px] mx-auto px-4 sm:px-6 -mt-8 sm:-mt-12 md:-mt-14 relative z-30 mb-5 sm:mb-12">
+      <div class="bg-white rounded-2xl shadow-xl shadow-brand-dark/10 border border-brand-dark/5 p-3 sm:p-5 flex flex-col lg:flex-row gap-2 sm:gap-4 items-stretch lg:items-center">
         <!-- Search Input -->
         <div class="relative flex-1">
-          <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-brand-dark/40 text-sm"></i>
+          <i class="fa-solid fa-magnifying-glass absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 text-brand-dark/40 text-sm"></i>
           <input 
             id="search-input"
             type="text" 
-            class="w-full rounded-xl border border-brand-dark/10 px-4 py-3 pl-10 text-sm bg-brand-cream/30 placeholder:text-brand-dark/40 focus:outline-none focus:border-brand-primary transition-colors font-medium text-brand-secondary"
-            placeholder="Zoek op cursusnaam..."
+            class="w-full rounded-xl border border-brand-dark/10 px-4 py-2 sm:py-3 pl-10 text-base sm:text-sm bg-brand-cream/30 placeholder:text-brand-dark/40 focus:outline-none focus:border-brand-primary transition-colors font-medium text-brand-secondary"
+            placeholder="Zoek op opleiding (bijv. BHV, EHBO, VCA)..."
           />
         </div>
         
-        <!-- Category Dropdown -->
-        <div class="relative flex-1">
-          <select 
-            id="category-select"
-            class="w-full rounded-xl border border-brand-dark/10 px-4 py-3 text-sm bg-brand-cream/30 text-brand-secondary font-semibold focus:outline-none focus:border-brand-primary transition-colors appearance-none cursor-pointer"
-          >
-            <option value="all">Alle Cursussen</option>
-            {uniqueCategories.map(cat => (
-              <option value={cat}>{cat}</option>
-            ))}
-          </select>
-          <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-brand-dark/40 text-xs pointer-events-none"></i>
-        </div>
+        <div class="grid grid-cols-1 min-[375px]:grid-cols-2 lg:contents gap-2 sm:gap-4">
+          <!-- Category Dropdown -->
+          <div class="relative flex-1 min-w-0">
+            <select 
+              id="category-select"
+              class="w-full rounded-xl border border-brand-dark/10 pl-2.5 pr-6 sm:px-4 sm:pr-8 py-2 sm:py-3 text-base sm:text-sm bg-brand-cream/30 text-brand-secondary font-semibold focus:outline-none focus:border-brand-primary transition-colors appearance-none cursor-pointer truncate"
+            >
+              <option value="all">Alle Cursussen</option>
+              {uniqueCategories.map(cat => (
+                <option value={cat}>{cat}</option>
+              ))}
+            </select>
+            <i class="fa-solid fa-chevron-down absolute right-2.5 sm:right-4 top-1/2 -translate-y-1/2 text-brand-dark/40 text-xs pointer-events-none"></i>
+          </div>
 
-        <!-- Location Dropdown -->
-        <div class="relative flex-1">
-          <select 
-            id="location-select"
-            class="w-full rounded-xl border border-brand-dark/10 px-4 py-3 text-sm bg-brand-cream/30 text-brand-secondary font-semibold focus:outline-none focus:border-brand-primary transition-colors appearance-none cursor-pointer"
-          >
-            <option value="all">Alle Locaties</option>
-            {uniqueLocations.map(loc => (
-              <option value={loc}>{loc}</option>
-            ))}
-          </select>
-          <i class="fa-solid fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-brand-dark/40 text-xs pointer-events-none"></i>
+          <!-- Month Dropdown -->
+          <div class="relative flex-1 min-w-0">
+            <select 
+              id="month-select"
+              class="w-full rounded-xl border border-brand-dark/10 pl-2.5 pr-6 sm:px-4 sm:pr-8 py-2 sm:py-3 text-base sm:text-sm bg-brand-cream/30 text-brand-secondary font-semibold focus:outline-none focus:border-brand-primary transition-colors appearance-none cursor-pointer truncate"
+            >
+              <option value="all">Alle Maanden</option>
+              {uniqueMonths.map(m => (
+                <option value={m}>{m}</option>
+              ))}
+            </select>
+            <i class="fa-solid fa-chevron-down absolute right-2.5 sm:right-4 top-1/2 -translate-y-1/2 text-brand-dark/40 text-xs pointer-events-none"></i>
+          </div>
         </div>
 
         <!-- Reset Button -->
         <button 
           id="reset-filters"
-          class="font-display font-semibold text-xs sm:text-sm px-5 py-3 rounded-xl bg-brand-cream hover:bg-brand-cream-dark text-brand-secondary transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shrink-0 border border-brand-dark/5"
+          type="button"
+          class="font-display font-semibold text-xs sm:text-sm px-4 sm:px-5 py-2 sm:py-3 min-h-[38px] sm:min-h-[42px] rounded-xl bg-brand-cream hover:bg-brand-primary/10 text-brand-secondary hover:text-brand-primary border border-brand-dark/10 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer shrink-0"
         >
-          <i class="fa-solid fa-filter-circle-xmark text-xs"></i>
-          <span>Filters Wissen</span>
+          <i class="fa-solid fa-rotate-left text-xs"></i>
+          <span>Filters wissen</span>
         </button>
       </div>
     </section>
 
-    <!-- Courses List Grid -->
-    <section class="max-w-[1280px] mx-auto px-6 pb-20">
-      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-8 gap-4">
+    <!-- Courses List Section -->
+    <section class="max-w-[1280px] mx-auto px-4 sm:px-6 pb-20">
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-4 sm:mb-8 gap-2 sm:gap-4">
         <div>
-          <h2 class="font-display text-2xl sm:text-3xl font-semibold text-brand-secondary mb-1">Aankomende Cursussen</h2>
-          <p id="course-count" class="text-xs sm:text-sm text-brand-dark/60 font-normal">{courses.length} cursussen gevonden</p>
+          <div class="flex items-center gap-2.5">
+            <h2 class="heading-section text-brand-secondary">Aankomende Trainingen</h2>
+            <span id="live-indicator" class="hidden items-center gap-1.5 text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200/60">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              Actuele beschikbaarheid
+            </span>
+          </div>
+          <p id="course-count" class="text-xs sm:text-sm text-brand-dark/60 font-normal mt-1">
+            {courses.length} trainingsmomenten gevonden
+          </p>
         </div>
-        
-        <!-- Toggle View (Grid / List) - Hidden for now, preserved for future toggle -->
-        <div class="hidden items-center bg-white rounded-xl p-1 border border-brand-dark/5 shadow-xs shrink-0">
-          <button 
-            id="grid-view-btn" 
-            class="p-2 rounded-lg transition-all duration-300 flex items-center justify-center text-brand-dark/40 hover:text-brand-dark/70 cursor-pointer"
-            aria-label="Grid weergave"
+
+        <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+          <a 
+            href="/persoonlijk-advies?intent=praktijkdag" 
+            class="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#0C4EA2] hover:text-brand-secondary transition-colors"
           >
-            <i class="fa-solid fa-table-cells text-xs"></i>
-          </button>
-          <button 
-            id="list-view-btn" 
-            class="p-2 rounded-lg transition-all duration-300 flex items-center justify-center bg-brand-primary text-white shadow-xs cursor-pointer"
-            aria-label="Lijst weergave"
+            <i class="fa-solid fa-graduation-cap text-[#0C4EA2]"></i>
+            <span>E-learning afgerond? Plan praktijkdag →</span>
+          </a>
+          <span class="hidden sm:inline text-brand-dark/20">•</span>
+          <a 
+            href="/persoonlijk-advies?mode=incompany" 
+            class="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-brand-primary hover:text-brand-secondary transition-colors"
           >
-            <i class="fa-solid fa-list text-xs"></i>
-          </button>
+            <i class="fa-solid fa-building-shield text-brand-accent"></i>
+            <span>Groepstraining op locatie? Incompany →</span>
+          </a>
         </div>
       </div>
 
-      <!-- VIEW 1: Course Grid Cards (Hidden by default, preserved for future use) -->
-      <div id="courses-grid" class="hidden grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {courses.map(course => {
-          const hasPrice = course.price && course.price !== '€ 0,-' && course.price !== '0' && course.price !== '€0' && course.price !== '€ 0';
-          return (
-            <div 
-              class="course-card bg-white rounded-2xl overflow-hidden shadow-sm border border-brand-dark/5 hover:shadow-lg hover:border-brand-primary/20 transition-all duration-300 flex flex-col justify-between"
-              data-title={course.title}
-              data-category={course.category}
-              data-location={course.location}
-            >
-              <!-- Card Header Image -->
-              <div class="relative h-44 overflow-hidden bg-brand-cream">
-                <img 
-                  src={course.image} 
-                  alt={course.title} 
-                  class="w-full h-full object-cover"
-                  loading="lazy"
-                />
-                
-                <!-- Badges -->
-                <div class="absolute top-3.5 left-3.5 z-10 flex flex-wrap gap-1.5">
-                  <span class="inline-flex items-center bg-white/95 backdrop-blur-xs text-brand-primary text-[10px] font-semibold px-3 py-1 rounded-lg shadow-sm uppercase tracking-wider">
-                    {course.category}
-                  </span>
-                  {course.spotsLeft && (
-                    <span class="inline-flex items-center bg-brand-accent text-white text-[10px] font-semibold px-2.5 py-1 rounded-lg shadow-sm uppercase tracking-wider animate-pulse">
-                      <i class="fa-solid fa-user-clock mr-1 text-[9px]"></i>
-                      {course.spotsLeft}
-                    </span>
-                  )}
-                </div>
-              </div>
-
-              <!-- Card Content -->
-              <div class="p-5 flex-1 flex flex-col justify-between">
-                <div>
-                  <h3 class="font-display text-lg font-semibold text-brand-secondary mb-3 leading-snug">
-                    {course.title}
-                  </h3>
-                  
-                  <!-- Info List -->
-                  <ul class="space-y-2 mb-5">
-                    <li class="flex items-center text-brand-dark/75 text-xs font-medium">
-                      <i class="fa-solid fa-calendar text-brand-primary w-4 text-center mr-2 text-xs"></i>
-                      <span>{course.date}</span>
-                    </li>
-                    <li class="flex items-center text-brand-dark/75 text-xs font-medium">
-                      <i class="fa-solid fa-clock text-brand-dark/40 w-4 text-center mr-2 text-xs"></i>
-                      <span>{course.time}</span>
-                    </li>
-                    <li class="flex items-start text-brand-dark/75 text-xs font-medium">
-                      <i class="fa-solid fa-location-dot text-brand-primary w-4 text-center mr-2 mt-0.5 text-xs"></i>
-                      <span class="truncate">{course.location}</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <!-- Card Action CTA -->
-                <div class="pt-4 border-t border-brand-dark/5 flex items-center justify-between gap-3">
-                  {hasPrice ? (
-                    <div class="flex items-baseline gap-1">
-                      <span class="font-display font-semibold text-brand-secondary text-base">{course.price}</span>
-                      <span class="text-[10px] text-brand-dark/40">excl.</span>
-                    </div>
-                  ) : (
-                    <span class="text-xs font-medium text-brand-dark/50">Op aanvraag</span>
-                  )}
-                  <a 
-                    href={`/inschrijven/${course.id}`} 
-                    class="font-display font-semibold text-xs py-2 px-4 rounded-xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 flex items-center gap-1.5 shadow-sm"
-                  >
-                    <span>Inschrijven</span>
-                    <i class="fa-solid fa-chevron-right text-[8px]"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      <!-- VIEW 2: Course List Rows (Active by default) -->
+      <!-- Course List Rows -->
       <div id="courses-list" class="flex flex-col gap-3.5">
         {courses.map(course => {
           const hasPrice = course.price && course.price !== '€ 0,-' && course.price !== '0' && course.price !== '€0' && course.price !== '€ 0';
+          const dateParts = (course.date || '').split(' ');
+          const monthKey = dateParts.length >= 3 ? `${dateParts[1]} ${dateParts[2]}` : '';
+          const courseDetailHref = `/cursussen/${course.courseSlug || 'bhv-basis'}`;
           return (
             <div 
-              class="course-list-item group bg-white p-4 sm:p-5 rounded-2xl border border-brand-dark/8 shadow-2xs hover:shadow-md hover:border-brand-primary/25 transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-6"
+              class="course-list-item group bg-white p-5 sm:p-6 rounded-2xl border border-brand-dark/8 shadow-2xs hover:shadow-md hover:border-brand-primary/25 transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-6"
               data-title={course.title}
               data-category={course.category}
-              data-location={course.location}
+              data-month={monthKey}
             >
-              <!-- Left: Open Date Typography (Vertically centered) -->
-              <div class="flex items-center gap-3 shrink-0 min-w-[76px] sm:min-w-[88px]">
-                <span class="font-display font-bold text-3xl sm:text-4xl text-brand-secondary leading-none w-10 text-center">
-                  {course.date.split(' ')[0]}
+              <!-- Left: Open Date Typography -->
+              <div class="flex items-center gap-3.5 shrink-0 min-w-[92px]">
+                <span class="font-display font-bold text-3xl sm:text-4xl text-brand-secondary leading-none w-11 text-center">
+                  {dateParts[0] || ''}
                 </span>
                 <div class="flex flex-col justify-center leading-tight">
                   <span class="text-xs font-bold text-brand-secondary uppercase tracking-wider">
-                    {course.date.split(' ')[1]}
+                    {dateParts[1] || ''}
                   </span>
-                  <span class="text-[10px] font-medium text-brand-dark/40">
-                    {course.date.split(' ')[2]}
+                  <span class="text-[10px] font-medium text-brand-dark/45">
+                    {dateParts[2] || ''}
                   </span>
                 </div>
               </div>
 
-              <!-- Middle: Title & Metadata -->
-              <div class="flex-1 min-w-0 flex flex-col justify-center">
-                <!-- Title Row (Clean, no redundant category pill) -->
-                <div class="mb-1.5">
-                  <h3 class="font-display font-semibold text-base sm:text-lg text-brand-secondary leading-snug group-hover:text-brand-primary transition-colors truncate">
+              <!-- Middle: Clickable Course Title (Opleidingsniveau) & Metadata -->
+              <div class="w-full flex-1 min-w-0 flex flex-col justify-center">
+                <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                  <a 
+                    href={courseDetailHref}
+                    class="font-display font-semibold text-base sm:text-lg text-brand-secondary leading-snug group-hover:text-brand-primary transition-colors line-clamp-2 sm:truncate hover:underline"
+                  >
                     {course.title}
-                  </h3>
+                  </a>
+                  <span class="inline-flex items-center bg-brand-primary/10 text-brand-primary text-[10px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                    {course.category}
+                  </span>
                 </div>
                 
-                <!-- Info metadata (Location & Time) -->
+                <!-- Info metadata (Location, Time & Link to Opleidingsniveau) -->
                 <div class="flex flex-wrap items-center gap-x-5 gap-y-1 text-xs text-brand-dark/65 font-medium">
                   <span class="inline-flex items-center gap-1.5">
-                    <i class="fa-solid fa-location-dot text-brand-primary/70 text-xs"></i>
+                    <i class="fa-solid fa-location-dot text-brand-primary/80 text-xs"></i>
                     <span>{course.location}</span>
                   </span>
                   <span class="inline-flex items-center gap-1.5">
                     <i class="fa-regular fa-clock text-brand-dark/40 text-xs"></i>
                     <span>{course.time}</span>
                   </span>
+                  <a 
+                    href={courseDetailHref}
+                    class="inline-flex items-center gap-1 text-brand-primary hover:text-brand-secondary font-semibold transition-colors"
+                  >
+                    <span>Bekijk opleiding</span>
+                    <i class="fa-solid fa-chevron-right text-[9px]"></i>
+                  </a>
                 </div>
               </div>
 
               <!-- Right: Price + Spots Pill + CTA Button -->
-              <div class="shrink-0 w-full md:w-auto flex items-center justify-between md:justify-end gap-3.5 pt-3 md:pt-0 border-t md:border-t-0 border-brand-dark/5">
-                <!-- Price (if available) -->
+              <div class="shrink-0 w-full md:w-auto flex flex-wrap sm:flex-nowrap items-center justify-between md:justify-end gap-3 sm:gap-3.5 pt-3 md:pt-0 border-t md:border-t-0 border-brand-dark/5">
                 {hasPrice && (
                   <div class="flex flex-col items-start md:items-end justify-center mr-1">
                     <span class="font-display font-bold text-base sm:text-lg text-brand-secondary leading-tight">
@@ -275,7 +227,6 @@ const uniqueLocations = [...new Set(courses.map(c => c.location))];
                   </div>
                 )}
 
-                <!-- Super clean participant/spots counter pill -->
                 {course.freeSpots && (
                   <span class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50/90 text-emerald-700 rounded-full text-xs font-semibold border border-emerald-200/60 shadow-2xs shrink-0">
                     <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
@@ -283,10 +234,9 @@ const uniqueLocations = [...new Set(courses.map(c => c.location))];
                   </span>
                 )}
 
-                <!-- Inschrijven CTA Button -->
                 <a 
-                  href={`/inschrijven/${course.id}`} 
-                  class="font-display font-semibold text-xs sm:text-sm py-2.5 px-5 sm:px-6 rounded-xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 shrink-0 inline-flex items-center gap-1.5 group/btn"
+                  href={`/persoonlijk-advies?event=${course.id}`} 
+                  class="font-display font-semibold text-xs sm:text-sm min-h-[44px] min-w-[128px] flex-1 sm:flex-none justify-center py-2.5 px-5 sm:px-6 rounded-xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 shrink-0 inline-flex items-center gap-1.5 group/btn"
                 >
                   <span>Inschrijven</span>
                   <i class="fa-solid fa-arrow-right text-[10px] group-hover/btn:translate-x-0.5 transition-transform"></i>
@@ -297,433 +247,281 @@ const uniqueLocations = [...new Set(courses.map(c => c.location))];
         })}
       </div>
 
-    </section>
-
-    <!-- SECTION 4: Stat Counters -->
-    <section class="py-16 bg-white border-t border-b border-brand-dark/5 reveal">
-      <div class="max-w-[1280px] mx-auto px-6">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center reveal-stagger">
-          <!-- Stat 1 -->
-          <div class="flex flex-col items-center justify-center">
-            <div class="text-4xl md:text-5xl font-display font-semibold text-brand-primary tracking-tight mb-1">
-              30<span class="text-brand-accent">+</span>
-            </div>
-            <div class="text-xs font-semibold text-brand-dark/50 uppercase tracking-wider">Locaties</div>
-          </div>
-          <!-- Stat 2 -->
-          <div class="flex flex-col items-center justify-center">
-            <div class="text-4xl md:text-5xl font-display font-semibold text-brand-primary tracking-tight mb-1">
-              100<span class="text-brand-accent">%</span>
-            </div>
-            <div class="text-xs font-semibold text-brand-dark/50 uppercase tracking-wider">Slagingspercentage</div>
-          </div>
-          <!-- Stat 3 -->
-          <div class="flex flex-col items-center justify-center">
-            <div class="text-4xl md:text-5xl font-display font-semibold text-brand-primary tracking-tight mb-1">
-              20<span class="text-brand-accent">+</span>
-            </div>
-            <div class="text-xs font-semibold text-brand-dark/50 uppercase tracking-wider">Jaren ervaring</div>
-          </div>
-          <!-- Stat 4 -->
-          <div class="flex flex-col items-center justify-center">
-            <div class="text-4xl md:text-5xl font-display font-semibold text-brand-primary tracking-tight mb-1">
-              15<span class="text-brand-accent">+</span>
-            </div>
-            <div class="text-xs font-semibold text-brand-dark/50 uppercase tracking-wider">Instructeurs</div>
-          </div>
+      <!-- Empty State when no courses match filters -->
+      <div id="no-results" class="hidden text-center py-14 px-6 bg-white rounded-3xl border border-brand-dark/8 shadow-xs mt-4">
+        <div class="w-14 h-14 rounded-2xl bg-brand-primary/10 text-brand-primary flex items-center justify-center mx-auto mb-4 text-xl">
+          <i class="fa-solid fa-calendar-xmark"></i>
+        </div>
+        <h3 class="font-display font-semibold text-lg sm:text-xl text-brand-secondary mb-2">
+          Geen trainingsdata gevonden voor deze selectie
+        </h3>
+        <p class="text-xs sm:text-sm text-brand-dark/65 max-w-md mx-auto mb-6">
+          Wis de filters om alle beschikbare data te bekijken, of vraag direct een datum op maat aan via onze persoonlijke adviesstraat.
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-3">
+          <button
+            id="clear-filters-empty"
+            type="button"
+            class="font-display font-semibold text-xs sm:text-sm px-5 py-2.5 rounded-xl bg-brand-secondary text-white hover:bg-brand-primary transition-colors cursor-pointer"
+          >
+            Alle filters wissen
+          </button>
+          <a
+            href="/persoonlijk-advies"
+            class="font-display font-semibold text-xs sm:text-sm px-5 py-2.5 rounded-xl bg-brand-accent text-white hover:bg-brand-accent-hover transition-colors"
+          >
+            Datum op maat aanvragen →
+          </a>
         </div>
       </div>
-    </section>
-
-    <!-- SECTION 5: E-Learning Promo Banner -->
-    <section class="py-20 bg-brand-cream reveal">
-      <div class="max-w-[1280px] mx-auto px-6">
-        <div class="relative bg-brand-secondary text-white rounded-2xl md:rounded-3xl overflow-hidden flex flex-col md:flex-row items-stretch shadow-xl border border-white/5">
-          
-          <!-- Left side content -->
-          <div class="p-8 md:p-12 lg:p-14 md:w-2/3 border-b md:border-b-0 md:border-r border-dashed border-white/15 relative">
-            <div class="relative z-10">
-              <div class="text-brand-accent font-display font-semibold tracking-wider uppercase mb-3 text-xs">Nieuw bij Edusafe</div>
-              <h2 class="font-display text-3xl md:text-4xl font-semibold mb-4 leading-tight text-white">Start direct met <br class="hidden sm:inline" />
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/75">E-Learning</span>
-              </h2>
-              <p class="text-white/80 text-sm md:text-base max-w-xl mb-6 leading-relaxed font-normal">Volg de theorie van onze veiligheidscursussen volledig online. In je eigen tempo, waar en wanneer het jou uitkomt.</p>
-              <div class="flex items-center gap-6 text-xs sm:text-sm font-semibold text-white/90">
-                <span class="flex items-center gap-2">
-                  <i class="fa-solid fa-circle-check text-brand-accent text-sm"></i> 24/7 Toegang
-                </span>
-                <span class="flex items-center gap-2">
-                  <i class="fa-solid fa-circle-check text-brand-accent text-sm"></i> Interactief
-                </span>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Right side portal log in -->
-          <div class="p-8 md:p-12 md:w-1/3 flex flex-col items-center justify-center text-center bg-white/5 relative overflow-hidden">
-            <div class="relative z-10 w-full flex flex-col items-center">
-              <div class="w-14 h-14 bg-brand-accent/20 rounded-full flex items-center justify-center mb-4">
-                <div class="w-10 h-10 bg-brand-accent rounded-full flex items-center justify-center shadow-md">
-                  <i class="fa-solid fa-arrow-right text-white text-sm"></i>
-                </div>
-              </div>
-              <h3 class="font-display text-xl font-semibold mb-4 text-white">Meld je aan</h3>
-              <a 
-                href="https://edusafe.app.clientclub.net/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                class="inline-flex items-center justify-center h-12 bg-white text-brand-secondary hover:bg-brand-cream rounded-xl px-6 text-sm font-semibold w-full shadow-md transition-all duration-300 hover:-translate-y-0.5 cursor-pointer"
-              >
-                Naar e-learning
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 6: Full Testimonials Section -->
-    <section class="py-20 bg-white border-t border-brand-dark/5 reveal">
-      <div class="max-w-[1280px] mx-auto px-6">
-        <div class="text-center mb-12">
-          <h2 class="font-display text-2xl sm:text-3xl font-semibold text-brand-secondary mb-2">Wat onze cursisten zeggen</h2>
-          <p class="text-brand-dark/60 max-w-2xl mx-auto font-normal text-xs sm:text-sm">Lees de ervaringen van mensen die u voorgingen met onze praktijkgerichte trainingen.</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal-stagger">
-          
-          <!-- Card 1 -->
-          <div class="bg-brand-cream/40 p-6 sm:p-7 rounded-2xl border border-brand-dark/5 flex flex-col justify-between hover:shadow-md transition-all duration-300">
-            <div>
-              <div class="flex gap-1 mb-4 text-amber-500 text-xs">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-              </div>
-              <p class="text-brand-dark/70 mb-6 font-normal text-xs sm:text-sm leading-relaxed">"Zeer professionele BHV cursus gehad. De instructeur legde alles duidelijk uit en er was veel ruimte voor praktijkoefeningen. Een aanrader!"</p>
-            </div>
-            <div class="flex items-center gap-3">
-              <div class="h-10 w-10 rounded-full overflow-hidden border border-brand-dark/10 shadow-xs">
-                <img src="/assets/images/0942f99c-0c49-4f5a-b280-362643425d75.jpg" alt="Sanne de Jong" class="h-full w-full object-cover">
-              </div>
-              <div>
-                <span class="font-display font-semibold text-brand-secondary text-sm block">Sanne de Jong</span>
-                <span class="text-[11px] text-brand-dark/50 font-normal">Rotterdam</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 2 -->
-          <div class="bg-brand-cream/40 p-6 sm:p-7 rounded-2xl border border-brand-dark/5 flex flex-col justify-between hover:shadow-md transition-all duration-300">
-            <div>
-              <div class="flex gap-1 mb-4 text-amber-500 text-xs">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-              </div>
-              <p class="text-brand-dark/70 mb-6 font-normal text-xs sm:text-sm leading-relaxed">"Het nieuwe e-learning portaal is echt ideaal. Ik kon de theorie voor mijn VCA in mijn eigen tijd doen, waardoor de praktijkdag veel korter was."</p>
-            </div>
-            <div class="flex items-center gap-3">
-              <div class="h-10 w-10 rounded-full overflow-hidden border border-brand-dark/10 shadow-xs">
-                <img src="/assets/images/00457656-619b-4bc5-bc92-364e6d5c7533.jpg" alt="Mark Visser" class="h-full w-full object-cover">
-              </div>
-              <div>
-                <span class="font-display font-semibold text-brand-secondary text-sm block">Mark Visser</span>
-                <span class="text-[11px] text-brand-dark/50 font-normal">Den Haag</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 3 -->
-          <div class="bg-brand-cream/40 p-6 sm:p-7 rounded-2xl border border-brand-dark/5 flex flex-col justify-between hover:shadow-md transition-all duration-300">
-            <div>
-              <div class="flex gap-1 mb-4 text-amber-500 text-xs">
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-                <i class="fa-solid fa-star"></i>
-              </div>
-              <p class="text-brand-dark/70 mb-6 font-normal text-xs sm:text-sm leading-relaxed">"Top locatie en goede faciliteiten. De instructeur nam de tijd voor iedereen en de lunch was ook nog eens uitstekend verzorgd."</p>
-            </div>
-            <div class="flex items-center gap-3">
-              <div class="h-10 w-10 rounded-full overflow-hidden border border-brand-dark/10 shadow-xs">
-                <img src="/assets/images/9f847927-354e-4000-9e3e-b31e062f316e.jpg" alt="Lisa Bakker" class="h-full w-full object-cover">
-              </div>
-              <div>
-                <span class="font-display font-semibold text-brand-secondary text-sm block">Lisa Bakker</span>
-                <span class="text-[11px] text-brand-dark/50 font-normal">Utrecht</span>
-              </div>
-            </div>
-          </div>
 
     </section>
+
+    <!-- Standaard Beoordelingen Sectie (zelfde als op Homepage) -->
+    <Reviews />
+
+    <!-- Overlappende Oranje Koffie & Advies Banner boven de Footer -->
+    <ContactForm />
 
   </main>
 </Layout>
 
 <script>
-  // Dynamic client-side search & filtering logic + Live GHL data fetching
-  const searchInput = document.getElementById('search-input') as HTMLInputElement;
-  const categorySelect = document.getElementById('category-select') as HTMLSelectElement;
-  const locationSelect = document.getElementById('location-select') as HTMLSelectElement;
-  const resetBtn = document.getElementById('reset-filters') as HTMLButtonElement;
-  const countText = document.getElementById('course-count');
+  function resolveSlugClient(course: any): string {
+    if (course.courseSlug) return course.courseSlug;
+    const t = (course.title || '').toLowerCase();
+    const c = (course.category || '').toLowerCase();
+    if (c.includes('ehak') || t.includes('ehak') || t.includes('kinder')) return 'ehak';
+    if (c.includes('aed') || t.includes('aed') || t.includes('reanimatie')) return 'aed-reanimatie';
+    if (c.includes('ehbo') || t.includes('ehbo')) {
+      return t.includes('herhaling') ? 'ehbo-herhaling' : 'ehbo-basis';
+    }
+    if (c.includes('vca') || t.includes('vca')) {
+      return (t.includes('vol') && !t.includes('basis')) ? 'vca-vol' : 'vca-basis';
+    }
+    if (c.includes('heftruck') || t.includes('heftruck')) return 'heftruck';
+    if (c.includes('offshore') || t.includes('bosiet') || t.includes('opito')) return 'bosiet';
+    if (t.includes('ploegleider')) return 'bhv-ploegleider';
+    if (t.includes('hoofd bhv')) return 'hoofd-bhv';
+    if (t.includes('ontruiming')) return 'brand-en-ontruiming';
+    if (t.includes('herhaling') && !t.includes('basis')) return 'bhv-herhaling';
+    return 'bhv-basis';
+  }
 
-  // Toggle View Buttons and Layout Containers
-  const gridViewBtn = document.getElementById('grid-view-btn') as HTMLButtonElement;
-  const listViewBtn = document.getElementById('list-view-btn') as HTMLButtonElement;
-  const coursesGrid = document.getElementById('courses-grid') as HTMLDivElement;
-  const coursesList = document.getElementById('courses-list') as HTMLDivElement;
+  function initCursusdataPage() {
+    const searchInput = document.getElementById('search-input') as HTMLInputElement | null;
+    const categorySelect = document.getElementById('category-select') as HTMLSelectElement | null;
+    const monthSelect = document.getElementById('month-select') as HTMLSelectElement | null;
+    const resetBtn = document.getElementById('reset-filters') as HTMLButtonElement | null;
+    const clearEmptyBtn = document.getElementById('clear-filters-empty') as HTMLButtonElement | null;
+    const countText = document.getElementById('course-count');
+    const coursesList = document.getElementById('courses-list') as HTMLDivElement | null;
+    const noResults = document.getElementById('no-results') as HTMLDivElement | null;
+    const liveIndicator = document.getElementById('live-indicator');
 
-  let currentLayout = 'list'; // 'list' active by default, 'grid' available
+    if (!coursesList) return;
 
-  /**
-   * Fetch live events from GHL API and replace the static list
-   */
-  async function loadLiveEvents() {
-    try {
-      const response = await fetch('/api/events');
-      if (!response.ok) throw new Error(`API error: ${response.status}`);
-      
-      const result = await response.json();
-      if (!result.success || !result.data || result.data.length === 0) return;
+    function filterCourses() {
+      const query = (searchInput?.value || '').toLowerCase().trim();
+      const selectedCategory = categorySelect?.value || 'all';
+      const selectedMonth = monthSelect?.value || 'all';
+      let visibleCount = 0;
 
-      const events = result.data;
+      const listRows = document.querySelectorAll('.course-list-item');
+      listRows.forEach(row => {
+        const htmlRow = row as HTMLElement;
+        const title = (htmlRow.getAttribute('data-title') || '').toLowerCase();
+        const category = htmlRow.getAttribute('data-category') || '';
+        const month = htmlRow.getAttribute('data-month') || '';
 
-      // Update the list view with live data
-      if (coursesList) {
-        coursesList.innerHTML = events.map((event: any) => {
-          const hasPrice = event.price && event.price !== '€ 0,-' && event.price !== '0' && event.price !== '€0' && event.price !== '€ 0' && event.price !== '';
-          const dateParts = (event.date || '').split(' ');
-          const day = dateParts[0] || '';
-          const month = dateParts[1] || '';
-          const year = dateParts[2] || '';
-          
-          // Determine spots display: ONLY if spots is set in GHL!
-          const hasSpots = Boolean(event.spots && Number(event.spots) > 0);
-          const freeSpots = event.freeSpots ?? 0;
-          const isFull = event.status === 'vol' || (hasSpots && freeSpots <= 0);
-          const spotsLabel = isFull ? 'Volgeboekt' : `${freeSpots} vrij`;
-          const spotsClass = isFull 
-            ? 'bg-red-50/90 text-red-700 border-red-200/60' 
-            : 'bg-emerald-50/90 text-emerald-700 border-emerald-200/60';
-          const dotClass = isFull ? 'bg-red-500' : 'bg-emerald-500';
+        const matchesQuery = !query || title.includes(query) || category.toLowerCase().includes(query);
+        const matchesCategory = selectedCategory === 'all' || category.toLowerCase() === selectedCategory.toLowerCase();
+        const matchesMonth = selectedMonth === 'all' || month === selectedMonth;
 
-          return `
-            <div class="course-list-item group bg-white p-4 sm:p-5 rounded-2xl border border-brand-dark/8 shadow-2xs hover:shadow-md hover:border-brand-primary/25 transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-6"
-              data-title="${event.title || ''}"
-              data-category="${event.category || ''}"
-              data-location="${event.location || ''}"
-            >
-              <!-- Left: Date -->
-              <div class="flex items-center gap-3 shrink-0 min-w-[76px] sm:min-w-[88px]">
-                <span class="font-display font-bold text-3xl sm:text-4xl text-brand-secondary leading-none w-10 text-center">${day}</span>
-                <div class="flex flex-col justify-center leading-tight">
-                  <span class="text-xs font-bold text-brand-secondary uppercase tracking-wider">${month}</span>
-                  <span class="text-[10px] font-medium text-brand-dark/40">${year}</span>
-                </div>
-              </div>
+        if (matchesQuery && matchesCategory && matchesMonth) {
+          htmlRow.style.display = 'flex';
+          visibleCount++;
+        } else {
+          htmlRow.style.display = 'none';
+        }
+      });
 
-              <!-- Middle: Title & Metadata -->
-              <div class="flex-1 min-w-0 flex flex-col justify-center">
-                <div class="mb-1.5">
-                  <h3 class="font-display font-semibold text-base sm:text-lg text-brand-secondary leading-snug group-hover:text-brand-primary transition-colors truncate">${event.title || ''}</h3>
-                </div>
-                <div class="flex flex-wrap items-center gap-x-5 gap-y-1 text-xs text-brand-dark/65 font-medium">
-                  <span class="inline-flex items-center gap-1.5">
-                    <i class="fa-solid fa-location-dot text-brand-primary/70 text-xs"></i>
-                    <span>${event.location || ''}</span>
-                  </span>
-                  <span class="inline-flex items-center gap-1.5">
-                    <i class="fa-regular fa-clock text-brand-dark/40 text-xs"></i>
-                    <span>${event.time || ''}</span>
-                  </span>
-                </div>
-              </div>
-
-              <!-- Right: Price + Spots + CTA -->
-              <div class="shrink-0 w-full md:w-auto flex items-center justify-between md:justify-end gap-3.5 pt-3 md:pt-0 border-t md:border-t-0 border-brand-dark/5">
-                ${hasPrice ? `
-                  <div class="flex flex-col items-start md:items-end justify-center mr-1">
-                    <span class="font-display font-bold text-base sm:text-lg text-brand-secondary leading-tight">${event.price}</span>
-                    <span class="text-[10px] font-medium text-brand-dark/40 -mt-0.5">excl. BTW</span>
-                  </div>
-                ` : ''}
-                
-                ${hasSpots ? `
-                  <span class="inline-flex items-center gap-1.5 px-3 py-1.5 ${spotsClass} rounded-full text-xs font-semibold border shadow-2xs shrink-0">
-                    <span class="w-2 h-2 rounded-full ${dotClass}"></span>
-                    <span>${spotsLabel}</span>
-                  </span>
-                ` : ''}
-
-                ${isFull ? `
-                  <span class="font-display font-semibold text-xs sm:text-sm py-2.5 px-5 sm:px-6 rounded-xl text-center bg-gray-300 text-gray-500 cursor-not-allowed shrink-0 inline-flex items-center gap-1.5">
-                    <span>Volgeboekt</span>
-                  </span>
-                ` : `
-                  <a href="/inschrijven/${event.id}" class="font-display font-semibold text-xs sm:text-sm py-2.5 px-5 sm:px-6 rounded-xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 shrink-0 inline-flex items-center gap-1.5 group/btn">
-                    <span>Inschrijven</span>
-                    <i class="fa-solid fa-arrow-right text-[10px] group-hover/btn:translate-x-0.5 transition-transform"></i>
-                  </a>
-                `}
-              </div>
-            </div>
-          `;
-        }).join('');
-      }
-
-      // Update the course count
       if (countText) {
-        countText.textContent = `${events.length} ${events.length === 1 ? 'cursus' : 'cursussen'} gevonden`;
+        countText.textContent = `${visibleCount} ${visibleCount === 1 ? 'trainingsmoment' : 'trainingsmomenten'} gevonden`;
       }
 
-      // Update filter dropdowns with live categories and locations
-      const liveCategories = [...new Set(events.map((e: any) => e.category).filter(Boolean))] as string[];
-      const liveLocations = [...new Set(events.map((e: any) => e.location).filter(Boolean))] as string[];
-
-      if (categorySelect && liveCategories.length > 0) {
-        const currentCat = categorySelect.value;
-        categorySelect.innerHTML = '<option value="all">Alle Cursussen</option>' + 
-          liveCategories.map(cat => `<option value="${cat}">${cat}</option>`).join('');
-        if (liveCategories.includes(currentCat)) categorySelect.value = currentCat;
-      }
-
-      if (locationSelect && liveLocations.length > 0) {
-        const currentLoc = locationSelect.value;
-        locationSelect.innerHTML = '<option value="all">Alle Locaties</option>' + 
-          liveLocations.map(loc => `<option value="${loc}">${loc}</option>`).join('');
-        if (liveLocations.includes(currentLoc)) locationSelect.value = currentLoc;
-      }
-
-      // Show a subtle indicator that data is live
-      if (result.source === 'ghl') {
-        const header = document.querySelector('h2.font-display');
-        if (header && !header.querySelector('.live-badge')) {
-          header.insertAdjacentHTML('afterend', 
-            '<span class="live-badge inline-flex items-center gap-1.5 text-[10px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full ml-2 border border-emerald-200/50"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Live</span>'
-          );
+      if (noResults) {
+        if (visibleCount === 0) {
+          noResults.classList.remove('hidden');
+        } else {
+          noResults.classList.add('hidden');
         }
       }
-
-      console.log(`[Edusafe] Loaded ${events.length} events from ${result.source}`);
-    } catch (error) {
-      console.log('[Edusafe] Using static fallback data (API unavailable):', error);
-      // Static data from courses.js is already rendered, so nothing to do
-    }
-  }
-
-  function filterCourses() {
-    const query = searchInput.value.toLowerCase().trim();
-    const selectedCategory = categorySelect.value;
-    const selectedLocation = locationSelect.value;
-    let visibleCount = 0;
-
-    // Filter Grid Cards
-    const gridCards = document.querySelectorAll('.course-card');
-    gridCards.forEach(card => {
-      const htmlCard = card as HTMLElement;
-      const title = htmlCard.getAttribute('data-title')?.toLowerCase() || '';
-      const category = htmlCard.getAttribute('data-category') || '';
-      const location = htmlCard.getAttribute('data-location') || '';
-
-      const matchesQuery = title.includes(query);
-      const matchesCategory = selectedCategory === 'all' || category === selectedCategory;
-      const matchesLocation = selectedLocation === 'all' || location === selectedLocation;
-
-      if (matchesQuery && matchesCategory && matchesLocation) {
-        htmlCard.style.display = 'flex';
-        if (currentLayout === 'grid') visibleCount++;
-      } else {
-        htmlCard.style.display = 'none';
-      }
-    });
-
-    // Filter List Rows
-    const listRows = document.querySelectorAll('.course-list-item');
-    listRows.forEach(row => {
-      const htmlRow = row as HTMLElement;
-      const title = htmlRow.getAttribute('data-title')?.toLowerCase() || '';
-      const category = htmlRow.getAttribute('data-category') || '';
-      const location = htmlRow.getAttribute('data-location') || '';
-
-      const matchesQuery = title.includes(query);
-      const matchesCategory = selectedCategory === 'all' || category === selectedCategory;
-      const matchesLocation = selectedLocation === 'all' || location === selectedLocation;
-
-      if (matchesQuery && matchesCategory && matchesLocation) {
-        htmlRow.style.display = 'flex';
-        if (currentLayout === 'list') visibleCount++;
-      } else {
-        htmlRow.style.display = 'none';
-      }
-    });
-
-    if (countText) {
-      countText.textContent = `${visibleCount} ${visibleCount === 1 ? 'cursus' : 'cursussen'} gevonden`;
-    }
-  }
-
-  function resetFilters() {
-    searchInput.value = '';
-    categorySelect.value = 'all';
-    locationSelect.value = 'all';
-    filterCourses();
-  }
-
-  function switchLayout(layout: 'grid' | 'list') {
-    currentLayout = layout;
-    
-    if (layout === 'grid') {
-      coursesGrid.classList.remove('hidden');
-      coursesGrid.classList.add('grid');
-      coursesList.classList.remove('flex');
-      coursesList.classList.add('hidden');
-
-      gridViewBtn.classList.add('bg-brand-primary', 'text-white', 'shadow-md');
-      gridViewBtn.classList.remove('text-brand-dark/40', 'hover:text-brand-dark/70');
-      listViewBtn.classList.remove('bg-brand-primary', 'text-white', 'shadow-md');
-      listViewBtn.classList.add('text-brand-dark/40', 'hover:text-brand-dark/70');
-    } else {
-      coursesGrid.classList.remove('grid');
-      coursesGrid.classList.add('hidden');
-      coursesList.classList.remove('hidden');
-      coursesList.classList.add('flex');
-
-      listViewBtn.classList.add('bg-brand-primary', 'text-white', 'shadow-md');
-      listViewBtn.classList.remove('text-brand-dark/40', 'hover:text-brand-dark/70');
-      gridViewBtn.classList.remove('bg-brand-primary', 'text-white', 'shadow-md');
-      gridViewBtn.classList.add('text-brand-dark/40', 'hover:text-brand-dark/70');
     }
 
-    filterCourses();
-  }
-
-  // Event Listeners
-  if (searchInput) searchInput.addEventListener('input', filterCourses);
-  if (categorySelect) categorySelect.addEventListener('change', filterCourses);
-  if (locationSelect) locationSelect.addEventListener('change', filterCourses);
-  if (resetBtn) resetBtn.addEventListener('click', resetFilters);
-
-  if (gridViewBtn) gridViewBtn.addEventListener('click', () => switchLayout('grid'));
-  if (listViewBtn) listViewBtn.addEventListener('click', () => switchLayout('list'));
-
-  // Parse query parameters for initial category selection
-  const params = new URLSearchParams(window.location.search);
-  const initialCategory = params.get('category');
-  if (initialCategory && categorySelect) {
-    const options = Array.from(categorySelect.options).map(o => o.value);
-    if (options.includes(initialCategory)) {
-      categorySelect.value = initialCategory;
+    function resetFilters() {
+      if (searchInput) searchInput.value = '';
+      if (categorySelect) categorySelect.value = 'all';
+      if (monthSelect) monthSelect.value = 'all';
       filterCourses();
     }
+
+    async function loadLiveEvents() {
+      try {
+        const response = await fetch('/api/events');
+        if (!response.ok) return;
+        const result = await response.json();
+        if (!result.success || !result.data || result.data.length === 0) return;
+
+        const events = result.data;
+
+        if (coursesList) {
+          coursesList.innerHTML = events.map((event: any) => {
+            const hasPrice = event.price && event.price !== '€ 0,-' && event.price !== '0' && event.price !== '€0' && event.price !== '€ 0' && event.price !== '';
+            const dateParts = (event.date || '').split(' ');
+            const day = dateParts[0] || '';
+            const month = dateParts[1] || '';
+            const year = dateParts[2] || '';
+            const monthKey = (month && year) ? `${month} ${year}` : '';
+            const slug = resolveSlugClient(event);
+            const courseDetailHref = `/cursussen/${slug}`;
+
+            const hasSpots = Boolean(event.spots && Number(event.spots) > 0);
+            const freeSpots = event.freeSpots ?? 0;
+            const isFull = event.status === 'vol' || (hasSpots && freeSpots <= 0);
+            const spotsLabel = isFull ? 'Volgeboekt' : `${freeSpots} vrij`;
+            const spotsClass = isFull 
+              ? 'bg-red-50/90 text-red-700 border-red-200/60' 
+              : 'bg-emerald-50/90 text-emerald-700 border-emerald-200/60';
+            const dotClass = isFull ? 'bg-red-500' : 'bg-emerald-500';
+
+            return `
+              <div class="course-list-item group bg-white p-5 sm:p-6 rounded-2xl border border-brand-dark/8 shadow-2xs hover:shadow-md hover:border-brand-primary/25 transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-6"
+                data-title="${event.title || ''}"
+                data-category="${event.category || ''}"
+                data-month="${monthKey}"
+              >
+                <div class="flex items-center gap-3.5 shrink-0 min-w-[92px]">
+                  <span class="font-display font-bold text-3xl sm:text-4xl text-brand-secondary leading-none w-11 text-center">${day}</span>
+                  <div class="flex flex-col justify-center leading-tight">
+                    <span class="text-xs font-bold text-brand-secondary uppercase tracking-wider">${month}</span>
+                    <span class="text-[10px] font-medium text-brand-dark/45">${year}</span>
+                  </div>
+                </div>
+
+                <div class="w-full flex-1 min-w-0 flex flex-col justify-center">
+                  <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                    <a href="${courseDetailHref}" class="font-display font-semibold text-base sm:text-lg text-brand-secondary leading-snug group-hover:text-brand-primary transition-colors line-clamp-2 sm:truncate hover:underline">${event.title || ''}</a>
+                    <span class="inline-flex items-center bg-brand-primary/10 text-brand-primary text-[10px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wider">${event.category || ''}</span>
+                  </div>
+                  <div class="flex flex-wrap items-center gap-x-5 gap-y-1 text-xs text-brand-dark/65 font-medium">
+                    <span class="inline-flex items-center gap-1.5">
+                      <i class="fa-solid fa-location-dot text-brand-primary/80 text-xs"></i>
+                      <span>${event.location || 'Edusafe Hoofdlocatie Den Haag'}</span>
+                    </span>
+                    <span class="inline-flex items-center gap-1.5">
+                      <i class="fa-regular fa-clock text-brand-dark/40 text-xs"></i>
+                      <span>${event.time || ''}</span>
+                    </span>
+                    <a href="${courseDetailHref}" class="inline-flex items-center gap-1 text-brand-primary hover:text-brand-secondary font-semibold transition-colors">
+                      <span>Bekijk opleiding</span>
+                      <i class="fa-solid fa-chevron-right text-[9px]"></i>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="shrink-0 w-full md:w-auto flex flex-wrap sm:flex-nowrap items-center justify-between md:justify-end gap-3 sm:gap-3.5 pt-3 md:pt-0 border-t md:border-t-0 border-brand-dark/5">
+                  ${hasPrice ? `
+                    <div class="flex flex-col items-start md:items-end justify-center mr-1">
+                      <span class="font-display font-bold text-base sm:text-lg text-brand-secondary leading-tight">${event.price}</span>
+                      <span class="text-[10px] font-medium text-brand-dark/40 -mt-0.5">excl. BTW</span>
+                    </div>
+                  ` : ''}
+                  
+                  ${hasSpots ? `
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 ${spotsClass} rounded-full text-xs font-semibold border shadow-2xs shrink-0">
+                      <span class="w-2 h-2 rounded-full ${dotClass}"></span>
+                      <span>${spotsLabel}</span>
+                    </span>
+                  ` : ''}
+
+                  ${isFull ? `
+                    <span class="font-display font-semibold text-xs sm:text-sm min-h-[44px] min-w-[128px] flex-1 sm:flex-none justify-center py-2.5 px-5 sm:px-6 rounded-xl text-center bg-gray-300 text-gray-500 cursor-not-allowed shrink-0 inline-flex items-center gap-1.5">
+                      <span>Volgeboekt</span>
+                    </span>
+                  ` : `
+                    <a href="/persoonlijk-advies?event=${event.id}" class="font-display font-semibold text-xs sm:text-sm min-h-[44px] min-w-[128px] flex-1 sm:flex-none justify-center py-2.5 px-5 sm:px-6 rounded-xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 shrink-0 inline-flex items-center gap-1.5 group/btn">
+                      <span>Inschrijven</span>
+                      <i class="fa-solid fa-arrow-right text-[10px] group-hover/btn:translate-x-0.5 transition-transform"></i>
+                    </a>
+                  `}
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+
+        // Update dropdown options dynamically from live events
+        const liveCategories = [...new Set(events.map((e: any) => e.category).filter(Boolean))] as string[];
+        const liveMonths = [
+          ...new Set(
+            events
+              .map((e: any) => {
+                const p = (e.date || '').split(' ');
+                return p.length >= 3 ? `${p[1]} ${p[2]}` : null;
+              })
+              .filter(Boolean)
+          )
+        ] as string[];
+
+        if (categorySelect && liveCategories.length > 0) {
+          const currentCat = categorySelect.value;
+          categorySelect.innerHTML = '<option value="all">Alle Cursussen</option>' + 
+            liveCategories.map(cat => `<option value="${cat}">${cat}</option>`).join('');
+          const match = liveCategories.find(c => c.toLowerCase() === currentCat.toLowerCase());
+          if (match) categorySelect.value = match;
+        }
+
+        if (monthSelect && liveMonths.length > 0) {
+          const currentMonth = monthSelect.value;
+          monthSelect.innerHTML = '<option value="all">Alle Maanden</option>' + 
+            liveMonths.map(m => `<option value="${m}">${m}</option>`).join('');
+          if (liveMonths.includes(currentMonth)) monthSelect.value = currentMonth;
+        }
+
+        if (result.source === 'ghl' && liveIndicator) {
+          liveIndicator.classList.remove('hidden');
+          liveIndicator.classList.add('inline-flex');
+        }
+
+        filterCourses();
+      } catch (error) {
+        // Static data remains visible if API is unavailable
+      }
+    }
+
+    searchInput?.addEventListener('input', filterCourses);
+    categorySelect?.addEventListener('change', filterCourses);
+    monthSelect?.addEventListener('change', filterCourses);
+    resetBtn?.addEventListener('click', resetFilters);
+    clearEmptyBtn?.addEventListener('click', resetFilters);
+
+    // Pre-filter if ?category=... is in URL
+    const params = new URLSearchParams(window.location.search);
+    const initialCategory = params.get('category');
+    if (initialCategory && categorySelect) {
+      const matchOption = Array.from(categorySelect.options).find(
+        o => o.value.toLowerCase() === initialCategory.toLowerCase()
+      );
+      if (matchOption) {
+        categorySelect.value = matchOption.value;
+      }
+    }
+
+    filterCourses();
+    loadLiveEvents();
   }
 
-  // Load live events from GHL API (replaces static data seamlessly)
-  loadLiveEvents();
+  initCursusdataPage();
+  document.addEventListener('astro:page-load', initCursusdataPage);
 </script>
-

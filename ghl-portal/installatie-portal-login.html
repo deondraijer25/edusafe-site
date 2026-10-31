@@ -1,0 +1,2002 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edusafe E-learning Portaal — Live Preview &amp; GHL Code</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #062856;
+      --blue: #0C4EA2;
+      --orange: #FF6B35;
+      --orange-hover: #e55620;
+      --cream: #FAF9F6;
+      --border: #E6E3DC;
+      --divider: #ECE9E2;
+      --input-border: #D8D5CE;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: #EDEBE4;
+      color: #1A202C;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Sticky Top Toolbar */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #FFFFFF;
+      border-bottom: 1px solid #E2DFD7;
+      box-shadow: 0 4px 18px rgba(6, 40, 86, 0.05);
+      padding: 12px 20px;
+    }
+
+    .topbar-inner {
+      max-width: 1380px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .topbar-row-1 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .brand-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-head img {
+      height: 36px;
+      width: auto;
+      display: block;
+    }
+
+    .brand-head h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 16.5px;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.2;
+    }
+
+    .brand-head span {
+      display: block;
+      font-size: 12px;
+      color: #64748B;
+      font-weight: 500;
+    }
+
+    .action-btns {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .copy-pill {
+      appearance: none;
+      border: 0;
+      background: var(--orange);
+      color: #FFFFFF;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 9px 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.16s ease;
+    }
+
+    .copy-pill:hover {
+      background: var(--orange-hover);
+    }
+
+    .copy-pill--navy {
+      background: var(--navy);
+    }
+
+    .copy-pill--navy:hover {
+      background: #093875;
+    }
+
+    .copy-pill--ghost {
+      background: var(--cream);
+      color: var(--navy);
+      border: 1px solid #D8D5CE;
+    }
+
+    .copy-pill--ghost:hover {
+      background: #F1EFEA;
+    }
+
+    .copy-pill.copied {
+      background: #15803D !important;
+      color: #FFFFFF !important;
+    }
+
+    .topbar-row-2 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding-top: 8px;
+      border-top: 1px solid #F1EFEA;
+    }
+
+    .tab-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      appearance: none;
+      border: 1px solid transparent;
+      background: transparent;
+      color: #475569;
+      font-family: 'Outfit', sans-serif;
+      font-size: 12.5px;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .tab-btn:hover {
+      background: var(--cream);
+      color: var(--navy);
+    }
+
+    .tab-btn.active {
+      background: var(--blue);
+      color: #FFFFFF;
+    }
+
+    .device-toggle {
+      display: inline-flex;
+      background: var(--cream);
+      border: 1px solid #E2DFD7;
+      border-radius: 9px;
+      padding: 2px;
+    }
+
+    .device-btn {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      color: #475569;
+      font-family: 'Outfit', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 11px;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+
+    .device-btn.active {
+      background: #FFFFFF;
+      color: var(--navy);
+      box-shadow: 0 1px 4px rgba(6, 40, 86, 0.08);
+    }
+
+    /* Interactive Stage */
+    .stage-outer {
+      padding: 28px 16px 36px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .stage-viewport {
+      width: 100%;
+      max-width: 1180px;
+      background: var(--cream);
+      border: 1px solid #DFDCD4;
+      border-radius: 20px;
+      box-shadow: 0 18px 48px rgba(6, 40, 86, 0.08);
+      overflow: hidden;
+      transition: max-width 0.25s ease;
+    }
+
+    .stage-viewport.is-mobile {
+      max-width: 390px;
+      border: 7px solid #1E293B;
+      border-radius: 32px;
+    }
+
+    .browser-bar {
+      background: #F4F2EC;
+      border-bottom: 1px solid #E6E3DC;
+      padding: 9px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .browser-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .browser-dots i {
+      display: block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #D5D1C8;
+    }
+
+    .browser-url {
+      flex: 1;
+      background: #FFFFFF;
+      border: 1px solid #E2DFD7;
+      border-radius: 7px;
+      padding: 4px 12px;
+      font-size: 12px;
+      color: #64748B;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Exact Edusafe Portal Canvas & Card */
+    .portal-canvas {
+      background: #FAF9F6;
+      min-height: 690px;
+      padding: 40px 16px 44px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .stage-viewport.is-mobile .portal-canvas {
+      padding: 20px 14px 28px;
+      min-height: 640px;
+      justify-content: flex-start;
+    }
+
+    .portal-col {
+      width: 100%;
+      max-width: 472px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .portal-circle-bg {
+      position: absolute;
+      top: calc(50% - 16px);
+      right: -236px;
+      width: 520px;
+      height: 520px;
+      transform: translateY(-50%);
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+    }
+
+    .portal-circle-bg svg {
+      width: 100%;
+      height: 100%;
+      transform: scaleX(-1);
+      filter: drop-shadow(0 25px 25px rgba(6, 40, 86, 0.15));
+    }
+
+    .stage-viewport.is-mobile .portal-circle-bg {
+      width: 380px;
+      height: 380px;
+      right: -195px;
+    }
+
+    .portal-card {
+      width: 100%;
+      background: #FFFFFF;
+      border: 1px solid #E6E3DC;
+      border-radius: 22px;
+      box-shadow: 0 22px 50px rgba(6, 40, 86, 0.13);
+      padding: 32px 40px 30px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .stage-viewport.is-mobile .portal-card {
+      padding: 24px 22px 22px;
+      border-radius: 18px;
+    }
+
+    .portal-brand-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 20px;
+      margin-bottom: 26px;
+      border-bottom: 1px solid #ECE9E2;
+    }
+
+    .stage-viewport.is-mobile .portal-brand-row {
+      padding-bottom: 16px;
+      margin-bottom: 22px;
+    }
+
+    .portal-brand-row img {
+      width: 124px;
+      height: auto;
+      display: block;
+    }
+
+    .stage-viewport.is-mobile .portal-brand-row img {
+      width: 112px;
+    }
+
+    .portal-brand-tag {
+      font-family: 'Outfit', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      color: #64748B;
+      letter-spacing: 0.01em;
+    }
+
+    .portal-screen {
+      display: none;
+    }
+
+    .portal-screen.active {
+      display: block;
+    }
+
+    .portal-h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 1.28;
+      letter-spacing: -0.015em;
+      color: #062856;
+    }
+
+    .stage-viewport.is-mobile .portal-h2 {
+      font-size: 21px;
+    }
+
+    .portal-sub {
+      font-size: 14.5px;
+      line-height: 1.6;
+      color: #475569;
+      margin-top: 6px;
+      margin-bottom: 22px;
+    }
+
+    .field-group {
+      margin-bottom: 16px;
+    }
+
+    .field-label {
+      display: block;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #062856;
+      padding-bottom: 6px;
+    }
+
+    .field-label b {
+      color: #FF6B35;
+      font-weight: 600;
+      margin-left: 2px;
+    }
+
+    .input-box {
+      display: flex;
+      align-items: center;
+      height: 48px;
+      background: #FFFFFF;
+      border: 1px solid #D8D5CE;
+      border-radius: 11px;
+      padding: 0 14px;
+      gap: 10px;
+      transition: border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .input-box:hover {
+      border-color: #94A3B8;
+    }
+
+    .input-box:focus-within {
+      border: 1.5px solid #0C4EA2;
+      box-shadow: 0 0 0 3.5px rgba(12, 78, 162, 0.11);
+    }
+
+    .input-icon {
+      width: 17px;
+      height: 17px;
+      color: #64748B;
+      flex-shrink: 0;
+    }
+
+    .input-box input {
+      border: 0;
+      outline: none;
+      background: transparent;
+      width: 100%;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      color: #062856;
+    }
+
+    .input-box input::placeholder {
+      color: #94A3B8;
+      font-size: 14.5px;
+    }
+
+    .eye-btn {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      color: #64748B;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      padding: 2px;
+    }
+
+    .eye-btn:hover {
+      color: #0C4EA2;
+    }
+
+    .field-helper {
+      font-size: 13px;
+      line-height: 1.5;
+      color: #64748B;
+      margin-top: 6px;
+    }
+
+    .inline-link-row {
+      margin-top: 8px;
+    }
+
+    .text-link {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      font-family: 'Outfit', sans-serif;
+      font-size: 13.5px;
+      font-weight: 600;
+      color: #0C4EA2;
+      cursor: pointer;
+      text-decoration: none;
+      padding: 0;
+    }
+
+    .text-link:hover {
+      color: #062856;
+      text-decoration: underline;
+    }
+
+    .btn-primary {
+      appearance: none;
+      border: 1px solid #FF6B35;
+      background: #FF6B35;
+      color: #FFFFFF;
+      width: 100%;
+      height: 48px;
+      border-radius: 11px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2);
+      transition: background-color 0.16s ease, box-shadow 0.16s ease;
+      margin-top: 6px;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: #e55620;
+      border-color: #e55620;
+      box-shadow: 0 6px 16px rgba(229, 86, 32, 0.26);
+    }
+
+    .btn-primary:disabled {
+      background: #F1EFEA;
+      border-color: #E2DFD7;
+      color: #8A94A6;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    .btn-secondary {
+      appearance: none;
+      border: 1px solid #D8D5CE;
+      background: #FFFFFF;
+      color: #062856;
+      width: 100%;
+      height: 46px;
+      border-radius: 11px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 14.5px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 12px;
+      transition: all 0.16s ease;
+    }
+
+    .btn-secondary:hover {
+      background: #FAF9F6;
+      border-color: #0C4EA2;
+      color: #0C4EA2;
+    }
+
+    .switch-account-row {
+      margin-top: 16px;
+      text-align: center;
+      font-size: 13.5px;
+      color: #64748B;
+    }
+
+    /* 6-digit OTP Grid */
+    .otp-row {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .otp-input {
+      width: 100%;
+      height: 50px;
+      text-align: center;
+      font-family: 'Outfit', sans-serif;
+      font-size: 19px;
+      font-weight: 600;
+      color: #062856;
+      background: #FFFFFF;
+      border: 1px solid #D8D5CE;
+      border-radius: 11px;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .otp-input:focus {
+      border: 1.5px solid #0C4EA2;
+      box-shadow: 0 0 0 3.5px rgba(12, 78, 162, 0.11);
+    }
+
+    /* Footer inside card */
+    .portal-footer {
+      border-top: 1px solid #ECE9E2;
+      margin-top: 26px;
+      padding-top: 18px;
+      display: grid;
+      grid-template-columns: 1.15fr 1.1fr 0.95fr;
+      gap: 12px;
+    }
+
+    .stage-viewport.is-mobile .portal-footer {
+      grid-template-columns: 1fr 1fr;
+      gap: 12px 16px;
+    }
+
+    .contact-col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .contact-lbl {
+      font-size: 10.5px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #94A3B8;
+      line-height: 1.35;
+    }
+
+    .contact-val {
+      font-family: 'Outfit', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: #0C4EA2;
+      text-decoration: none;
+      margin-top: 3px;
+      white-space: nowrap;
+    }
+
+    .contact-val--phone {
+      color: #062856;
+    }
+
+    .contact-val:hover {
+      text-decoration: underline;
+    }
+
+    .outside-address {
+      width: 100%;
+      text-align: center;
+      padding: 16px 12px 0;
+      font-size: 12px;
+      color: #94A3B8;
+      line-height: 1.6;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Installation & Copy Section Below Preview */
+    .install-section {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 8px 20px 68px;
+    }
+
+    .install-card {
+      background: #FFFFFF;
+      border: 1px solid #E6E3DC;
+      border-radius: 20px;
+      padding: 30px 34px;
+      box-shadow: 0 10px 28px rgba(6, 40, 86, 0.04);
+      margin-bottom: 22px;
+    }
+
+    .install-card h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 14px;
+    }
+
+    .steps-list {
+      display: grid;
+      gap: 9px;
+      margin-bottom: 16px;
+    }
+
+    .step-item {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 8px;
+      font-size: 14px;
+      color: #334155;
+    }
+
+    .step-item b.num {
+      font-family: 'Outfit', sans-serif;
+      color: var(--navy);
+    }
+
+    .step-item a {
+      color: var(--blue);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .step-item a:hover {
+      text-decoration: underline;
+    }
+
+    .live-mode-note {
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 13.5px;
+      color: #475569;
+    }
+
+    .code-two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 820px) {
+      .code-two-col {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .code-box-card {
+      background: #FFFFFF;
+      border: 1px solid #E6E3DC;
+      border-radius: 18px;
+      padding: 22px 24px;
+    }
+
+    .code-box-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .code-box-head h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .code-box-head span {
+      display: block;
+      font-size: 12px;
+      color: #64748B;
+    }
+
+    textarea.code-area {
+      width: 100%;
+      height: 220px;
+      background: #FAF9F6;
+      border: 1px solid #DFDCD4;
+      border-radius: 11px;
+      padding: 12px 14px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #1E293B;
+      resize: vertical;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Preview & Copy Bar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-row-1">
+        <div class="brand-head">
+          <img src="data:image/png;base64,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" alt="Edusafe" />
+          <div>
+            <h1>E-learning Portaal Login — Live Preview &amp; GHL Code</h1>
+            <span>Klik door alle 6 inlog- en vervolgschermen heen (Google verwijderd, dashboard blijft standaard)</span>
+          </div>
+        </div>
+        <div class="action-btns">
+          <button type="button" class="copy-pill" data-copy="code-css" data-default="1. Kopieer Custom CSS">1. Kopieer Custom CSS</button>
+          <button type="button" class="copy-pill copy-pill--navy" data-copy="code-js" data-default="2. Kopieer Custom JS">2. Kopieer Custom JS</button>
+          <button type="button" class="copy-pill copy-pill--ghost" onclick="document.getElementById('ghl-install').scrollIntoView({behavior:'smooth'})">GHL Instructies &darr;</button>
+        </div>
+      </div>
+
+      <div class="topbar-row-2">
+        <div class="tab-group" id="screen-tabs">
+          <button type="button" class="tab-btn active" data-screen="login" data-url="https://edusafe.app.clientclub.net/login?redirect=/dashboard">1. Aanmelden</button>
+          <button type="button" class="tab-btn" data-screen="forgot" data-url="https://edusafe.app.clientclub.net/forgot-password">2. Wachtwoord vergeten</button>
+          <button type="button" class="tab-btn" data-screen="code" data-url="https://edusafe.app.clientclub.net/login-with-code">3. Beveiligingscode</button>
+          <button type="button" class="tab-btn" data-screen="otp" data-url="https://edusafe.app.clientclub.net/login-with-code#verify">4. 6-cijferige code (OTP)</button>
+          <button type="button" class="tab-btn" data-screen="signup" data-url="https://edusafe.app.clientclub.net/signup">5. Registreren</button>
+          <button type="button" class="tab-btn" data-screen="setpw" data-url="https://edusafe.app.clientclub.net/set-password">6. Nieuw wachtwoord</button>
+        </div>
+
+        <div class="device-toggle">
+          <button type="button" class="device-btn active" data-device="desktop">Desktop</button>
+          <button type="button" class="device-btn" data-device="mobile">Mobiel (390px)</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Interactive Live Preview Stage -->
+  <main class="stage-outer">
+    <div class="stage-viewport" id="viewport">
+      <div class="browser-bar">
+        <div class="browser-dots"><i></i><i></i><i></i></div>
+        <div class="browser-url" id="browser-url">https://edusafe.app.clientclub.net/login?redirect=/dashboard</div>
+      </div>
+
+      <div class="portal-canvas">
+        <div class="portal-col">
+          <div class="portal-circle-bg" aria-hidden="true">
+            <svg viewBox="0 0 680 680" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="edusafeCircleGrad" x1="40" y1="40" x2="640" y2="640" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#0E56B5" />
+                  <stop offset="60%" stop-color="#0C4EA2" />
+                  <stop offset="100%" stop-color="#07326B" />
+                </linearGradient>
+              </defs>
+              <circle cx="330" cy="340" r="305" fill="url(#edusafeCircleGrad)" />
+              <path d="M 555 115 A 328 328 0 1 0 555 565" stroke="#0C4EA2" stroke-opacity="0.25" stroke-width="2.5" stroke-linecap="round" />
+              <path d="M 510 160 A 265 265 0 1 0 510 520" stroke="#FFFFFF" stroke-opacity="0.16" stroke-width="1.5" stroke-dasharray="6 8" stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="portal-card">
+            <!-- Zone 1: Merkheader -->
+            <div class="portal-brand-row">
+              <a href="https://www.edusafe.nl" target="_blank" rel="noopener">
+                <img src="data:image/png;base64,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" alt="Edusafe" />
+              </a>
+              <span class="portal-brand-tag">Online Leeromgeving</span>
+            </div>
+
+            <!-- SCREEN 1: AANMELDEN (/login) -->
+            <section class="portal-screen active" id="screen-login">
+              <h2 class="portal-h2">Aanmelden</h2>
+              <p class="portal-sub">Meld u aan bij uw account om te beginnen.</p>
+
+              <div class="field-group">
+                <label class="field-label">E-mail<b>*</b></label>
+                <div class="input-box">
+                  <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3 7 9 6 9-6"/></svg>
+                  <input type="email" placeholder="Uw e-mailadres" />
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label">Wachtwoord<b>*</b></label>
+                <div class="input-box">
+                  <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+                  <input type="password" id="login-pw" placeholder="Voer wachtwoord in" />
+                  <button type="button" class="eye-btn" onclick="togglePw('login-pw')" title="Toon/verberg wachtwoord">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </button>
+                </div>
+                <div class="inline-link-row">
+                  <button type="button" class="text-link" onclick="switchScreen('forgot')">Wachtwoord opnieuw instellen</button>
+                </div>
+              </div>
+
+              <button type="button" class="btn-primary">Aanmelden</button>
+              <button type="button" class="btn-secondary" onclick="switchScreen('code')">Meld u aan met de beveiligingscode</button>
+
+              <div class="switch-account-row">
+                Nieuw hier? <button type="button" class="text-link" onclick="switchScreen('signup')">Registreren</button>
+              </div>
+            </section>
+
+            <!-- SCREEN 2: WACHTWOORD VERGETEN (/forgot-password) -->
+            <section class="portal-screen" id="screen-forgot">
+              <h2 class="portal-h2">Wachtwoord opnieuw instellen</h2>
+              <p class="portal-sub">Voer uw geregistreerde e-mailadres in om uw wachtwoord opnieuw in te stellen.</p>
+
+              <div class="field-group">
+                <label class="field-label">E-mail<b>*</b></label>
+                <div class="input-box">
+                  <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3 7 9 6 9-6"/></svg>
+                  <input type="email" id="forgot-email" placeholder="Typ hier een e-mail om de knop actief te zien..." oninput="document.getElementById('forgot-btn').disabled = !this.value.trim()" />
+                </div>
+              </div>
+
+              <button type="button" class="btn-primary" id="forgot-btn" disabled>Stuur herstel e-mail</button>
+
+              <div class="switch-account-row">
+                <button type="button" class="text-link" onclick="switchScreen('login')">&larr; Terug naar aanmelden</button>
+              </div>
+            </section>
+
+            <!-- SCREEN 3: BEVEILIGINGSCODE (/login-with-code) -->
+            <section class="portal-screen" id="screen-code">
+              <h2 class="portal-h2">Meld u aan met de beveiligingscode</h2>
+              <p class="portal-sub">We sturen een eenmalige beveiligingscode naar uw e-mailadres.</p>
+
+              <div class="field-group">
+                <label class="field-label">E-mail<b>*</b></label>
+                <div class="input-box">
+                  <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3 7 9 6 9-6"/></svg>
+                  <input type="email" id="code-email" value="jan.devries@voorbeeld.nl" oninput="document.getElementById('code-btn').disabled = !this.value.trim()" />
+                </div>
+              </div>
+
+              <button type="button" class="btn-primary" id="code-btn" onclick="switchScreen('otp')">Verzend code</button>
+              <button type="button" class="btn-secondary" onclick="switchScreen('login')">Meld u aan met wachtwoord</button>
+            </section>
+
+            <!-- SCREEN 4: 6-CIJFERIGE OTP CODE -->
+            <section class="portal-screen" id="screen-otp">
+              <h2 class="portal-h2">Voer de beveiligingscode in</h2>
+              <p class="portal-sub">Voer de 6-cijferige code in die is verzonden naar <strong style="color:#062856;font-weight:600;">jan.devries@voorbeeld.nl</strong>.</p>
+
+              <div class="otp-row" id="otp-boxes">
+                <input class="otp-input" type="text" maxlength="1" value="4" />
+                <input class="otp-input" type="text" maxlength="1" value="8" />
+                <input class="otp-input" type="text" maxlength="1" value="2" />
+                <input class="otp-input" type="text" maxlength="1" value="9" />
+                <input class="otp-input" type="text" maxlength="1" value="" placeholder="·" />
+                <input class="otp-input" type="text" maxlength="1" value="" placeholder="·" />
+              </div>
+
+              <button type="button" class="btn-primary">Verifiëren en aanmelden</button>
+
+              <div class="switch-account-row">
+                Geen code ontvangen? <button type="button" class="text-link">Opnieuw verzenden</button>
+                &nbsp;&middot;&nbsp;
+                <button type="button" class="text-link" onclick="switchScreen('code')">Wijzig e-mail</button>
+              </div>
+            </section>
+
+            <!-- SCREEN 5: REGISTREREN (/signup — ZONDER GOOGLE) -->
+            <section class="portal-screen" id="screen-signup">
+              <h2 class="portal-h2">Registreren</h2>
+              <p class="portal-sub">Meld u aan voor een account om aan de slag te gaan.</p>
+
+              <div class="field-group">
+                <label class="field-label">Volledige naam<b>*</b></label>
+                <div class="input-box">
+                  <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c1.5-4 5-6 8-6s6.5 2 8 6"/></svg>
+                  <input type="text" placeholder="bijv. Jan de Vries" />
+                </div>
+                <p class="field-helper">Gebruik uw echte naam zodat mensen u kunnen herkennen.</p>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label">E-mail<b>*</b></label>
+                <div class="input-box">
+                  <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3 7 9 6 9-6"/></svg>
+                  <input type="email" placeholder="bijv. jan.devries@voorbeeld.nl" />
+                </div>
+                <p class="field-helper">We sturen een verificatiecode naar dit e-mailadres.</p>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label">Wachtwoord<b>*</b></label>
+                <div class="input-box">
+                  <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+                  <input type="password" id="signup-pw" placeholder="Stel uw wachtwoord in" />
+                  <button type="button" class="eye-btn" onclick="togglePw('signup-pw')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                  </button>
+                </div>
+              </div>
+
+              <button type="button" class="btn-primary">Verstuur verificatiecode</button>
+
+              <div class="switch-account-row">
+                Heeft u al een account? <button type="button" class="text-link" onclick="switchScreen('login')">Aanmelden</button>
+              </div>
+            </section>
+
+            <!-- SCREEN 6: NIEUW WACHTWOORD INSTELLEN (/set-password) -->
+            <section class="portal-screen" id="screen-setpw">
+              <h2 class="portal-h2">Nieuw wachtwoord instellen</h2>
+              <p class="portal-sub">Kies een nieuw wachtwoord voor toegang tot uw online leeromgeving.</p>
+
+              <div class="field-group">
+                <label class="field-label">Nieuw wachtwoord<b>*</b></label>
+                <div class="input-box">
+                  <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+                  <input type="password" id="new-pw-1" placeholder="Minimaal 8 tekens" />
+                </div>
+              </div>
+
+              <div class="field-group">
+                <label class="field-label">Bevestig nieuw wachtwoord<b>*</b></label>
+                <div class="input-box">
+                  <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+                  <input type="password" id="new-pw-2" placeholder="Herhaal nieuw wachtwoord" />
+                </div>
+              </div>
+
+              <button type="button" class="btn-primary">Wachtwoord opslaan</button>
+
+              <div class="switch-account-row">
+                <button type="button" class="text-link" onclick="switchScreen('login')">&larr; Terug naar aanmelden</button>
+              </div>
+            </section>
+
+            <!-- Zone 3: 3-Koloms Contactbalk -->
+            <footer class="portal-footer">
+              <div class="contact-col">
+                <span class="contact-lbl">Telefoon</span>
+                <a class="contact-val contact-val--phone" href="tel:0704447795">070 - 444 77 95</a>
+              </div>
+              <div class="contact-col">
+                <span class="contact-lbl">E-mail</span>
+                <a class="contact-val" href="mailto:info@edusafe.nl">info@edusafe.nl</a>
+              </div>
+              <div class="contact-col">
+                <span class="contact-lbl">Website</span>
+                <a class="contact-val" href="https://www.edusafe.nl" target="_blank" rel="noopener">www.edusafe.nl</a>
+              </div>
+            </footer>
+          </div>
+
+          <div class="outside-address">
+            Edusafe Trainingen &amp; Opleidingen &nbsp;&middot;&nbsp; Oude Middenweg 241A, 2491 AH Den Haag
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- GHL Instructions & 2 Separate Copy Boxes -->
+  <section class="install-section" id="ghl-install">
+    <div class="install-card">
+      <h2>Zo zet je dit live in GoHighLevel / LeadFabriek (2 minuten)</h2>
+      <div class="steps-list">
+        <div class="step-item">
+          <b class="num">1.</b>
+          <span>Open <a href="https://app.leadfabriek.io/v2/location/RxhTWyNa3XHNVvCWE5Wc/memberships/client-portal/branding" target="_blank" rel="noopener">Memberships &rarr; Client Portal &rarr; Settings &rarr; Branding</a> en scroll naar beneden tot <strong>Advanced</strong>.</span>
+        </div>
+        <div class="step-item">
+          <b class="num">2.</b>
+          <span>Klik op <strong>1. Kopieer Custom CSS</strong> en plak dit in het GHL-vak <strong>Custom CSS</strong>.</span>
+        </div>
+        <div class="step-item">
+          <b class="num">3.</b>
+          <span>Klik op <strong>2. Kopieer Custom JS</strong> en plak dit in het GHL-vak <strong>Custom JS</strong>.</span>
+        </div>
+        <div class="step-item">
+          <b class="num">4.</b>
+          <span>Zet de schakelaar <strong>Live Mode</strong> AAN en klik rechtsonder op <strong>Save</strong>.</span>
+        </div>
+      </div>
+      <div class="live-mode-note">
+        <strong>Belangrijk:</strong> Zonder <strong>Live Mode</strong> aan negeert GoHighLevel alle Custom CSS en Custom JS voor bezoekers op <code>edusafe.app.clientclub.net</code>. Het ingelogde cursistendashboard (<code>/dashboard</code> en <code>/courses</code>) blijft 100% standaard en ongewijzigd.
+      </div>
+    </div>
+
+    <div class="code-two-col">
+      <div class="code-box-card">
+        <div class="code-box-head">
+          <div>
+            <h3>Vak 1 in GHL — Custom CSS</h3>
+            <span>ghl-portal/edusafe-portal-login.css</span>
+          </div>
+          <button type="button" class="copy-pill" data-copy="code-css" data-default="Kopieer Custom CSS">Kopieer Custom CSS</button>
+        </div>
+        <textarea id="code-css" class="code-area" readonly spellcheck="false">/* ==========================================================================
+   EDUSAFE ONLINE LEEROMGEVING — GHL CLIENT PORTAL AUTH REDESIGN
+   Locatie: Client Portal -&gt; Settings -&gt; Branding -&gt; Advanced -&gt; Custom CSS
+   Scope:   Uitsluitend actief op inlog- en vervolgschermen (.auth-page).
+            Het ingelogde dashboard (/dashboard, /courses) blijft 100% standaard.
+   Let op:  Bevat bewust GEEN @import zodat de browser deze stylesheet in 0ms
+            toepast zonder op externe font-downloads te wachten.
+   ========================================================================== */
+
+@keyframes edusafeCircleReveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   0. INGELOGDE PORTAALPAGINA'S (:not(.auth-page)) — BEHOUD EDUSAFE BLAUW
+      (Zodat Merkkleur één én twee in GHL beide op #FAF9F6 gezet kunnen worden
+       voor een 100% crème achtergrond vanaf milliseconde 0 op /login)
+   -------------------------------------------------------------------------- */
+html:has(#cp-root-container:not(.auth-page)) {
+  --cp-brand-primary: #0C4EA2 !important;
+  --brand-color-primary: #0C4EA2 !important;
+  --cp-platform-primary: #0C4EA2 !important;
+  --cp-primary-50: #EFF5FC !important;
+  --primary-50: #EFF5FC !important;
+  --cp-primary-100: #DBEAFE !important;
+  --primary-100: #DBEAFE !important;
+  --cp-primary-200: #BFDBFE !important;
+  --primary-200: #BFDBFE !important;
+  --cp-primary-300: #93C5FD !important;
+  --primary-300: #93C5FD !important;
+  --cp-primary-400: #60A5FA !important;
+  --primary-400: #60A5FA !important;
+  --cp-primary-500: #0C4EA2 !important;
+  --primary-500: #0C4EA2 !important;
+  --cp-primary-600: #093D80 !important;
+  --primary-600: #093D80 !important;
+  --cp-primary-700: #07326B !important;
+  --primary-700: #07326B !important;
+  --cp-primary-800: #062856 !important;
+  --primary-800: #062856 !important;
+  --cp-primary-900: #041B3B !important;
+  --primary-900: #041B3B !important;
+  --cp-text-on-primary: #FFFFFF !important;
+}
+
+/* --------------------------------------------------------------------------
+   1. BUITENSTE CANVAS (#FAF9F6 EDUSAFE CRÈME) &amp; SPLIT-SCREEN UITSCHAKELEN
+   -------------------------------------------------------------------------- */
+#cp-root-container.auth-page,
+#cp-root-container.auth-page .cp-content-area,
+#cp-root-container.auth-page #cp-main-content,
+#cp-root-container.auth-page .cp-main-content-inner {
+  background-color: #FAF9F6 !important;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+  color: #1A202C !important;
+}
+
+/* Verberg de rechter split-screen stockfoto */
+#cp-root-container.auth-page aside#cp-auth-hero {
+  display: none !important;
+}
+
+/* Huidige GHL grid-wrapper (wanneer Portal Image in GHL gevuld is) */
+#cp-root-container.auth-page .cp-main-content-inner &gt; div.grid {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 100dvh !important;
+  width: 100% !important;
+  background-color: #FAF9F6 !important;
+  padding: 36px 16px 40px 16px !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+  overflow-x: hidden !important;
+}
+
+#cp-root-container.auth-page .cp-main-content-inner &gt; div.grid &gt; section {
+  width: 100% !important;
+  max-width: 472px !important;
+  padding: 0 !important;
+  margin: 0 auto !important;
+  flex: 0 0 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+#cp-root-container.auth-page .cp-main-content-inner &gt; div.grid &gt; section &gt; div {
+  max-width: 472px !important;
+  width: 100% !important;
+  flex: 0 0 auto !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+/* Fallback layout (mocht Portal Image later in GHL leeggemaakt worden) */
+#cp-root-container.auth-page #cp-auth-background.auth-layout-background {
+  background: #FAF9F6 !important;
+  background-image: none !important;
+  min-height: 100dvh !important;
+  padding: 36px 16px 40px 16px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  overflow-x: hidden !important;
+}
+
+#cp-root-container.auth-page .auth-card-container {
+  max-width: 472px !important;
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Herkenbare Edusafe 3/4-cirkel met blauwe gradient achter de kaart (zoals in de aanvraagstraat) */
+#cp-root-container.auth-page .cp-main-content-inner &gt; div.grid &gt; section::before,
+#cp-root-container.auth-page .auth-card-container::before {
+  content: "" !important;
+  position: absolute !important;
+  top: calc(50% - 16px) !important;
+  right: -236px !important;
+  width: 520px !important;
+  height: 520px !important;
+  transform: translateY(-50%) scaleX(-1) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 680 680' fill='none'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='40' y1='40' x2='640' y2='640' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0%25' stop-color='%230E56B5'/%3E%3Cstop offset='60%25' stop-color='%230C4EA2'/%3E%3Cstop offset='100%25' stop-color='%2307326B'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='330' cy='340' r='305' fill='url(%23g)'/%3E%3Cpath d='M 555 115 A 328 328 0 1 0 555 565' stroke='%230C4EA2' stroke-opacity='0.25' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M 510 160 A 265 265 0 1 0 510 520' stroke='%23FFFFFF' stroke-opacity='0.16' stroke-width='1.5' stroke-dasharray='6 8' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+  filter: drop-shadow(0 25px 25px rgba(6, 40, 86, 0.15)) !important;
+  animation: edusafeCircleReveal 0.25s ease-out both !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  z-index: 0 !important;
+}
+
+/* Rustige adresregel onder de witte kaart (100% pure CSS, geen Vue VDOM-conflict) */
+#cp-root-container.auth-page .cp-main-content-inner &gt; div.grid &gt; section::after,
+#cp-root-container.auth-page .auth-card-container::after {
+  content: "Edusafe Trainingen &amp; Opleidingen  \00B7  Oude Middenweg 241A, 2491 AH Den Haag" !important;
+  display: block !important;
+  width: 100% !important;
+  text-align: center !important;
+  padding: 16px 12px 0 12px !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 12px !important;
+  color: #94A3B8 !important;
+  line-height: 1.6 !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+/* --------------------------------------------------------------------------
+   2. WITTE HOOFDKAART (AANVRAAGSTRAAT &amp; UITNODIGINGSMAIL STIJL)
+   -------------------------------------------------------------------------- */
+#cp-root-container.auth-page .cp-main-content-inner &gt; div.grid &gt; section &gt; div &gt; div.flex.w-full.flex-col,
+#cp-root-container.auth-page #cp-auth-card.auth-card {
+  background-color: #FFFFFF !important;
+  border: 1px solid #E6E3DC !important;
+  border-radius: 22px !important;
+  box-shadow: 0 22px 50px rgba(6, 40, 86, 0.13) !important;
+  padding: 32px 40px 30px 40px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+/* Voorkom dubbele kaart-styling als #cp-auth-card actief is */
+#cp-root-container.auth-page #cp-auth-card.auth-card &gt; div.flex.w-full.flex-col {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* --------------------------------------------------------------------------
+   3. GOOGLE INLOGGEN &amp; SCHEIDINGSLIJN DIRECT VERBERGEN (FRAME 0)
+   -------------------------------------------------------------------------- */
+#cp-root-container.auth-page div:has(&gt; #google-one-tap-1-container),
+#cp-root-container.auth-page #google-one-tap-1-container,
+#cp-root-container.auth-page .custom-google-button,
+#cp-root-container.auth-page .google-button,
+#cp-root-container.auth-page #google-signin-spinner,
+#cp-root-container.auth-page #google-sso-loading,
+#cp-root-container.auth-page .cp-divider:has(#login-modal-with-email-divider) {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   4. ZONE 1: EDUSAFE MERKHEADER (100% PURE CSS — NUL VUE HYDRATION MISMATCH)
+   -------------------------------------------------------------------------- */
+#cp-root-container.auth-page .mb-12:has(.cp-avatar--square) {
+  margin-bottom: 26px !important;
+  padding-bottom: 20px !important;
+  border-bottom: 1px solid #ECE9E2 !important;
+  width: 100% !important;
+}
+
+/* Verberg standaard platgedrukt 40x40 favicon + "Welkom bij EDUSAFE!" */
+#cp-root-container.auth-page .mb-12:has(.cp-avatar--square) .cp-avatar--square,
+#cp-root-container.auth-page .mb-12:has(.cp-avatar--square) p.hr-text {
+  display: none !important;
+}
+
+#cp-root-container.auth-page .mb-12:has(.cp-avatar--square) &gt; div {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+}
+
+#cp-root-container.auth-page .mb-12:has(.cp-avatar--square) &gt; div::before {
+  content: "" !important;
+  display: block !important;
+  width: 124px !important;
+  height: 58px !important;
+  background-image: url("https://edusafe-site.vercel.app/assets/images/edusafe_logo.png") !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: left center !important;
+  cursor: pointer !important;
+}
+
+#cp-root-container.auth-page .mb-12:has(.cp-avatar--square) &gt; div::after {
+  content: "Online Leeromgeving" !important;
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  color: #64748B !important;
+  letter-spacing: 0.01em !important;
+  white-space: nowrap !important;
+}
+
+/* Fallback logo bovenaan op schermen waar GHL geen .mb-12 header rendert (bijv. /profile-confirmation) */
+#cp-root-container.auth-page .cp-main-content-inner &gt; div.grid &gt; section &gt; div &gt; div.flex.w-full.flex-col:not(:has(.cp-avatar--square))::before,
+#cp-root-container.auth-page #cp-auth-card.auth-card &gt; div.flex.w-full.flex-col:not(:has(.cp-avatar--square))::before {
+  content: "" !important;
+  display: block !important;
+  width: 100% !important;
+  height: 58px !important;
+  padding-bottom: 20px !important;
+  margin-bottom: 26px !important;
+  border-bottom: 1px solid #ECE9E2 !important;
+  background-image: url("https://edusafe-site.vercel.app/assets/images/edusafe_logo.png") !important;
+  background-size: 124px auto !important;
+  background-repeat: no-repeat !important;
+  background-position: left top !important;
+}
+
+/* --------------------------------------------------------------------------
+   5. TYPOGRAFIE — KOPPEN, SUBTITELS &amp; HELPERTEKSTEN OP ALLE SUBSCHERMEN
+   -------------------------------------------------------------------------- */
+#cp-root-container.auth-page .montserrat-semibold,
+#cp-root-container.auth-page .flex.min-w-0.flex-1.flex-col.mb-4 &gt; p.hr-text:first-child {
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 24px !important;
+  font-weight: 600 !important;
+  line-height: 1.28 !important;
+  letter-spacing: -0.015em !important;
+  color: #062856 !important;
+}
+
+#cp-root-container.auth-page .montserrat-regular,
+#cp-root-container.auth-page .flex.min-w-0.flex-1.flex-col.mb-4 &gt; p.hr-text:nth-child(2) {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 14.5px !important;
+  font-weight: 400 !important;
+  line-height: 1.6 !important;
+  color: #475569 !important;
+  margin-top: 6px !important;
+}
+
+#cp-root-container.auth-page .flex.min-w-0.flex-1.flex-col.mb-4 {
+  margin-bottom: 22px !important;
+  flex: 0 0 auto !important;
+}
+
+/* Toelichtingsteksten onder invoervelden */
+#cp-root-container.auth-page .text-clientportal-font-secondary,
+#cp-root-container.auth-page .text-clientportal-primary {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 13px !important;
+  line-height: 1.55 !important;
+  color: #64748B !important;
+}
+
+/* Foutmeldingen */
+#cp-root-container.auth-page .text-danger,
+#cp-root-container.auth-page #login-modal-email-field-feedback:not(:empty),
+#cp-root-container.auth-page #login-modal-password-field-feedback:not(:empty) {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 13px !important;
+  color: #DC2626 !important;
+}
+
+/* --------------------------------------------------------------------------
+   6. FORMULIEREN, VELDLABELS, INPUTS &amp; 6-CIJFERIGE OTP-VAKJES
+   -------------------------------------------------------------------------- */
+#cp-root-container.auth-page form.hr-form {
+  gap: 14px !important;
+  width: 100% !important;
+}
+
+/* Veldlabels (E-mail *, Wachtwoord *, Volledige naam) */
+#cp-root-container.auth-page .hr-form-item-label {
+  padding-bottom: 6px !important;
+  height: auto !important;
+}
+
+#cp-root-container.auth-page .hr-form-item-label__text {
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  color: #062856 !important;
+  letter-spacing: -0.005em !important;
+}
+
+#cp-root-container.auth-page .hr-form-item-label__asterisk {
+  color: #FF6B35 !important;
+  font-weight: 600 !important;
+}
+
+/* Feedback-regels onder velden: klap lege regels in, geef gevulde regels rustige ruimte */
+#cp-root-container.auth-page .hr-form-item-feedback-wrapper {
+  min-height: 0 !important;
+  padding-top: 4px !important;
+}
+
+#cp-root-container.auth-page .hr-form-item-feedback-wrapper:has(p:not(:empty)) {
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+}
+
+#cp-root-container.auth-page #login-modal-email-form-item .hr-form-item-feedback-wrapper:not(:has(p:not(:empty))) {
+  display: none !important;
+}
+
+/* Tekst- en wachtwoordvelden (HighRise / Naive UI --n-* variabelen) */
+#cp-root-container.auth-page .hr-input-container {
+  --n-border-radius: 11px !important;
+  border-radius: 11px !important;
+}
+
+#cp-root-container.auth-page .hr-input {
+  --n-height: 48px !important;
+  --n-border-radius: 11px !important;
+  --n-color: #FFFFFF !important;
+  --n-color-focus: #FFFFFF !important;
+  --n-color-disabled: #FAF9F6 !important;
+  --n-border: 1px solid #D8D5CE !important;
+  --n-border-hover: 1px solid #94A3B8 !important;
+  --n-border-focus: 1.5px solid #0C4EA2 !important;
+  --n-box-shadow-focus: 0 0 0 3.5px rgba(12, 78, 162, 0.11) !important;
+  --n-text-color: #062856 !important;
+  --n-text-color-disabled: #64748B !important;
+  --n-caret-color: #0C4EA2 !important;
+  --n-placeholder-color: #94A3B8 !important;
+  --n-padding-left: 14px !important;
+  --n-padding-right: 14px !important;
+  --n-font-size: 15px !important;
+  --n-icon-color: #64748B !important;
+  --n-icon-color-hover: #0C4EA2 !important;
+  border-radius: 11px !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease !important;
+}
+
+#cp-root-container.auth-page .hr-input:focus-within {
+  --n-border: 1.5px solid #0C4EA2 !important;
+  box-shadow: 0 0 0 3.5px rgba(12, 78, 162, 0.11) !important;
+}
+
+#cp-root-container.auth-page .hr-input__input-el {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 15px !important;
+  color: #062856 !important;
+}
+
+#cp-root-container.auth-page .hr-input__placeholder {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 14.5px !important;
+  color: #94A3B8 !important;
+}
+
+#cp-root-container.auth-page .hr-input__prefix,
+#cp-root-container.auth-page .hr-input__eye {
+  color: #64748B !important;
+}
+
+#cp-root-container.auth-page .hr-input__eye:hover {
+  color: #0C4EA2 !important;
+}
+
+/* 6-cijferige Beveiligings- &amp; Verificatiecode vakjes (LoginOtpInput) */
+#cp-root-container.auth-page .login-otp-input__fields .hr-otp-field-wrapper,
+#cp-root-container.auth-page .hr-input-otp .hr-input {
+  --n-border-radius: 11px !important;
+  --n-border: 1px solid #D8D5CE !important;
+  --n-border-hover: 1px solid #94A3B8 !important;
+  --n-border-focus: 1.5px solid #0C4EA2 !important;
+  --n-box-shadow-focus: 0 0 0 3.5px rgba(12, 78, 162, 0.11) !important;
+  border-radius: 11px !important;
+}
+
+#cp-root-container.auth-page .login-otp-input__fields input,
+#cp-root-container.auth-page .hr-otp-field-input {
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+  font-weight: 600 !important;
+  color: #062856 !important;
+}
+
+#cp-root-container.auth-page #secure-code-modal-resend-code-button {
+  color: #0C4EA2 !important;
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+  font-weight: 600 !important;
+}
+
+/* --------------------------------------------------------------------------
+   7. KNOPPENHIËRARCHIE (PRIMAIR ORANJE, LEESBAAR DISABLED, SECUNDAIR &amp; LINKS)
+   -------------------------------------------------------------------------- */
+/* Primaire actieknop (Actief — Edusafe Oranje #FF6B35) */
+#cp-root-container.auth-page .hr-button.hr-button--primary:not(.hr-button--disabled):not([disabled]) {
+  --n-color: #FF6B35 !important;
+  --n-color-hover: #e55620 !important;
+  --n-color-pressed: #d44d1a !important;
+  --n-color-focus: #FF6B35 !important;
+  --n-border: 1px solid #FF6B35 !important;
+  --n-border-hover: 1px solid #e55620 !important;
+  --n-border-pressed: 1px solid #d44d1a !important;
+  --n-border-focus: 1px solid #FF6B35 !important;
+  --n-text-color: #FFFFFF !important;
+  --n-text-color-hover: #FFFFFF !important;
+  --n-text-color-pressed: #FFFFFF !important;
+  --n-text-color-focus: #FFFFFF !important;
+  --n-height: 48px !important;
+  --n-border-radius: 11px !important;
+  --n-ripple-color: rgba(255, 107, 53, 0.3) !important;
+  background-color: #FF6B35 !important;
+  height: 48px !important;
+  border-radius: 11px !important;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2) !important;
+  transition: background-color 0.18s ease, box-shadow 0.18s ease !important;
+}
+
+#cp-root-container.auth-page .hr-button.hr-button--primary:not(.hr-button--disabled):not([disabled]):hover {
+  background-color: #e55620 !important;
+  box-shadow: 0 6px 16px rgba(229, 86, 32, 0.26) !important;
+}
+
+#cp-root-container.auth-page .hr-button.hr-button--primary:not(.hr-button--disabled):not([disabled]) .hr-text {
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: #FFFFFF !important;
+  letter-spacing: 0.005em !important;
+}
+
+/* Primaire actieknop (Disabled — Rustig steengrijs met helder leesbare tekst) */
+#cp-root-container.auth-page .hr-button.hr-button--primary.hr-button--disabled,
+#cp-root-container.auth-page .hr-button.hr-button--primary[disabled] {
+  --n-color: #F1EFEA !important;
+  --n-color-disabled: #F1EFEA !important;
+  --n-border: 1px solid #E2DFD7 !important;
+  --n-border-disabled: 1px solid #E2DFD7 !important;
+  --n-text-color: #8A94A6 !important;
+  --n-text-color-disabled: #8A94A6 !important;
+  --n-opacity-disabled: 1 !important;
+  --n-height: 48px !important;
+  --n-border-radius: 11px !important;
+  background-color: #F1EFEA !important;
+  height: 48px !important;
+  border-radius: 11px !important;
+  opacity: 1 !important;
+  box-shadow: none !important;
+}
+
+#cp-root-container.auth-page .hr-button.hr-button--primary.hr-button--disabled .hr-text,
+#cp-root-container.auth-page .hr-button.hr-button--primary[disabled] .hr-text {
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: #8A94A6 !important;
+}
+
+/* Secundaire actieknop (Beveiligingscode / Terug naar wachtwoord) */
+#cp-root-container.auth-page .hr-button.hr-button--secondary {
+  --n-color: #FFFFFF !important;
+  --n-color-hover: #FAF9F6 !important;
+  --n-color-pressed: #F2EFE8 !important;
+  --n-color-focus: #FAF9F6 !important;
+  --n-border: 1px solid #D8D5CE !important;
+  --n-border-hover: 1px solid #0C4EA2 !important;
+  --n-border-pressed: 1px solid #0C4EA2 !important;
+  --n-border-focus: 1px solid #0C4EA2 !important;
+  --n-text-color: #062856 !important;
+  --n-text-color-hover: #0C4EA2 !important;
+  --n-text-color-pressed: #0C4EA2 !important;
+  --n-text-color-focus: #0C4EA2 !important;
+  --n-height: 46px !important;
+  --n-border-radius: 11px !important;
+  background-color: #FFFFFF !important;
+  height: 46px !important;
+  border-radius: 11px !important;
+  transition: all 0.18s ease !important;
+}
+
+#cp-root-container.auth-page .hr-button.hr-button--secondary:hover {
+  background-color: #FAF9F6 !important;
+}
+
+#cp-root-container.auth-page .hr-button.hr-button--secondary .hr-text {
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 14.5px !important;
+  font-weight: 600 !important;
+  color: #062856 !important;
+}
+
+#cp-root-container.auth-page .hr-button.hr-button--secondary:hover .hr-text {
+  color: #0C4EA2 !important;
+}
+
+/* Tekstlinks (Wachtwoord opnieuw instellen, Registreren, Aanmelden, Terug) */
+#cp-root-container.auth-page .hr-button.hr-button--text {
+  --n-color: transparent !important;
+  --n-color-hover: transparent !important;
+  --n-color-pressed: transparent !important;
+  --n-text-color: #0C4EA2 !important;
+  --n-text-color-hover: #062856 !important;
+  --n-text-color-pressed: #062856 !important;
+}
+
+#cp-root-container.auth-page .hr-button.hr-button--text .hr-text {
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  color: #0C4EA2 !important;
+}
+
+#cp-root-container.auth-page .hr-button.hr-button--text:hover .hr-text {
+  color: #062856 !important;
+  text-decoration: underline !important;
+}
+
+/* "Nieuw hier?" / "Heeft u al een account?" regel */
+#cp-root-container.auth-page .text-secondary.flex.w-full.justify-center {
+  margin-top: 16px !important;
+  color: #64748B !important;
+}
+
+#cp-root-container.auth-page .text-secondary.flex.w-full.justify-center &gt; span.hr-text {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 13.5px !important;
+  color: #64748B !important;
+}
+
+/* --------------------------------------------------------------------------
+   8. ZONE 3: CONTACTBALK ONDERAAN DE KAART
+   -------------------------------------------------------------------------- */
+#cp-root-container.auth-page #cp-auth-footer {
+  border-top: 1px solid #ECE9E2 !important;
+  margin-top: 26px !important;
+  padding-top: 18px !important;
+}
+
+/* Verberg het losse '©' teken uit GHL's standaard footer */
+#cp-root-container.auth-page #cp-auth-footer &gt; span:not(.edusafe-footer-item) {
+  display: none !important;
+}
+
+#cp-root-container.auth-page #cp-auth-support-link {
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #0C4EA2 !important;
+}
+
+/* Door JS verrijkte 3-koloms contactbalk (identiek aan de uitnodigingsmail) */
+#cp-root-container.auth-page #cp-auth-footer.edusafe-footer-ready &gt; a#cp-auth-support-link {
+  display: none !important;
+}
+
+#cp-root-container.auth-page .edusafe-contact-grid {
+  display: grid !important;
+  grid-template-columns: 1.15fr 1.1fr 0.95fr !important;
+  gap: 12px !important;
+  width: 100% !important;
+}
+
+#cp-root-container.auth-page .edusafe-contact-col {
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+}
+
+#cp-root-container.auth-page .edusafe-contact-label {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 10.5px !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  color: #94A3B8 !important;
+  line-height: 1.35 !important;
+}
+
+#cp-root-container.auth-page .edusafe-contact-link {
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #0C4EA2 !important;
+  text-decoration: none !important;
+  margin-top: 3px !important;
+  line-height: 1.4 !important;
+  white-space: nowrap !important;
+}
+
+#cp-root-container.auth-page .edusafe-contact-link--phone {
+  color: #062856 !important;
+}
+
+#cp-root-container.auth-page .edusafe-contact-link:hover {
+  text-decoration: underline !important;
+}
+
+/* --------------------------------------------------------------------------
+   9. MOBIELE WEERGAVE (&lt;= 540PX)
+   -------------------------------------------------------------------------- */
+@media only screen and (max-width: 540px) {
+  #cp-root-container.auth-page .cp-main-content-inner &gt; div.grid,
+  #cp-root-container.auth-page #cp-auth-background.auth-layout-background {
+    padding: 20px 14px 28px 14px !important;
+    justify-content: flex-start !important;
+  }
+
+  #cp-root-container.auth-page .cp-main-content-inner &gt; div.grid &gt; section &gt; div &gt; div.flex.w-full.flex-col,
+  #cp-root-container.auth-page #cp-auth-card.auth-card {
+    padding: 24px 22px 22px 22px !important;
+    border-radius: 18px !important;
+  }
+
+  #cp-root-container.auth-page .mb-12:has(.cp-avatar--square) {
+    padding-bottom: 16px !important;
+    margin-bottom: 22px !important;
+  }
+
+  #cp-root-container.auth-page .mb-12:has(.cp-avatar--square) &gt; div::before {
+    width: 112px !important;
+    height: 52px !important;
+  }
+
+  #cp-root-container.auth-page .montserrat-semibold,
+  #cp-root-container.auth-page .flex.min-w-0.flex-1.flex-col.mb-4 &gt; p.hr-text:first-child {
+    font-size: 21px !important;
+  }
+
+  #cp-root-container.auth-page .cp-main-content-inner &gt; div.grid &gt; section::before,
+  #cp-root-container.auth-page .auth-card-container::before {
+    width: 380px !important;
+    height: 380px !important;
+    right: -195px !important;
+  }
+
+  #cp-root-container.auth-page .edusafe-contact-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px 16px !important;
+  }
+}
+</textarea>
+      </div>
+
+      <div class="code-box-card">
+        <div class="code-box-head">
+          <div>
+            <h3>Vak 2 in GHL — Custom JS</h3>
+            <span>ghl-portal/edusafe-portal-login.js</span>
+          </div>
+          <button type="button" class="copy-pill copy-pill--navy" data-copy="code-js" data-default="Kopieer Custom JS">Kopieer Custom JS</button>
+        </div>
+        <textarea id="code-js" class="code-area" readonly spellcheck="false">/* ==========================================================================
+   EDUSAFE ONLINE LEEROMGEVING — GHL CLIENT PORTAL AUTH ENHANCEMENT
+   Locatie: Client Portal - Settings - Branding - Advanced - Custom JS
+   Let op:  Bevat bewust geen HTML-haakjes zodat de GHL Custom JS-parser
+            geen enkel teken stript. Wacht netjes op Vue 3 SSR-hydratie en
+            werkt uitsluitend op .auth-page routes.
+   ========================================================================== */
+(function () {
+  var SITE_URL = 'https://www.edusafe.nl';
+  var FONT_HREF =
+    'https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600&amp;display=swap';
+  var rafPending = false;
+
+  function ensureEdusafeFonts() {
+    var head = document.head || document.getElementsByTagName('head')[0];
+    if (!head || document.getElementById('edusafe-auth-fonts')) {
+      return;
+    }
+    var pre1 = document.createElement('link');
+    pre1.rel = 'preconnect';
+    pre1.href = 'https://fonts.googleapis.com';
+    head.appendChild(pre1);
+
+    var pre2 = document.createElement('link');
+    pre2.rel = 'preconnect';
+    pre2.href = 'https://fonts.gstatic.com';
+    pre2.crossOrigin = 'anonymous';
+    head.appendChild(pre2);
+
+    var fontLink = document.createElement('link');
+    fontLink.id = 'edusafe-auth-fonts';
+    fontLink.rel = 'stylesheet';
+    fontLink.href = FONT_HREF;
+    head.appendChild(fontLink);
+  }
+
+  function makeEl(tag, className, text) {
+    var el = document.createElement(tag);
+    if (className) {
+      el.className = className;
+    }
+    if (typeof text === 'string') {
+      el.textContent = text;
+    }
+    return el;
+  }
+
+  function buildContactCol(label, value, href, extraLinkClass, external) {
+    var col = makeEl('div', 'edusafe-contact-col');
+    var lbl = makeEl('span', 'edusafe-contact-label', label);
+    var lnk = makeEl(
+      'a',
+      extraLinkClass ? 'edusafe-contact-link ' + extraLinkClass : 'edusafe-contact-link',
+      value
+    );
+    lnk.href = href;
+    if (external) {
+      lnk.target = '_blank';
+      lnk.rel = 'noopener';
+    }
+    col.appendChild(lbl);
+    col.appendChild(lnk);
+    return col;
+  }
+
+  function buildContactGrid() {
+    var grid = makeEl('div', 'edusafe-contact-grid edusafe-footer-item');
+    grid.appendChild(
+      buildContactCol('Telefoon', '070 - 444 77 95', 'tel:0704447795', 'edusafe-contact-link--phone', false)
+    );
+    grid.appendChild(
+      buildContactCol('E-mail', 'info@edusafe.nl', 'mailto:info@edusafe.nl', '', false)
+    );
+    grid.appendChild(
+      buildContactCol('Website', 'www.edusafe.nl', SITE_URL, '', true)
+    );
+    return grid;
+  }
+
+  function cleanupAuthEnhancements() {
+    var nodes = document.querySelectorAll('.edusafe-contact-grid');
+    Array.prototype.forEach.call(nodes, function (node) {
+      if (node &amp;&amp; node.parentNode) {
+        node.parentNode.removeChild(node);
+      }
+    });
+
+    var readyFooters = document.querySelectorAll('.edusafe-footer-ready');
+    Array.prototype.forEach.call(readyFooters, function (el) {
+      el.classList.remove('edusafe-footer-ready');
+    });
+  }
+
+  function bindHeaderLogoClick(root) {
+    var avatars = root.querySelectorAll('.cp-avatar--square');
+    Array.prototype.forEach.call(avatars, function (avatar) {
+      var headerRow = avatar.parentElement;
+      if (headerRow &amp;&amp; !headerRow.getAttribute('data-edusafe-logo-bound')) {
+        headerRow.setAttribute('data-edusafe-logo-bound', '1');
+        headerRow.addEventListener('click', function (ev) {
+          var rect = headerRow.getBoundingClientRect();
+          if (ev.clientX - rect.left &lt;= 140) {
+            window.open(SITE_URL, '_blank', 'noopener');
+          }
+        });
+      }
+    });
+  }
+
+  function applyEdusafeAuth() {
+    var nuxtRoot = document.getElementById('__nuxt');
+    if (nuxtRoot &amp;&amp; !nuxtRoot.__vue_app__) {
+      window.setTimeout(applyEdusafeAuth, 80);
+      return;
+    }
+
+    var root = document.getElementById('cp-root-container');
+    if (!root || !root.classList.contains('auth-page')) {
+      cleanupAuthEnhancements();
+      return;
+    }
+
+    ensureEdusafeFonts();
+
+    if (document.title &amp;&amp; document.title.indexOf('Welkom bij EDUSAFE!') !== -1) {
+      document.title = document.title.replace('Welkom bij EDUSAFE!', 'Edusafe Online Leeromgeving');
+    }
+
+    bindHeaderLogoClick(root);
+
+    var footer = document.getElementById('cp-auth-footer');
+    if (footer) {
+      if (!footer.querySelector('.edusafe-contact-grid')) {
+        footer.appendChild(buildContactGrid());
+      }
+      if (!footer.classList.contains('edusafe-footer-ready')) {
+        footer.classList.add('edusafe-footer-ready');
+      }
+    }
+  }
+
+  function scheduleApply() {
+    if (rafPending) {
+      return;
+    }
+    rafPending = true;
+    window.requestAnimationFrame(function () {
+      rafPending = false;
+      applyEdusafeAuth();
+    });
+  }
+
+  if (window.__edusafeAuthObserver) {
+    try {
+      window.__edusafeAuthObserver.disconnect();
+    } catch (e) {}
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyEdusafeAuth);
+  } else {
+    applyEdusafeAuth();
+  }
+
+  var observeTarget = document.getElementById('__nuxt') || document.body || document.documentElement;
+  if (observeTarget &amp;&amp; typeof MutationObserver !== 'undefined') {
+    var observer = new MutationObserver(scheduleApply);
+    observer.observe(observeTarget, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ['class']
+    });
+    window.__edusafeAuthObserver = observer;
+  }
+})();
+</textarea>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function switchScreen(id) {
+      document.querySelectorAll('.portal-screen').forEach(function (el) {
+        el.classList.toggle('active', el.id === 'screen-' + id);
+      });
+      document.querySelectorAll('#screen-tabs .tab-btn').forEach(function (btn) {
+        var active = btn.getAttribute('data-screen') === id;
+        btn.classList.toggle('active', active);
+        if (active) {
+          document.getElementById('browser-url').textContent = btn.getAttribute('data-url');
+        }
+      });
+    }
+
+    document.querySelectorAll('#screen-tabs .tab-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        switchScreen(btn.getAttribute('data-screen'));
+      });
+    });
+
+    document.querySelectorAll('.device-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var isMobile = btn.getAttribute('data-device') === 'mobile';
+        document.getElementById('viewport').classList.toggle('is-mobile', isMobile);
+        document.querySelectorAll('.device-btn').forEach(function (b) {
+          b.classList.toggle('active', b === btn);
+        });
+      });
+    });
+
+    function togglePw(inputId) {
+      var el = document.getElementById(inputId);
+      if (el) {
+        el.type = el.type === 'password' ? 'text' : 'password';
+      }
+    }
+
+    // Auto-advance OTP inputs
+    var otpInputs = document.querySelectorAll('#otp-boxes .otp-input');
+    otpInputs.forEach(function (inp, idx) {
+      inp.addEventListener('input', function () {
+        if (inp.value && idx < otpInputs.length - 1) {
+          otpInputs[idx + 1].focus();
+        }
+      });
+      inp.addEventListener('keydown', function (e) {
+        if (e.key === 'Backspace' && !inp.value && idx > 0) {
+          otpInputs[idx - 1].focus();
+        }
+      });
+    });
+
+    // Clipboard buttons
+    document.querySelectorAll('[data-copy]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var target = document.getElementById(btn.getAttribute('data-copy'));
+        var def = btn.getAttribute('data-default');
+        if (!target) return;
+        navigator.clipboard.writeText(target.value).then(function () {
+          btn.textContent = 'Gekopieerd!';
+          btn.classList.add('copied');
+          setTimeout(function () {
+            btn.textContent = def;
+            btn.classList.remove('copied');
+          }, 2200);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,682 @@
+/* ==========================================================================
+   EDUSAFE ONLINE LEEROMGEVING — GHL CLIENT PORTAL AUTH REDESIGN
+   Locatie: Client Portal -> Settings -> Branding -> Advanced -> Custom CSS
+   Scope:   Uitsluitend actief op inlog- en vervolgschermen (.auth-page).
+            Het ingelogde dashboard (/dashboard, /courses) blijft 100% standaard.
+   Let op:  Bevat bewust GEEN @import zodat de browser deze stylesheet in 0ms
+            toepast zonder op externe font-downloads te wachten.
+   ========================================================================== */
+
+@keyframes edusafeCircleReveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   0. INGELOGDE PORTAALPAGINA'S (:not(.auth-page)) — BEHOUD EDUSAFE BLAUW
+      (Zodat Merkkleur één én twee in GHL beide op #FAF9F6 gezet kunnen worden
+       voor een 100% crème achtergrond vanaf milliseconde 0 op /login)
+   -------------------------------------------------------------------------- */
+html:has(#cp-root-container:not(.auth-page)) {
+  --cp-brand-primary: #0C4EA2 !important;
+  --brand-color-primary: #0C4EA2 !important;
+  --cp-platform-primary: #0C4EA2 !important;
+  --cp-primary-50: #EFF5FC !important;
+  --primary-50: #EFF5FC !important;
+  --cp-primary-100: #DBEAFE !important;
+  --primary-100: #DBEAFE !important;
+  --cp-primary-200: #BFDBFE !important;
+  --primary-200: #BFDBFE !important;
+  --cp-primary-300: #93C5FD !important;
+  --primary-300: #93C5FD !important;
+  --cp-primary-400: #60A5FA !important;
+  --primary-400: #60A5FA !important;
+  --cp-primary-500: #0C4EA2 !important;
+  --primary-500: #0C4EA2 !important;
+  --cp-primary-600: #093D80 !important;
+  --primary-600: #093D80 !important;
+  --cp-primary-700: #07326B !important;
+  --primary-700: #07326B !important;
+  --cp-primary-800: #062856 !important;
+  --primary-800: #062856 !important;
+  --cp-primary-900: #041B3B !important;
+  --primary-900: #041B3B !important;
+  --cp-text-on-primary: #FFFFFF !important;
+}
+
+/* --------------------------------------------------------------------------
+   1. BUITENSTE CANVAS (#FAF9F6 EDUSAFE CRÈME) & SPLIT-SCREEN UITSCHAKELEN
+   -------------------------------------------------------------------------- */
+#cp-root-container.auth-page,
+#cp-root-container.auth-page .cp-content-area,
+#cp-root-container.auth-page #cp-main-content,
+#cp-root-container.auth-page .cp-main-content-inner {
+  background-color: #FAF9F6 !important;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+  color: #1A202C !important;
+}
+
+/* Verberg de rechter split-screen stockfoto */
+#cp-root-container.auth-page aside#cp-auth-hero {
+  display: none !important;
+}
+
+/* Huidige GHL grid-wrapper (wanneer Portal Image in GHL gevuld is) */
+#cp-root-container.auth-page .cp-main-content-inner > div.grid {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 100dvh !important;
+  width: 100% !important;
+  background-color: #FAF9F6 !important;
+  padding: 36px 16px 40px 16px !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+  overflow-x: hidden !important;
+}
+
+#cp-root-container.auth-page .cp-main-content-inner > div.grid > section {
+  width: 100% !important;
+  max-width: 472px !important;
+  padding: 0 !important;
+  margin: 0 auto !important;
+  flex: 0 0 auto !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+#cp-root-container.auth-page .cp-main-content-inner > div.grid > section > div {
+  max-width: 472px !important;
+  width: 100% !important;
+  flex: 0 0 auto !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+/* Fallback layout (mocht Portal Image later in GHL leeggemaakt worden) */
+#cp-root-container.auth-page #cp-auth-background.auth-layout-background {
+  background: #FAF9F6 !important;
+  background-image: none !important;
+  min-height: 100dvh !important;
+  padding: 36px 16px 40px 16px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  overflow-x: hidden !important;
+}
+
+#cp-root-container.auth-page .auth-card-container {
+  max-width: 472px !important;
+  width: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+/* Herkenbare Edusafe 3/4-cirkel met blauwe gradient achter de kaart (zoals in de aanvraagstraat) */
+#cp-root-container.auth-page .cp-main-content-inner > div.grid > section::before,
+#cp-root-container.auth-page .auth-card-container::before {
+  content: "" !important;
+  position: absolute !important;
+  top: calc(50% - 16px) !important;
+  right: -236px !important;
+  width: 520px !important;
+  height: 520px !important;
+  transform: translateY(-50%) scaleX(-1) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 680 680' fill='none'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='40' y1='40' x2='640' y2='640' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0%25' stop-color='%230E56B5'/%3E%3Cstop offset='60%25' stop-color='%230C4EA2'/%3E%3Cstop offset='100%25' stop-color='%2307326B'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='330' cy='340' r='305' fill='url(%23g)'/%3E%3Cpath d='M 555 115 A 328 328 0 1 0 555 565' stroke='%230C4EA2' stroke-opacity='0.25' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M 510 160 A 265 265 0 1 0 510 520' stroke='%23FFFFFF' stroke-opacity='0.16' stroke-width='1.5' stroke-dasharray='6 8' stroke-linecap='round'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-size: contain !important;
+  filter: drop-shadow(0 25px 25px rgba(6, 40, 86, 0.15)) !important;
+  animation: edusafeCircleReveal 0.25s ease-out both !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  z-index: 0 !important;
+}
+
+/* Rustige adresregel onder de witte kaart (100% pure CSS, geen Vue VDOM-conflict) */
+#cp-root-container.auth-page .cp-main-content-inner > div.grid > section::after,
+#cp-root-container.auth-page .auth-card-container::after {
+  content: "Edusafe Trainingen & Opleidingen  \00B7  Oude Middenweg 241A, 2491 AH Den Haag" !important;
+  display: block !important;
+  width: 100% !important;
+  text-align: center !important;
+  padding: 16px 12px 0 12px !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 12px !important;
+  color: #94A3B8 !important;
+  line-height: 1.6 !important;
+  box-sizing: border-box !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+/* --------------------------------------------------------------------------
+   2. WITTE HOOFDKAART (AANVRAAGSTRAAT & UITNODIGINGSMAIL STIJL)
+   -------------------------------------------------------------------------- */
+#cp-root-container.auth-page .cp-main-content-inner > div.grid > section > div > div.flex.w-full.flex-col,
+#cp-root-container.auth-page #cp-auth-card.auth-card {
+  background-color: #FFFFFF !important;
+  border: 1px solid #E6E3DC !important;
+  border-radius: 22px !important;
+  box-shadow: 0 22px 50px rgba(6, 40, 86, 0.13) !important;
+  padding: 32px 40px 30px 40px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  flex-direction: column !important;
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+/* Voorkom dubbele kaart-styling als #cp-auth-card actief is */
+#cp-root-container.auth-page #cp-auth-card.auth-card > div.flex.w-full.flex-col {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* --------------------------------------------------------------------------
+   3. GOOGLE INLOGGEN & SCHEIDINGSLIJN DIRECT VERBERGEN (FRAME 0)
+   -------------------------------------------------------------------------- */
+#cp-root-container.auth-page div:has(> #google-one-tap-1-container),
+#cp-root-container.auth-page #google-one-tap-1-container,
+#cp-root-container.auth-page .custom-google-button,
+#cp-root-container.auth-page .google-button,
+#cp-root-container.auth-page #google-signin-spinner,
+#cp-root-container.auth-page #google-sso-loading,
+#cp-root-container.auth-page .cp-divider:has(#login-modal-with-email-divider) {
+  display: none !important;
+}
+
+/* --------------------------------------------------------------------------
+   4. ZONE 1: EDUSAFE MERKHEADER (100% PURE CSS — NUL VUE HYDRATION MISMATCH)
+   -------------------------------------------------------------------------- */
+#cp-root-container.auth-page .mb-12:has(.cp-avatar--square) {
+  margin-bottom: 26px !important;
+  padding-bottom: 20px !important;
+  border-bottom: 1px solid #ECE9E2 !important;
+  width: 100% !important;
+}
+
+/* Verberg standaard platgedrukt 40x40 favicon + "Welkom bij EDUSAFE!" */
+#cp-root-container.auth-page .mb-12:has(.cp-avatar--square) .cp-avatar--square,
+#cp-root-container.auth-page .mb-12:has(.cp-avatar--square) p.hr-text {
+  display: none !important;
+}
+
+#cp-root-container.auth-page .mb-12:has(.cp-avatar--square) > div {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+}
+
+#cp-root-container.auth-page .mb-12:has(.cp-avatar--square) > div::before {
+  content: "" !important;
+  display: block !important;
+  width: 124px !important;
+  height: 58px !important;
+  background-image: url("https://edusafe-site.vercel.app/assets/images/edusafe_logo.png") !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: left center !important;
+  cursor: pointer !important;
+}
+
+#cp-root-container.auth-page .mb-12:has(.cp-avatar--square) > div::after {
+  content: "Online Leeromgeving" !important;
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  color: #64748B !important;
+  letter-spacing: 0.01em !important;
+  white-space: nowrap !important;
+}
+
+/* Fallback logo bovenaan op schermen waar GHL geen .mb-12 header rendert (bijv. /profile-confirmation) */
+#cp-root-container.auth-page .cp-main-content-inner > div.grid > section > div > div.flex.w-full.flex-col:not(:has(.cp-avatar--square))::before,
+#cp-root-container.auth-page #cp-auth-card.auth-card > div.flex.w-full.flex-col:not(:has(.cp-avatar--square))::before {
+  content: "" !important;
+  display: block !important;
+  width: 100% !important;
+  height: 58px !important;
+  padding-bottom: 20px !important;
+  margin-bottom: 26px !important;
+  border-bottom: 1px solid #ECE9E2 !important;
+  background-image: url("https://edusafe-site.vercel.app/assets/images/edusafe_logo.png") !important;
+  background-size: 124px auto !important;
+  background-repeat: no-repeat !important;
+  background-position: left top !important;
+}
+
+/* --------------------------------------------------------------------------
+   5. TYPOGRAFIE — KOPPEN, SUBTITELS & HELPERTEKSTEN OP ALLE SUBSCHERMEN
+   -------------------------------------------------------------------------- */
+#cp-root-container.auth-page .montserrat-semibold,
+#cp-root-container.auth-page .flex.min-w-0.flex-1.flex-col.mb-4 > p.hr-text:first-child {
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 24px !important;
+  font-weight: 600 !important;
+  line-height: 1.28 !important;
+  letter-spacing: -0.015em !important;
+  color: #062856 !important;
+}
+
+#cp-root-container.auth-page .montserrat-regular,
+#cp-root-container.auth-page .flex.min-w-0.flex-1.flex-col.mb-4 > p.hr-text:nth-child(2) {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 14.5px !important;
+  font-weight: 400 !important;
+  line-height: 1.6 !important;
+  color: #475569 !important;
+  margin-top: 6px !important;
+}
+
+#cp-root-container.auth-page .flex.min-w-0.flex-1.flex-col.mb-4 {
+  margin-bottom: 22px !important;
+  flex: 0 0 auto !important;
+}
+
+/* Toelichtingsteksten onder invoervelden */
+#cp-root-container.auth-page .text-clientportal-font-secondary,
+#cp-root-container.auth-page .text-clientportal-primary {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 13px !important;
+  line-height: 1.55 !important;
+  color: #64748B !important;
+}
+
+/* Foutmeldingen */
+#cp-root-container.auth-page .text-danger,
+#cp-root-container.auth-page #login-modal-email-field-feedback:not(:empty),
+#cp-root-container.auth-page #login-modal-password-field-feedback:not(:empty) {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 13px !important;
+  color: #DC2626 !important;
+}
+
+/* --------------------------------------------------------------------------
+   6. FORMULIEREN, VELDLABELS, INPUTS & 6-CIJFERIGE OTP-VAKJES
+   -------------------------------------------------------------------------- */
+#cp-root-container.auth-page form.hr-form {
+  gap: 14px !important;
+  width: 100% !important;
+}
+
+/* Veldlabels (E-mail *, Wachtwoord *, Volledige naam) */
+#cp-root-container.auth-page .hr-form-item-label {
+  padding-bottom: 6px !important;
+  height: auto !important;
+}
+
+#cp-root-container.auth-page .hr-form-item-label__text {
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  color: #062856 !important;
+  letter-spacing: -0.005em !important;
+}
+
+#cp-root-container.auth-page .hr-form-item-label__asterisk {
+  color: #FF6B35 !important;
+  font-weight: 600 !important;
+}
+
+/* Feedback-regels onder velden: klap lege regels in, geef gevulde regels rustige ruimte */
+#cp-root-container.auth-page .hr-form-item-feedback-wrapper {
+  min-height: 0 !important;
+  padding-top: 4px !important;
+}
+
+#cp-root-container.auth-page .hr-form-item-feedback-wrapper:has(p:not(:empty)) {
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+}
+
+#cp-root-container.auth-page #login-modal-email-form-item .hr-form-item-feedback-wrapper:not(:has(p:not(:empty))) {
+  display: none !important;
+}
+
+/* Tekst- en wachtwoordvelden (HighRise / Naive UI --n-* variabelen) */
+#cp-root-container.auth-page .hr-input-container {
+  --n-border-radius: 11px !important;
+  border-radius: 11px !important;
+}
+
+#cp-root-container.auth-page .hr-input {
+  --n-height: 48px !important;
+  --n-border-radius: 11px !important;
+  --n-color: #FFFFFF !important;
+  --n-color-focus: #FFFFFF !important;
+  --n-color-disabled: #FAF9F6 !important;
+  --n-border: 1px solid #D8D5CE !important;
+  --n-border-hover: 1px solid #94A3B8 !important;
+  --n-border-focus: 1.5px solid #0C4EA2 !important;
+  --n-box-shadow-focus: 0 0 0 3.5px rgba(12, 78, 162, 0.11) !important;
+  --n-text-color: #062856 !important;
+  --n-text-color-disabled: #64748B !important;
+  --n-caret-color: #0C4EA2 !important;
+  --n-placeholder-color: #94A3B8 !important;
+  --n-padding-left: 14px !important;
+  --n-padding-right: 14px !important;
+  --n-font-size: 15px !important;
+  --n-icon-color: #64748B !important;
+  --n-icon-color-hover: #0C4EA2 !important;
+  border-radius: 11px !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease !important;
+}
+
+#cp-root-container.auth-page .hr-input:focus-within {
+  --n-border: 1.5px solid #0C4EA2 !important;
+  box-shadow: 0 0 0 3.5px rgba(12, 78, 162, 0.11) !important;
+}
+
+#cp-root-container.auth-page .hr-input__input-el {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 15px !important;
+  color: #062856 !important;
+}
+
+#cp-root-container.auth-page .hr-input__placeholder {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 14.5px !important;
+  color: #94A3B8 !important;
+}
+
+#cp-root-container.auth-page .hr-input__prefix,
+#cp-root-container.auth-page .hr-input__eye {
+  color: #64748B !important;
+}
+
+#cp-root-container.auth-page .hr-input__eye:hover {
+  color: #0C4EA2 !important;
+}
+
+/* 6-cijferige Beveiligings- & Verificatiecode vakjes (LoginOtpInput) */
+#cp-root-container.auth-page .login-otp-input__fields .hr-otp-field-wrapper,
+#cp-root-container.auth-page .hr-input-otp .hr-input {
+  --n-border-radius: 11px !important;
+  --n-border: 1px solid #D8D5CE !important;
+  --n-border-hover: 1px solid #94A3B8 !important;
+  --n-border-focus: 1.5px solid #0C4EA2 !important;
+  --n-box-shadow-focus: 0 0 0 3.5px rgba(12, 78, 162, 0.11) !important;
+  border-radius: 11px !important;
+}
+
+#cp-root-container.auth-page .login-otp-input__fields input,
+#cp-root-container.auth-page .hr-otp-field-input {
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+  font-weight: 600 !important;
+  color: #062856 !important;
+}
+
+#cp-root-container.auth-page #secure-code-modal-resend-code-button {
+  color: #0C4EA2 !important;
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+  font-weight: 600 !important;
+}
+
+/* --------------------------------------------------------------------------
+   7. KNOPPENHIËRARCHIE (PRIMAIR ORANJE, LEESBAAR DISABLED, SECUNDAIR & LINKS)
+   -------------------------------------------------------------------------- */
+/* Primaire actieknop (Actief — Edusafe Oranje #FF6B35) */
+#cp-root-container.auth-page .hr-button.hr-button--primary:not(.hr-button--disabled):not([disabled]) {
+  --n-color: #FF6B35 !important;
+  --n-color-hover: #e55620 !important;
+  --n-color-pressed: #d44d1a !important;
+  --n-color-focus: #FF6B35 !important;
+  --n-border: 1px solid #FF6B35 !important;
+  --n-border-hover: 1px solid #e55620 !important;
+  --n-border-pressed: 1px solid #d44d1a !important;
+  --n-border-focus: 1px solid #FF6B35 !important;
+  --n-text-color: #FFFFFF !important;
+  --n-text-color-hover: #FFFFFF !important;
+  --n-text-color-pressed: #FFFFFF !important;
+  --n-text-color-focus: #FFFFFF !important;
+  --n-height: 48px !important;
+  --n-border-radius: 11px !important;
+  --n-ripple-color: rgba(255, 107, 53, 0.3) !important;
+  background-color: #FF6B35 !important;
+  height: 48px !important;
+  border-radius: 11px !important;
+  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.2) !important;
+  transition: background-color 0.18s ease, box-shadow 0.18s ease !important;
+}
+
+#cp-root-container.auth-page .hr-button.hr-button--primary:not(.hr-button--disabled):not([disabled]):hover {
+  background-color: #e55620 !important;
+  box-shadow: 0 6px 16px rgba(229, 86, 32, 0.26) !important;
+}
+
+#cp-root-container.auth-page .hr-button.hr-button--primary:not(.hr-button--disabled):not([disabled]) .hr-text {
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: #FFFFFF !important;
+  letter-spacing: 0.005em !important;
+}
+
+/* Primaire actieknop (Disabled — Rustig steengrijs met helder leesbare tekst) */
+#cp-root-container.auth-page .hr-button.hr-button--primary.hr-button--disabled,
+#cp-root-container.auth-page .hr-button.hr-button--primary[disabled] {
+  --n-color: #F1EFEA !important;
+  --n-color-disabled: #F1EFEA !important;
+  --n-border: 1px solid #E2DFD7 !important;
+  --n-border-disabled: 1px solid #E2DFD7 !important;
+  --n-text-color: #8A94A6 !important;
+  --n-text-color-disabled: #8A94A6 !important;
+  --n-opacity-disabled: 1 !important;
+  --n-height: 48px !important;
+  --n-border-radius: 11px !important;
+  background-color: #F1EFEA !important;
+  height: 48px !important;
+  border-radius: 11px !important;
+  opacity: 1 !important;
+  box-shadow: none !important;
+}
+
+#cp-root-container.auth-page .hr-button.hr-button--primary.hr-button--disabled .hr-text,
+#cp-root-container.auth-page .hr-button.hr-button--primary[disabled] .hr-text {
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: #8A94A6 !important;
+}
+
+/* Secundaire actieknop (Beveiligingscode / Terug naar wachtwoord) */
+#cp-root-container.auth-page .hr-button.hr-button--secondary {
+  --n-color: #FFFFFF !important;
+  --n-color-hover: #FAF9F6 !important;
+  --n-color-pressed: #F2EFE8 !important;
+  --n-color-focus: #FAF9F6 !important;
+  --n-border: 1px solid #D8D5CE !important;
+  --n-border-hover: 1px solid #0C4EA2 !important;
+  --n-border-pressed: 1px solid #0C4EA2 !important;
+  --n-border-focus: 1px solid #0C4EA2 !important;
+  --n-text-color: #062856 !important;
+  --n-text-color-hover: #0C4EA2 !important;
+  --n-text-color-pressed: #0C4EA2 !important;
+  --n-text-color-focus: #0C4EA2 !important;
+  --n-height: 46px !important;
+  --n-border-radius: 11px !important;
+  background-color: #FFFFFF !important;
+  height: 46px !important;
+  border-radius: 11px !important;
+  transition: all 0.18s ease !important;
+}
+
+#cp-root-container.auth-page .hr-button.hr-button--secondary:hover {
+  background-color: #FAF9F6 !important;
+}
+
+#cp-root-container.auth-page .hr-button.hr-button--secondary .hr-text {
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 14.5px !important;
+  font-weight: 600 !important;
+  color: #062856 !important;
+}
+
+#cp-root-container.auth-page .hr-button.hr-button--secondary:hover .hr-text {
+  color: #0C4EA2 !important;
+}
+
+/* Tekstlinks (Wachtwoord opnieuw instellen, Registreren, Aanmelden, Terug) */
+#cp-root-container.auth-page .hr-button.hr-button--text {
+  --n-color: transparent !important;
+  --n-color-hover: transparent !important;
+  --n-color-pressed: transparent !important;
+  --n-text-color: #0C4EA2 !important;
+  --n-text-color-hover: #062856 !important;
+  --n-text-color-pressed: #062856 !important;
+}
+
+#cp-root-container.auth-page .hr-button.hr-button--text .hr-text {
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  color: #0C4EA2 !important;
+}
+
+#cp-root-container.auth-page .hr-button.hr-button--text:hover .hr-text {
+  color: #062856 !important;
+  text-decoration: underline !important;
+}
+
+/* "Nieuw hier?" / "Heeft u al een account?" regel */
+#cp-root-container.auth-page .text-secondary.flex.w-full.justify-center {
+  margin-top: 16px !important;
+  color: #64748B !important;
+}
+
+#cp-root-container.auth-page .text-secondary.flex.w-full.justify-center > span.hr-text {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 13.5px !important;
+  color: #64748B !important;
+}
+
+/* --------------------------------------------------------------------------
+   8. ZONE 3: CONTACTBALK ONDERAAN DE KAART
+   -------------------------------------------------------------------------- */
+#cp-root-container.auth-page #cp-auth-footer {
+  border-top: 1px solid #ECE9E2 !important;
+  margin-top: 26px !important;
+  padding-top: 18px !important;
+}
+
+/* Verberg het losse '©' teken uit GHL's standaard footer */
+#cp-root-container.auth-page #cp-auth-footer > span:not(.edusafe-footer-item) {
+  display: none !important;
+}
+
+#cp-root-container.auth-page #cp-auth-support-link {
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #0C4EA2 !important;
+}
+
+/* Door JS verrijkte 3-koloms contactbalk (identiek aan de uitnodigingsmail) */
+#cp-root-container.auth-page #cp-auth-footer.edusafe-footer-ready > a#cp-auth-support-link {
+  display: none !important;
+}
+
+#cp-root-container.auth-page .edusafe-contact-grid {
+  display: grid !important;
+  grid-template-columns: 1.15fr 1.1fr 0.95fr !important;
+  gap: 12px !important;
+  width: 100% !important;
+}
+
+#cp-root-container.auth-page .edusafe-contact-col {
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0 !important;
+}
+
+#cp-root-container.auth-page .edusafe-contact-label {
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 10.5px !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  color: #94A3B8 !important;
+  line-height: 1.35 !important;
+}
+
+#cp-root-container.auth-page .edusafe-contact-link {
+  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #0C4EA2 !important;
+  text-decoration: none !important;
+  margin-top: 3px !important;
+  line-height: 1.4 !important;
+  white-space: nowrap !important;
+}
+
+#cp-root-container.auth-page .edusafe-contact-link--phone {
+  color: #062856 !important;
+}
+
+#cp-root-container.auth-page .edusafe-contact-link:hover {
+  text-decoration: underline !important;
+}
+
+/* --------------------------------------------------------------------------
+   9. MOBIELE WEERGAVE (<= 540PX)
+   -------------------------------------------------------------------------- */
+@media only screen and (max-width: 540px) {
+  #cp-root-container.auth-page .cp-main-content-inner > div.grid,
+  #cp-root-container.auth-page #cp-auth-background.auth-layout-background {
+    padding: 20px 14px 28px 14px !important;
+    justify-content: flex-start !important;
+  }
+
+  #cp-root-container.auth-page .cp-main-content-inner > div.grid > section > div > div.flex.w-full.flex-col,
+  #cp-root-container.auth-page #cp-auth-card.auth-card {
+    padding: 24px 22px 22px 22px !important;
+    border-radius: 18px !important;
+  }
+
+  #cp-root-container.auth-page .mb-12:has(.cp-avatar--square) {
+    padding-bottom: 16px !important;
+    margin-bottom: 22px !important;
+  }
+
+  #cp-root-container.auth-page .mb-12:has(.cp-avatar--square) > div::before {
+    width: 112px !important;
+    height: 52px !important;
+  }
+
+  #cp-root-container.auth-page .montserrat-semibold,
+  #cp-root-container.auth-page .flex.min-w-0.flex-1.flex-col.mb-4 > p.hr-text:first-child {
+    font-size: 21px !important;
+  }
+
+  #cp-root-container.auth-page .cp-main-content-inner > div.grid > section::before,
+  #cp-root-container.auth-page .auth-card-container::before {
+    width: 380px !important;
+    height: 380px !important;
+    right: -195px !important;
+  }
+
+  #cp-root-container.auth-page .edusafe-contact-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px 16px !important;
+  }
+}

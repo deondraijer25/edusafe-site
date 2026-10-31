@@ -19,7 +19,7 @@ export const ui = {
   nl: {
     // Topbar
     'topbar.follow': 'Volg ons op:',
-    'topbar.address': 'Oude Middenweg 241A, Den Haag',
+    'topbar.address': 'Oude Middenweg 241A, 2491 AH Den Haag',
     'topbar.contact': 'Direct Contact',
 
     // Navbar
@@ -40,7 +40,7 @@ export const ui = {
     'nav.faq': 'Veelgestelde Vragen',
     'nav.faq_desc': 'Antwoorden op vragen over geldigheid, planning en betaling.',
     'nav.login': 'Log in',
-    'nav.direct_register': 'Direct Starten',
+    'nav.direct_register': 'Aanmelden & Advies',
 
     // Offshore Under Construction
     'offshore.badge': 'Offshore Veiligheidstrainingen',
@@ -75,7 +75,7 @@ export const ui = {
   en: {
     // Topbar
     'topbar.follow': 'Follow us:',
-    'topbar.address': 'Oude Middenweg 241A, The Hague',
+    'topbar.address': 'Oude Middenweg 241A, 2491 AH The Hague',
     'topbar.contact': 'Direct Contact',
 
     // Navbar
@@ -96,7 +96,7 @@ export const ui = {
     'nav.faq': 'Frequently Asked Questions',
     'nav.faq_desc': 'Answers regarding certifications, dates, and group bookings.',
     'nav.login': 'Log in',
-    'nav.direct_register': 'Get Started',
+    'nav.direct_register': 'Register & Advice',
 
     // Offshore Under Construction
     'offshore.badge': 'Offshore Safety Training',

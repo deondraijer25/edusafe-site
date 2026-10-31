@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import PageHeroBackdrop from '../../components/PageHeroBackdrop.astro';
 import MobileCourseBottomBar from '../../components/MobileCourseBottomBar.astro';
 
 const services = [
@@ -27,7 +28,7 @@ const services = [
       { name: "Psychosocial workload (stress, aggression) & emergency response organisation (BHV)" }
     ],
     image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=800",
-    registerLink: "#contact"
+    registerLink: "/en/personal-advice?type=zakelijk&service=rie-advies"
   },
   {
     id: "rie-update",
@@ -53,7 +54,7 @@ const services = [
       { name: "Executive summary for management board and Works Council (OR / PVT)" }
     ],
     image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&q=80&w=800",
-    registerLink: "#contact"
+    registerLink: "/en/personal-advice?type=zakelijk&service=rie-advies"
   }
 ];
 ---
@@ -63,57 +64,60 @@ const services = [
   description="Legally required Risk Assessment and Evaluation (RI&E) for companies in the Netherlands. Practical, cost-effective and compliant with Dutch Arbowet regulations."
 >
   <!-- Hero Section -->
-  <section class="relative bg-brand-secondary text-white pt-36 pb-20 overflow-hidden">
-    <div class="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none"></div>
-    <div class="max-w-[1280px] mx-auto px-6 relative z-10">
+  <section class="relative bg-brand-primary text-white pt-12 pb-16 sm:pt-20 sm:pb-20 md:pt-24 md:pb-24 overflow-hidden">
+    <PageHeroBackdrop
+      image="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=1600"
+      alt="Occupational Health & Safety Risk Assessment (RI&E)"
+    />
+    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 relative z-10">
       
-      <div class="flex items-center gap-2 text-xs font-semibold text-brand-primary uppercase tracking-wider mb-4">
-        <a href="/en" class="hover:underline">Home</a>
-        <span>/</span>
-        <span>Services</span>
-        <span>/</span>
-        <span class="text-white">RI&E Risk Assessment</span>
+      <div class="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-wider mb-3.5 sm:mb-4">
+        <a href="/en" class="hover:underline text-white/75 hover:text-white">Home</a>
+        <span class="text-white/40">/</span>
+        <span class="text-white/75">Services</span>
+        <span class="text-white/40">/</span>
+        <span class="text-brand-accent">RI&E Risk Assessment</span>
       </div>
 
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         <div class="lg:col-span-8">
-          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-primary/20 text-brand-primary border border-brand-primary/30 text-xs font-bold uppercase tracking-wider mb-4">
-            <i class="fa-solid fa-clipboard-check"></i>
+          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/12 text-white border border-white/25 backdrop-blur-sm text-xs font-bold uppercase tracking-wider mb-3.5 sm:mb-4">
+            <i class="fa-solid fa-clipboard-check text-brand-accent"></i>
             Mandatory in the Netherlands
           </span>
-          <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+          <h1 class="heading-page mb-4 sm:mb-6 text-white">
             Occupational Health &amp; <span class="text-brand-accent">Safety Risk Assessment (RI&E)</span>
           </h1>
-          <p class="text-lg text-white/80 leading-relaxed max-w-2xl mb-8">
+          <p class="text-[15px] sm:text-lg text-white/90 leading-relaxed max-w-2xl mb-6 sm:mb-8">
             Providing a healthy and secure workplace starts with transparent hazard insight. Edusafe assesses all occupational risks and delivers an actionable, legally certified Action Plan.
           </p>
 
-          <div class="flex flex-wrap gap-4">
-            <button type="button" data-open-contact-drawer class="bg-brand-accent hover:bg-brand-accent-hover text-white font-display font-semibold px-8 py-4 rounded-xl transition-all shadow-lg hover:-translate-y-0.5">
+          <div class="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 sm:gap-4">
+            <button type="button" data-open-contact-drawer class="w-full sm:w-auto inline-flex items-center justify-center text-center min-h-[48px] bg-brand-accent hover:bg-brand-accent-hover text-white font-display font-semibold px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl transition-all shadow-lg hover:-translate-y-0.5 cursor-pointer">
               Request Free RI&E Proposal
             </button>
-            <a href="#details" class="bg-white/10 hover:bg-white/20 text-white font-display font-semibold px-8 py-4 rounded-xl border border-white/20 transition-all">
+            <a href="#details" class="w-full sm:w-auto inline-flex items-center justify-center text-center min-h-[48px] bg-white/12 hover:bg-white/20 text-white border border-white/30 backdrop-blur-sm font-display font-semibold px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl shadow-sm transition-all">
               Explore Process &amp; Certification
             </a>
           </div>
         </div>
 
-        <div class="lg:col-span-4 grid grid-cols-2 gap-4">
-          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
-            <div class="text-3xl font-display font-bold text-brand-primary mb-1">100%</div>
-            <div class="text-xs text-white/70">Inspectie SZW Compliant</div>
+        <div class="lg:col-span-4 grid grid-cols-2 gap-3 sm:gap-4">
+          <div class="bg-[#062856]/50 backdrop-blur-md border border-white/20 rounded-2xl p-4 sm:p-5 text-center shadow-lg">
+            <div class="text-2xl sm:text-3xl font-display font-bold text-white mb-1">100%</div>
+            <div class="text-xs text-white/80">Inspectie SZW Compliant</div>
           </div>
-          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
-            <div class="text-3xl font-display font-bold text-brand-accent mb-1">Arbowet</div>
-            <div class="text-xs text-white/70">Certified Experts</div>
+          <div class="bg-[#062856]/50 backdrop-blur-md border border-white/20 rounded-2xl p-4 sm:p-5 text-center shadow-lg">
+            <div class="text-2xl sm:text-3xl font-display font-bold text-brand-accent mb-1">Arbowet</div>
+            <div class="text-xs text-white/80">Certified Experts</div>
           </div>
-          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
-            <div class="text-3xl font-display font-bold text-brand-primary mb-1">&lt; 25 staff</div>
-            <div class="text-xs text-white/70">Audit Exemption Support</div>
+          <div class="bg-[#062856]/50 backdrop-blur-md border border-white/20 rounded-2xl p-4 sm:p-5 text-center shadow-lg">
+            <div class="text-2xl sm:text-3xl font-display font-bold text-white mb-1">&lt; 25 staff</div>
+            <div class="text-xs text-white/80">Audit Exemption Support</div>
           </div>
-          <div class="bg-white/5 border border-white/10 rounded-2xl p-5 text-center">
-            <div class="text-3xl font-display font-bold text-brand-accent mb-1">Action</div>
-            <div class="text-xs text-white/70">Tailored Plan</div>
+          <div class="bg-[#062856]/50 backdrop-blur-md border border-white/20 rounded-2xl p-4 sm:p-5 text-center shadow-lg">
+            <div class="text-2xl sm:text-3xl font-display font-bold text-brand-accent mb-1">Action</div>
+            <div class="text-xs text-white/80">Tailored Plan</div>
           </div>
         </div>
       </div>
@@ -122,27 +126,27 @@ const services = [
   </section>
 
   <!-- Interactive Master Detail Tabs -->
-  <section id="details" class="py-20 bg-brand-cream relative">
-    <div class="max-w-[1280px] mx-auto px-6">
+  <section id="details" class="py-14 sm:py-20 bg-brand-cream relative">
+    <div class="max-w-[1280px] mx-auto px-4 sm:px-6">
       
-      <div class="text-center max-w-3xl mx-auto mb-14">
+      <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
         <span class="text-brand-accent font-display font-semibold text-xs uppercase tracking-wider mb-2 block">
           Customized for your workplace
         </span>
-        <h2 class="font-display text-3xl sm:text-4xl font-bold text-brand-secondary">
+        <h2 class="heading-section text-brand-secondary">
           Our RI&E Advisory Services
         </h2>
-        <p class="text-brand-dark/70 text-base mt-3">
+        <p class="text-brand-dark/70 text-[15px] sm:text-base mt-3">
           Select a full initial setup or an annual periodic audit of your existing occupational risk registry.
         </p>
       </div>
 
       <!-- Service Cards Grid -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-12 sm:mb-16">
         {services.map((srv) => (
-          <div class="bg-white rounded-3xl p-8 border border-brand-dark/5 shadow-xl flex flex-col justify-between hover:border-brand-primary/30 transition-all">
+          <div class="bg-white rounded-3xl p-5 sm:p-8 border border-brand-dark/5 shadow-xl flex flex-col justify-between hover:border-brand-primary/30 transition-all">
             <div>
-              <div class="flex items-center justify-between gap-4 mb-4">
+              <div class="flex flex-wrap items-center justify-between gap-2 sm:gap-4 mb-4">
                 <span class="px-3 py-1 rounded-full bg-brand-primary/10 text-brand-primary text-xs font-bold uppercase tracking-wider">
                   {srv.spotsText}
                 </span>
@@ -150,7 +154,7 @@ const services = [
                   {srv.price}
                 </span>
               </div>
-              <h3 class="font-display text-2xl font-bold text-brand-secondary mb-2">
+              <h3 class="font-display text-2xl font-semibold text-brand-secondary mb-2">
                 {srv.title}
               </h3>
               <p class="text-brand-dark/70 text-sm mb-6 leading-relaxed">
@@ -174,7 +178,7 @@ const services = [
                 </div>
               </div>
 
-              <h4 class="text-xs font-bold uppercase tracking-wider text-brand-secondary mb-3">Included in this service:</h4>
+              <h4 class="text-xs font-semibold uppercase tracking-wider text-brand-secondary mb-3">Included in this service:</h4>
               <ul class="space-y-2 mb-8">
                 {srv.inclusions.map((inc) => (
                   <li class="flex items-center gap-2.5 text-sm text-brand-dark/80">
@@ -188,7 +192,7 @@ const services = [
             <button 
               type="button" 
               data-open-contact-drawer 
-              class="w-full py-4 rounded-xl bg-brand-primary hover:bg-brand-primary-hover text-white font-display font-semibold text-center transition-all shadow-md"
+              class="w-full py-4 rounded-xl bg-brand-accent hover:bg-brand-accent-hover text-white font-display font-semibold text-center transition-all shadow-md"
             >
               Request Non-binding Quote
             </button>
@@ -197,8 +201,8 @@ const services = [
       </div>
 
       <!-- Why RI&E is Mandatory section -->
-      <div class="bg-white rounded-3xl p-8 lg:p-12 border border-brand-dark/5 shadow-sm">
-        <h3 class="font-display text-2xl sm:text-3xl font-bold text-brand-secondary mb-6">
+      <div class="bg-white rounded-3xl p-5 sm:p-8 lg:p-12 border border-brand-dark/5 shadow-sm">
+        <h3 class="heading-section text-brand-secondary mb-6">
           Why an updated RI&E is vital for your Dutch entity
         </h3>
         
@@ -207,7 +211,7 @@ const services = [
             <div class="w-10 h-10 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center mb-4">
               <i class="fa-solid fa-gavel text-lg"></i>
             </div>
-            <h4 class="font-display font-bold text-brand-secondary text-base mb-2">Statutory Requirement</h4>
+            <h4 class="font-display font-semibold text-brand-secondary text-base mb-2">Statutory Requirement</h4>
             <p>Mandatory for all Dutch employers with employees under the Working Conditions Act. The Dutch Labour Inspectorate actively conducts audits with substantial fines for non-compliance.</p>
           </div>
 
@@ -215,7 +219,7 @@ const services = [
             <div class="w-10 h-10 rounded-xl bg-brand-accent/10 text-brand-accent flex items-center justify-center mb-4">
               <i class="fa-solid fa-file-contract text-lg"></i>
             </div>
-            <h4 class="font-display font-bold text-brand-secondary text-base mb-2">Insurance Compliance</h4>
+            <h4 class="font-display font-semibold text-brand-secondary text-base mb-2">Insurance Compliance</h4>
             <p>Corporate insurers mandate an active and audited RI&E when underwriting or maintaining business liability and fire insurance policies in the Netherlands.</p>
           </div>
 
@@ -223,7 +227,7 @@ const services = [
             <div class="w-10 h-10 rounded-xl bg-green-500/10 text-green-600 flex items-center justify-center mb-4">
               <i class="fa-solid fa-heart-pulse text-lg"></i>
             </div>
-            <h4 class="font-display font-bold text-brand-secondary text-base mb-2">Sick Leave Reduction</h4>
+            <h4 class="font-display font-semibold text-brand-secondary text-base mb-2">Sick Leave Reduction</h4>
             <p>Systematic assessment of physical strain, psychosocial workplace stress (PSA) and facility safety directly reduces absenteeism and increases employee satisfaction.</p>
           </div>
         </div>
@@ -232,5 +236,10 @@ const services = [
     </div>
   </section>
 
-  <MobileCourseBottomBar defaultCourse={services[0]} />
+  <MobileCourseBottomBar
+    defaultCourse={services[0]}
+    itemType="service"
+    serviceSlug="rie-advies"
+    advisorText="Need an RI&E or Action Plan?"
+  />
 </Layout>

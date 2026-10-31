@@ -1,4 +1,8 @@
 ---
+import { getLangFromUrl } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const isEn = lang === 'en';
 ---
 <!-- Global Slide-Over Contact Drawer -->
 <div id="contact-drawer-backdrop" class="fixed inset-0 bg-brand-secondary/60 backdrop-blur-sm z-[100] opacity-0 pointer-events-none transition-opacity duration-300"></div>
@@ -7,46 +11,59 @@
   id="contact-drawer" 
   class="fixed top-0 right-0 bottom-0 w-full max-w-[480px] bg-white z-[101] shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col justify-between overflow-y-auto"
   aria-hidden="true"
-  aria-label="Contact formulier"
+  aria-label={isEn ? "Contact form" : "Contact formulier"}
 >
   <!-- Drawer Header -->
-  <div class="p-6 sm:p-8 border-b border-brand-dark/5 flex items-center justify-between bg-brand-cream/40">
-    <div>
-      <span class="text-xs font-semibold uppercase tracking-wider text-brand-primary block mb-1">Direct contact</span>
-      <h3 class="font-display font-semibold text-xl text-brand-secondary">Stel uw vraag of vraag een offerte aan</h3>
+  <div class="p-5 sm:p-8 border-b border-brand-dark/5 flex items-center justify-between bg-brand-cream/40">
+    <div class="pr-3">
+      <span class="section-eyebrow text-brand-primary mb-1">
+        {isEn ? "Direct contact" : "Direct contact"}
+      </span>
+      <h3 class="heading-card text-brand-secondary mb-1.5">
+        {isEn ? "Have a question?" : "Heb je een vraag?"}
+      </h3>
+      <p class="text-card text-brand-dark/70">
+        {isEn
+          ? "Our team is available by phone on weekdays from 08:30 to 17:00. We answer emails within 24 hours."
+          : "Ons team staat telefonisch op werkdagen van 08:30-17:00 voor u klaar. Mail beantwoorden wij binnen 24 uur."}
+      </p>
     </div>
     
     <button 
       id="close-contact-drawer" 
-      class="w-10 h-10 rounded-full bg-white border border-brand-dark/10 flex items-center justify-center text-brand-dark/60 hover:text-brand-secondary hover:bg-brand-cream transition-colors cursor-pointer shrink-0 shadow-sm"
-      aria-label="Sluit contactformulier"
+      class="w-11 h-11 rounded-full bg-white border border-brand-dark/10 flex items-center justify-center text-brand-dark/60 hover:text-brand-secondary hover:bg-brand-cream transition-colors cursor-pointer shrink-0 shadow-sm"
+      aria-label={isEn ? "Close contact form" : "Sluit contactformulier"}
     >
       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
     </button>
   </div>
 
   <!-- Drawer Body: Form & Direct Contact Info -->
-  <div class="p-6 sm:p-8 flex-1">
+  <div class="p-5 sm:p-8 flex-1">
     
     <!-- Quick Contact Strip -->
-    <div class="grid grid-cols-2 gap-3 mb-6">
-      <a href="tel:0704447795" class="flex items-center gap-2.5 p-3 rounded-xl bg-brand-cream border border-brand-dark/5 hover:border-brand-primary/30 transition-all group">
+    <div class="grid grid-cols-1 min-[420px]:grid-cols-2 gap-2.5 sm:gap-3 mb-6">
+      <a href="tel:0704447795" class="flex items-center gap-3 p-3 rounded-xl bg-brand-cream border border-brand-dark/5 hover:border-brand-primary/30 transition-all group min-h-[48px]">
         <div class="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary shrink-0 group-hover:bg-brand-primary group-hover:text-white transition-colors">
           <i class="fa-solid fa-phone text-xs"></i>
         </div>
         <div class="min-w-0">
-          <div class="text-[10px] text-brand-dark/50 font-medium uppercase">Bellen</div>
-          <div class="text-xs font-semibold text-brand-secondary truncate">070 444 77 95</div>
+          <div class="text-[10px] text-brand-dark/50 font-medium uppercase">
+            {isEn ? "Weekdays 08:30-17:00" : "Werkdagen 08:30-17:00"}
+          </div>
+          <div class="text-xs font-semibold text-brand-secondary">070 444 77 95</div>
         </div>
       </a>
 
-      <a href="mailto:info@edusafe.nl" class="flex items-center gap-2.5 p-3 rounded-xl bg-brand-cream border border-brand-dark/5 hover:border-brand-primary/30 transition-all group">
+      <a href="mailto:info@edusafe.nl" class="flex items-center gap-3 p-3 rounded-xl bg-brand-cream border border-brand-dark/5 hover:border-brand-primary/30 transition-all group min-h-[48px]">
         <div class="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary shrink-0 group-hover:bg-brand-primary group-hover:text-white transition-colors">
           <i class="fa-solid fa-envelope text-xs"></i>
         </div>
         <div class="min-w-0">
-          <div class="text-[10px] text-brand-dark/50 font-medium uppercase">Mailen</div>
-          <div class="text-xs font-semibold text-brand-secondary truncate">info@edusafe.nl</div>
+          <div class="text-[10px] text-brand-dark/50 font-medium uppercase">
+            {isEn ? "Reply within 24h" : "Binnen 24u antwoord"}
+          </div>
+          <div class="text-xs font-semibold text-brand-secondary break-all min-[420px]:truncate">info@edusafe.nl</div>
         </div>
       </a>
     </div>
@@ -56,39 +73,45 @@
       
       <!-- Name -->
       <div class="flex flex-col gap-1.5">
-        <label for="drawer-name" class="text-xs font-semibold text-brand-secondary uppercase tracking-wider">Naam *</label>
+        <label for="drawer-name" class="text-xs font-semibold text-brand-secondary uppercase tracking-wider">
+          {isEn ? "Name *" : "Naam *"}
+        </label>
         <input 
           type="text" 
           id="drawer-name" 
           name="name" 
           required 
-          class="w-full bg-brand-cream border border-brand-dark/10 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all"
-          placeholder="Uw volledige naam"
+          class="w-full bg-brand-cream border border-brand-dark/10 rounded-xl px-3.5 py-3 sm:py-2.5 text-base sm:text-sm focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all"
+          placeholder={isEn ? "Your full name" : "Uw volledige naam"}
         />
       </div>
 
       <!-- Email & Phone Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
         <div class="flex flex-col gap-1.5">
-          <label for="drawer-email" class="text-xs font-semibold text-brand-secondary uppercase tracking-wider">E-mail *</label>
+          <label for="drawer-email" class="text-xs font-semibold text-brand-secondary uppercase tracking-wider">
+            {isEn ? "Email *" : "E-mail *"}
+          </label>
           <input 
             type="email" 
             id="drawer-email" 
             name="email" 
             required 
-            class="w-full bg-brand-cream border border-brand-dark/10 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all"
-            placeholder="naam@voorbeeld.nl"
+            class="w-full bg-brand-cream border border-brand-dark/10 rounded-xl px-3.5 py-3 sm:py-2.5 text-base sm:text-sm focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all"
+            placeholder={isEn ? "name@company.com" : "naam@voorbeeld.nl"}
           />
         </div>
 
         <div class="flex flex-col gap-1.5">
-          <label for="drawer-phone" class="text-xs font-semibold text-brand-secondary uppercase tracking-wider">Telefoon *</label>
+          <label for="drawer-phone" class="text-xs font-semibold text-brand-secondary uppercase tracking-wider">
+            {isEn ? "Phone *" : "Telefoon *"}
+          </label>
           <input 
             type="tel" 
             id="drawer-phone" 
             name="phone" 
             required 
-            class="w-full bg-brand-cream border border-brand-dark/10 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all"
+            class="w-full bg-brand-cream border border-brand-dark/10 rounded-xl px-3.5 py-3 sm:py-2.5 text-base sm:text-sm focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all"
             placeholder="06 12345678"
           />
         </div>
@@ -96,52 +119,76 @@
 
       <!-- Company -->
       <div class="flex flex-col gap-1.5">
-        <label for="drawer-company" class="text-xs font-semibold text-brand-secondary uppercase tracking-wider">Bedrijfsnaam (optioneel)</label>
+        <label for="drawer-company" class="text-xs font-semibold text-brand-secondary uppercase tracking-wider">
+          {isEn ? "Company Name (optional)" : "Bedrijfsnaam (optioneel)"}
+        </label>
         <input 
           type="text" 
           id="drawer-company" 
           name="company" 
-          class="w-full bg-brand-cream border border-brand-dark/10 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all"
-          placeholder="Uw bedrijfsnaam"
+          class="w-full bg-brand-cream border border-brand-dark/10 rounded-xl px-3.5 py-3 sm:py-2.5 text-base sm:text-sm focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all"
+          placeholder={isEn ? "Your company name" : "Uw bedrijfsnaam"}
         />
       </div>
 
       <!-- Training Selection -->
       <div class="flex flex-col gap-1.5">
-        <label for="drawer-training" class="text-xs font-semibold text-brand-secondary uppercase tracking-wider">Onderwerp / Cursus</label>
+        <label for="drawer-training" class="text-xs font-semibold text-brand-secondary uppercase tracking-wider">
+          {isEn ? "Subject / Course" : "Onderwerp / Cursus"}
+        </label>
         <select 
           id="drawer-training" 
           name="training" 
-          class="w-full bg-brand-cream border border-brand-dark/10 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all cursor-pointer"
+          class="w-full bg-brand-cream border border-brand-dark/10 rounded-xl px-3.5 py-3 sm:py-2.5 text-base sm:text-sm focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all cursor-pointer"
         >
-          <option value="bhv">BHV Basis / Herhaling</option>
-          <option value="ehbo">EHBO & Reanimatie / AED</option>
-          <option value="vca">VCA Basis / VOL</option>
-          <option value="heftruck">Heftruckcertificaat</option>
-          <option value="incompany">Incompany Training Offerte</option>
-          <option value="diensten">Brandveiligheid / RI&E / Noodverlichting</option>
-          <option value="overig">Overige vraag</option>
+          {isEn ? (
+            <>
+              <option value="bhv">BHV (Basic, Refresher, Team Leader, Head of BHV)</option>
+              <option value="ehbo">First Aid, Paediatric (EHAK) &amp; AED/CPR</option>
+              <option value="vca">VCA Basic, VCA-VOL, VCU-VIL or Exam</option>
+              <option value="transport">Transport (Forklift, Reach Truck, Aerial Platform, Stacker)</option>
+              <option value="offshore">Offshore (BOSIET, OPITO, Equipment, Staffing)</option>
+              <option value="elearning">E-learning (BHV &amp; VCA in NL / EN)</option>
+              <option value="diensten">Services (Inspections, Certification, Permits, RI&amp;E, Staffing)</option>
+              <option value="incompany">Incompany Training Proposal</option>
+              <option value="overig">Other Question</option>
+            </>
+          ) : (
+            <>
+              <option value="bhv">BHV (Basis, Herhaling, Ploegleider, Hoofd BHV)</option>
+              <option value="ehbo">EHBO, EHAK &amp; AED/Reanimatie</option>
+              <option value="vca">VCA Basis, VCA-VOL, VCU-VIL of Examen</option>
+              <option value="transport">Transport (Heftruck, Reachtruck, Hoogwerker, Stapelaar)</option>
+              <option value="offshore">Offshore (BOSIET, OPITO, Middelen, Detachering)</option>
+              <option value="elearning">E-learning (BHV &amp; VCA in NL / EN)</option>
+              <option value="diensten">Diensten (Keuringen, Certificering, Vergunningen, RI&amp;E, Detachering)</option>
+              <option value="incompany">Incompany Training Offerte</option>
+              <option value="overig">Overige vraag</option>
+            </>
+          )}
         </select>
       </div>
 
       <!-- Message -->
       <div class="flex flex-col gap-1.5">
-        <label for="drawer-message" class="text-xs font-semibold text-brand-secondary uppercase tracking-wider">Bericht / Toelichting</label>
+        <label for="drawer-message" class="text-xs font-semibold text-brand-secondary uppercase tracking-wider">
+          {isEn ? "Message / Details" : "Bericht / Toelichting"}
+        </label>
         <textarea 
           id="drawer-message" 
           name="message" 
           rows="3" 
-          class="w-full bg-brand-cream border border-brand-dark/10 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all resize-none"
-          placeholder="Vertel ons kort wat u nodig heeft..."
+          class="w-full bg-brand-cream border border-brand-dark/10 rounded-xl px-3.5 py-3 sm:py-2.5 text-base sm:text-sm focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all resize-none"
+          placeholder={isEn ? "Briefly tell us how we can help..." : "Vertel ons kort wat u nodig heeft..."}
         ></textarea>
       </div>
 
       <!-- Submit Button -->
       <button 
         type="submit" 
-        class="w-full mt-2 font-display font-semibold text-sm bg-brand-accent hover:bg-brand-accent-hover text-white py-3.5 rounded-xl transition-all duration-300 shadow-[0_6px_20px_rgba(255,107,53,0.25)] hover:shadow-[0_8px_25px_rgba(255,107,53,0.4)] cursor-pointer text-center"
+        class="w-full mt-2 font-display font-semibold text-sm bg-brand-accent hover:bg-brand-accent-hover text-white py-3.5 rounded-xl transition-all duration-300 shadow-sm cursor-pointer text-center"
       >
-        Bericht Verzenden
+        {isEn ? "Send Message" : "Bericht Verzenden"}
       </button>
     </form>
 
@@ -150,15 +197,19 @@
       <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 mb-2">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" /></svg>
       </div>
-      <h5 class="font-display font-semibold text-emerald-900 text-base mb-1">Bericht succesvol verzonden!</h5>
-      <p class="text-xs text-emerald-700">Wij nemen binnen 1 werkdag contact met u op.</p>
+      <h5 class="font-display font-semibold text-emerald-900 text-base mb-1">
+        {isEn ? "Message sent successfully!" : "Bericht succesvol verzonden!"}
+      </h5>
+      <p class="text-xs text-emerald-700">
+        {isEn ? "We will answer your message within 24 hours." : "Wij beantwoorden uw bericht binnen 24 uur."}
+      </p>
     </div>
 
   </div>
 
   <!-- Drawer Footer -->
   <div class="p-6 border-t border-brand-dark/5 bg-brand-cream/30 text-center text-xs text-brand-dark/50">
-    Edusafe &bull; Oude Middenweg 241A, Den Haag
+    {isEn ? "Edusafe • Oude Middenweg 241A, 2491 AH The Hague" : "Edusafe • Oude Middenweg 241A, 2491 AH Den Haag"}
   </div>
 </aside>
 
@@ -205,8 +256,42 @@
       });
 
       if (drawerForm && successMsg) {
-        drawerForm.addEventListener('submit', (e) => {
+        drawerForm.addEventListener('submit', async (e) => {
           e.preventDefault();
+          const submitBtn = drawerForm.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+          const originalBtnText = submitBtn ? submitBtn.textContent : '';
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.textContent = '...';
+          }
+
+          const formData = new FormData(drawerForm);
+          const trainingSelect = document.getElementById('drawer-training') as HTMLSelectElement | null;
+          const trainingLabel = trainingSelect?.options[trainingSelect.selectedIndex]?.text || String(formData.get('training') || '');
+
+          try {
+            await fetch('/api/advies', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                source: 'contact-drawer',
+                name: formData.get('name') || '',
+                email: formData.get('email') || '',
+                phone: formData.get('phone') || '',
+                company: formData.get('company') || '',
+                category: trainingLabel,
+                message: formData.get('message') || '',
+              }),
+            });
+          } catch (err) {
+            console.warn('Contact drawer sync warning:', err);
+          } finally {
+            if (submitBtn) {
+              submitBtn.disabled = false;
+              submitBtn.textContent = originalBtnText;
+            }
+          }
+
           drawerForm.style.display = 'none';
           successMsg.classList.remove('hidden');
           setTimeout(() => {

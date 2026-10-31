@@ -9,10 +9,13 @@ const isEn = lang === 'en';
   <!-- Outer Container for Floating Hero Frame -->
   <div class="max-w-[1280px] mx-auto px-4 sm:px-6">
     
-    <!-- Floating Framed Hero Card (Zwevend Kader met volledige video achtergrond) -->
-    <div class="relative rounded-[28px] sm:rounded-[36px] lg:rounded-[40px] overflow-hidden min-h-[560px] sm:min-h-[620px] lg:min-h-[660px] flex flex-col justify-between p-6 sm:p-10 md:p-14 lg:p-16 border border-brand-dark/10 shadow-[0_25px_70px_-15px_rgba(14,34,61,0.25)] ring-1 ring-white/20 bg-brand-secondary">
+    <!-- Wrapper for Floating Hero Card + Overlapping Corner Badge -->
+    <div class="relative">
+
+      <!-- Floating Framed Hero Card (Zwevend Kader met volledige video achtergrond) -->
+      <div class="relative rounded-[28px] sm:rounded-[36px] lg:rounded-[40px] overflow-hidden min-h-[560px] sm:min-h-[620px] lg:min-h-[660px] flex flex-col justify-between p-6 sm:p-10 md:p-14 lg:p-16 border border-brand-primary/15 shadow-[0_25px_70px_-15px_rgba(12,78,162,0.28)] ring-1 ring-white/25 bg-brand-primary">
       
-      <!-- Video Background (High quality, local loop, fast preload) -->
+      <!-- Video Background (Fast WebP poster + responsive mobile/desktop streams) -->
       <video 
         id="hero-video"
         autoplay 
@@ -20,102 +23,152 @@ const isEn = lang === 'en';
         muted 
         playsinline 
         webkit-playsinline
-        preload="auto"
+        preload="metadata"
+        poster="/assets/images/hero_poster.webp"
         disablepictureinpicture
         disableremoteplayback
-        class="absolute inset-0 w-full h-full object-cover z-0 filter brightness-[0.9] contrast-[1.02] pointer-events-none"
+        class="absolute inset-0 w-full h-full object-cover object-center z-0 filter brightness-[0.98] contrast-[1.03] pointer-events-none"
       >
+        <source src="/assets/videos/hero_video_mobile.mp4" type="video/mp4" media="(max-width: 767px)" />
         <source src="/assets/videos/hero_video.mp4" type="video/mp4" />
       </video>
 
-      <!-- Multi-Layered Modern Dark Gradient Overlay for Maximum Legibility & High-End B2B Look -->
-      <div class="absolute inset-0 bg-gradient-to-r from-brand-secondary/90 via-brand-secondary/75 to-brand-secondary/35 z-10 pointer-events-none"></div>
-      <div class="absolute inset-0 bg-gradient-to-t from-brand-secondary/80 via-transparent to-black/20 z-10 pointer-events-none"></div>
+      <!-- Mobile High-Contrast Brand Blue Overlay (< md) -->
+      <div 
+        class="md:hidden absolute inset-0 z-10 pointer-events-none"
+        style="background: linear-gradient(165deg, rgba(12, 78, 162, 0.95) 0%, rgba(12, 78, 162, 0.86) 55%, rgba(6, 40, 86, 0.80) 100%);"
+      ></div>
+
+      <!-- Pure Edusafe Brand Blue (#0C4EA2) Gradient Overlay (Tablet/Desktop >= md) -->
+      <div 
+        class="hidden md:block absolute inset-0 z-10 pointer-events-none"
+        style="background: linear-gradient(90deg, #0C4EA2 0%, #0C4EA2 36%, rgba(12, 78, 162, 0.86) 56%, rgba(12, 78, 162, 0.38) 78%, rgba(12, 78, 162, 0.08) 100%);"
+      ></div>
 
       <!-- Hero Main Content (relative z-20) -->
-      <div class="relative z-20 max-w-[760px] pt-4 sm:pt-6">
+      <div class="relative z-20 max-w-[720px] pt-4 sm:pt-6">
         
         <!-- Headline with tilted colored background -->
-        <h1 class="font-display text-[34px] sm:text-5xl lg:text-[58px] font-semibold tracking-tight text-white leading-[1.22] mb-6 drop-shadow-sm">
+        <h1 class="heading-hero text-white mb-6 drop-shadow-sm">
           {isEn ? (
             <>
-              Enhance safety across the <span class="relative inline-block text-white px-4 sm:px-5 py-1 sm:py-1.5 mx-1 sm:mx-1.5 my-1 transform -rotate-1 align-baseline"><span class="absolute inset-0 bg-brand-accent rounded-xl sm:rounded-2xl shadow-md z-0"></span><span class="relative z-10 font-semibold">workplace</span></span>
+              Together we create a safe <span class="relative inline-block text-white px-4 sm:px-5 py-1 sm:py-1.5 mx-1 sm:mx-1.5 my-1 transform -rotate-1 align-baseline"><span class="absolute inset-0 bg-brand-accent rounded-xl sm:rounded-2xl shadow-md z-0"></span><span class="relative z-10 font-semibold">workplace</span></span>
             </>
           ) : (
             <>
-              Vergroot de veiligheid op de <span class="relative inline-block text-white px-4 sm:px-5 py-1 sm:py-1.5 mx-1 sm:mx-1.5 my-1 transform -rotate-1 align-baseline"><span class="absolute inset-0 bg-brand-accent rounded-xl sm:rounded-2xl shadow-md z-0"></span><span class="relative z-10 font-semibold">werkvloer</span></span>
+              Samen zorgen we voor een veilige <span class="relative inline-block text-white px-4 sm:px-5 py-1 sm:py-1.5 mx-1 sm:mx-1.5 my-1 transform -rotate-1 align-baseline"><span class="absolute inset-0 bg-brand-accent rounded-xl sm:rounded-2xl shadow-md z-0"></span><span class="relative z-10 font-semibold">werkvloer</span></span>
             </>
           )}
         </h1>
 
         <!-- Subtitle -->
-        <p class="text-white/85 text-base sm:text-lg lg:text-[19px] leading-relaxed mb-8 sm:mb-10 max-w-[620px] font-normal">
+        <p class="text-lead text-white/90 mb-8 sm:mb-10 max-w-[600px]">
           {isEn 
-            ? "Practical Emergency Response (BHV), First Aid and VCA safety training compliant with Dutch Arbowet regulations. Book incompany or at our modern training facilities."
-            : "Praktijkgerichte BHV, EHBO en VCA trainingen conform de nieuwste Arbowetgeving. Direct in te plannen incompany of op één van onze opleidingslocaties."}
+            ? "Practical BHV, First Aid and VCA training, inspections and safety advice. At our training facility or on-site at your company."
+            : "Praktijkgerichte BHV-, EHBO- en VCA-opleidingen, keuringen en veiligheidsadvies. Op onze opleidingslocatie of bij u op het bedrijf."}
         </p>
 
         <!-- CTA Buttons -->
-        <div class="flex flex-wrap items-center gap-4 sm:gap-5">
+        <div class="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 sm:gap-5">
           <a 
-            href={isEn ? "#courses" : "#cursussen"} 
-            class="font-display font-semibold text-[15px] sm:text-base bg-brand-accent hover:bg-brand-accent-hover text-white px-7 sm:px-8 py-3.5 sm:py-4 rounded-xl transition-all duration-300 shadow-[0_10px_25px_rgba(255,107,53,0.35)] hover:-translate-y-0.5 flex items-center gap-2.5 group"
+            href="#cursussen" 
+            class="w-full sm:w-auto btn-hero bg-brand-accent hover:bg-brand-accent-hover text-white shadow-sm hover:-translate-y-0.5 group"
           >
-            <span>{isEn ? "Get Started" : "Direct Starten"}</span>
+            <span>{isEn ? "Explore our courses" : "Bekijk ons aanbod"}</span>
             <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
           </a>
           
-          <button 
-            type="button"
-            data-open-contact-drawer
-            class="font-display font-semibold text-[15px] sm:text-base bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/25 px-6 sm:px-7 py-3.5 sm:py-4 rounded-xl transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-2.5 cursor-pointer"
+          <a 
+            href={isEn ? "/en/personal-advice" : "/persoonlijk-advies"}
+            class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 font-display font-semibold text-[15px] px-6 sm:px-7 py-3.5 sm:py-4 rounded-xl bg-white/10 sm:bg-transparent backdrop-blur-2xs sm:backdrop-blur-none hover:bg-white/15 text-white border border-white/80 hover:border-white transition-all duration-300 hover:-translate-y-0.5 cursor-pointer"
           >
-            <i class="fa-regular fa-comment-dots text-lg text-white"></i>
-            <span>{isEn ? "Request Advice" : "Vraag advies aan"}</span>
-          </button>
+            <i class="fa-regular fa-comment-dots text-base text-white"></i>
+            <span>{isEn ? "Quick personal advice" : "Snel persoonlijk advies"}</span>
+          </a>
         </div>
 
       </div>
 
-      <!-- Bottom Card Trust Bar / Social Proof (relative z-20) -->
-      <div class="relative z-20 pt-8 sm:pt-10 border-t border-white/15 mt-8 flex flex-wrap items-center justify-between gap-6">
+      <!-- Bottom Card Trust Bar / Social Proof (Left-aligned & unified counters) -->
+      <div class="relative z-20 pt-8 sm:pt-10 border-t border-white/15 mt-8 flex flex-wrap items-center justify-start gap-6 sm:gap-8 lg:gap-10 sm:mr-36 md:mr-44 lg:mr-48">
         
-        <!-- Social Proof: Avatars & Counter (1.761+ Cursisten) -->
+        <!-- Block 1: Avatars & Animated Trainees Counter (2.000+ Cursisten) -->
         <div class="flex items-center gap-4">
           <!-- Avatars Stack -->
-          <div class="flex -space-x-3">
-            <img class="w-10 h-10 rounded-full border-2 border-brand-secondary object-cover shadow-sm" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100&h=100" alt="Cursist" width="40" height="40" />
-            <img class="w-10 h-10 rounded-full border-2 border-brand-secondary object-cover shadow-sm" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100&h=100" alt="Cursist" width="40" height="40" />
-            <img class="w-10 h-10 rounded-full border-2 border-brand-secondary object-cover shadow-sm" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100&h=100" alt="Cursist" width="40" height="40" />
-            <img class="w-10 h-10 rounded-full border-2 border-brand-secondary object-cover shadow-sm" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=100&h=100" alt="Cursist" width="40" height="40" />
+          <div class="flex -space-x-3 shrink-0">
+            <img class="w-10 h-10 rounded-full border-2 border-brand-primary object-cover shadow-sm" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100&h=100" alt="Cursist" width="40" height="40" />
+            <img class="w-10 h-10 rounded-full border-2 border-brand-primary object-cover shadow-sm" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=100&h=100" alt="Cursist" width="40" height="40" />
+            <img class="w-10 h-10 rounded-full border-2 border-brand-primary object-cover shadow-sm" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=100&h=100" alt="Cursist" width="40" height="40" />
+            <img class="w-10 h-10 rounded-full border-2 border-brand-primary object-cover shadow-sm" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=100&h=100" alt="Cursist" width="40" height="40" />
           </div>
 
-          <!-- Text -->
+          <!-- Text (2-line unified hierarchy) -->
           <div class="flex flex-col">
-            <span class="font-display font-semibold text-white text-base sm:text-lg leading-tight">1.761+ Cursisten</span>
-            <span class="text-xs sm:text-[13px] text-white/70 font-normal">Gecertificeerd in heel Nederland</span>
+            <span class="font-display font-semibold text-white text-lg sm:text-xl leading-tight tabular-nums">
+              <span data-counter-target="2000" data-counter-sep={isEn ? "," : "."}>0</span>+ {isEn ? "Trainees" : "Cursisten"}
+            </span>
+            <span class="text-xs sm:text-[13px] text-white/75 font-normal">
+              {isEn ? "Certified across the Netherlands" : "Gecertificeerd in heel Nederland"}
+            </span>
           </div>
         </div>
 
-        <!-- Rating & Badges -->
-        <div class="flex items-center gap-6 text-white/90">
+        <!-- Subtle Vertical Divider -->
+        <div class="hidden sm:block h-10 w-px bg-white/15 shrink-0"></div>
+
+        <!-- Block 2: Animated Rating & Reviews Counter (4.9 / 5 & 250+ reviews) -->
+        <div class="flex flex-col">
           <div class="flex items-center gap-2">
-            <div class="flex text-amber-400 text-xs">
+            <div class="flex text-amber-400 text-xs sm:text-sm gap-0.5">
               <i class="fa-solid fa-star"></i>
               <i class="fa-solid fa-star"></i>
               <i class="fa-solid fa-star"></i>
               <i class="fa-solid fa-star"></i>
               <i class="fa-solid fa-star"></i>
             </div>
-            <span class="font-semibold text-xs sm:text-sm text-white">4.9 / 5</span>
-            <span class="text-xs text-white/60">(250+ reviews)</span>
+            <span class="font-display font-semibold text-white text-lg sm:text-xl leading-tight tabular-nums">
+              <span data-counter-decimal="4.9">0.0</span> / 5
+            </span>
           </div>
-
-          <div class="hidden md:flex items-center gap-2 text-xs font-medium text-emerald-300 bg-emerald-950/40 border border-emerald-500/30 px-3 py-1.5 rounded-lg">
-            <i class="fa-solid fa-shield-check"></i>
-            <span>100% Slagingsgarantie</span>
-          </div>
+          <span class="text-xs sm:text-[13px] text-white/75 font-normal tabular-nums">
+            {isEn ? (
+              <>Based on <strong class="text-white font-semibold"><span data-counter-target="250">0</span>+</strong> reviews</>
+            ) : (
+              <>Op basis van <strong class="text-white font-semibold"><span data-counter-target="250">0</span>+</strong> reviews</>
+            )}
+          </span>
         </div>
+
+      </div>
+
+      <!-- Round Seal Badge (White & Orange) Neatly Inside Bottom-Right Corner with Breathing Room -->
+      <div 
+        class="hidden sm:flex absolute bottom-6 right-6 md:bottom-8 md:right-8 lg:bottom-10 lg:right-10 z-30 w-36 h-36 md:w-40 md:h-40 lg:w-44 lg:h-44 rounded-full bg-white shadow-xl border-2 border-brand-accent/25 ring-4 ring-white/15 items-center justify-center select-none group hover:scale-105 transition-transform duration-300"
+        aria-label={isEn ? "Practice-oriented certification" : "Praktijkgerichte certificering"}
+      >
+        <!-- Subtle dashed inner accent ring -->
+        <div class="absolute inset-2.5 rounded-full border border-dashed border-brand-accent/40 pointer-events-none"></div>
+
+        <!-- Rotating circular SVG text around the border -->
+        <svg class="w-full h-full p-2 animate-[spin_24s_linear_infinite]" viewBox="0 0 120 120">
+          <defs>
+            <path id="hero-cert-seal-path" d="M 60, 60 m -43, 0 a 43,43 0 1,1 86,0 a 43,43 0 1,1 -86,0" />
+          </defs>
+          <text class="font-display font-bold uppercase text-[8.3px] tracking-[0.14em] fill-brand-accent">
+            <textPath href="#hero-cert-seal-path" startOffset="0%" textLength="264" lengthAdjust="spacing">
+              {isEn ? "PRACTICE-ORIENTED CERTIFICATION • EDUSAFE •" : "PRAKTIJKGERICHTE CERTIFICERING • EDUSAFE •"}
+            </textPath>
+          </text>
+        </svg>
+
+        <!-- Orange center core with crisp white shield-check icon -->
+        <div class="absolute w-16 h-16 md:w-[72px] md:h-[72px] lg:w-20 lg:h-20 rounded-full bg-brand-accent text-white flex items-center justify-center shadow-sm group-hover:bg-brand-accent-hover transition-colors">
+          <svg class="w-8 h-8 md:w-9 md:h-9 lg:w-10 lg:h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            <path d="m9 12 2 2 4-4" />
+          </svg>
+        </div>
+      </div>
 
       </div>
 
@@ -128,7 +181,7 @@ const isEn = lang === 'en';
         <!-- Left: Fixed Text Badge -->
         <div class="shrink-0 text-center lg:text-left lg:pr-8 lg:border-r border-brand-dark/10">
           <span class="font-display font-semibold text-xs sm:text-sm text-brand-dark/70 tracking-tight whitespace-nowrap block">
-            Vertrouwd door 300+ bedrijven:
+            {isEn ? "Trusted by 300+ companies:" : "Vertrouwd door 300+ bedrijven:"}
           </span>
         </div>
 
@@ -142,7 +195,19 @@ const isEn = lang === 'en';
                 <img src="/assets/images/ado-den-haag-160x80.svg" alt="ADO Den Haag" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
               </div>
               <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
-                <img src="/assets/images/cirque-du-soleil-160x80.png" alt="Cirque du Soleil" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+                <img src="/assets/images/cirque-du-soleil.svg" alt="Cirque du Soleil" class="h-11 sm:h-13 md:h-14 w-auto object-contain" />
+              </div>
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/knus-delft-logo.png" alt="Knus Delft" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+              </div>
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/two-brothers-logo.png" alt="Golden Tulip / Two Brothers" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+              </div>
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/saffier-logo.svg" alt="Saffier" class="h-9 sm:h-11 md:h-12 w-auto object-contain" />
+              </div>
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/wblo-logo.svg" alt="WBLO" class="h-9 sm:h-11 md:h-12 w-auto object-contain" />
               </div>
               <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
                 <img src="/assets/images/world-forum-160x80.png" alt="World Forum Den Haag" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
@@ -151,22 +216,22 @@ const isEn = lang === 'en';
                 <img src="/assets/images/ronald-mcdonald-den-haag-160x80.png" alt="Ronald McDonald Huis" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
               </div>
               <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
-                <img src="/assets/images/uithof-160x80.png" alt="De Uithof" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+                <img src="/assets/images/uithof-logo.svg" alt="De Uithof" class="h-9 sm:h-10 md:h-11 w-auto object-contain" />
               </div>
               <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
-                <img src="/assets/images/paard-160x80.svg" alt="PAARD" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+                <img src="/assets/images/paard-160x80.svg" alt="PAARD" class="h-8 sm:h-9 md:h-10 w-auto object-contain" />
               </div>
               <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
-                <img src="/assets/images/bex-beveiliging-160x80.jpg" alt="Bex Beveiliging" class="h-10 sm:h-12 md:h-13 w-auto object-contain rounded-md shadow-xs" />
+                <img src="/assets/images/bex-beveiliging-logo.svg" alt="Bex Beveiliging" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
               </div>
               <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
-                <img src="/assets/images/hofstad-security-160x80.png" alt="Hofstad Security" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+                <img src="/assets/images/hofstad-security-logo.png" alt="Hofstad Security" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
               </div>
               <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
-                <img src="/assets/images/ortec-160x80.jpg" alt="Ortec" class="h-10 sm:h-12 md:h-13 w-auto object-contain rounded-md shadow-xs" />
+                <img src="/assets/images/ortec-logo.svg" alt="ORTEC" class="h-7 sm:h-8 md:h-9 w-auto object-contain" />
               </div>
               <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
-                <img src="/assets/images/khn-160x80.png" alt="Koninklijke Horeca Nederland" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+                <img src="/assets/images/khn-logo.svg" alt="Koninklijke Horeca Nederland" class="h-9 sm:h-11 md:h-12 w-auto object-contain" />
               </div>
               <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
                 <img src="/assets/images/de-maas-160x80.png" alt="De Maas" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
@@ -179,7 +244,19 @@ const isEn = lang === 'en';
                 <img src="/assets/images/ado-den-haag-160x80.svg" alt="ADO Den Haag" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
               </div>
               <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
-                <img src="/assets/images/cirque-du-soleil-160x80.png" alt="Cirque du Soleil" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+                <img src="/assets/images/cirque-du-soleil.svg" alt="Cirque du Soleil" class="h-11 sm:h-13 md:h-14 w-auto object-contain" />
+              </div>
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/knus-delft-logo.png" alt="Knus Delft" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+              </div>
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/two-brothers-logo.png" alt="Golden Tulip / Two Brothers" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+              </div>
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/saffier-logo.svg" alt="Saffier" class="h-9 sm:h-11 md:h-12 w-auto object-contain" />
+              </div>
+              <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
+                <img src="/assets/images/wblo-logo.svg" alt="WBLO" class="h-9 sm:h-11 md:h-12 w-auto object-contain" />
               </div>
               <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
                 <img src="/assets/images/world-forum-160x80.png" alt="World Forum Den Haag" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
@@ -188,22 +265,22 @@ const isEn = lang === 'en';
                 <img src="/assets/images/ronald-mcdonald-den-haag-160x80.png" alt="Ronald McDonald Huis" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
               </div>
               <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
-                <img src="/assets/images/uithof-160x80.png" alt="De Uithof" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+                <img src="/assets/images/uithof-logo.svg" alt="De Uithof" class="h-9 sm:h-10 md:h-11 w-auto object-contain" />
               </div>
               <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
-                <img src="/assets/images/paard-160x80.svg" alt="PAARD" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+                <img src="/assets/images/paard-160x80.svg" alt="PAARD" class="h-8 sm:h-9 md:h-10 w-auto object-contain" />
               </div>
               <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
-                <img src="/assets/images/bex-beveiliging-160x80.jpg" alt="Bex Beveiliging" class="h-10 sm:h-12 md:h-13 w-auto object-contain rounded-md shadow-xs" />
+                <img src="/assets/images/bex-beveiliging-logo.svg" alt="Bex Beveiliging" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
               </div>
               <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
-                <img src="/assets/images/hofstad-security-160x80.png" alt="Hofstad Security" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+                <img src="/assets/images/hofstad-security-logo.png" alt="Hofstad Security" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
               </div>
               <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
-                <img src="/assets/images/ortec-160x80.jpg" alt="Ortec" class="h-10 sm:h-12 md:h-13 w-auto object-contain rounded-md shadow-xs" />
+                <img src="/assets/images/ortec-logo.svg" alt="ORTEC" class="h-7 sm:h-8 md:h-9 w-auto object-contain" />
               </div>
               <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
-                <img src="/assets/images/khn-160x80.png" alt="Koninklijke Horeca Nederland" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
+                <img src="/assets/images/khn-logo.svg" alt="Koninklijke Horeca Nederland" class="h-9 sm:h-11 md:h-12 w-auto object-contain" />
               </div>
               <div class="h-14 sm:h-16 flex items-center justify-center transition-all duration-300 hover:scale-105">
                 <img src="/assets/images/de-maas-160x80.png" alt="De Maas" class="h-10 sm:h-12 md:h-13 w-auto object-contain" />
@@ -267,9 +344,55 @@ const isEn = lang === 'en';
     }
   }
 
+  function initHeroCounters() {
+    const intCounters = document.querySelectorAll<HTMLElement>('[data-counter-target]');
+    const decCounters = document.querySelectorAll<HTMLElement>('[data-counter-decimal]');
+    if (!intCounters.length && !decCounters.length) return;
+
+    const runAnimation = () => {
+      const duration = 1800;
+      const startTime = performance.now();
+
+      const formatInt = (val: number, sep: string | null) => {
+        if (!sep || val < 1000) return String(val);
+        return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, sep);
+      };
+
+      const step = (now: number) => {
+        const elapsed = Math.min((now - startTime) / duration, 1);
+        const eased = 1 - Math.pow(1 - elapsed, 3); // cubic ease-out
+
+        intCounters.forEach((el) => {
+          const target = parseInt(el.getAttribute('data-counter-target') || '0', 10);
+          const sep = el.getAttribute('data-counter-sep');
+          const current = Math.round(target * eased);
+          el.textContent = formatInt(current, sep);
+        });
+
+        decCounters.forEach((el) => {
+          const target = parseFloat(el.getAttribute('data-counter-decimal') || '0');
+          const current = (target * eased).toFixed(1);
+          el.textContent = current;
+        });
+
+        if (elapsed < 1) {
+          requestAnimationFrame(step);
+        }
+      };
+
+      requestAnimationFrame(step);
+    };
+
+    runAnimation();
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initHeroVideo);
+    document.addEventListener('DOMContentLoaded', () => {
+      initHeroVideo();
+      initHeroCounters();
+    });
   } else {
     initHeroVideo();
+    initHeroCounters();
   }
 </script>

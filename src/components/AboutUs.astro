@@ -1,6 +1,10 @@
 ---
+import { getLangFromUrl } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const isEn = lang === 'en';
 ---
-<section id="over-ons" class="w-full bg-white py-20 md:py-28 relative overflow-hidden reveal">
+<section id="over-ons" class="w-full bg-white py-16 md:py-28 relative overflow-hidden reveal">
   
   <!-- Left Side Background Doodles -->
   <div class="absolute top-[20%] left-[-5%] text-brand-primary/10 pointer-events-none select-none hidden lg:block">
@@ -9,13 +13,13 @@
     </svg>
   </div>
 
-  <div class="max-w-[1280px] mx-auto px-6">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center reveal-stagger">
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-12 lg:gap-20 items-center reveal-stagger">
       
       <!-- Left Column: Retro Image Container with Doodles -->
       <div class="col-span-1 lg:col-span-6 relative flex justify-center lg:justify-start">
         <!-- Retro Backdrop Frame -->
-        <div class="absolute inset-0 bg-[repeating-linear-gradient(45deg,rgba(27,102,177,0.08),rgba(27,102,177,0.08)_10px,transparent_10px,transparent_20px)] border-2 border-brand-primary/20 rounded-[32px] translate-x-[-16px] translate-y-[16px] z-0 max-w-[480px] w-full"></div>
+        <div class="absolute inset-0 bg-[repeating-linear-gradient(45deg,rgba(12,78,162,0.08),rgba(12,78,162,0.08)_10px,transparent_10px,transparent_20px)] border-2 border-brand-primary/20 rounded-[28px] sm:rounded-[32px] -translate-x-2 translate-y-2 sm:-translate-x-4 sm:translate-y-4 z-0 max-w-[480px] w-full"></div>
 
         <!-- Main Image Card -->
         <div class="relative bg-brand-cream rounded-[32px] overflow-hidden border-4 border-brand-cream shadow-2xl z-10 max-w-[480px] w-full aspect-[4/3] md:aspect-auto">
@@ -42,25 +46,29 @@
       <div class="col-span-1 lg:col-span-6 relative z-20">
         
         <!-- Tagline -->
-        <div class="inline-flex items-center gap-1.5 text-brand-primary font-display font-semibold text-sm uppercase tracking-wider mb-3">
-          <svg class="w-4.5 h-4.5" fill="currentColor" viewBox="0 0 20 20">
+        <div class="section-eyebrow text-brand-primary mb-2.5">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
             <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
           </svg>
-          Over Edusafe
+          {isEn ? "About Edusafe" : "Over Edusafe"}
         </div>
 
         <!-- Title -->
-        <h2 class="font-display text-3xl md:text-4xl font-semibold tracking-tight text-brand-secondary leading-[1.1] mb-6">
-          Veiligheid en zekerheid voor uw organisatie
+        <h2 class="heading-section text-brand-secondary mb-6">
+          {isEn ? "Safety and certainty for your organization" : "Veiligheid en zekerheid voor uw organisatie"}
         </h2>
 
         <!-- Subtext -->
-        <p class="text-brand-dark/80 text-[16px] md:text-base leading-relaxed mb-6">
-          Bij Edusafe geloven we dat een veilige werkomgeving begint met de juiste kennis en vaardigheden. Wij verzorgen praktijkgerichte veiligheidsopleidingen en trainingen waarmee uw medewerkers direct in actie kunnen komen in noodsituaties. We zorgen dat uw organisatie volledig voldoet aan alle wettelijke verplichtingen.
+        <p class="text-body text-brand-dark/80 mb-5">
+          {isEn
+            ? "At Edusafe, we believe that a safe working environment starts with the right knowledge and hands-on skills. We provide practical safety training courses that empower your employees to take immediate action during emergencies, ensuring your organization complies with all statutory requirements."
+            : "Bij Edusafe geloven we dat een veilige werkomgeving begint met de juiste kennis en vaardigheden. Wij verzorgen praktijkgerichte veiligheidsopleidingen en trainingen waarmee uw medewerkers direct in actie kunnen komen in noodsituaties. We zorgen dat uw organisatie volledig voldoet aan alle wettelijke verplichtingen."}
         </p>
         
-        <p class="text-brand-dark/70 text-[15px] md:text-sm leading-relaxed mb-8">
-          Onze gecertificeerde instructeurs brengen theorie tot leven met interactieve simulaties, reanimatie-oefeningen en praktijkgerichte scenario's. Zo blijft de leerstof écht hangen en gaan uw cursisten met zelfvertrouwen naar huis.
+        <p class="text-body text-brand-dark/70 mb-8">
+          {isEn
+            ? "Our certified instructors bring theory to life with interactive simulations, CPR drills, and realistic workplace scenarios. This ensures the training truly sticks and your staff return to work with confidence."
+            : "Onze gecertificeerde instructeurs brengen theorie tot leven met interactieve simulaties, reanimatie-oefeningen en praktijkgerichte scenario's. Zo blijft de leerstof écht hangen en gaan uw cursisten met zelfvertrouwen naar huis."}
         </p>
 
         <!-- Checklist (Mockup layout grid) -->
@@ -72,7 +80,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <span class="text-brand-secondary font-semibold text-[15px]">Erkend door Het Oranje Kruis</span>
+            <span class="text-brand-secondary font-semibold text-[15px]">
+              {isEn ? "Accredited by Het Oranje Kruis" : "Erkend door Het Oranje Kruis"}
+            </span>
           </div>
 
           <div class="flex items-start gap-3">
@@ -81,7 +91,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <span class="text-brand-secondary font-semibold text-[15px]">Gecertificeerd NIBHV</span>
+            <span class="text-brand-secondary font-semibold text-[15px]">
+              {isEn ? "NIBHV Certified" : "Gecertificeerd NIBHV"}
+            </span>
           </div>
 
           <div class="flex items-start gap-3">
@@ -90,7 +102,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <span class="text-brand-secondary font-semibold text-[15px]">Incompany trainingen</span>
+            <span class="text-brand-secondary font-semibold text-[15px]">
+              {isEn ? "Incompany training" : "Incompany trainingen"}
+            </span>
           </div>
 
           <div class="flex items-start gap-3">
@@ -99,7 +113,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <span class="text-brand-secondary font-semibold text-[15px]">Ervaren praktijkinstructeurs</span>
+            <span class="text-brand-secondary font-semibold text-[15px]">
+              {isEn ? "Experienced frontline instructors" : "Ervaren praktijkinstructeurs"}
+            </span>
           </div>
 
         </div>
@@ -115,25 +131,29 @@
       <div class="col-span-1 lg:col-span-6 relative z-20">
         
         <!-- Tagline -->
-        <div class="inline-flex items-center gap-1.5 text-brand-primary font-display font-semibold text-sm uppercase tracking-wider mb-3">
-          <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <div class="section-eyebrow text-brand-primary mb-2.5">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
           </svg>
-          Kwaliteitsgarantie
+          {isEn ? "Quality Guarantee" : "Kwaliteitsgarantie"}
         </div>
 
         <!-- Title -->
-        <h2 class="font-display text-3xl md:text-4xl font-semibold tracking-tight text-brand-secondary leading-[1.1] mb-6">
-          Kwaliteit en maatwerk voor uw sector
+        <h2 class="heading-section text-brand-secondary mb-6">
+          {isEn ? "Quality and tailored solutions for your sector" : "Kwaliteit en maatwerk voor uw sector"}
         </h2>
 
         <!-- Subtext -->
-        <p class="text-brand-dark/80 text-[16px] md:text-base leading-relaxed mb-6">
-          Elke sector stelt andere eisen aan veiligheid. Of het nu gaat om een bouwplaats die VCA vereist, een kantooromgeving die BHV-ers nodig heeft, of een offshore windpark met specifieke OPITO-normen. Edusafe biedt trainingen op maat die naadloos aansluiten bij uw specifieke risico's en werkzaamheden.
+        <p class="text-body text-brand-dark/80 mb-5">
+          {isEn
+            ? "Every industry faces distinct safety requirements—whether it is a construction site requiring VCA certification, an office needing Emergency Response (BHV) officers, or an offshore facility complying with OPITO standards. Edusafe delivers tailored training aligned with your specific operational risks."
+            : "Elke sector stelt andere eisen aan veiligheid. Of het nu gaat om een bouwplaats die VCA vereist, een kantooromgeving die BHV-ers nodig heeft, of een offshore windpark met specifieke OPITO-normen. Edusafe biedt trainingen op maat die naadloos aansluiten bij uw specifieke risico's en werkzaamheden."}
         </p>
         
-        <p class="text-brand-dark/70 text-[15px] md:text-sm leading-relaxed mb-8">
-          Wij nemen de volledige organisatie uit handen: van het inplannen van de lesdagen en het beheren van de certificaatsgeldigheid tot incompany trainingen op uw eigen locatie. Zo blijft uw organisatie altijd compliant met de wetgeving.
+        <p class="text-body text-brand-dark/70 mb-8">
+          {isEn
+            ? "We take care of the entire process: from scheduling training days and tracking certificate validity to organizing incompany courses at your own premises. That way, your organization remains effortlessly compliant."
+            : "Wij nemen de volledige organisatie uit handen: van het inplannen van de lesdagen en het beheren van de certificaatsgeldigheid tot incompany trainingen op uw eigen locatie. Zo blijft uw organisatie altijd compliant met de wetgeving."}
         </p>
 
         <!-- Checklist -->
@@ -145,7 +165,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <span class="text-brand-secondary font-semibold text-[15px]">Trainingen op uw eigen locatie</span>
+            <span class="text-brand-secondary font-semibold text-[15px]">
+              {isEn ? "On-site training at your location" : "Trainingen op uw eigen locatie"}
+            </span>
           </div>
 
           <div class="flex items-start gap-3">
@@ -154,7 +176,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <span class="text-brand-secondary font-semibold text-[15px]">Flexibele planning (ook avond/weekend)</span>
+            <span class="text-brand-secondary font-semibold text-[15px]">
+              {isEn ? "Flexible scheduling (evenings/weekends)" : "Flexibele planning (ook avond/weekend)"}
+            </span>
           </div>
 
           <div class="flex items-start gap-3">
@@ -163,7 +187,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <span class="text-brand-secondary font-semibold text-[15px]">Officieel erkende certificaten</span>
+            <span class="text-brand-secondary font-semibold text-[15px]">
+              {isEn ? "Officially recognized certificates" : "Officieel erkende certificaten"}
+            </span>
           </div>
 
           <div class="flex items-start gap-3">
@@ -172,7 +198,9 @@
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <span class="text-brand-secondary font-semibold text-[15px]">Arboconform en up-to-date</span>
+            <span class="text-brand-secondary font-semibold text-[15px]">
+              {isEn ? "Arbowet compliant and up-to-date" : "Arboconform en up-to-date"}
+            </span>
           </div>
 
         </div>
@@ -182,7 +210,7 @@
       <!-- Right Column: Retro Image Container (Mirrored shadow direction) -->
       <div class="col-span-1 lg:col-span-6 relative flex justify-center lg:justify-end">
         <!-- Retro Backdrop Frame (Translated right-down instead of left-down to mirror) -->
-        <div class="absolute inset-0 bg-[repeating-linear-gradient(45deg,rgba(27,102,177,0.08),rgba(27,102,177,0.08)_10px,transparent_10px,transparent_20px)] border-2 border-brand-primary/20 rounded-[32px] translate-x-[16px] translate-y-[16px] z-0 max-w-[480px] w-full"></div>
+        <div class="absolute inset-0 bg-[repeating-linear-gradient(45deg,rgba(12,78,162,0.08),rgba(12,78,162,0.08)_10px,transparent_10px,transparent_20px)] border-2 border-brand-primary/20 rounded-[28px] sm:rounded-[32px] translate-x-2 translate-y-2 sm:translate-x-4 sm:translate-y-4 z-0 max-w-[480px] w-full"></div>
 
         <!-- Main Image Card -->
         <div class="relative bg-brand-cream rounded-[32px] overflow-hidden border-4 border-brand-cream shadow-2xl z-10 max-w-[480px] w-full aspect-[4/3] md:aspect-auto">

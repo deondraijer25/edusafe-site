@@ -1,0 +1,557 @@
+---
+import type { SubCourse } from '../data/catalog';
+
+export interface FaqItem {
+  question?: string;
+  answer?: string;
+  q?: string;
+  a?: string;
+}
+
+interface NormalizedFaqItem {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  course?: SubCourse;
+  category?: 'BHV' | 'EHBO' | 'VCA' | 'Transport' | 'Offshore' | 'E-learning' | 'Incompany';
+  hubTitle?: string;
+  customFaqs?: FaqItem[];
+  lang?: 'nl' | 'en';
+}
+
+const {
+  course,
+  category = course?.category || 'BHV',
+  hubTitle,
+  customFaqs,
+  lang = 'nl',
+} = Astro.props;
+
+const isEn = lang === 'en';
+
+const defaultCategoryTitleNl: Record<string, string> = {
+  BHV: 'BHV Opleidingen',
+  EHBO: 'EHBO & Reanimatie',
+  VCA: 'VCA Certificering',
+  Transport: 'Heftruck & Intern Transport',
+  Offshore: 'Offshore Trainingen (BOSIET & OPITO)',
+  'E-learning': 'E-learning Academie',
+  Incompany: 'Incompany Trainingen',
+};
+
+const defaultCategoryTitleEn: Record<string, string> = {
+  BHV: 'BHV Training',
+  EHBO: 'First Aid & CPR',
+  VCA: 'VCA Certification',
+  Transport: 'Forklift & Material Handling',
+  Offshore: 'Offshore Training (BOSIET & OPITO)',
+  'E-learning': 'E-learning Academy',
+  Incompany: 'Incompany Training',
+};
+
+const courseName =
+  course?.shortTitle ||
+  hubTitle ||
+  (isEn ? defaultCategoryTitleEn[category] || 'Safety Training' : defaultCategoryTitleNl[category] || 'Veiligheidstraining');
+
+const coursePrice = course?.price || '€ 195,00';
+const courseDuration =
+  course?.duration || (isEn ? 'E-learning + 1 practical day' : 'E-learning + 1 praktijkdag');
+const slug = course?.slug || '';
+
+const normalizedCustomFaqs: NormalizedFaqItem[] | undefined =
+  customFaqs && customFaqs.length > 0
+    ? customFaqs
+        .map((item) => ({
+          question: item.question || item.q || '',
+          answer: item.answer || item.a || '',
+        }))
+        .filter((item) => item.question && item.answer)
+    : undefined;
+
+function buildNlFaqs(): NormalizedFaqItem[] {
+  if (normalizedCustomFaqs && normalizedCustomFaqs.length > 0) return normalizedCustomFaqs;
+
+  const priceAnswerNl = course
+    ? coursePrice.startsWith('€')
+      ? `De kosten voor <strong>${courseName}</strong> bedragen bij Edusafe <strong>${coursePrice} excl. BTW per deelnemer</strong>. Dit all-in tarief is inclusief lesmateriaal, praktijk- of examentraining, de officiële beoordeling/certificering én koffie, thee en gratis parkeren voor de deur (bij hele lesdagen inclusief uitgebreide lunch).`
+      : `Voor <strong>${courseName}</strong> werken wij met een scherp <strong>maatwerktarief op offertebasis</strong>, afgestemd op uw locatie, het aantal deelnemers en de gewenste modules. Vraag vrijblijvend een voorstel aan; u ontvangt binnen 1 werkdag een heldere prijsopgave.`
+    : '';
+
+  if (category === 'EHBO') {
+    const isEhak = slug === 'ehak';
+    const isAed = slug === 'aed-reanimatie';
+    return [
+      {
+        question: `Wordt de cursus ${courseName} vergoed door mijn zorgverzekering?`,
+        answer: `Ja, veel Nederlandse zorgverzekeraars vergoeden een erkende EHBO-, Kinder-EHBO (EHAK)- of Reanimatiecursus (tot wel 75% of 100%) vanuit de <strong>aanvullende zorgverzekering</strong> onder het budget preventie. Omdat Edusafe opleidt conform de officiële richtlijnen van <strong>Het Oranje Kruis en de Nederlandse Reanimatie Raad (NRR)</strong>, kunt u onze factuur direct declareren bij uw verzekeraar.`,
+      },
+      ...(course
+        ? [
+            {
+              question: `Wat kost de cursus ${courseName} bij Edusafe?`,
+              answer: priceAnswerNl,
+            },
+          ]
+        : []),
+      {
+        question: isEhak
+          ? 'Is EHBO aan Kinderen (EHAK) wettelijk verplicht in de kinderopvang (Wet IKK)?'
+          : isAed
+          ? 'Mag je reanimeren zonder diploma en kan ik mij aanmelden bij HartslagNu?'
+          : 'Hoe lang is een EHBO-diploma van Het Oranje Kruis geldig?',
+        answer: isEhak
+          ? `Ja. Volgens de <strong>Wet Innovatie en Kwaliteit Kinderopvang (Wet IKK)</strong> moet er op elk kinderdagverblijf, elke BSO en bij gastouders tijdens openingsuren altijd minimaal één volwassene aanwezig zijn met een geldig en geregistreerd certificaat Eerste Hulp aan Kinderen. Ons Oranje Kruis EHAK-certificaat staat op de officiële lijst van de Rijksoverheid en wordt 100% goedgekeurd door de GGD.`
+          : isAed
+          ? `Iedereen mag in een noodsituatie starten met reanimeren, maar een training vergroot de overlevingskans aanzienlijk doordat u zonder twijfel de juiste compressiediepte en AED-stappen toepast. Met het officiële <strong>NRR-certificaat</strong> van Edusafe (2 jaar geldig) kunt u zich bovendien direct registreren als burgerhulpverlener bij <strong>HartslagNu</strong>.`
+          : `Het officiële <strong>Diploma Eerste Hulp van Het Oranje Kruis</strong> is <strong>2 jaar geldig</strong>. Om uw diploma geldig te houden volgt u periodiek onze 1-daagse <a href="/cursussen/ehbo-herhaling" class="text-brand-primary font-semibold underline">EHBO Herhaling</a>, waarin alle verplichte competenties (inclusief reanimatie en AED) praktijkgericht worden afgetoetst zonder schriftelijk examen.`,
+      },
+      {
+        question: 'Wat is het verschil tussen een EHBO-cursus en een BHV-cursus?',
+        answer: `Bij een <a href="/cursussen/bhv-basis" class="text-brand-primary font-semibold underline">BHV-cursus</a> leert u naast levensreddende eerste hulp ook beginnende branden blussen en een bedrijfspand ontruimen (verplicht volgens de Arbowet). Een volwaardige <strong>EHBO-opleiding</strong> gaat veel dieper in op medische handelingen, wondzorg, botbreuken, vergiftigingen en acute ziektebeelden. Heeft u al een geldig Oranje Kruis EHBO-diploma? Dan hoeft u voor BHV vaak alleen nog de deelmodule <a href="/cursussen/brand-en-ontruiming" class="text-brand-primary font-semibold underline">Brand & Ontruiming</a> te volgen.`,
+      },
+      {
+        question: `Kan ${courseName} ook Incompany of in het Engels verzorgd worden?`,
+        answer: `Zeker! Wij verzorgen onze EHBO-, EHAK- en Reanimatietrainingen zowel in het <strong>Nederlands als het Engels</strong> op onze hoofdlocatie in Den Haag én vanaf circa 6 deelnemers als <a href="/incompany-training" class="text-brand-primary font-semibold underline">Incompany training</a> bij uw bedrijf, school, sportclub of kinderopvang op locatie.`,
+      },
+    ];
+  }
+
+  if (category === 'VCA') {
+    return [
+      {
+        question: 'Wat is het verschil tussen VCA Basis (B-VCA) en VCA-VOL?',
+        answer: `<a href="/cursussen/vca-basis" class="text-brand-primary font-semibold underline">VCA Basis (B-VCA)</a> is bedoeld voor uitvoerende medewerkers in loondienst en richt zich op veilig werken op de eigen werkplek. <a href="/cursussen/vca-vol" class="text-brand-primary font-semibold underline">VCA-VOL</a> (Veiligheid voor Operationeel Leidinggevenden) is verplicht voor leidinggevenden, uitvoerders én voor <strong>ZZP’ers</strong> die op VCA-locaties werken. Bij VCA-VOL hoeft u niet eerst VCA Basis te behalen.`,
+      },
+      ...(course
+        ? [
+            {
+              question: `Wat kost ${courseName} inclusief het officiële SSVV-examen?`,
+              answer: priceAnswerNl,
+            },
+          ]
+        : []),
+      {
+        question: 'Hoeveel vragen moet je goed hebben op het VCA-examen en is het examen moeilijk?',
+        answer: `Voor <strong>VCA Basis</strong> krijgt u 40 vragen (60 minuten) en voor <strong>VCA-VOL en VCU-VIL</strong> 70 vragen (75 minuten). Bij alle varianten bent u geslaagd vanaf <strong>64,5% van de punten</strong> (circa 26 goede vragen bij B-VCA en 45 bij VOL-VCA). Dankzij onze praktijkgerichte examentraining en proefvragen slaagt het overgrote deel van onze cursisten direct de eerste keer.`,
+      },
+      {
+        question: 'Hoe lang is een VCA-certificaat geldig in het Centraal Diploma Register (CDR)?',
+        answer: `Elk officieel SSVV VCA-diploma (B-VCA, VOL-VCA en VIL-VCU) is <strong>10 jaar geldig</strong> vanaf de examendatum. Direct na het slagen ontvangt u het digitale certificaat en wordt uw diploma officieel geregistreerd in het openbare <strong>Centraal Diploma Register (CDR)</strong> van de SSVV.`,
+      },
+      {
+        question: 'Is een voorleesexamen of Engelstalig VCA-examen mogelijk bij Edusafe?',
+        answer: `Ja! Voor <strong>VCA Basis (B-VCA)</strong> kunt u zonder meerkosten kiezen voor een officieel <strong>voorleesexamen met audio</strong> (ideaal bij dyslexie of moeite met lezen). Daarnaast verzorgt Edusafe zowel de VCA-training, e-learning als het officiële CBT-examen volledig in het <strong>Nederlands én Engels</strong>.`,
+      },
+    ];
+  }
+
+  if (category === 'Transport') {
+    const isHoogwerker = slug === 'hoogwerker';
+    return [
+      {
+        question: isHoogwerker
+          ? 'Is een hoogwerkercertificaat wettelijk verplicht volgens de Arbowet?'
+          : 'Is een heftruckcertificaat of reachtruckcertificaat wettelijk verplicht?',
+        answer: `Ja. Volgens <strong>Artikel 7.17c van het Arbobesluit</strong> (Arbowet) mogen mobiele arbeidsmiddelen met een eigen aandrijving — zoals een vorkheftruck, reachtruck, hoogwerker, stapelaar of EPT — uitsluitend worden bediend door medewerkers met <strong>aantoonbare specifieke deskundigheid</strong>. Met een officieel Edusafe-certificaat voldoet de werkgever direct aan de eisen van de Nederlandse Arbeidsinspectie én bedrijfsverzekeraars.`,
+      },
+      ...(course
+        ? [
+            {
+              question: `Wat kost het behalen van ${courseName} bij Edusafe?`,
+              answer: priceAnswerNl,
+            },
+          ]
+        : []),
+      {
+        question: isHoogwerker
+          ? 'Vanaf welke leeftijd mag je een hoogwerker bedienen en is valbeveiliging verplicht?'
+          : 'Heb ik een autorijbewijs nodig voor de heftruck en vanaf welke leeftijd mag je rijden?',
+        answer: isHoogwerker
+          ? `Voor het zelfstandig bedienen van een hoogwerker geldt een wettelijke minimumleeftijd van <strong>18 jaar</strong>. Tijdens de training leren deelnemers bovendien het correct dragen en kort aanlijnen van een <strong>harnasgordel</strong> tegen het katapult-effect bij giekhoogwerkers, evenals werken binnen de maximale windkracht (6 Beaufort).`
+          : `Nee, voor het besturen van een heftruck, reachtruck of stapelaar op bedrijfsterrein heeft u <strong>géén autorijbewijs (rijbewijs B) nodig</strong>. Jongeren van <strong>16 en 17 jaar</strong> mogen na certificering rijden onder deskundig toezicht; vanaf <strong>18 jaar</strong> mag u volledig zelfstandig rijden.`,
+      },
+      {
+        question: `Hoe lang is het ${isHoogwerker ? 'hoogwerkercertificaat' : 'heftruck- of transportcertificaat'} geldig?`,
+        answer: `Het officiële Edusafe certificaat en het bijbehorende veiligheidspasje in creditcardformaat zijn <strong>5 jaar geldig</strong>. Voor ervaren chauffeurs waarvan het pasje binnenkort verloopt, bieden wij een compacte herhalingstoets van één dagdeel aan.`,
+      },
+      {
+        question: 'Kunnen jullie deze training ook Incompany op onze eigen machines verzorgen?',
+        answer: `Absoluut! Vanaf enkele deelnemers verzorgen onze instructeurs deze opleiding graag <a href="/incompany-training" class="text-brand-primary font-semibold underline">Incompany in uw eigen magazijn of op uw bedrijfsterrein</a> (in het Nederlands of Engels), zodat uw medewerkers direct leren werken met uw eigen trucks, stellingen en specifieke ladingen.`,
+      },
+    ];
+  }
+
+  if (category === 'Offshore') {
+    return [
+      {
+        question: 'Hoe lang is een OPITO BOSIET- of FOET-certificaat geldig?',
+        answer: `Een officieel OPITO <strong>BOSIET</strong>- of <strong>FOET</strong>-certificaat (inclusief CA-EBS) is wereldwijd <strong>4 jaar geldig</strong> en wordt direct geregistreerd in de internationale <strong>OPITO Vantage-database</strong>. Vernieuwt u uw certificaat vóór de vervaldatum, dan volstaat de 1-daagse <a href="/cursussen/opito" class="text-brand-primary font-semibold underline">OPITO FOET herhalingstraining</a>.`,
+      },
+      ...(course
+        ? [
+            {
+              question: `Wat kost de ${courseName} opleiding?`,
+              answer: priceAnswerNl,
+            },
+          ]
+        : []),
+      {
+        question: 'Welke medische keuring is vereist voor deelname aan BOSIET, FOET en HUET?',
+        answer: `Voor deelname aan de praktische onderwateroefeningen (HUET met Compressed Air Emergency Breathing System / CA-EBS) dient u in het bezit te zijn van een geldige <strong>offshore medische keuring (OEUK / OGUK of NOGEPA)</strong> en een geldig paspoort of ID-bewijs.`,
+      },
+      {
+        question: 'Wat is het verschil tussen BOSIET, FOET en HUET?',
+        answer: `<a href="/cursussen/bosiet" class="text-brand-primary font-semibold underline">BOSIET</a> is de volledige 3-daagse basisopleiding voor iedereen die nieuw start in de offshore sector (Safety Induction, Sea Survival, Fire Fighting/Self-Rescue en HUET + CA-EBS). <strong>FOET</strong> is de 1-daagse 4-jaarlijkse herhaling, en <strong>HUET + CA-EBS</strong> is de specifieke helikopter-onderwaterontsnappingsmodule die ook los geboekt kan worden.`,
+      },
+    ];
+  }
+
+  if (category === 'E-learning') {
+    return [
+      {
+        question: 'Hoe werken de Edusafe E-learning licenties en zakelijke maandabonnementen?',
+        answer: `Individuele cursisten kunnen direct online een theoriemodule (BHV of VCA) starten voor hun praktijkdag of examen. Voor bedrijven met meerdere medewerkers bieden wij bovendien flexibele <strong>E-learning maandabonnementen</strong> met een centraal HR-dashboard, waarmee uw team het hele jaar door up-to-date blijft zonder grote eenmalige uitgaven.`,
+      },
+      {
+        question: 'Heb ik na de BHV of VCA E-learning nog een praktijkdag of examen nodig?',
+        answer: `Ja. Voor een officieel Arbowet <strong>BHV-certificaat</strong> rondt u na de online theorie één praktijkdag af op onze locatie in Den Haag (of Incompany). Voor een SSVV <strong>VCA-diploma</strong> boekt u na de online voorbereiding eenvoudig een <a href="/cursussen/vca-examen" class="text-brand-primary font-semibold underline">Los VCA-examen</a>.`,
+      },
+      {
+        question: 'In welke talen en op welke apparaten werkt de online leeromgeving?',
+        answer: `Onze online academie werkt zonder installatie op elke smartphone, tablet en computer. Zowel de BHV- als de VCA-modules (Basis én VOL) zijn volledig beschikbaar in het <strong>Nederlands en Engels</strong>.`,
+      },
+      {
+        question: 'Hoe snel ontvang ik mijn inloggegevens na aanmelding?',
+        answer: `Direct na het afronden van uw online bestelling ontvangt u automatisch een e-mail met uw persoonlijke inloggegevens voor het Edusafe E-learning portaal, zodat u dezelfde minuut nog kunt starten.`,
+      },
+    ];
+  }
+
+  if (category === 'Incompany') {
+    return [
+      {
+        question: 'Vanaf hoeveel deelnemers is een Incompany training voordeliger?',
+        answer: `Vanaf <strong>6 deelnemers</strong> is een Incompany training op uw eigen locatie vrijwel altijd voordeliger dan losse open inschrijvingen. Bovendien bespaart uw organisatie direct op reistijd en reiskosten van medewerkers, en oefent uw team met uw eigen vluchtwegen, blusmiddelen, AED of magazijntrucks.`,
+      },
+      {
+        question: 'Aan welke eisen moet onze bedrijfslocatie voldoen voor een Incompany cursus?',
+        answer: `Voor de instructie volstaat een rustige vergader- of kantineruimte met zitplaatsen. Voor praktische blusoefeningen is een veilige buitenplek (zoals een parkeerplaats van ca. 6×6 meter) voldoende. Edusafe neemt alle oefenpoppen, trainings-AED’s, milieuvriendelijke blusbakken en lesmaterialen zelf mee.`,
+      },
+      {
+        question: 'Kunnen Incompany trainingen ook in het Engels, ’s avonds of op zaterdag plaatsvinden?',
+        answer: `Ja! Wij stemmen zowel de taal (<strong>Nederlands, Engels of tweetalige groepen</strong>) als de tijden volledig af op uw ploegendienst of bedrijfsvoering — overdag, in de avonduren of op zaterdag.`,
+      },
+      {
+        question: 'Hoe snel ontvangen wij een Incompany groepsofferte?',
+        answer: `Wanneer u uw groepsgrootte en gewenste training doorgeeft via onze aanvraagpagina, ontvangt u binnen <strong>1 werkdag</strong> een transparant all-in voorstel inclusief docent, lesmateriaal en certificering.`,
+      },
+    ];
+  }
+
+  // Default: BHV (met echte Google.nl PAA vragen!)
+  return [
+    {
+      question: `Hoe werkt de cursus ${courseName} en kan ik de theorie vooraf online volgen?`,
+      answer: course?.duration.toLowerCase().includes('e-learning')
+        ? `Ja, bij de <strong>${courseName}</strong> van Edusafe combineert u een flexibele online voorbereiding (e-learning) met <strong>1 praktijkdag op locatie (08:30 – 16:00 uur)</strong>. U doorloopt de theorie vooraf in uw eigen tempo op pc, tablet of smartphone, zodat u een hele werkdag bespaart en op de lesdag 100% praktijkgericht oefent.`
+        : `De training <strong>${courseName}</strong> heeft een doorlooptijd van <strong>${courseDuration}</strong> en is volledig praktijkgericht opgebouwd. Onder begeleiding van gecertificeerde instructeurs traint u met realistische scenario’s op onze hoofdlocatie in Den Haag of Incompany op uw eigen locatie.`,
+    },
+    ...(course
+      ? [
+          {
+            question: `Wat kost de opleiding ${courseName} bij Edusafe?`,
+            answer: priceAnswerNl,
+          },
+        ]
+      : []),
+    {
+      question: 'Hoe lang is een BHV-certificaat geldig en hoe vaak moet je op herhaling?',
+      answer: `Een officieel BHV-certificaat is conform de richtlijnen en de Arbowet <strong>1 jaar (12 maanden) geldig</strong>. Om uw certificering geldig te houden volgt u jaarlijks onze 1-daagse <a href="/cursussen/bhv-herhaling" class="text-brand-primary font-semibold underline">BHV Herhalingscursus</a>. Edusafe stuurt u automatisch tijdig een herinnering voordat uw pasje verloopt.`,
+    },
+    {
+      question: 'Hoe ziet het BHV-examen eruit en is een BHV-cursus moeilijk?',
+      answer: `Een BHV-cursus is voor iedereen goed te volgen en heeft op de praktijkdag <strong>géén moeilijk schriftelijk eindexamen</strong>. De theorie rondt u rustig vooraf af in de e-learning; tijdens de praktijkdag coacht en beoordeelt de instructeur doorlopend of u veilig kunt reanimeren, een AED kunt aansluiten, een beginnende brand kunt blussen en kunt ontruimen. Bent u zwanger of heeft u een lichte fysieke beperking? Geef dit vooraf even aan, dan houdt onze instructeur daar veilig rekening mee.`,
+    },
+    {
+      question: 'Is BHV wettelijk verplicht voor elk bedrijf en wanneer is een Ploegleider of Ontruimingsoefening nodig?',
+      answer: `Volgens <strong>Artikel 15 van de Arbowet</strong> is iedere werkgever met personeel (vanaf 1 werknemer) verplicht om tijdens werktijd voldoende gecertificeerde BHV’ers aanwezig te hebben én minimaal jaarlijks een <a href="/cursussen/ontruimingsoefening" class="text-brand-primary font-semibold underline">Ontruimingsoefening</a> te houden. Werkt u met meerdere BHV’ers per dienst of in een groter pand? Dan zorgt een opgeleide <a href="/cursussen/bhv-ploegleider" class="text-brand-primary font-semibold underline">BHV Ploegleider</a> voor duidelijke coördinatie tijdens incidenten.`,
+    },
+    {
+      question: 'Kan deze BHV-training ook in het Engels of Incompany op onze locatie gevolgd worden?',
+      answer: `Zeker! Edusafe verzorgt de BHV-opleidingen (inclusief online e-learning én praktijkdag) volledig in het <strong>Nederlands en Engels</strong>. Vanaf circa 6 deelnemers verzorgen wij de training bovendien graag als <a href="/incompany-training" class="text-brand-primary font-semibold underline">Incompany groepstraining</a> op uw eigen bedrijfslocatie door heel Nederland.`,
+    },
+  ];
+}
+
+function buildEnFaqs(): NormalizedFaqItem[] {
+  if (normalizedCustomFaqs && normalizedCustomFaqs.length > 0) return normalizedCustomFaqs;
+
+  const priceAnswerEn = course
+    ? coursePrice.startsWith('€')
+      ? `The fee for <strong>${courseName}</strong> at Edusafe is <strong>${coursePrice} excl. VAT per participant</strong>. This all-inclusive rate covers study materials, hands-on or exam training, official assessment & certification, plus coffee, tea, and free parking (full-day courses include lunch).`
+      : `For <strong>${courseName}</strong>, we provide a competitive tailored quote based on your location, modules, and number of participants. Submit your request online and receive a clear proposal within 1 business day.`
+    : '';
+
+  if (category === 'EHBO') {
+    const isEhak = slug === 'ehak';
+    return [
+      {
+        question: `Is the ${courseName} course reimbursed by Dutch health insurance?`,
+        answer: `Yes! Many Dutch supplementary health insurance plans reimburse accredited First Aid, Paediatric First Aid (EHAK), and CPR/AED courses up to 75%–100%. Because Edusafe trains in accordance with <strong>Het Oranje Kruis and Dutch Resuscitation Council (NRR)</strong> standards, you can submit our invoice directly to your insurer.`,
+      },
+      ...(course ? [{ question: `What does ${courseName} cost at Edusafe?`, answer: priceAnswerEn }] : []),
+      {
+        question: isEhak
+          ? 'Does this Paediatric First Aid (EHAK) certificate comply with the Dutch Childcare Act (Wet IKK)?'
+          : 'How long is an official First Aid or CPR certificate valid?',
+        answer: isEhak
+          ? `Yes, 100%. Our Het Oranje Kruis Paediatric First Aid certificate is officially listed by the Dutch government under the <strong>Wet IKK</strong> and approved by GGD municipal inspectors for daycare centers, BSOs, and registered childminders.`
+          : `Both the official <strong>Het Oranje Kruis First Aid Diploma</strong> and the <strong>NRR CPR & AED Certificate</strong> are valid for <strong>2 years</strong> and can be renewed via our practical refresher courses without a written exam.`,
+      },
+      {
+        question: 'What is the difference between a First Aid (EHBO) course and a BHV course?',
+        answer: `A <a href="/en/courses/bhv-basis" class="text-brand-primary font-semibold underline">BHV course</a> combines emergency first aid with firefighting and building evacuation per Dutch Arbowet Art. 15. A full <strong>First Aid (EHBO)</strong> course covers comprehensive medical care for wounds, fractures, burns, poisoning and acute illnesses in much greater depth.`,
+      },
+      {
+        question: 'Can this First Aid training be delivered in English or Incompany at our workplace?',
+        answer: `Absolutely. We deliver First Aid, Paediatric First Aid, and CPR/AED courses in both <strong>English and Dutch</strong> at our training center in The Hague or <a href="/en/incompany-training" class="text-brand-primary font-semibold underline">Incompany on-site</a> for groups of 6 or more participants anywhere in the Netherlands.`,
+      },
+    ];
+  }
+
+  if (category === 'VCA') {
+    return [
+      {
+        question: 'What is the difference between VCA Basic (B-VCA) and VCA-VOL?',
+        answer: `<a href="/en/courses/vca-basis" class="text-brand-primary font-semibold underline">VCA Basic (B-VCA)</a> is designed for operational employees working on VCA-mandated sites. <a href="/en/courses/vca-vol" class="text-brand-primary font-semibold underline">VCA-VOL</a> (Safety for Operational Supervisors) is mandatory for supervisors, foremen, and <strong>self-employed contractors (ZZP / freelancers)</strong>. You can take VCA-VOL directly without holding VCA Basic first.`,
+      },
+      ...(course ? [{ question: `What does ${courseName} cost including the official SSVV exam?`, answer: priceAnswerEn }] : []),
+      {
+        question: 'What is the passing score for the official VCA exam?',
+        answer: `The official SSVV computer-based exam consists of <strong>40 questions (60 min) for B-VCA</strong> and <strong>70 questions (75 min) for VOL-VCA and VIL-VCU</strong>. You pass with at least <strong>64.5% of the points</strong> and see your preliminary score immediately on screen.`,
+      },
+      {
+        question: 'How long is a VCA diploma valid and is it available in English?',
+        answer: `Your official SSVV VCA diploma is valid for <strong>10 years</strong> and registered directly in the national <strong>Central Diploma Register (CDR)</strong>. Both our classroom/online training and the official CBT examination are available in <strong>English and Dutch</strong>.`,
+      },
+      {
+        question: 'Is a read-aloud VCA exam or Incompany group exam available?',
+        answer: `Yes! For <strong>VCA Basic (B-VCA)</strong> you can opt for an official <strong>read-aloud audio exam</strong> at no extra cost, and for groups of 6+ employees we organize <a href="/en/incompany-training" class="text-brand-primary font-semibold underline">Incompany VCA training + official CBT exam</a> at your own site.`,
+      },
+    ];
+  }
+
+  if (category === 'Transport') {
+    const isHoogwerker = slug === 'hoogwerker';
+    return [
+      {
+        question: `Is a ${isHoogwerker ? 'MEWP / aerial platform' : 'forklift or reach truck'} certificate legally required in the Netherlands?`,
+        answer: `Yes. Under <strong>Article 7.17c of the Dutch Working Conditions Decree (Arbobesluit)</strong>, employers must prove that operators of self-propelled work equipment possess demonstrable specific competence. An official Edusafe certificate ensures full compliance for the Labour Inspectorate and corporate insurers.`,
+      },
+      ...(course ? [{ question: `What does ${courseName} cost at Edusafe?`, answer: priceAnswerEn }] : []),
+      {
+        question: isHoogwerker
+          ? 'What is the minimum age and validity period for the Aerial Platform certificate?'
+          : 'Do I need a car driver’s license and how long is the forklift certificate valid?',
+        answer: isHoogwerker
+          ? `Operators must be at least <strong>18 years old</strong>. Your official Aerial Work Platform certificate and wallet card are valid for <strong>5 years</strong>.`
+          : `No car driver’s license is required on private premises. Operators aged 16–17 may drive under supervision and from <strong>18 years</strong> independently. Your certificate and physical wallet card are valid for <strong>5 years</strong>.`,
+      },
+      {
+        question: 'Is this course suitable for complete beginners as well as experienced drivers?',
+        answer: `Yes. Beginners complete the full 1-day practical & theory training in small groups, while experienced operators renewing an expiring card can complete a compact half-day recertification assessment.`,
+      },
+      {
+        question: 'Can you deliver this training in English or Incompany at our warehouse?',
+        answer: `Yes! We deliver all forklift, reach truck, aerial platform, and EPT/stacker courses in <strong>English and Dutch</strong>, both at our facility in The Hague and <a href="/en/incompany-training" class="text-brand-primary font-semibold underline">Incompany at your own warehouse</a> on your own equipment.`,
+      },
+    ];
+  }
+
+  if (category === 'Offshore') {
+    return [
+      {
+        question: 'How long is an OPITO BOSIET or FOET certificate valid?',
+        answer: `Official OPITO <strong>BOSIET</strong> and <strong>FOET</strong> certificates (including HUET & CA-EBS) are valid worldwide for <strong>4 years</strong> and registered directly in the global <strong>OPITO Vantage database</strong>. Before expiry, you can renew for another 4 years via the 1-day <a href="/en/courses/opito" class="text-brand-primary font-semibold underline">OPITO FOET refresher</a>.`,
+      },
+      ...(course ? [{ question: `What is the fee for ${courseName}?`, answer: priceAnswerEn }] : []),
+      {
+        question: 'What medical certificate is required to attend BOSIET or FOET?',
+        answer: `To participate in the underwater helicopter escape (HUET) and CA-EBS breathing exercises, delegates must hold a valid <strong>offshore medical certificate (OEUK / OGUK or NOGEPA)</strong> and bring valid government photo ID.`,
+      },
+      {
+        question: 'What is the difference between BOSIET, FOET and HUET + CA-EBS?',
+        answer: `<a href="/en/courses/bosiet" class="text-brand-primary font-semibold underline">BOSIET</a> is the complete 3-day initial offshore safety course (Safety Induction, Sea Survival, Fire Fighting/Self-Rescue and HUET + CA-EBS). <strong>FOET</strong> is the 1-day 4-year renewal, while <strong>HUET + CA-EBS</strong> focuses specifically on helicopter underwater escape.`,
+      },
+    ];
+  }
+
+  if (category === 'E-learning') {
+    return [
+      {
+        question: 'How do Edusafe E-learning licenses and monthly corporate subscriptions work?',
+        answer: `Individual participants can start their online BHV or VCA theory immediately. For companies, we also offer flexible <strong>monthly E-learning subscriptions</strong> with a central team dashboard so employees remain trained year-round.`,
+      },
+      {
+        question: 'Do I still need a practical day or official exam after completing E-learning?',
+        answer: `Yes: for an official Dutch <strong>BHV diploma</strong> you attend 1 practical day in The Hague (or Incompany) after finishing the e-learning. For <strong>VCA</strong>, you book a <a href="/en/courses/vca-examen" class="text-brand-primary font-semibold underline">Standalone VCA Exam</a>.`,
+      },
+      {
+        question: 'In which languages and on what devices does the E-learning platform work?',
+        answer: `Our online academy works in any browser on smartphone, tablet or PC without software installation. All BHV and VCA modules are available in both <strong>English and Dutch</strong>.`,
+      },
+      {
+        question: 'How quickly will I receive my login credentials?',
+        answer: `Immediately after completing your online order, your personal login credentials for the Edusafe E-learning Academy are emailed automatically so you can begin right away.`,
+      },
+    ];
+  }
+
+  if (category === 'Incompany') {
+    return [
+      {
+        question: 'From how many participants is Incompany training cost-effective?',
+        answer: `From <strong>6 participants</strong>, on-site Incompany training is typically more economical than individual open registrations—while eliminating employee travel time and tailoring drills directly to your building and equipment.`,
+      },
+      {
+        question: 'What room or facility requirements apply for an on-site Incompany course?',
+        answer: `A standard meeting room or canteen is sufficient for instruction, plus a safe outdoor spot (approx. 6×6m) for live-fire extinguishing drills. Edusafe brings all manikins, training AEDs, clean fire units and course materials.`,
+      },
+      {
+        question: 'Can Incompany courses be taught in English or outside regular office hours?',
+        answer: `Yes! All Incompany courses can be delivered in <strong>English, Dutch, or bilingual formats</strong> during weekdays, evenings, or Saturdays across the Netherlands.`,
+      },
+      {
+        question: 'How quickly will we receive a tailored Incompany proposal?',
+        answer: `Submit your preferred training and group size via our request page and receive a clear all-inclusive proposal within <strong>1 business day</strong>.`,
+      },
+    ];
+  }
+
+  // Default: BHV EN
+  return [
+    {
+      question: `How does the ${courseName} course work and can I complete the theory online?`,
+      answer: course?.duration.toLowerCase().includes('e-learning')
+        ? `Yes! Our <strong>${courseName}</strong> combines self-paced online theory (e-learning in English or Dutch) with <strong>1 hands-on practical day (08:30 – 16:00)</strong> in The Hague or Incompany on-site, saving you a full working day.`
+        : `The <strong>${courseName}</strong> training (${courseDuration}) focuses 100% on realistic, hands-on scenarios guided by certified instructors in The Hague or Incompany at your premises.`,
+    },
+    ...(course ? [{ question: `What does ${courseName} cost at Edusafe?`, answer: priceAnswerEn }] : []),
+    {
+      question: 'How long is a Dutch BHV certificate valid and is there a written exam?',
+      answer: `Your official BHV certificate is valid for <strong>1 year</strong> under the Dutch Arbowet and renewed annually via our 1-day <a href="/en/courses/bhv-herhaling" class="text-brand-primary font-semibold underline">BHV Refresher</a>. There is no stressful written exam on the practical day—your instructor assesses your CPR/AED, firefighting, and evacuation skills continuously.`,
+    },
+    {
+      question: 'Is BHV mandatory for international companies operating in the Netherlands?',
+      answer: `Yes. Under <strong>Article 15 of the Dutch Working Conditions Act (Arbowet)</strong>, every employer in the Netherlands with one or more employees must have certified BHV officers present during working hours and conduct an annual <a href="/en/courses/ontruimingsoefening" class="text-brand-primary font-semibold underline">Evacuation Drill</a>.`,
+    },
+    {
+      question: 'Can we book this BHV course in English or Incompany at our own office?',
+      answer: `Absolutely. Both our e-learning and practical training days are delivered in <strong>English and Dutch</strong>, and for groups of 6+ employees we offer tailored <a href="/en/incompany-training" class="text-brand-primary font-semibold underline">Incompany training</a> anywhere in the Netherlands.`,
+    },
+  ];
+}
+
+const faqs = isEn ? buildEnFaqs() : buildNlFaqs();
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer.replace(/<[^>]+>/g, ''),
+    },
+  })),
+};
+
+const adviceHref = isEn
+  ? course
+    ? `/en/personal-advice?course=${encodeURIComponent(course.slug)}`
+    : `/en/personal-advice?category=${encodeURIComponent(category)}`
+  : course
+  ? `/persoonlijk-advies?course=${encodeURIComponent(course.slug)}`
+  : `/persoonlijk-advies?category=${encodeURIComponent(category)}`;
+---
+
+<!-- Structured Data for Google & AI Search (GEO) -->
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+<section id="faq" class="w-full py-14 sm:py-16 md:py-24 bg-white border-t border-brand-dark/5 scroll-mt-24">
+  <div class="max-w-[1000px] mx-auto px-4 sm:px-6">
+    <!-- Section Header -->
+    <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+      <div class="section-eyebrow text-brand-primary mb-3 justify-center">
+        <i class="fa-solid fa-circle-question text-brand-accent"></i>
+        <span>{isEn ? `FAQ — ${courseName}` : `Veelgestelde vragen — ${courseName}`}</span>
+      </div>
+      <h2 class="heading-section text-brand-secondary mb-3">
+        {isEn
+          ? `Frequently asked questions about ${courseName}`
+          : `Veelgestelde vragen over ${courseName}`}
+      </h2>
+      <p class="text-body text-brand-dark/70">
+        {isEn
+          ? 'We have listed the most frequently asked questions about this training below. Is your question not listed? Feel free to call us at 070 - 444 77 95!'
+          : 'We hebben hieronder de meest voorkomende vragen over deze opleiding voor u op een rij gezet. Staat uw vraag er niet tussen? Bel ons gerust op 070 - 444 77 95!'}
+      </p>
+    </div>
+
+    <!-- Accordion List -->
+    <div class="space-y-3.5">
+      {faqs.map((faq, idx) => (
+        <details
+          class="group rounded-2xl bg-brand-cream/40 border border-brand-dark/8 open:bg-white open:border-brand-primary/25 open:shadow-md transition-all duration-200"
+          open={idx === 0}
+        >
+          <summary class="flex items-center justify-between gap-3.5 sm:gap-4 p-4 sm:p-6 cursor-pointer list-none heading-tile text-brand-secondary select-none">
+            <span>{faq.question}</span>
+            <span class="w-8 h-8 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center shrink-0 transition-transform duration-200 group-open:rotate-180 group-open:bg-brand-primary group-open:text-white">
+              <i class="fa-solid fa-chevron-down text-xs"></i>
+            </span>
+          </summary>
+          <div class="px-4 sm:px-6 pb-4 sm:pb-6 pt-3.5 sm:pt-4 text-body text-brand-dark/75 border-t border-brand-dark/5 mt-1">
+            <p set:html={faq.answer} />
+          </div>
+        </details>
+      ))}
+    </div>
+
+    <!-- Bottom Helper Bar -->
+    <div class="mt-8 p-5 rounded-2xl bg-brand-cream/60 border border-brand-dark/5 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+      <div class="flex items-start sm:items-center gap-3.5">
+        <div class="w-10 h-10 rounded-xl bg-brand-secondary text-white flex items-center justify-center shrink-0 mt-0.5 sm:mt-0">
+          <i class="fa-solid fa-headset text-sm text-brand-accent"></i>
+        </div>
+        <div>
+          <p class="heading-tile text-brand-secondary">
+            {isEn ? 'Need personal advice for your organization?' : 'Persoonlijk advies nodig voor uw organisatie of team?'}
+          </p>
+          <p class="text-card text-brand-dark/65">
+            {isEn ? 'Our safety advisors are happy to help you on weekdays from 08:30 to 17:00.' : 'Onze opleidingsadviseurs denken op werkdagen van 08:30 tot 17:00 uur direct met u mee.'}
+          </p>
+        </div>
+      </div>
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 w-full md:w-auto shrink-0">
+        <a
+          href="tel:0704447795"
+          class="w-full sm:w-auto justify-center min-h-[44px] font-display font-semibold text-sm px-5 py-3 rounded-xl bg-white border border-brand-dark/10 text-brand-secondary hover:border-brand-primary transition-all inline-flex items-center gap-2 whitespace-nowrap"
+        >
+          <i class="fa-solid fa-phone text-brand-accent text-xs"></i>
+          <span>070 - 444 77 95</span>
+        </a>
+        <a
+          href={adviceHref}
+          class="btn-base w-full sm:w-auto min-h-[44px] whitespace-nowrap"
+        >
+          <span>{isEn ? 'Request Advice →' : 'Advies aanvragen →'}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,110 +1,253 @@
 ---
-import { courses } from '../data/courses.js';
+import { courses as coursesNl } from '../data/courses.js';
+import { courses_en as coursesEn } from '../data/courses_en.js';
+import { getLangFromUrl } from '../i18n/utils';
 
-// Select the first 3 upcoming courses
-const upcoming = courses.slice(0, 3);
+const lang = getLangFromUrl(Astro.url);
+const isEn = lang === 'en';
+const courses = isEn ? coursesEn : coursesNl;
+
+// Select 3 varied upcoming courses (unique titles first so we never show 3x the same course)
+function pickVariedTopThree(list: any[]) {
+  const valid = list.filter(c => c.date && !/aanvraag|request/i.test(c.date));
+  const selected: any[] = [];
+  const seenTitles = new Set<string>();
+  const seenCategories = new Set<string>();
+
+  // Pass 1: Different category AND different title
+  for (const item of valid) {
+    const tKey = (item.title || '').toLowerCase().trim();
+    const cKey = (item.category || '').toLowerCase().trim();
+    if (!seenCategories.has(cKey) && !seenTitles.has(tKey)) {
+      selected.push(item);
+      seenCategories.add(cKey);
+      seenTitles.add(tKey);
+      if (selected.length === 3) return selected;
+    }
+  }
+
+  // Pass 2: Different title (e.g. BHV basis vs BHV herhaling)
+  for (const item of valid) {
+    if (selected.includes(item)) continue;
+    const tKey = (item.title || '').toLowerCase().trim();
+    if (!seenTitles.has(tKey)) {
+      selected.push(item);
+      seenTitles.add(tKey);
+      if (selected.length === 3) return selected;
+    }
+  }
+
+  // Pass 3: Fill remaining slots chronologically if needed
+  for (const item of valid) {
+    if (selected.includes(item)) continue;
+    selected.push(item);
+    if (selected.length === 3) return selected;
+  }
+
+  return selected;
+}
+
+const upcoming = pickVariedTopThree(courses);
+const allDatesUrl = isEn ? '/en/course-dates' : '/cursusdata';
+const registerBaseUrl = isEn ? '/en/register' : '/inschrijven';
+const courseBaseUrl = isEn ? '/en/courses' : '/cursussen';
 ---
 
-<section class="py-24 bg-brand-cream-dark/15 border-t border-b border-brand-dark/5 reveal">
-  <div class="max-w-[1280px] mx-auto px-6">
+<section class="py-16 md:py-24 bg-brand-cream-dark/15 border-t border-b border-brand-dark/5 reveal">
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6">
     
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-14 gap-6">
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-10 sm:mb-12 gap-5 sm:gap-6">
       <div>
-        <span class="inline-flex items-center gap-1.5 text-brand-accent font-display font-semibold text-xs uppercase tracking-wider mb-3">
+        <span class="section-eyebrow text-brand-primary mb-2.5">
           <i class="fa-solid fa-calendar-days"></i>
-          Snel starten
+          {isEn ? "Start Quickly" : "Snel starten"}
         </span>
-        <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-semibold text-brand-secondary tracking-tight">
-          Eerstvolgende Live Trainingen
+        <h2 class="heading-section text-brand-secondary">
+          {isEn ? "Upcoming Live Training Sessions" : "Eerstvolgende Live Trainingen"}
         </h2>
       </div>
       <a 
-        href="/cursusdata" 
-        class="font-display font-semibold text-sm py-4 px-8 rounded-2xl text-center border-2 border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white transition-all duration-300 shadow-sm shrink-0"
+        href={allDatesUrl} 
+        class="w-full sm:w-auto btn-base bg-brand-accent hover:bg-brand-accent-hover text-white shadow-sm shrink-0"
       >
-        Bekijk alle cursusdata
+        {isEn ? "View all course dates" : "Bekijk alle cursusdata"}
       </a>
     </div>
 
     <!-- List rows on Homepage -->
-    <div id="upcoming-events-list" class="flex flex-col gap-4 reveal-stagger">
-      {upcoming.map(course => (
-        <div class="bg-white p-6 rounded-3xl border border-brand-dark/5 shadow-sm hover:shadow-lg hover:border-brand-primary/20 transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          
-          <!-- Left: Big Date Block -->
-          <div class="flex items-center gap-3 shrink-0">
-            <span class="font-display font-semibold text-4xl text-brand-secondary leading-none w-10 text-right">
-              {course.date.split(' ')[0]}
-            </span>
-            <div class="text-[10px] font-medium text-brand-dark/50 leading-tight">
-              <div>{course.date.split(' ')[1]}</div>
-              <div>{course.date.split(' ')[2]}</div>
-            </div>
-          </div>
-
-          <!-- Middle: Title & Meta -->
-          <div class="flex-1 min-w-0">
-            <div class="flex flex-wrap items-center gap-2 mb-2">
-              <h3 class="font-display font-semibold text-lg text-brand-secondary leading-tight truncate">
-                {course.title}
-              </h3>
-              <span class="inline-flex items-center bg-brand-primary/10 text-brand-primary text-[10px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
-                {course.category}
+    <div id="upcoming-events-list" data-lang={lang} class="flex flex-col gap-4 reveal-stagger">
+      {upcoming.map(course => {
+        const courseDetailHref = `${courseBaseUrl}/${course.courseSlug || 'bhv-basis'}`;
+        const hasPrice = Boolean(course.price && course.price !== '€ 0,-' && course.price !== '0');
+        return (
+          <div class="group bg-white p-5 sm:p-6 rounded-3xl border border-brand-dark/5 shadow-sm hover:shadow-lg hover:border-brand-primary/20 transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 sm:gap-5 md:gap-6">
+            
+            <!-- Left: Big Date Block -->
+            <div class="flex items-center gap-3.5 shrink-0 min-w-[92px]">
+              <span class="font-display font-bold text-3xl sm:text-4xl text-brand-secondary leading-none w-11 text-center">
+                {course.date.split(' ')[0]}
               </span>
-              {course.spotsLeft && (
-                <span class="inline-flex items-center bg-brand-accent/15 text-brand-accent text-[9px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wider animate-pulse border border-brand-accent/20">
-                  {course.spotsLeft}
+              <div class="flex flex-col justify-center leading-tight">
+                <span class="text-xs font-bold text-brand-secondary uppercase tracking-wider">
+                  {course.date.split(' ')[1]}
                 </span>
+                <span class="text-[10px] font-medium text-brand-dark/45">
+                  {course.date.split(' ')[2]}
+                </span>
+              </div>
+            </div>
+
+            <!-- Middle: Clickable Course Title (links to Course Level) & Meta -->
+            <div class="flex-1 min-w-0 w-full">
+              <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                <a 
+                  href={courseDetailHref}
+                  class="heading-tile text-brand-secondary group-hover:text-brand-primary transition-colors line-clamp-2 sm:truncate hover:underline"
+                >
+                  {course.title}
+                </a>
+                <span class="inline-flex items-center bg-brand-primary/10 text-brand-primary text-[10px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                  {course.category}
+                </span>
+                {course.spotsLeft && (
+                  <span class="inline-flex items-center bg-brand-accent/15 text-brand-accent text-[10px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wider border border-brand-accent/20">
+                    {course.spotsLeft}
+                  </span>
+                )}
+              </div>
+              
+              <div class="flex flex-wrap items-center gap-x-5 gap-y-1 text-xs text-brand-dark/65 font-medium">
+                <span class="flex items-center gap-1.5">
+                  <i class="fa-solid fa-location-dot text-brand-primary"></i>
+                  {course.location}
+                </span>
+                <span class="flex items-center gap-1.5">
+                  <i class="fa-regular fa-clock text-brand-dark/40"></i>
+                  {course.time}
+                </span>
+                <a 
+                  href={courseDetailHref}
+                  class="inline-flex items-center gap-1 text-brand-primary hover:text-brand-secondary font-semibold transition-colors"
+                >
+                  <span>{isEn ? "Course details" : "Bekijk opleiding"}</span>
+                  <i class="fa-solid fa-chevron-right text-[9px]"></i>
+                </a>
+              </div>
+            </div>
+
+            <!-- Right: Price + CTA Button -->
+            <div class="shrink-0 w-full md:w-auto flex items-center justify-between md:justify-end gap-4 pt-3 md:pt-0 border-t md:border-t-0 border-brand-dark/5">
+              {hasPrice && (
+                <div class="flex flex-col items-start md:items-end justify-center shrink-0">
+                  <span class="font-display font-bold text-base sm:text-lg text-brand-secondary leading-tight">
+                    {course.price}
+                  </span>
+                  <span class="text-[10px] font-medium text-brand-dark/40 -mt-0.5">
+                    {isEn ? "excl. VAT" : "excl. BTW"}
+                  </span>
+                </div>
               )}
+              <a 
+                href={`${registerBaseUrl}/${course.id}`} 
+                class="btn-base bg-brand-accent text-white hover:bg-brand-accent-hover shadow-sm flex-1 sm:flex-none min-h-[44px]"
+              >
+                {isEn ? "Register Now" : "Nu Inschrijven"}
+              </a>
             </div>
             
-            <div class="flex flex-wrap gap-x-6 gap-y-1 text-xs text-brand-dark/65 font-medium">
-              <span class="flex items-center gap-1.5">
-                <i class="fa-solid fa-location-dot text-brand-primary"></i>
-                {course.location}
-              </span>
-              <span class="flex items-center gap-1.5">
-                <i class="fa-solid fa-clock text-brand-dark/40"></i>
-                {course.time}
-              </span>
-            </div>
           </div>
-
-          <!-- Right: CTA Button -->
-          <div class="shrink-0 w-full md:w-auto">
-            <a 
-              href={`/inschrijven/${course.id}`} 
-              class="font-display font-semibold text-sm py-3.5 px-8 rounded-2xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 w-full md:w-auto block shadow-[0_4px_12px_rgba(255,107,53,0.15)]"
-            >
-              Nu Inschrijven
-            </a>
-          </div>
-          
-        </div>
-      ))}
+        );
+      })}
     </div>
 
   </div>
 </section>
 
 <script>
+  function resolveSlugClient(course: any): string {
+    if (course.courseSlug) return course.courseSlug;
+    const t = (course.title || '').toLowerCase();
+    const c = (course.category || '').toLowerCase();
+    if (c.includes('ehak') || t.includes('ehak') || t.includes('kinder') || t.includes('paediatric')) return 'ehak';
+    if (c.includes('aed') || t.includes('aed') || t.includes('reanimatie') || t.includes('cpr')) return 'aed-reanimatie';
+    if (c.includes('ehbo') || t.includes('ehbo') || t.includes('first aid')) {
+      return (t.includes('herhaling') || t.includes('refresher')) ? 'ehbo-herhaling' : 'ehbo-basis';
+    }
+    if (c.includes('vca') || t.includes('vca')) {
+      return (t.includes('vol') && !t.includes('basis')) ? 'vca-vol' : 'vca-basis';
+    }
+    if (c.includes('heftruck') || t.includes('heftruck') || t.includes('forklift')) return 'heftruck';
+    if (c.includes('offshore') || t.includes('bosiet') || t.includes('opito')) return 'bosiet';
+    if (t.includes('ploegleider')) return 'bhv-ploegleider';
+    if (t.includes('hoofd bhv')) return 'hoofd-bhv';
+    if (t.includes('ontruiming')) return 'brand-en-ontruiming';
+    if (t.includes('herhaling') && !t.includes('basis')) return 'bhv-herhaling';
+    return 'bhv-basis';
+  }
+
+  function pickVariedEvents(list: any[]): any[] {
+    const valid = list.filter((c: any) => c.date && !/aanvraag|request/i.test(c.date));
+    const selected: any[] = [];
+    const seenTitles = new Set<string>();
+    const seenCategories = new Set<string>();
+
+    // Pass 1: Different category AND different title
+    for (const item of valid) {
+      const tKey = (item.title || '').toLowerCase().trim();
+      const cKey = (item.category || '').toLowerCase().trim();
+      if (!seenCategories.has(cKey) && !seenTitles.has(tKey)) {
+        selected.push(item);
+        seenCategories.add(cKey);
+        seenTitles.add(tKey);
+        if (selected.length === 3) return selected;
+      }
+    }
+
+    // Pass 2: Different course title (e.g. BHV basis vs BHV herhaling)
+    for (const item of valid) {
+      if (selected.includes(item)) continue;
+      const tKey = (item.title || '').toLowerCase().trim();
+      if (!seenTitles.has(tKey)) {
+        selected.push(item);
+        seenTitles.add(tKey);
+        if (selected.length === 3) return selected;
+      }
+    }
+
+    // Pass 3: Fallback chronologically
+    for (const item of valid) {
+      if (selected.includes(item)) continue;
+      selected.push(item);
+      if (selected.length === 3) return selected;
+    }
+
+    return selected;
+  }
+
   async function loadUpcomingLiveEvents() {
     const listContainer = document.getElementById('upcoming-events-list');
     if (!listContainer) return;
+    const isEn = listContainer.getAttribute('data-lang') === 'en';
+    const registerBaseUrl = isEn ? '/en/register' : '/inschrijven';
+    const courseBaseUrl = isEn ? '/en/courses' : '/cursussen';
 
     try {
       const response = await fetch('/api/events');
-      if (!response.ok) return; // Silent fail if API fails, leaves static list
+      if (!response.ok) return;
       const result = await response.json();
       if (!result.success || !result.data || result.data.length === 0) return;
 
-      const upcoming = result.data.slice(0, 3); // Top 3
+      const upcoming = pickVariedEvents(result.data);
+      if (upcoming.length === 0) return;
 
       listContainer.innerHTML = upcoming.map((course: any) => {
         const dateParts = (course.date || '').split(' ');
         const day = dateParts[0] || '';
         const month = dateParts[1] || '';
         const year = dateParts[2] || '';
+        const slug = resolveSlugClient(course);
+        const courseDetailHref = `${courseBaseUrl}/${slug}`;
+        const hasPrice = Boolean(course.price && course.price !== '€ 0,-' && course.price !== '0' && course.price !== '');
         
         // Handle spots info based on live data
         const hasSpots = Boolean(course.spots && Number(course.spots) > 0);
@@ -113,54 +256,66 @@ const upcoming = courses.slice(0, 3);
         
         let spotsLeftBadge = '';
         if (isFull) {
-          spotsLeftBadge = `<span class="inline-flex items-center bg-red-100 text-red-600 text-[9px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wider border border-red-200">Volgeboekt</span>`;
+          spotsLeftBadge = `<span class="inline-flex items-center bg-red-100 text-red-600 text-[10px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wider border border-red-200">${isEn ? 'Fully Booked' : 'Volgeboekt'}</span>`;
         } else if (hasSpots && freeSpots <= 5) {
-          spotsLeftBadge = `<span class="inline-flex items-center bg-brand-accent/15 text-brand-accent text-[9px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wider animate-pulse border border-brand-accent/20">Nog ${freeSpots} plekken</span>`;
+          spotsLeftBadge = `<span class="inline-flex items-center bg-brand-accent/15 text-brand-accent text-[10px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wider border border-brand-accent/20">${isEn ? `${freeSpots} spots left` : `Nog ${freeSpots} plekken`}</span>`;
         }
 
         const buttonClass = isFull 
-          ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
-          : 'bg-brand-accent text-white hover:bg-brand-accent-hover shadow-[0_4px_12px_rgba(255,107,53,0.15)]';
+          ? '!bg-gray-300 !text-gray-500 cursor-not-allowed' 
+          : 'bg-brand-accent text-white hover:bg-brand-accent-hover shadow-sm';
         
-        const buttonText = isFull ? 'Volgeboekt' : 'Nu Inschrijven';
+        const buttonText = isFull
+          ? (isEn ? 'Fully Booked' : 'Volgeboekt')
+          : (isEn ? 'Register Now' : 'Nu Inschrijven');
         const buttonAction = isFull ? 'onclick="event.preventDefault();"' : '';
 
         return `
-          <div class="bg-white p-6 rounded-3xl border border-brand-dark/5 shadow-sm hover:shadow-lg hover:border-brand-primary/20 transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <div class="flex items-center gap-3 shrink-0">
-              <span class="font-display font-semibold text-4xl text-brand-secondary leading-none w-10 text-right">
+          <div class="group bg-white p-5 sm:p-6 rounded-3xl border border-brand-dark/5 shadow-sm hover:shadow-lg hover:border-brand-primary/20 transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 sm:gap-5 md:gap-6">
+            <div class="flex items-center gap-3.5 shrink-0 min-w-[92px]">
+              <span class="font-display font-bold text-3xl sm:text-4xl text-brand-secondary leading-none w-11 text-center">
                 ${day}
               </span>
-              <div class="text-[10px] font-medium text-brand-dark/50 leading-tight">
-                <div>${month}</div>
-                <div>${year}</div>
+              <div class="flex flex-col justify-center leading-tight">
+                <span class="text-xs font-bold text-brand-secondary uppercase tracking-wider">${month}</span>
+                <span class="text-[10px] font-medium text-brand-dark/45">${year}</span>
               </div>
             </div>
-            <div class="flex-1 min-w-0">
-              <div class="flex flex-wrap items-center gap-2 mb-2">
-                <h3 class="font-display font-semibold text-lg text-brand-secondary leading-tight truncate">
+            <div class="flex-1 min-w-0 w-full">
+              <div class="flex flex-wrap items-center gap-2 mb-1.5">
+                <a href="${courseDetailHref}" class="heading-tile text-brand-secondary group-hover:text-brand-primary transition-colors line-clamp-2 sm:truncate hover:underline">
                   ${course.title}
-                </h3>
+                </a>
                 <span class="inline-flex items-center bg-brand-primary/10 text-brand-primary text-[10px] font-semibold px-2.5 py-0.5 rounded-full uppercase tracking-wider">
                   ${course.category}
                 </span>
                 ${spotsLeftBadge}
               </div>
-              <div class="flex flex-wrap gap-x-6 gap-y-1 text-xs text-brand-dark/65 font-medium">
+              <div class="flex flex-wrap items-center gap-x-5 gap-y-1 text-xs text-brand-dark/65 font-medium">
                 <span class="flex items-center gap-1.5">
                   <i class="fa-solid fa-location-dot text-brand-primary"></i>
-                  ${course.location}
+                  ${course.location || 'Edusafe Hoofdlocatie Den Haag'}
                 </span>
                 <span class="flex items-center gap-1.5">
-                  <i class="fa-solid fa-clock text-brand-dark/40"></i>
-                  ${course.time}
+                  <i class="fa-regular fa-clock text-brand-dark/40"></i>
+                  ${course.time || ''}
                 </span>
+                <a href="${courseDetailHref}" class="inline-flex items-center gap-1 text-brand-primary hover:text-brand-secondary font-semibold transition-colors">
+                  <span>${isEn ? 'Course details' : 'Bekijk opleiding'}</span>
+                  <i class="fa-solid fa-chevron-right text-[9px]"></i>
+                </a>
               </div>
             </div>
-            <div class="shrink-0 w-full md:w-auto">
+            <div class="shrink-0 w-full md:w-auto flex items-center justify-between md:justify-end gap-4 pt-3 md:pt-0 border-t md:border-t-0 border-brand-dark/5">
+              ${hasPrice ? `
+                <div class="flex flex-col items-start md:items-end justify-center shrink-0">
+                  <span class="font-display font-bold text-base sm:text-lg text-brand-secondary leading-tight">${course.price}</span>
+                  <span class="text-[10px] font-medium text-brand-dark/40 -mt-0.5">${isEn ? 'excl. VAT' : 'excl. BTW'}</span>
+                </div>
+              ` : ''}
               <a 
-                href="/inschrijven/${course.id}" 
-                class="font-display font-semibold text-sm py-3.5 px-8 rounded-2xl text-center ${buttonClass} transition-all duration-300 w-full md:w-auto block"
+                href="${registerBaseUrl}/${course.id}" 
+                class="btn-base ${buttonClass} flex-1 sm:flex-none min-h-[44px]"
                 ${buttonAction}
               >
                 ${buttonText}
@@ -174,7 +329,6 @@ const upcoming = courses.slice(0, 3);
     }
   }
 
-  // Fetch on page load (compatible with Astro ViewTransitions)
   document.addEventListener('astro:page-load', loadUpcomingLiveEvents);
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', loadUpcomingLiveEvents);

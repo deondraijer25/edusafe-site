@@ -1,0 +1,1110 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Edusafe × Leadfabriek — Businesscase & ROI Calculator"
+  description="Overzichtelijke omzet-, herhalings- en besparingscalculator voor Edusafe."
+>
+  <meta slot="head" name="robots" content="noindex, nofollow" />
+
+  <main class="w-full bg-[#F4F7FB] min-h-screen pb-24">
+    <!-- Rustige Header over de volledige breedte -->
+    <section class="bg-[#0C4EA2] text-white py-6 sm:py-8 border-b border-white/10">
+      <div class="max-w-[1280px] mx-auto px-4 sm:px-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-brand-accent block mb-1">
+              Edusafe × Leadfabriek CRM
+            </span>
+            <h1 class="font-display font-bold text-2xl sm:text-3xl text-white">
+              Interactieve Businesscase & Calculator
+            </h1>
+          </div>
+
+          <!-- Tabbladen + PDF Knop -->
+          <div class="flex flex-wrap gap-1.5 bg-white/10 p-1.5 rounded-xl border border-white/15 self-start md:self-auto">
+            <button
+              type="button"
+              data-main-tab="calculator"
+              class="main-tab-btn px-4 py-2 rounded-lg text-xs font-bold transition-all bg-brand-accent text-white cursor-pointer"
+            >
+              1. Calculator
+            </button>
+            <button
+              type="button"
+              data-main-tab="zoekvolume"
+              class="main-tab-btn px-4 py-2 rounded-lg text-xs font-bold transition-all text-white/85 hover:text-white hover:bg-white/10 cursor-pointer"
+            >
+              2. Zoekvolume Details
+            </button>
+            <button
+              type="button"
+              data-main-tab="checklist"
+              class="main-tab-btn px-4 py-2 rounded-lg text-xs font-bold transition-all text-white/85 hover:text-white hover:bg-white/10 cursor-pointer"
+            >
+              3. Checklist
+            </button>
+            <a
+              href="/Edusafe-Meeting-Overzicht.pdf"
+              target="_blank"
+              class="px-4 py-2 rounded-lg text-xs font-bold transition-all bg-white text-[#0C4EA2] hover:bg-white/90 inline-flex items-center gap-1.5"
+            >
+              <i class="fa-solid fa-file-pdf text-brand-accent"></i> PDF Overzicht
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Hoofdcontainer (1280px breed voor rust, ruimte en gelijke kolommen) -->
+    <div class="max-w-[1280px] mx-auto px-4 sm:px-6 pt-6 sm:pt-8">
+      
+      <!-- ============================================================ -->
+      <!-- TAB 1: OVERZICHTELIJKE BUSINESSCASE & CALCULATOR             -->
+      <!-- ============================================================ -->
+      <div id="tab-panel-calculator" class="main-tab-panel space-y-6 sm:space-y-8">
+        
+        <!-- DEEL 1: SAMENVATTING VAN DE OMVANG VAN DE MARKT -->
+        <div class="bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-7 shadow-xs space-y-5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-[#0C4EA2] block">
+                1. Marktpotentieel Nederland (DataForSEO)
+              </span>
+              <h2 class="font-display font-bold text-xl text-slate-900 mt-0.5">
+                De Omvang van de Markt in Google
+              </h2>
+            </div>
+            <div class="grid grid-cols-2 sm:flex items-center gap-2 sm:gap-3">
+              <div class="bg-slate-50 border border-slate-200 rounded-xl px-3 sm:px-4 py-2 text-left sm:text-right">
+                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Zoekvolume / mnd</span>
+                <span class="font-display font-bold text-base sm:text-lg text-slate-900 whitespace-nowrap">41.710 / mnd</span>
+              </div>
+              <div class="bg-[#0C4EA2]/8 border border-[#0C4EA2]/20 rounded-xl px-3 sm:px-4 py-2 text-left sm:text-right">
+                <span class="block text-[10px] font-bold uppercase tracking-wider text-[#0C4EA2]">Zoekvolume / jaar</span>
+                <span class="font-display font-bold text-base sm:text-lg text-[#0C4EA2] whitespace-nowrap">500.520 / jaar</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5 gelijke kolommen voor de branches -->
+          <div class="grid grid-cols-1 min-[375px]:grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+            <div class="bg-slate-50/80 border border-slate-200/80 rounded-xl p-4">
+              <span class="block text-xs font-bold text-slate-800">VCA & Veiligheid</span>
+              <span class="block font-display font-bold text-xl text-[#0C4EA2] mt-1 whitespace-nowrap">11.000 <span class="text-xs font-normal text-slate-500">/mnd</span></span>
+              <span class="block text-xs text-slate-500 mt-0.5">132.000 per jaar</span>
+              <span class="inline-block text-[11px] font-semibold text-brand-accent bg-brand-accent/10 px-2 py-0.5 rounded mt-2">CPC tot € 10,86</span>
+            </div>
+            <div class="bg-slate-50/80 border border-slate-200/80 rounded-xl p-4">
+              <span class="block text-xs font-bold text-slate-800">Keuringen & RI&E</span>
+              <span class="block font-display font-bold text-xl text-[#0C4EA2] mt-1 whitespace-nowrap">10.670 <span class="text-xs font-normal text-slate-500">/mnd</span></span>
+              <span class="block text-xs text-slate-500 mt-0.5">128.040 per jaar</span>
+              <span class="inline-block text-[11px] font-semibold text-brand-accent bg-brand-accent/10 px-2 py-0.5 rounded mt-2">CPC tot € 49,33</span>
+            </div>
+            <div class="bg-slate-50/80 border border-slate-200/80 rounded-xl p-4">
+              <span class="block text-xs font-bold text-slate-800">BHV Opleidingen</span>
+              <span class="block font-display font-bold text-xl text-[#0C4EA2] mt-1 whitespace-nowrap">8.890 <span class="text-xs font-normal text-slate-500">/mnd</span></span>
+              <span class="block text-xs text-slate-500 mt-0.5">106.680 per jaar</span>
+              <span class="inline-block text-[11px] font-semibold text-brand-accent bg-brand-accent/10 px-2 py-0.5 rounded mt-2">CPC tot € 61,35</span>
+            </div>
+            <div class="bg-slate-50/80 border border-slate-200/80 rounded-xl p-4">
+              <span class="block text-xs font-bold text-slate-800">EHBO & Reanimatie</span>
+              <span class="block font-display font-bold text-xl text-[#0C4EA2] mt-1 whitespace-nowrap">7.700 <span class="text-xs font-normal text-slate-500">/mnd</span></span>
+              <span class="block text-xs text-slate-500 mt-0.5">92.400 per jaar</span>
+              <span class="inline-block text-[11px] font-semibold text-brand-accent bg-brand-accent/10 px-2 py-0.5 rounded mt-2">CPC tot € 4,37</span>
+            </div>
+            <div class="bg-slate-50/80 border border-slate-200/80 rounded-xl p-4 min-[375px]:col-span-2 sm:col-span-1">
+              <span class="block text-xs font-bold text-slate-800">Heftruck & Offshore</span>
+              <span class="block font-display font-bold text-xl text-[#0C4EA2] mt-1 whitespace-nowrap">3.450 <span class="text-xs font-normal text-slate-500">/mnd</span></span>
+              <span class="block text-xs text-slate-500 mt-0.5">41.400 per jaar</span>
+              <span class="inline-block text-[11px] font-semibold text-brand-accent bg-brand-accent/10 px-2 py-0.5 rounded mt-2">CPC tot € 20,69</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SNELKEUZE BALK -->
+        <div class="bg-white rounded-2xl border border-slate-200/90 px-4 sm:px-6 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-[#0C4EA2] block">
+              2. Rekenmodel & Schuifjes
+            </span>
+            <span class="text-sm font-semibold text-slate-700">
+              Kies een groeiscenario of pas de 6 onderdelen hieronder aan:
+            </span>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button
+              type="button"
+              data-preset="1.5"
+              class="preset-btn px-3.5 py-2 rounded-xl text-xs font-bold border border-slate-200 bg-slate-50 text-slate-700 hover:border-[#0C4EA2] transition-all cursor-pointer"
+            >
+              Voorzichtig (1,5%)
+            </button>
+            <button
+              type="button"
+              data-preset="3"
+              class="preset-btn is-active px-3.5 py-2 rounded-xl text-xs font-bold border border-brand-accent bg-brand-accent text-white transition-all cursor-pointer"
+            >
+              3% (Basis)
+            </button>
+            <button
+              type="button"
+              data-preset="5"
+              class="preset-btn px-3.5 py-2 rounded-xl text-xs font-bold border border-slate-200 bg-slate-50 text-slate-700 hover:border-[#0C4EA2] transition-all cursor-pointer"
+            >
+              5% (Groei)
+            </button>
+            <button
+              type="button"
+              data-preset="7.5"
+              class="preset-btn px-3.5 py-2 rounded-xl text-xs font-bold border border-slate-200 bg-slate-50 text-slate-700 hover:border-[#0C4EA2] transition-all cursor-pointer"
+            >
+              7,5% (Sterk)
+            </button>
+            <button
+              type="button"
+              data-preset="10"
+              class="preset-btn px-3.5 py-2 rounded-xl text-xs font-bold border border-slate-200 bg-slate-50 text-slate-700 hover:border-[#0C4EA2] transition-all cursor-pointer"
+            >
+              10% (Marktleider)
+            </button>
+          </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- DE 6 REKENBLOKKEN IN EEN RUSTIG 2-KOLOMS GRID                -->
+        <!-- ============================================================ -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+          
+          <!-- KAART 1: DIRECTE ZZP'ERS & PARTICULIEREN -->
+          <div class="bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-6 shadow-xs flex flex-col justify-between space-y-6">
+            <div class="space-y-5">
+              <div class="flex items-center gap-3 pb-4 border-b border-slate-100">
+                <span class="w-8 h-8 rounded-lg bg-[#0C4EA2] text-white font-display font-bold text-sm flex items-center justify-center shrink-0">
+                  1
+                </span>
+                <div>
+                  <h3 class="font-display font-bold text-base text-slate-900">
+                    Directe ZZP'ers & Losse Cursisten
+                  </h3>
+                  <span id="sub-zzp-count-yr" class="text-xs text-slate-500">15 per maand = 180 cursisten per jaar</span>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div class="space-y-2">
+                  <div class="flex items-center justify-between gap-2">
+                    <label for="num-zzpCount" class="text-xs font-semibold text-slate-600">Aantal per maand</label>
+                    <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1">
+                      <input type="number" id="num-zzpCount" min="0" max="500" step="1" value="15" class="w-14 text-right font-display font-bold text-sm text-slate-900 bg-transparent focus:outline-none" />
+                      <span class="text-xs text-slate-500 ml-1">/mnd</span>
+                    </div>
+                  </div>
+                  <input type="range" id="rng-zzpCount" min="0" max="150" step="1" value="15" class="w-full accent-[#0C4EA2] cursor-pointer h-2 bg-slate-200 rounded-lg" />
+                </div>
+
+                <div class="space-y-2">
+                  <div class="flex items-center justify-between gap-2">
+                    <label for="num-zzpPrice" class="text-xs font-semibold text-slate-600">Cursusprijs p.p. (/jr)</label>
+                    <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1">
+                      <span class="text-xs text-slate-500 mr-1">€</span>
+                      <input type="number" id="num-zzpPrice" min="50" max="1000" step="5" value="195" class="w-14 text-right font-display font-bold text-sm text-slate-900 bg-transparent focus:outline-none" />
+                      <span class="text-xs text-slate-500 ml-1">/jr</span>
+                    </div>
+                  </div>
+                  <input type="range" id="rng-zzpPrice" min="95" max="450" step="5" value="195" class="w-full accent-[#0C4EA2] cursor-pointer h-2 bg-slate-200 rounded-lg" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Vaste Resultaatbalk onderaan de kaart -->
+            <div class="grid grid-cols-1 min-[420px]:grid-cols-2 gap-2.5 sm:gap-3 pt-4 border-t border-slate-100">
+              <div class="bg-slate-50 border border-slate-200/80 rounded-xl px-4 py-2.5 flex items-center justify-between">
+                <span class="text-xs font-semibold text-slate-500">Per maand</span>
+                <span id="sub-zzp-month" class="font-display font-bold text-sm text-slate-900 whitespace-nowrap">€ 2.925,-</span>
+              </div>
+              <div class="bg-[#0C4EA2]/8 border border-[#0C4EA2]/20 rounded-xl px-4 py-2.5 flex items-center justify-between">
+                <span class="text-xs font-semibold text-[#0C4EA2]">Per jaar</span>
+                <span id="sub-zzp-year" class="font-display font-bold text-sm text-[#0C4EA2] whitespace-nowrap">€ 35.100,-</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- KAART 2: BEDRIJVEN & GROEPEN -->
+          <div class="bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-6 shadow-xs flex flex-col justify-between space-y-6">
+            <div class="space-y-5">
+              <div class="flex items-center gap-3 pb-4 border-b border-slate-100">
+                <span class="w-8 h-8 rounded-lg bg-[#0C4EA2] text-white font-display font-bold text-sm flex items-center justify-center shrink-0">
+                  2
+                </span>
+                <div>
+                  <h3 class="font-display font-bold text-base text-slate-900">
+                    Bedrijven & Groepen (B2B Multiplier)
+                  </h3>
+                  <span id="sub-comp-staff-total" class="text-xs text-slate-500">10 bedrijven/mnd × 10 medewerkers = 100 cursisten/mnd</span>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="space-y-2">
+                  <div class="flex items-center justify-between gap-2">
+                    <label for="num-compCount" class="text-xs font-semibold text-slate-600">Bedrijven / mnd</label>
+                    <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1">
+                      <input type="number" id="num-compCount" min="0" max="200" step="1" value="10" class="w-12 text-right font-display font-bold text-sm text-slate-900 bg-transparent focus:outline-none" />
+                    </div>
+                  </div>
+                  <input type="range" id="rng-compCount" min="0" max="60" step="1" value="10" class="w-full accent-[#0C4EA2] cursor-pointer h-2 bg-slate-200 rounded-lg" />
+                </div>
+
+                <div class="space-y-2">
+                  <div class="flex items-center justify-between gap-2">
+                    <label for="num-compStaff" class="text-xs font-semibold text-slate-600">Gem. personeel</label>
+                    <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1">
+                      <input type="number" id="num-compStaff" min="1" max="200" step="1" value="10" class="w-12 text-right font-display font-bold text-sm text-slate-900 bg-transparent focus:outline-none" />
+                      <span class="text-[11px] text-slate-500 ml-1">p.</span>
+                    </div>
+                  </div>
+                  <input type="range" id="rng-compStaff" min="1" max="50" step="1" value="10" class="w-full accent-brand-accent cursor-pointer h-2 bg-slate-200 rounded-lg" />
+                </div>
+
+                <div class="space-y-2">
+                  <div class="flex items-center justify-between gap-2">
+                    <label for="num-compPrice" class="text-xs font-semibold text-slate-600">Prijs p.p. (/jr)</label>
+                    <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1">
+                      <span class="text-[11px] text-slate-500 mr-0.5">€</span>
+                      <input type="number" id="num-compPrice" min="50" max="600" step="5" value="195" class="w-13 text-right font-display font-bold text-sm text-slate-900 bg-transparent focus:outline-none" />
+                    </div>
+                  </div>
+                  <input type="range" id="rng-compPrice" min="95" max="350" step="5" value="195" class="w-full accent-[#0C4EA2] cursor-pointer h-2 bg-slate-200 rounded-lg" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Vaste Resultaatbalk onderaan de kaart -->
+            <div class="grid grid-cols-1 min-[420px]:grid-cols-2 gap-2.5 sm:gap-3 pt-4 border-t border-slate-100">
+              <div class="bg-slate-50 border border-slate-200/80 rounded-xl px-4 py-2.5 flex items-center justify-between">
+                <span class="text-xs font-semibold text-slate-500">Per maand</span>
+                <span id="sub-comp-month" class="font-display font-bold text-sm text-slate-900 whitespace-nowrap">€ 19.500,-</span>
+              </div>
+              <div class="bg-[#0C4EA2]/8 border border-[#0C4EA2]/20 rounded-xl px-4 py-2.5 flex items-center justify-between">
+                <span class="text-xs font-semibold text-[#0C4EA2]">Per jaar</span>
+                <span id="sub-comp-year" class="font-display font-bold text-sm text-[#0C4EA2] whitespace-nowrap">€ 234.000,-</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- KAART 3: KEURINGEN, RI&E & VEILIGHEIDSMIDDELEN -->
+          <div class="bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-6 shadow-xs flex flex-col justify-between space-y-6">
+            <div class="space-y-5">
+              <div class="flex items-center gap-3 pb-4 border-b border-slate-100">
+                <span class="w-8 h-8 rounded-lg bg-[#0C4EA2] text-white font-display font-bold text-sm flex items-center justify-center shrink-0">
+                  3
+                </span>
+                <div>
+                  <h3 class="font-display font-bold text-base text-slate-900">
+                    Keuringen (NEN / Scope), RI&E & Middelen
+                  </h3>
+                  <span id="sub-serv-count-yr" class="text-xs text-slate-500">5 opdrachten per maand = 60 opdrachten per jaar</span>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div class="space-y-2">
+                  <div class="flex items-center justify-between gap-2">
+                    <label for="num-servCount" class="text-xs font-semibold text-slate-600">Opdrachten per maand</label>
+                    <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1">
+                      <input type="number" id="num-servCount" min="0" max="200" step="1" value="5" class="w-14 text-right font-display font-bold text-sm text-slate-900 bg-transparent focus:outline-none" />
+                      <span class="text-xs text-slate-500 ml-1">/mnd</span>
+                    </div>
+                  </div>
+                  <input type="range" id="rng-servCount" min="0" max="50" step="1" value="5" class="w-full accent-[#0C4EA2] cursor-pointer h-2 bg-slate-200 rounded-lg" />
+                </div>
+
+                <div class="space-y-2">
+                  <div class="flex items-center justify-between gap-2">
+                    <label for="num-servPrice" class="text-xs font-semibold text-slate-600">Waarde per opdracht</label>
+                    <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1">
+                      <span class="text-xs text-slate-500 mr-1">€</span>
+                      <input type="number" id="num-servPrice" min="100" max="25000" step="50" value="1750" class="w-16 text-right font-display font-bold text-sm text-slate-900 bg-transparent focus:outline-none" />
+                    </div>
+                  </div>
+                  <input type="range" id="rng-servPrice" min="250" max="5000" step="50" value="1750" class="w-full accent-[#0C4EA2] cursor-pointer h-2 bg-slate-200 rounded-lg" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Vaste Resultaatbalk onderaan de kaart -->
+            <div class="grid grid-cols-1 min-[420px]:grid-cols-2 gap-2.5 sm:gap-3 pt-4 border-t border-slate-100">
+              <div class="bg-slate-50 border border-slate-200/80 rounded-xl px-4 py-2.5 flex items-center justify-between">
+                <span class="text-xs font-semibold text-slate-500">Per maand</span>
+                <span id="sub-serv-month" class="font-display font-bold text-sm text-slate-900 whitespace-nowrap">€ 8.750,-</span>
+              </div>
+              <div class="bg-[#0C4EA2]/8 border border-[#0C4EA2]/20 rounded-xl px-4 py-2.5 flex items-center justify-between">
+                <span class="text-xs font-semibold text-[#0C4EA2]">Per jaar</span>
+                <span id="sub-serv-year" class="font-display font-bold text-sm text-[#0C4EA2] whitespace-nowrap">€ 105.000,-</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- KAART 4: NIEUW VERDIENMODEL — E-LEARNING MAANDABONNEMENTEN -->
+          <div class="bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-6 shadow-xs flex flex-col justify-between space-y-6">
+            <div class="space-y-5">
+              <div class="flex items-center gap-3 pb-4 border-b border-slate-100">
+                <span class="w-8 h-8 rounded-lg bg-brand-accent text-white font-display font-bold text-sm flex items-center justify-center shrink-0">
+                  4
+                </span>
+                <div>
+                  <h3 class="font-display font-bold text-base text-slate-900">
+                    Nieuw: E-Learning Maandabonnementen
+                  </h3>
+                  <span id="sub-elearn-count-yr" class="text-xs text-slate-500">
+                    30 nieuwe abonnees/mnd = 360 actieve abonnees in Jaar 1 (stapelt maandelijks op)
+                  </span>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div class="space-y-2">
+                  <div class="flex items-center justify-between gap-2">
+                    <label for="num-subNewMonthly" class="text-xs font-semibold text-slate-600">Nieuwe abonnees / mnd</label>
+                    <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1">
+                      <input type="number" id="num-subNewMonthly" min="0" max="1000" step="5" value="30" class="w-14 text-right font-display font-bold text-sm text-slate-900 bg-transparent focus:outline-none" />
+                      <span class="text-xs text-slate-500 ml-1">/mnd</span>
+                    </div>
+                  </div>
+                  <input type="range" id="rng-subNewMonthly" min="0" max="200" step="5" value="30" class="w-full accent-brand-accent cursor-pointer h-2 bg-slate-200 rounded-lg" />
+                </div>
+
+                <div class="space-y-2">
+                  <div class="flex items-center justify-between gap-2">
+                    <label for="num-subPriceMonthly" class="text-xs font-semibold text-slate-600">Abonnementsprijs / mnd</label>
+                    <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1">
+                      <span class="text-xs text-slate-500 mr-1">€</span>
+                      <input type="number" id="num-subPriceMonthly" min="1" max="250" step="1" value="15" class="w-14 text-right font-display font-bold text-sm text-slate-900 bg-transparent focus:outline-none" />
+                      <span class="text-xs text-slate-500 ml-1">/mnd</span>
+                    </div>
+                  </div>
+                  <input type="range" id="rng-subPriceMonthly" min="5" max="50" step="1" value="15" class="w-full accent-brand-accent cursor-pointer h-2 bg-slate-200 rounded-lg" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Vaste Resultaatbalk onderaan de kaart -->
+            <div class="grid grid-cols-1 min-[420px]:grid-cols-2 gap-2.5 sm:gap-3 pt-4 border-t border-slate-100">
+              <div class="bg-slate-50 border border-slate-200/80 rounded-xl px-4 py-2.5 flex items-center justify-between">
+                <span class="text-xs font-semibold text-slate-500">Per maand (J1)</span>
+                <span id="sub-elearning-mnd" class="font-display font-bold text-sm text-slate-900 whitespace-nowrap">€ 5.400,- / mnd</span>
+              </div>
+              <div class="bg-brand-accent/10 border border-brand-accent/25 rounded-xl px-4 py-2.5 flex items-center justify-between">
+                <span class="text-xs font-semibold text-brand-accent">Per jaar (J1)</span>
+                <span id="sub-elearning-y1" class="font-display font-bold text-sm text-brand-accent whitespace-nowrap">€ 64.800,- / jr</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- KAART 5: WETTELIJKE JAARLIJKSE VERLENGING -->
+          <div class="bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-6 shadow-xs flex flex-col justify-between space-y-6">
+            <div class="space-y-5">
+              <div class="flex items-center gap-3 pb-4 border-b border-slate-100">
+                <span class="w-8 h-8 rounded-lg bg-emerald-600 text-white font-display font-bold text-sm flex items-center justify-center shrink-0">
+                  5
+                </span>
+                <div>
+                  <h3 class="font-display font-bold text-base text-slate-900">
+                    Wettelijke Jaarlijkse Verlenging (Herhaalplicht)
+                  </h3>
+                  <span class="text-xs text-slate-500">
+                    Automatische oproepflow (90/60/30 dagen) via het Leadfabriek CRM
+                  </span>
+                </div>
+              </div>
+
+              <div class="space-y-2">
+                <div class="flex items-center justify-between gap-2">
+                  <label for="num-renewalRate" class="text-xs font-semibold text-slate-600">
+                    Percentage klanten dat jaarlijks verlengt bij Edusafe
+                  </label>
+                  <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1 shrink-0">
+                    <input type="number" id="num-renewalRate" min="0" max="100" step="1" value="85" class="w-14 text-right font-display font-bold text-sm text-emerald-700 bg-transparent focus:outline-none" />
+                    <span class="text-xs text-slate-500 ml-1">%</span>
+                  </div>
+                </div>
+                <input type="range" id="rng-renewalRate" min="40" max="95" step="1" value="85" class="w-full accent-emerald-600 cursor-pointer h-2 bg-slate-200 rounded-lg" />
+              </div>
+            </div>
+
+            <!-- Vaste Resultaatbalk onderaan de kaart -->
+            <div class="grid grid-cols-1 min-[420px]:grid-cols-2 gap-2.5 sm:gap-3 pt-4 border-t border-slate-100">
+              <div class="bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-2.5 flex items-center justify-between">
+                <span class="text-xs font-semibold text-emerald-800">Extra in Jaar 2</span>
+                <span id="sub-renewal-y2" class="font-display font-bold text-sm text-emerald-700 whitespace-nowrap">+ € 317.985,-</span>
+              </div>
+              <div class="bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-2.5 flex items-center justify-between">
+                <span class="text-xs font-semibold text-emerald-800">Extra in Jaar 3</span>
+                <span id="sub-renewal-y3" class="font-display font-bold text-sm text-emerald-700 whitespace-nowrap">+ € 588.272,-</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- KAART 6: BESPARING LEADFABRIEK KANTOORUREN -->
+          <div class="bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-6 shadow-xs flex flex-col justify-between space-y-6">
+            <div class="space-y-5">
+              <div class="flex items-center gap-3 pb-4 border-b border-slate-100">
+                <span class="w-8 h-8 rounded-lg bg-emerald-600 text-white font-display font-bold text-sm flex items-center justify-center shrink-0">
+                  6
+                </span>
+                <div>
+                  <h3 class="font-display font-bold text-base text-slate-900">
+                    Besparing Leadfabriek (Kantoor & Handwerk)
+                  </h3>
+                  <span id="sub-lf-hours-label" class="text-xs text-slate-500">
+                    800 uur per jaar bespaard op uitnodigingen, evaluaties & verlengingen
+                  </span>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="space-y-2">
+                  <div class="flex items-center justify-between gap-2">
+                    <label for="num-lfStaffCount" class="text-xs font-semibold text-slate-600">Personen</label>
+                    <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1">
+                      <input type="number" id="num-lfStaffCount" min="1" max="15" step="1" value="2" class="w-10 text-right font-display font-bold text-sm text-slate-900 bg-transparent focus:outline-none" />
+                      <span class="text-[11px] text-slate-500 ml-1">p.</span>
+                    </div>
+                  </div>
+                  <input type="range" id="rng-lfStaffCount" min="1" max="6" step="1" value="2" class="w-full accent-emerald-600 cursor-pointer h-2 bg-slate-200 rounded-lg" />
+                </div>
+
+                <div class="space-y-2">
+                  <div class="flex items-center justify-between gap-2">
+                    <label for="num-lfHoursPerWeek" class="text-xs font-semibold text-slate-600">Uren p.p./wk</label>
+                    <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1">
+                      <input type="number" id="num-lfHoursPerWeek" min="1" max="40" step="1" value="8" class="w-10 text-right font-display font-bold text-sm text-slate-900 bg-transparent focus:outline-none" />
+                      <span class="text-[11px] text-slate-500 ml-1">u</span>
+                    </div>
+                  </div>
+                  <input type="range" id="rng-lfHoursPerWeek" min="1" max="32" step="1" value="8" class="w-full accent-emerald-600 cursor-pointer h-2 bg-slate-200 rounded-lg" />
+                </div>
+
+                <div class="space-y-2">
+                  <div class="flex items-center justify-between gap-2">
+                    <label for="num-lfHourlyRate" class="text-xs font-semibold text-slate-600">Uurtarief</label>
+                    <div class="flex items-center bg-slate-50 border border-slate-200 rounded-lg px-2 py-1">
+                      <span class="text-[11px] text-slate-500 mr-0.5">€</span>
+                      <input type="number" id="num-lfHourlyRate" min="25" max="200" step="5" value="75" class="w-12 text-right font-display font-bold text-sm text-slate-900 bg-transparent focus:outline-none" />
+                    </div>
+                  </div>
+                  <input type="range" id="rng-lfHourlyRate" min="35" max="125" step="5" value="75" class="w-full accent-emerald-600 cursor-pointer h-2 bg-slate-200 rounded-lg" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Vaste Resultaatbalk onderaan de kaart -->
+            <div class="grid grid-cols-1 min-[420px]:grid-cols-2 gap-2.5 sm:gap-3 pt-4 border-t border-slate-100">
+              <div class="bg-slate-50 border border-slate-200/80 rounded-xl px-4 py-2.5 flex items-center justify-between">
+                <span class="text-xs font-semibold text-slate-500">Per maand</span>
+                <span id="sub-lf-month-label" class="font-display font-bold text-sm text-slate-900 whitespace-nowrap">+ € 5.000,-</span>
+              </div>
+              <div class="bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-2.5 flex items-center justify-between">
+                <span class="text-xs font-semibold text-emerald-800">Per jaar</span>
+                <span id="sub-lf-saving-year" class="font-display font-bold text-sm text-emerald-700 whitespace-nowrap">+ € 60.000,-</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- DEEL 3: SAMENVATTING & EINDRESULTAAT ONDERAAN                -->
+        <!-- ============================================================ -->
+        <div class="bg-[#0C4EA2] text-white rounded-3xl p-4 sm:p-8 shadow-xl space-y-6">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-white/15">
+            <div>
+              <span class="text-xs font-bold uppercase tracking-wider text-brand-accent block">
+                3. Eindresultaat & Samenvatting
+              </span>
+              <h2 class="font-display font-bold text-xl sm:text-2xl text-white mt-0.5">
+                Cumulatieve Groei over Jaar 1, Jaar 2 en Jaar 3
+              </h2>
+            </div>
+            <div class="flex flex-wrap gap-2.5 sm:gap-3">
+              <div class="bg-white/10 border border-white/15 rounded-xl px-3.5 sm:px-4 py-2.5 text-left sm:text-right flex-1 sm:flex-none">
+                <span class="block text-[10px] uppercase tracking-wider text-white/70">Nieuwe omzet / maand</span>
+                <span id="res-monthly-new" class="font-display font-bold text-base sm:text-lg text-white whitespace-nowrap">€ 32.945,- / mnd</span>
+              </div>
+              <div class="bg-white/15 border border-white/25 rounded-xl px-3.5 sm:px-4 py-2.5 text-left sm:text-right flex-1 sm:flex-none">
+                <span class="block text-[10px] uppercase tracking-wider text-brand-accent font-bold">Nieuwe omzet / jaar</span>
+                <span id="res-yearly-new" class="font-display font-bold text-base sm:text-lg text-white whitespace-nowrap">€ 395.340,- / jr</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3 Overzichtelijke Jaarkaarten naast elkaar -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <!-- JAAR 1 -->
+            <div class="bg-white/10 border border-white/15 rounded-2xl p-5 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-white/80">Jaar 1</span>
+                <span id="res-y1-mnd" class="text-xs bg-white/10 px-2.5 py-0.5 rounded text-white/90 font-semibold whitespace-nowrap">€ 37.945,- / mnd</span>
+              </div>
+              <div id="res-y1-total" class="font-display font-bold text-2xl text-white whitespace-nowrap">
+                € 455.340,- / jr
+              </div>
+              <div class="space-y-1.5 pt-2 border-t border-white/10 text-xs text-white/80">
+                <div class="flex justify-between"><span>Nieuwe cursussen/diensten:</span><strong id="res-y1-new" class="text-white">€ 374.100</strong></div>
+                <div class="flex justify-between"><span>E-learning licenties:</span><strong id="res-y1-sub" class="text-white">€ 21.240</strong></div>
+                <div class="flex justify-between text-emerald-300"><span>Besparing kantoor:</span><strong id="res-y1-labor">+ € 60.000</strong></div>
+              </div>
+            </div>
+
+            <!-- JAAR 2 -->
+            <div class="bg-white/10 border border-white/15 rounded-2xl p-5 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-emerald-300">Jaar 2</span>
+                <span id="res-y2-mnd" class="text-xs bg-emerald-500/25 text-emerald-200 px-2.5 py-0.5 rounded font-semibold whitespace-nowrap">€ 65.948,- / mnd</span>
+              </div>
+              <div id="res-y2-total" class="font-display font-bold text-2xl text-emerald-300 whitespace-nowrap">
+                € 791.379,- / jr
+              </div>
+              <div class="space-y-1.5 pt-2 border-t border-white/10 text-xs text-white/80">
+                <div class="flex justify-between"><span>Nieuwe aanwas J2:</span><strong id="res-y2-new" class="text-white">€ 374.100</strong></div>
+                <div class="flex justify-between text-emerald-300"><span>Verlenging Jaar 1:</span><strong id="res-y2-ren">+ € 317.985</strong></div>
+                <div class="flex justify-between"><span>E-learning (incl. verl.):</span><strong id="res-y2-sub" class="text-white">€ 39.294</strong></div>
+                <div class="flex justify-between text-emerald-300"><span>Besparing kantoor:</span><strong id="res-y2-labor">+ € 60.000</strong></div>
+              </div>
+            </div>
+
+            <!-- JAAR 3 -->
+            <div class="bg-white/15 border-2 border-brand-accent rounded-2xl p-5 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-brand-accent">Jaar 3</span>
+                <span id="res-y3-mnd" class="text-xs bg-brand-accent text-white px-2.5 py-0.5 rounded font-semibold whitespace-nowrap">€ 89.751,- / mnd</span>
+              </div>
+              <div id="res-y3-total" class="font-display font-bold text-2xl text-white whitespace-nowrap">
+                € 1.077.012,- / jr
+              </div>
+              <div class="space-y-1.5 pt-2 border-t border-white/10 text-xs text-white/80">
+                <div class="flex justify-between"><span>Nieuwe aanwas J3:</span><strong id="res-y3-new" class="text-white">€ 374.100</strong></div>
+                <div class="flex justify-between text-emerald-300"><span>Verlenging J1 + J2:</span><strong id="res-y3-ren">+ € 588.272</strong></div>
+                <div class="flex justify-between"><span>E-learning (incl. verl.):</span><strong id="res-y3-sub" class="text-white">€ 54.640</strong></div>
+                <div class="flex justify-between text-emerald-300"><span>Besparing kantoor:</span><strong id="res-y3-labor">+ € 60.000</strong></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Totaalbalk over 3 jaar -->
+          <div class="bg-brand-accent rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <span class="font-display font-bold text-base sm:text-lg text-white block">
+                Totaal Cumulatief Resultaat over 3 Jaar
+              </span>
+              <span id="res-lf-summary-line" class="text-xs text-white/90">
+                Inclusief € 180.000,- besparing op kantooruren over 3 jaar (2 pers. à € 75/uur)
+              </span>
+            </div>
+            <div id="res-3yr-grand" class="font-display font-bold text-2xl sm:text-3xl text-white whitespace-nowrap">
+              € 2.323.731,-
+            </div>
+          </div>
+        </div>
+
+        <!-- Rustige Vergelijkingstabel onderaan: 3% vs 5% vs 7,5% vs 10% -->
+        <div class="bg-white rounded-2xl border border-slate-200/90 p-4 sm:p-7 shadow-xs space-y-4">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <h3 class="font-display font-bold text-lg text-slate-900">
+              Vergelijking bij 3%, 5%, 7,5% en 10%
+            </h3>
+            <span class="text-xs text-slate-500">
+              O.b.v. cursusprijs € <strong id="tbl-price-label">195</strong>/jr en gem. <strong id="tbl-staff-label">10</strong> medewerkers per bedrijf
+            </span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-sm">
+              <thead>
+                <tr class="border-b border-slate-200 text-slate-700 font-display text-xs uppercase tracking-wider">
+                  <th class="py-3 pr-4">Onderdeel</th>
+                  <th class="py-3 px-4 bg-[#0C4EA2]/5 text-[#0C4EA2] font-bold">Bij 3%</th>
+                  <th class="py-3 px-4 font-bold">Bij 5%</th>
+                  <th class="py-3 px-4 font-bold">Bij 7,5%</th>
+                  <th class="py-3 px-4 bg-brand-accent/8 text-brand-accent font-bold">Bij 10%</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr>
+                  <td class="py-3 pr-4 text-slate-600">Nieuwe aanvragen per maand</td>
+                  <td class="py-3 px-4 bg-[#0C4EA2]/5 font-semibold whitespace-nowrap" id="t-req-3">30 / mnd</td>
+                  <td class="py-3 px-4 font-semibold whitespace-nowrap" id="t-req-5">50 / mnd</td>
+                  <td class="py-3 px-4 font-semibold whitespace-nowrap" id="t-req-75">75 / mnd</td>
+                  <td class="py-3 px-4 bg-brand-accent/8 font-bold text-brand-accent whitespace-nowrap" id="t-req-10">100 / mnd</td>
+                </tr>
+                <tr>
+                  <td class="py-3 pr-4 text-slate-600">Nieuwe omzet per maand</td>
+                  <td class="py-3 px-4 bg-[#0C4EA2]/5 font-semibold whitespace-nowrap" id="t-mnd-3">—</td>
+                  <td class="py-3 px-4 font-semibold whitespace-nowrap" id="t-mnd-5">—</td>
+                  <td class="py-3 px-4 font-semibold whitespace-nowrap" id="t-mnd-75">—</td>
+                  <td class="py-3 px-4 bg-brand-accent/8 font-bold text-brand-accent whitespace-nowrap" id="t-mnd-10">—</td>
+                </tr>
+                <tr>
+                  <td class="py-3 pr-4 text-slate-600">Besparing Leadfabriek kantoor</td>
+                  <td class="py-3 px-4 bg-[#0C4EA2]/5 font-semibold text-emerald-700 whitespace-nowrap" id="t-lf-3">+ € 60.000,- / jr</td>
+                  <td class="py-3 px-4 font-semibold text-emerald-700 whitespace-nowrap" id="t-lf-5">+ € 60.000,- / jr</td>
+                  <td class="py-3 px-4 font-semibold text-emerald-700 whitespace-nowrap" id="t-lf-75">+ € 60.000,- / jr</td>
+                  <td class="py-3 px-4 bg-brand-accent/8 font-semibold text-emerald-700 whitespace-nowrap" id="t-lf-10">+ € 60.000,- / jr</td>
+                </tr>
+                <tr>
+                  <td class="py-3 pr-4 font-semibold text-slate-900">Jaar 1 (per jaar)</td>
+                  <td class="py-3 px-4 bg-[#0C4EA2]/5 font-bold text-slate-900 whitespace-nowrap" id="t-y1-3">—</td>
+                  <td class="py-3 px-4 font-bold text-slate-900 whitespace-nowrap" id="t-y1-5">—</td>
+                  <td class="py-3 px-4 font-bold text-slate-900 whitespace-nowrap" id="t-y1-75">—</td>
+                  <td class="py-3 px-4 bg-brand-accent/8 font-bold text-slate-900 whitespace-nowrap" id="t-y1-10">—</td>
+                </tr>
+                <tr>
+                  <td class="py-3 pr-4 font-semibold text-slate-900">Jaar 2 (incl. jaarlijkse verlenging)</td>
+                  <td class="py-3 px-4 bg-[#0C4EA2]/5 font-bold text-emerald-700 whitespace-nowrap" id="t-y2-3">—</td>
+                  <td class="py-3 px-4 font-bold text-emerald-700 whitespace-nowrap" id="t-y2-5">—</td>
+                  <td class="py-3 px-4 font-bold text-emerald-700 whitespace-nowrap" id="t-y2-75">—</td>
+                  <td class="py-3 px-4 bg-brand-accent/8 font-bold text-emerald-700 whitespace-nowrap" id="t-y2-10">—</td>
+                </tr>
+                <tr>
+                  <td class="py-3 pr-4 font-semibold text-slate-900">Jaar 3 (incl. jaarlijkse verlenging)</td>
+                  <td class="py-3 px-4 bg-[#0C4EA2]/5 font-bold text-[#0C4EA2] whitespace-nowrap" id="t-y3-3">—</td>
+                  <td class="py-3 px-4 font-bold text-[#0C4EA2] whitespace-nowrap" id="t-y3-5">—</td>
+                  <td class="py-3 px-4 font-bold text-[#0C4EA2] whitespace-nowrap" id="t-y3-75">—</td>
+                  <td class="py-3 px-4 bg-brand-accent/8 font-bold text-brand-accent whitespace-nowrap" id="t-y3-10">—</td>
+                </tr>
+                <tr class="border-t-2 border-slate-200 bg-slate-50">
+                  <td class="py-3.5 pr-4 font-display font-bold text-slate-900">Totaal over 3 Jaar</td>
+                  <td class="py-3.5 px-4 font-display font-bold text-slate-900 whitespace-nowrap" id="t-sum-3">—</td>
+                  <td class="py-3.5 px-4 font-display font-bold text-slate-900 whitespace-nowrap" id="t-sum-5">—</td>
+                  <td class="py-3.5 px-4 font-display font-bold text-slate-900 whitespace-nowrap" id="t-sum-75">—</td>
+                  <td class="py-3.5 px-4 font-display font-bold text-brand-accent whitespace-nowrap" id="t-sum-10">—</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- TAB 2: DATAFORSEO ZOEKVOLUME & CPC TABEL                     -->
+      <!-- ============================================================ -->
+      <div id="tab-panel-zoekvolume" class="main-tab-panel hidden space-y-6">
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-8 shadow-xs space-y-5">
+          <div>
+            <span class="text-xs font-bold uppercase tracking-wider text-[#0C4EA2]">
+              DataForSEO Google Zoekvolume (Nederland)
+            </span>
+            <h2 class="font-display font-bold text-xl text-slate-900 mt-1">
+              Waar die 41.710 zoekopdrachten per maand (500.520 / jaar) uit bestaan
+            </h2>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-sm">
+              <thead>
+                <tr class="border-b border-slate-200 text-slate-700 font-display text-xs uppercase">
+                  <th class="py-3 pr-4">Categorie (42 hoofdtermen)</th>
+                  <th class="py-3 px-4">Per maand</th>
+                  <th class="py-3 px-4">Per jaar</th>
+                  <th class="py-3 pl-4">Klikprijs (CPC)</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100">
+                <tr>
+                  <td class="py-3.5 pr-4 font-bold text-slate-900">1. VCA & Veiligheid <span class="block text-xs font-normal text-slate-500">vca cursus, vca basis, vca vol, vca examen</span></td>
+                  <td class="py-3.5 px-4 font-bold text-[#0C4EA2]">11.000 / mnd</td>
+                  <td class="py-3.5 px-4">132.000 / jr</td>
+                  <td class="py-3.5 pl-4 font-semibold text-brand-accent">€ 6,83 – € 10,86</td>
+                </tr>
+                <tr>
+                  <td class="py-3.5 pr-4 font-bold text-slate-900">2. Keuringen, Scope & RI&E <span class="block text-xs font-normal text-slate-500">risico inventarisatie, scope 8/10/12, nen 3140, blussers</span></td>
+                  <td class="py-3.5 px-4 font-bold text-[#0C4EA2]">10.670 / mnd</td>
+                  <td class="py-3.5 px-4">128.040 / jr</td>
+                  <td class="py-3.5 pl-4 font-semibold text-brand-accent">€ 8,69 – € 49,33</td>
+                </tr>
+                <tr>
+                  <td class="py-3.5 pr-4 font-bold text-slate-900">3. BHV Opleidingen <span class="block text-xs font-normal text-slate-500">bhv cursus, bhv herhaling, ploegleider, incompany</span></td>
+                  <td class="py-3.5 px-4 font-bold text-[#0C4EA2]">8.890 / mnd</td>
+                  <td class="py-3.5 px-4">106.680 / jr</td>
+                  <td class="py-3.5 pl-4 font-semibold text-brand-accent">€ 8,80 – € 61,35</td>
+                </tr>
+                <tr>
+                  <td class="py-3.5 pr-4 font-bold text-slate-900">4. EHBO & Reanimatie <span class="block text-xs font-normal text-slate-500">ehbo cursus, reanimatie, ehbo bij kinderen, aed</span></td>
+                  <td class="py-3.5 px-4 font-bold text-[#0C4EA2]">7.700 / mnd</td>
+                  <td class="py-3.5 px-4">92.400 / jr</td>
+                  <td class="py-3.5 pl-4 font-semibold text-brand-accent">€ 1,49 – € 4,37</td>
+                </tr>
+                <tr>
+                  <td class="py-3.5 pr-4 font-bold text-slate-900">5. Transport & Offshore <span class="block text-xs font-normal text-slate-500">heftruckcertificaat, hoogwerker, reachtruck, bosiet</span></td>
+                  <td class="py-3.5 px-4 font-bold text-[#0C4EA2]">3.450 / mnd</td>
+                  <td class="py-3.5 px-4">41.400 / jr</td>
+                  <td class="py-3.5 pl-4 font-semibold text-brand-accent">€ 4,91 – € 20,69</td>
+                </tr>
+                <tr class="border-t-2 border-slate-200 bg-slate-50 font-bold">
+                  <td class="py-3.5 pr-4 text-slate-900">TOTAAL</td>
+                  <td class="py-3.5 px-4 text-[#0C4EA2]">41.710 / mnd</td>
+                  <td class="py-3.5 px-4 text-slate-900">500.520 / jr</td>
+                  <td class="py-3.5 pl-4 text-slate-600">Gem. € 12 – € 61 / klik</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- TAB 3: MEETING CHECKLIST                                     -->
+      <!-- ============================================================ -->
+      <div id="tab-panel-checklist" class="main-tab-panel hidden space-y-6">
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 sm:p-8 shadow-xs space-y-4">
+          <h2 class="font-display font-bold text-xl text-slate-900">
+            Checklist & Vraagstukken voor tijdens de Meeting
+          </h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
+            <label class="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer">
+              <input type="checkbox" class="mt-1 w-4 h-4 accent-brand-accent rounded shrink-0" />
+              <span><strong>1. Cursusoverzicht + Exacte Prijzen + E-learning Abonnement:</strong> Definitieve lijst met alle cursusprijzen én de prijzen voor het nieuwe E-learning abonnement.</span>
+            </label>
+            <label class="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer">
+              <input type="checkbox" class="mt-1 w-4 h-4 accent-brand-accent rounded shrink-0" />
+              <span><strong>2. Officiële Livegang-datum:</strong> Wanneer willen ze officieel live?</span>
+            </label>
+            <label class="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer">
+              <input type="checkbox" class="mt-1 w-4 h-4 accent-brand-accent rounded shrink-0" />
+              <span><strong>3. Google Bedrijfsprofiel (GBP):</strong> Wie heeft toegang en mij direct <strong>Beheerder</strong> maken.</span>
+            </label>
+            <label class="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer">
+              <input type="checkbox" class="mt-1 w-4 h-4 accent-brand-accent rounded shrink-0" />
+              <span><strong>4. Facebook (Edusafe & Firesafe) + WhatsApp Business:</strong> Facebook Business + WhatsApp Business instellen via Leadfabriek CRM (mij <strong>Beheerder</strong> maken).</span>
+            </label>
+            <label class="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer">
+              <input type="checkbox" class="mt-1 w-4 h-4 accent-brand-accent rounded shrink-0" />
+              <span><strong>5. Variabele onderdelen via Leadfabriek CRM:</strong> Welke onderdelen op de website willen ze zelf aanpassen vanuit het Leadfabriek CRM?</span>
+            </label>
+            <label class="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer">
+              <input type="checkbox" class="mt-1 w-4 h-4 accent-brand-accent rounded shrink-0" />
+              <span><strong>6. Welke documenten/handelingen nog meer automatiseren?:</strong> Evaluatieformulier (`/evaluatieformulier`) is nu digitaal. Welke documenten of flows volgen?</span>
+            </label>
+            <label class="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer">
+              <input type="checkbox" class="mt-1 w-4 h-4 accent-brand-accent rounded shrink-0" />
+              <span><strong>7. Firesafe B.V. (`firesafebv.nl`) & Webshop-URL:</strong> Meer context + optie voor een andere URL voor de webshop.</span>
+            </label>
+            <label class="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer">
+              <input type="checkbox" class="mt-1 w-4 h-4 accent-brand-accent rounded shrink-0" />
+              <span><strong>8. Fotoshoot & Content-dag prikken:</strong> Foto's/video schieten op kantoor, van de auto's en tijdens een event/training op locatie.</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</Layout>
+
+<script is:inline>
+  (function () {
+    // Tab switching
+    const tabBtns = document.querySelectorAll('.main-tab-btn');
+    const tabPanels = {
+      calculator: document.getElementById('tab-panel-calculator'),
+      zoekvolume: document.getElementById('tab-panel-zoekvolume'),
+      checklist: document.getElementById('tab-panel-checklist'),
+    };
+
+    tabBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-main-tab');
+        tabBtns.forEach((b) => {
+          b.className =
+            'main-tab-btn px-4 py-2 rounded-lg text-xs font-bold transition-all text-white/85 hover:text-white hover:bg-white/10 cursor-pointer';
+        });
+        btn.className =
+          'main-tab-btn px-4 py-2 rounded-lg text-xs font-bold transition-all bg-brand-accent text-white cursor-pointer';
+
+        Object.keys(tabPanels).forEach((k) => {
+          if (k === target) {
+            tabPanels[k]?.classList.remove('hidden');
+          } else {
+            tabPanels[k]?.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    const fields = [
+      'zzpCount',
+      'zzpPrice',
+      'compCount',
+      'compStaff',
+      'compPrice',
+      'servCount',
+      'servPrice',
+      'subNewMonthly',
+      'subPriceMonthly',
+      'renewalRate',
+      'lfStaffCount',
+      'lfHoursPerWeek',
+      'lfHourlyRate',
+    ];
+
+    const state = {
+      zzpCount: 15,
+      zzpPrice: 195,
+      compCount: 10,
+      compStaff: 10,
+      compPrice: 195,
+      servCount: 5,
+      servPrice: 1750,
+      subNewMonthly: 30,
+      subPriceMonthly: 15,
+      renewalRate: 85,
+      lfStaffCount: 2,
+      lfHoursPerWeek: 8,
+      lfHourlyRate: 75,
+    };
+
+    function formatEuro(amount) {
+      return '€ ' + Math.round(amount).toLocaleString('nl-NL') + ',-';
+    }
+
+    function formatEuroCompact(amount) {
+      return '€ ' + Math.round(amount).toLocaleString('nl-NL');
+    }
+
+    function syncInputsFromState() {
+      fields.forEach((f) => {
+        const numEl = document.getElementById('num-' + f);
+        const rngEl = document.getElementById('rng-' + f);
+        if (numEl) numEl.value = String(state[f]);
+        if (rngEl) rngEl.value = String(state[f]);
+      });
+    }
+
+    function setTxt(id, txt) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = txt;
+    }
+
+    function recalculate() {
+      // Stap 1: ZZP (Aantal per maand × € 195/jr)
+      const mndZzp = state.zzpCount * state.zzpPrice;
+      const yrZzp = mndZzp * 12;
+      setTxt('sub-zzp-month', formatEuro(mndZzp));
+      setTxt('sub-zzp-year', formatEuro(yrZzp));
+      setTxt(
+        'sub-zzp-count-yr',
+        state.zzpCount +
+          ' per maand = ' +
+          state.zzpCount * 12 +
+          ' cursisten per jaar'
+      );
+
+      // Stap 2: Bedrijven (Aantal bedrijven per maand × gem. personeel × € 195/jr)
+      const mndComp = state.compCount * state.compStaff * state.compPrice;
+      const yrComp = mndComp * 12;
+      const mndStaff = state.compCount * state.compStaff;
+      setTxt('sub-comp-month', formatEuro(mndComp));
+      setTxt('sub-comp-year', formatEuro(yrComp));
+      setTxt(
+        'sub-comp-staff-total',
+        state.compCount +
+          ' bedrijven/mnd × ' +
+          state.compStaff +
+          ' medewerkers = ' +
+          mndStaff +
+          ' cursisten/mnd'
+      );
+
+      // Stap 3: Diensten (Aantal opdrachten per maand × opdrachtwaarde)
+      const mndServ = state.servCount * state.servPrice;
+      const yrServ = mndServ * 12;
+      setTxt('sub-serv-month', formatEuro(mndServ));
+      setTxt('sub-serv-year', formatEuro(yrServ));
+      setTxt(
+        'sub-serv-count-yr',
+        state.servCount +
+          ' opdrachten per maand = ' +
+          state.servCount * 12 +
+          ' opdrachten per jaar'
+      );
+
+      // Stap 4: E-learning maandabonnementen (Aantal nieuwe abonnees/mnd × 12 = actieve abonnees J1 × maandprijs)
+      const renRate = state.renewalRate / 100;
+      const activeSubsY1 = state.subNewMonthly * 12;
+      const mndSub = activeSubsY1 * state.subPriceMonthly;
+      const subY1 = mndSub * 12;
+      const subY2 = subY1 + subY1 * renRate;
+      const subY3 = subY1 + subY2 * renRate;
+
+      setTxt('sub-elearning-mnd', formatEuro(mndSub) + ' / mnd');
+      setTxt('sub-elearning-y1', formatEuro(subY1) + ' / jr');
+      setTxt(
+        'sub-elearn-count-yr',
+        state.subNewMonthly +
+          ' nieuwe abonnees/mnd = ' +
+          activeSubsY1 +
+          ' abonnees in Jaar 1 (groeit naar ' +
+          formatEuro(subY3) +
+          '/jr in J3)'
+      );
+
+      // Directe nieuwe omzet (Stap 1 + 2 + 3)
+      const mndNewDirect = mndZzp + mndComp + mndServ;
+      const yrNewDirect = mndNewDirect * 12;
+
+      // Stap 5: Verlenging (op directe jaaromzet)
+      const y2Ren = yrNewDirect * renRate;
+      const y3Ren = (yrNewDirect + y2Ren) * renRate;
+      setTxt('sub-renewal-y2', '+ ' + formatEuro(y2Ren));
+      setTxt('sub-renewal-y3', '+ ' + formatEuro(y3Ren));
+
+      // Stap 6: Besparing Leadfabriek
+      const lfHoursYear = state.lfStaffCount * state.lfHoursPerWeek * 50;
+      const yrLfLaborSaved = lfHoursYear * state.lfHourlyRate;
+      setTxt(
+        'sub-lf-hours-label',
+        lfHoursYear.toLocaleString('nl-NL') +
+          ' uur per jaar bespaard op uitnodigingen, evaluaties & verlengingen'
+      );
+      setTxt('sub-lf-saving-year', '+ ' + formatEuro(yrLfLaborSaved));
+      setTxt('sub-lf-month-label', '+ ' + formatEuro(yrLfLaborSaved / 12));
+
+      // Samenvatting onderaan (Jaar 1, Jaar 2, Jaar 3)
+      const mndTotalNew = mndNewDirect + mndSub;
+      const yrTotalNew = yrNewDirect + subY1;
+
+      const y1Total = yrNewDirect + subY1 + yrLfLaborSaved;
+      const y2Total = yrNewDirect + y2Ren + subY2 + yrLfLaborSaved;
+      const y3Total = yrNewDirect + y3Ren + subY3 + yrLfLaborSaved;
+      const grand3Yr = y1Total + y2Total + y3Total;
+
+      setTxt('res-monthly-new', formatEuro(mndTotalNew) + ' / mnd');
+      setTxt('res-yearly-new', formatEuro(yrTotalNew) + ' / jr');
+
+      setTxt('res-y1-total', formatEuro(y1Total) + ' / jr');
+      setTxt('res-y1-mnd', formatEuro(y1Total / 12) + ' / mnd');
+      setTxt('res-y1-new', formatEuroCompact(yrNewDirect));
+      setTxt('res-y1-sub', formatEuroCompact(subY1));
+      setTxt('res-y1-labor', '+ ' + formatEuroCompact(yrLfLaborSaved));
+
+      setTxt('res-y2-total', formatEuro(y2Total) + ' / jr');
+      setTxt('res-y2-mnd', formatEuro(y2Total / 12) + ' / mnd');
+      setTxt('res-y2-new', formatEuroCompact(yrNewDirect));
+      setTxt('res-y2-ren', '+ ' + formatEuroCompact(y2Ren));
+      setTxt('res-y2-sub', formatEuroCompact(subY2));
+      setTxt('res-y2-labor', '+ ' + formatEuroCompact(yrLfLaborSaved));
+
+      setTxt('res-y3-total', formatEuro(y3Total) + ' / jr');
+      setTxt('res-y3-mnd', formatEuro(y3Total / 12) + ' / mnd');
+      setTxt('res-y3-new', formatEuroCompact(yrNewDirect));
+      setTxt('res-y3-ren', '+ ' + formatEuroCompact(y3Ren));
+      setTxt('res-y3-sub', formatEuroCompact(subY3));
+      setTxt('res-y3-labor', '+ ' + formatEuroCompact(yrLfLaborSaved));
+
+      setTxt('res-3yr-grand', formatEuro(grand3Yr));
+      setTxt(
+        'res-lf-summary-line',
+        'Inclusief ' +
+          formatEuro(yrLfLaborSaved * 3) +
+          ' besparing op kantooruren over 3 jaar (' +
+          state.lfStaffCount +
+          ' pers. à € ' +
+          state.lfHourlyRate +
+          '/uur)'
+      );
+
+      // Vergelijkingstabel onderaan (3%, 5%, 7.5%, 10%)
+      setTxt('tbl-staff-label', String(state.compStaff));
+      setTxt('tbl-price-label', String(state.compPrice));
+
+      const baseCounts = { zzp: 15, comp: 10, serv: 5, sub: 30 };
+      const cols = [
+        { key: '3', mult: 1 },
+        { key: '5', mult: 5 / 3 },
+        { key: '75', mult: 7.5 / 3 },
+        { key: '10', mult: 10 / 3 },
+      ];
+
+      cols.forEach((col) => {
+        const zC = Math.round(baseCounts.zzp * col.mult);
+        const cC = Math.round(baseCounts.comp * col.mult);
+        const sC = Math.round(baseCounts.serv * col.mult);
+        const subC = Math.round(baseCounts.sub * col.mult);
+
+        const mDirect =
+          zC * state.zzpPrice +
+          cC * state.compStaff * state.compPrice +
+          sC * state.servPrice;
+        const yDirect = mDirect * 12;
+
+        const mSub = subC * 12 * state.subPriceMonthly;
+        const sY1 = mSub * 12;
+        const sY2 = sY1 + sY1 * renRate;
+        const sY3 = sY1 + sY2 * renRate;
+
+        const y1 = yDirect + sY1 + yrLfLaborSaved;
+        const r2 = yDirect * renRate;
+        const y2 = yDirect + r2 + sY2 + yrLfLaborSaved;
+        const r3 = (yDirect + r2) * renRate;
+        const y3 = yDirect + r3 + sY3 + yrLfLaborSaved;
+        const sum3 = y1 + y2 + y3;
+
+        setTxt('t-req-' + col.key, zC + cC + sC + ' / mnd');
+        setTxt('t-mnd-' + col.key, formatEuro(mDirect + mSub) + ' / mnd');
+        setTxt('t-lf-' + col.key, '+ ' + formatEuro(yrLfLaborSaved) + ' / jr');
+        setTxt('t-y1-' + col.key, formatEuro(y1));
+        setTxt('t-y2-' + col.key, formatEuro(y2));
+        setTxt('t-y3-' + col.key, formatEuro(y3));
+        setTxt('t-sum-' + col.key, formatEuro(sum3));
+      });
+    }
+
+    fields.forEach((f) => {
+      const numEl = document.getElementById('num-' + f);
+      const rngEl = document.getElementById('rng-' + f);
+
+      numEl?.addEventListener('input', () => {
+        const val = Number(numEl.value) || 0;
+        state[f] = val;
+        if (rngEl) rngEl.value = String(val);
+        recalculate();
+      });
+
+      rngEl?.addEventListener('input', () => {
+        const val = Number(rngEl.value) || 0;
+        state[f] = val;
+        if (numEl) numEl.value = String(val);
+        recalculate();
+      });
+    });
+
+    const presetBtns = document.querySelectorAll('.preset-btn');
+    presetBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const pct = Number(btn.getAttribute('data-preset'));
+        const mult = pct / 3;
+
+        presetBtns.forEach((b) => {
+          b.className =
+            'preset-btn px-3.5 py-2 rounded-xl text-xs font-bold border border-slate-200 bg-slate-50 text-slate-700 hover:border-[#0C4EA2] transition-all cursor-pointer';
+        });
+        btn.className =
+          'preset-btn is-active px-3.5 py-2 rounded-xl text-xs font-bold border border-brand-accent bg-brand-accent text-white transition-all cursor-pointer';
+
+        state.zzpCount = Math.round(15 * mult);
+        state.compCount = Math.round(10 * mult);
+        state.servCount = Math.round(5 * mult);
+        state.subNewMonthly = Math.round(30 * mult);
+
+        syncInputsFromState();
+        recalculate();
+      });
+    });
+
+    recalculate();
+  })();
+</script>

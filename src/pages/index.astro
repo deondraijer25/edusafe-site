@@ -5,11 +5,15 @@ import CourseCategories from '../components/CourseCategories.astro';
 import PortalPromo from '../components/PortalPromo.astro';
 import UpcomingEvents from '../components/UpcomingEvents.astro';
 import AboutUs from '../components/AboutUs.astro';
+import HomeFaq from '../components/HomeFaq.astro';
 import Reviews from '../components/Reviews.astro';
 import ContactForm from '../components/ContactForm.astro';
 ---
 
-<Layout title="Edusafe | Expert in Bedrijfsveiligheid, BHV & VCA Trainingen" showLoader={true}>
+<Layout 
+  title="BHV, EHBO, VCA & Bedrijfsveiligheid | Cursussen, Keuringen & Incompany | Edusafe" 
+  description="Dé partner in BHV (NL & EN), EHBO, VCA, Heftruck en Offshore trainingen, NEN-keuringen en RI&E. Vaak al binnen 1 dag gecertificeerd op onze hoofdlocatie in Den Haag of landelijk incompany."
+>
 	<main class="w-full relative">
 		<!-- Hero Section -->
 		<Hero />
@@ -25,6 +29,9 @@ import ContactForm from '../components/ContactForm.astro';
 
 		<!-- About Us & Certifications -->
 		<AboutUs />
+
+		<!-- DataForSEO & GEO FAQ Section (Directly Above Reviews) -->
+		<HomeFaq />
 
 		<!-- Reviews Section -->
 		<Reviews />

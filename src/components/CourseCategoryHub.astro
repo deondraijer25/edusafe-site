@@ -1,0 +1,836 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeroBackdrop from './PageHeroBackdrop.astro';
+import MobileCourseBottomBar from './MobileCourseBottomBar.astro';
+import CourseFaq from './CourseFaq.astro';
+import Reviews from './Reviews.astro';
+import ContactForm from './ContactForm.astro';
+
+export interface HubCourseItem {
+  id: string;
+  slug?: string;
+  title: string;
+  shortTitle?: string;
+  tagline: string;
+  price: string;
+  duration: string;
+  target: string;
+  suitableForHtml?: string[];
+  requirements: string;
+  exam: string;
+  certification: string;
+  inclusions: string[];
+  modules: { name: string; description?: string }[];
+  learningOutcomes?: string[];
+  image: string;
+  requestUrl?: string;
+  incompanyUrl?: string;
+}
+
+interface Props {
+  lang?: 'nl' | 'en';
+  seoTitle: string;
+  seoDescription: string;
+  breadcrumbLabel: string;
+  heroTitle: string;
+  heroSubtitle: string;
+  heroImage: string;
+  heroBullets: string[];
+  primaryCtaUrl: string;
+  primaryCtaLabel?: string;
+  secondaryCtaLabel?: string;
+  category: 'BHV' | 'EHBO' | 'VCA' | 'Transport' | 'Offshore' | 'Incompany';
+  courses: HubCourseItem[];
+  coursesHeading?: string;
+  coursesSubheading?: string;
+  faqTitle?: string;
+  customFaqs?: { q: string; a: string }[];
+  advisorText?: string;
+  contactCourseSlug?: string;
+}
+
+const {
+  lang = 'nl',
+  seoTitle,
+  seoDescription,
+  breadcrumbLabel,
+  heroTitle,
+  heroSubtitle,
+  heroImage,
+  heroBullets,
+  primaryCtaUrl,
+  primaryCtaLabel,
+  secondaryCtaLabel,
+  category,
+  courses,
+  coursesHeading,
+  coursesSubheading,
+  faqTitle,
+  customFaqs,
+  advisorText,
+  contactCourseSlug,
+} = Astro.props;
+
+const isEn = lang === 'en';
+const adviceBase = isEn ? '/en/personal-advice' : '/persoonlijk-advies';
+const detailBase = isEn ? '/en/courses' : '/cursussen';
+const anchorId = isEn ? 'courses' : 'opleidingen';
+
+const normalizedCourses = courses.map((c) => {
+  const courseParam = c.slug || c.id;
+  return {
+    ...c,
+    displayTitle: c.shortTitle || c.title,
+    requestUrl: c.requestUrl || `${adviceBase}?course=${encodeURIComponent(courseParam)}`,
+    incompanyUrl:
+      c.incompanyUrl ||
+      `${adviceBase}?type=zakelijk&course=${encodeURIComponent(courseParam)}&mode=incompany`,
+    detailUrl: c.slug ? `${detailBase}/${c.slug}` : '',
+  };
+});
+
+const defaultCourse = normalizedCourses[0];
+
+const defaultMobileCourse = {
+  ...defaultCourse,
+  title: defaultCourse.displayTitle,
+  registerLink: defaultCourse.detailUrl || defaultCourse.requestUrl,
+};
+
+const categoryStatutoryHtmlNl: Record<string, string> = {
+  BHV: 'Volledig erkend conform <strong>Artikel 15 van de Arbowet</strong> voor de Arbeidsinspectie en verzekeraars.',
+  EHBO: 'Erkend conform de richtlijnen van <strong>Het Oranje Kruis / NRR</strong> &amp; Wet IKK (vergoeding zorgverzekering mogelijk).',
+  VCA: 'Officieel <strong>SSVV-erkend VCA-examen</strong> inclusief 10 jaar landelijke registratie in het Centraal Diploma Register (CDR).',
+  Transport: 'Volledig erkend conform <strong>Arbobesluit Artikel 7.17c</strong> voor de Nederlandse Arbeidsinspectie en verzekeraars.',
+  Offshore: 'Officieel <strong>OPITO-geaccrediteerd</strong> inclusief 4 jaar wereldwijde registratie in de centrale Vantage-database.',
+  Incompany: 'Maatwerk op uw eigen bedrijfslocatie met <strong>officieel erkende certificaten</strong> conform de Arbowet.',
+};
+
+const categoryStatutoryHtmlEn: Record<string, string> = {
+  BHV: 'Fully compliant with <strong>Article 15 of the Dutch Working Conditions Act (Arbowet)</strong> for the Labour Inspectorate and insurers.',
+  EHBO: 'Certified in accordance with <strong>The Orange Cross / NRR</strong> &amp; Dutch Childcare IKK guidelines (health insurer reimbursement possible).',
+  VCA: 'Official <strong>SSVV-accredited VCA exam</strong> including 10-year national registration in the Central Diploma Register (CDR).',
+  Transport: 'Fully compliant with <strong>Dutch Working Conditions Decree Art. 7.17c</strong> for the Labour Inspectorate and corporate insurers.',
+  Offshore: 'Officially <strong>OPITO-accredited</strong> including 4-year global registration in the central Vantage database.',
+  Incompany: 'Tailored on-site training at your company premises with <strong>officially accredited certificates</strong> per Dutch Arbowet.',
+};
+
+const categoryQualityTagNl: Record<string, string> = {
+  BHV: 'Erkend certificaat conform Arbowet',
+  EHBO: 'Erkend conform Het Oranje Kruis / NRR',
+  VCA: 'SSVV-erkend + CDR-registratie',
+  Transport: 'Erkend conform Arbobesluit Art. 7.17c',
+  Offshore: 'OPITO-erkend + Vantage-registratie',
+  Incompany: 'Maatwerk & erkende certificaten',
+};
+
+const categoryQualityTagEn: Record<string, string> = {
+  BHV: 'Certified per Dutch Arbowet',
+  EHBO: 'Orange Cross / NRR recognized',
+  VCA: 'SSVV-accredited + CDR register',
+  Transport: 'Certified per Arbobesluit Art. 7.17c',
+  Offshore: 'OPITO-accredited + Vantage register',
+  Incompany: 'Tailored & accredited certificates',
+};
+
+const statutoryCalloutHtml = isEn
+  ? categoryStatutoryHtmlEn[category] || categoryStatutoryHtmlEn.BHV
+  : categoryStatutoryHtmlNl[category] || categoryStatutoryHtmlNl.BHV;
+
+const qualityTagLabel = isEn
+  ? categoryQualityTagEn[category] || categoryQualityTagEn.BHV
+  : categoryQualityTagNl[category] || categoryQualityTagNl.BHV;
+
+const itemListSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: heroTitle,
+  description: seoDescription,
+  itemListElement: normalizedCourses.map((c, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    item: {
+      '@type': 'Course',
+      name: c.title,
+      description: `${c.tagline}. ${c.target}`,
+      provider: {
+        '@type': 'EducationalOrganization',
+        name: 'Edusafe',
+        sameAs: 'https://edusafe.nl',
+      },
+      ...(c.detailUrl ? { url: `https://edusafe.nl${c.detailUrl}` } : {}),
+    },
+  })),
+};
+
+const resolvedPrimaryLabel = primaryCtaLabel || (isEn ? 'Request course' : 'Cursus aanvragen');
+const resolvedSecondaryLabel =
+  secondaryCtaLabel || (isEn ? 'View courses ↓' : 'Bekijk opleidingen ↓');
+const resolvedCoursesHeading =
+  coursesHeading ||
+  (isEn ? `All ${breadcrumbLabel} Courses` : `Kies uw opleiding binnen ${breadcrumbLabel}`);
+const resolvedCoursesSubheading =
+  coursesSubheading ||
+  (isEn
+    ? 'Click a course to preview its curriculum and practical details above, or open the full course page with start dates.'
+    : 'Klik op een opleiding om de inhoud hierboven te bekijken, of open direct de volledige cursuspagina met startdata.');
+const resolvedAdvisorText =
+  advisorText ||
+  (isEn
+    ? `Need advice on ${breadcrumbLabel}?`
+    : `Persoonlijk advies over ${breadcrumbLabel}?`);
+---
+
+<Layout title={seoTitle} description={seoDescription}>
+  <script type="application/ld+json" set:html={JSON.stringify(itemListSchema)} />
+
+  <main class="w-full">
+    <!-- 1. GOLD-STANDARD HERO HEADER SECTION -->
+    <section class="relative bg-brand-primary text-white pt-12 pb-20 sm:pt-20 sm:pb-28 md:pt-24 md:pb-36 overflow-hidden">
+      <PageHeroBackdrop image={heroImage} alt={heroTitle} />
+
+      <div class="max-w-[1280px] mx-auto px-4 sm:px-6 relative z-10">
+        <!-- Breadcrumbs (.section-eyebrow) -->
+        <nav aria-label="Breadcrumb" class="section-eyebrow text-brand-primary mb-3 sm:mb-3.5 flex-wrap">
+          <a href={isEn ? '/en' : '/'} class="hover:underline text-white/70 hover:text-white">Home</a>
+          <span class="text-white/40">/</span>
+          <span class="text-brand-accent">{breadcrumbLabel}</span>
+        </nav>
+
+        <div class="max-w-3xl">
+          <h1 class="heading-page mb-3 text-white">
+            {heroTitle}
+          </h1>
+
+          <p class="text-lead text-white/85 max-w-2xl mb-5 sm:mb-6">
+            {heroSubtitle}
+          </p>
+
+          <!-- Compact 2x2 Grid of 4 Ultra-Short Key Facts -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5 max-w-xl mb-6 sm:mb-7 text-card text-white/95 font-medium">
+            {heroBullets.map((bullet) => (
+              <div class="flex items-center gap-2.5">
+                <i class="fa-solid fa-circle-check text-brand-accent text-sm shrink-0"></i>
+                <span>{bullet}</span>
+              </div>
+            ))}
+          </div>
+
+          <!-- 2 Direct Hero CTA Buttons -->
+          <div class="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 sm:gap-3.5">
+            <a href={primaryCtaUrl} class="btn-hero w-full sm:w-auto">
+              <span>{resolvedPrimaryLabel}</span>
+              <i class="fa-solid fa-arrow-right text-xs"></i>
+            </a>
+            <a
+              href={`#${anchorId}`}
+              class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 font-display font-semibold text-[15px] px-7 py-3.5 sm:py-4 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-sm transition-all duration-300"
+            >
+              <i class="fa-solid fa-list-ul text-brand-accent"></i>
+              <span>{resolvedSecondaryLabel}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. MAIN CONTENT GRID (8 Cols Calm 1-Column Left + 4 Cols Sticky Right Cart) -->
+    <section class="max-w-[1280px] mx-auto px-4 sm:px-6 -mt-12 sm:-mt-14 md:-mt-20 relative z-20 pb-20">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
+
+        <!-- Left Side (8 columns — Calm 1-column layout with Accordions) -->
+        <div class="lg:col-span-8 space-y-6 sm:space-y-7">
+
+          <!-- KAART 1: GESELECTEERDE OPLEIDING IN 1-KOLOMS ACCORDIONS -->
+          <div
+            id="details-card-left"
+            class="bg-white rounded-3xl p-5 sm:p-8 shadow-lg border border-brand-dark/5 scroll-mt-40"
+          >
+            <div class="mb-6">
+              <span id="selected-tagline" class="section-eyebrow text-brand-primary mb-1">
+                <span>{defaultCourse.tagline}</span>
+              </span>
+              <h2 id="selected-title" class="heading-card text-brand-secondary mb-2.5">
+                {defaultCourse.title}
+              </h2>
+              <p id="selected-target" class="text-body text-brand-dark/75">
+                {defaultCourse.target}
+              </p>
+            </div>
+
+            <div class="space-y-3">
+              <!-- Accordion 1: Voor wie geschikt? -->
+              <details class="group rounded-2xl bg-brand-cream/45 border border-brand-dark/8 open:bg-white open:border-brand-primary/25 open:shadow-sm transition-all duration-200">
+                <summary class="flex items-center justify-between gap-4 p-5 cursor-pointer list-none heading-tile text-brand-secondary select-none">
+                  <span class="inline-flex items-center gap-3.5">
+                    <span class="w-8 h-8 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center shrink-0">
+                      <i class="fa-solid fa-users text-xs"></i>
+                    </span>
+                    <span>
+                      {isEn ? 'Who is this course suitable for?' : 'Voor wie is deze opleiding geschikt?'}
+                    </span>
+                  </span>
+                  <span class="w-8 h-8 rounded-xl bg-brand-dark/5 text-brand-secondary flex items-center justify-center shrink-0 transition-transform duration-200 group-open:rotate-180 group-open:bg-brand-primary group-open:text-white">
+                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                  </span>
+                </summary>
+                <div
+                  id="selected-suitable"
+                  class="px-5 pb-6 pt-4 border-t border-brand-dark/6 space-y-3.5 text-body text-brand-dark/80"
+                >
+                  {defaultCourse.suitableForHtml && defaultCourse.suitableForHtml.length > 0 ? (
+                    defaultCourse.suitableForHtml.map((p) => <p set:html={p} />)
+                  ) : (
+                    <p>{defaultCourse.target}</p>
+                  )}
+                </div>
+              </details>
+
+              <!-- Accordion 2: Onderwerpen & Praktijkmodules (1 kolom) -->
+              <details class="group rounded-2xl bg-brand-cream/45 border border-brand-dark/8 open:bg-white open:border-brand-primary/25 open:shadow-sm transition-all duration-200">
+                <summary class="flex items-center justify-between gap-4 p-5 cursor-pointer list-none heading-tile text-brand-secondary select-none">
+                  <span class="inline-flex items-center gap-3.5">
+                    <span class="w-8 h-8 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center shrink-0">
+                      <i class="fa-solid fa-graduation-cap text-xs"></i>
+                    </span>
+                    <span>
+                      {isEn ? 'Topics & Practical Modules' : 'Onderwerpen & Praktijkmodules'}
+                    </span>
+                  </span>
+                  <span class="w-8 h-8 rounded-xl bg-brand-dark/5 text-brand-secondary flex items-center justify-center shrink-0 transition-transform duration-200 group-open:rotate-180 group-open:bg-brand-primary group-open:text-white">
+                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                  </span>
+                </summary>
+                <div class="px-5 pb-6 pt-4 border-t border-brand-dark/6">
+                  <ul id="selected-modules" class="divide-y divide-brand-dark/6">
+                    {defaultCourse.modules.map((mod) => (
+                      <li class="py-3 first:pt-0 last:pb-0 flex items-start gap-3.5">
+                        <span class="w-6 h-6 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xs shrink-0 mt-0.5">
+                          <i class="fa-solid fa-check"></i>
+                        </span>
+                        <div>
+                          <h4 class="heading-tile text-brand-secondary leading-snug">{mod.name}</h4>
+                          {mod.description && (
+                            <p class="text-card text-brand-dark/70 mt-0.5">{mod.description}</p>
+                          )}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </details>
+
+              <!-- Accordion 3: Praktische informatie & Certificering -->
+              <details class="group rounded-2xl bg-brand-cream/45 border border-brand-dark/8 open:bg-white open:border-brand-primary/25 open:shadow-sm transition-all duration-200">
+                <summary class="flex items-center justify-between gap-4 p-5 cursor-pointer list-none heading-tile text-brand-secondary select-none">
+                  <span class="inline-flex items-center gap-3.5">
+                    <span class="w-8 h-8 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center shrink-0">
+                      <i class="fa-solid fa-clipboard-check text-xs"></i>
+                    </span>
+                    <span>
+                      {isEn
+                        ? 'Practical Information & Certification'
+                        : 'Praktische informatie & Certificering'}
+                    </span>
+                  </span>
+                  <span class="w-8 h-8 rounded-xl bg-brand-dark/5 text-brand-secondary flex items-center justify-center shrink-0 transition-transform duration-200 group-open:rotate-180 group-open:bg-brand-primary group-open:text-white">
+                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                  </span>
+                </summary>
+                <div class="px-5 pb-6 pt-4 border-t border-brand-dark/6 space-y-4">
+                  <dl class="rounded-2xl bg-brand-cream/55 border border-brand-dark/6 px-5 divide-y divide-brand-dark/6 text-card">
+                    <div class="py-3.5 grid grid-cols-1 sm:grid-cols-[190px_1fr] items-center gap-1 sm:gap-6">
+                      <dt class="font-semibold text-brand-secondary inline-flex items-center gap-2.5">
+                        <i class="fa-solid fa-clock text-brand-primary w-4 text-center"></i>
+                        <span>{isEn ? 'Duration & format' : 'Duur & vorm'}</span>
+                      </dt>
+                      <dd id="selected-duration-spec" class="text-brand-dark/80 font-medium">
+                        {defaultCourse.duration}
+                      </dd>
+                    </div>
+
+                    <div class="py-3.5 grid grid-cols-1 sm:grid-cols-[190px_1fr] items-center gap-1 sm:gap-6">
+                      <dt class="font-semibold text-brand-secondary inline-flex items-center gap-2.5">
+                        <i class="fa-solid fa-user-check text-brand-primary w-4 text-center"></i>
+                        <span>{isEn ? 'Prerequisites' : 'Toelatingseisen'}</span>
+                      </dt>
+                      <dd id="selected-requirements" class="text-brand-dark/80 font-medium">
+                        {defaultCourse.requirements}
+                      </dd>
+                    </div>
+
+                    <div class="py-3.5 grid grid-cols-1 sm:grid-cols-[190px_1fr] items-center gap-1 sm:gap-6">
+                      <dt class="font-semibold text-brand-secondary inline-flex items-center gap-2.5">
+                        <i class="fa-solid fa-clipboard-check text-brand-primary w-4 text-center"></i>
+                        <span>{isEn ? 'Exam & assessment' : 'Examen & toetsing'}</span>
+                      </dt>
+                      <dd id="selected-exam" class="text-brand-dark/80 font-medium">
+                        {defaultCourse.exam}
+                      </dd>
+                    </div>
+
+                    <div class="py-3.5 grid grid-cols-1 sm:grid-cols-[190px_1fr] items-center gap-1 sm:gap-6">
+                      <dt class="font-semibold text-brand-secondary inline-flex items-center gap-2.5">
+                        <i class="fa-solid fa-award text-brand-primary w-4 text-center"></i>
+                        <span>{isEn ? 'Certification' : 'Certificering'}</span>
+                      </dt>
+                      <dd id="selected-certification" class="text-brand-dark/80 font-medium">
+                        {defaultCourse.certification}
+                      </dd>
+                    </div>
+                  </dl>
+
+                  <div class="p-4 rounded-xl bg-brand-primary/5 border border-brand-primary/15 flex items-center gap-3 text-card text-brand-secondary">
+                    <i class="fa-solid fa-shield-halved text-brand-primary shrink-0"></i>
+                    <span set:html={statutoryCalloutHtml} />
+                  </div>
+                </div>
+              </details>
+            </div>
+
+            <!-- Direct link to full dedicated course page & start dates (when slug exists) -->
+            <div
+              id="selected-card-footer"
+              class={`mt-6 pt-5 border-t border-brand-dark/6 flex flex-wrap items-center justify-between gap-3 ${
+                defaultCourse.detailUrl ? '' : 'hidden'
+              }`}
+            >
+              <span class="text-card text-brand-dark/65">
+                {isEn
+                  ? 'Want to view the step-by-step program and open practical dates?'
+                  : 'Wilt u het volledige stappenplan en de openstaande startdata bekijken?'}
+              </span>
+              <a
+                id="selected-card-detail-link"
+                href={defaultCourse.detailUrl || '#'}
+                class="text-card font-semibold text-brand-primary hover:text-brand-secondary inline-flex items-center gap-1.5"
+              >
+                <span>
+                  {isEn
+                    ? 'Full course page & start dates →'
+                    : 'Volledige cursuspagina & startdata →'}
+                </span>
+              </a>
+            </div>
+          </div>
+
+          <!-- KAART 2 (#opleidingen / #courses): RUSTIG 1-KOLOMS OVERZICHT VAN ALLE VARIANTEN -->
+          <div
+            id={anchorId}
+            class="bg-white rounded-3xl p-5 sm:p-8 shadow-md border border-brand-dark/5 scroll-mt-40"
+          >
+            <div class="border-b border-brand-dark/6 pb-4 mb-5">
+              <span class="section-eyebrow text-brand-accent mb-1">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>{isEn ? 'Course Selection' : 'Opleidingsoverzicht'}</span>
+              </span>
+              <h2 class="heading-card text-brand-secondary mb-1.5">
+                {resolvedCoursesHeading}
+              </h2>
+              <p class="text-card text-brand-dark/65">
+                {resolvedCoursesSubheading}
+              </p>
+            </div>
+
+            <div class="space-y-3.5">
+              {normalizedCourses.map((course, idx) => (
+                <div
+                  data-course-id={course.id}
+                  class={`hub-course-row rounded-2xl p-4 sm:p-5 border transition-all duration-200 cursor-pointer flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
+                    idx === 0
+                      ? 'bg-white border-brand-primary ring-2 ring-brand-primary/15 shadow-xs'
+                      : 'bg-brand-cream/40 border-brand-dark/8 hover:border-brand-primary/30 hover:bg-white'
+                  }`}
+                >
+                  <div class="flex items-start sm:items-center gap-4">
+                    <img
+                      src={course.image}
+                      alt={course.title}
+                      class="w-16 h-16 rounded-2xl object-cover shrink-0 bg-brand-secondary"
+                      loading="lazy"
+                    />
+                    <div>
+                      <div class="flex flex-wrap items-center gap-2 mb-1">
+                        <h3 class="heading-tile text-brand-secondary">
+                          {course.displayTitle}
+                        </h3>
+                        <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-brand-primary/10 text-brand-primary">
+                          {course.duration}
+                        </span>
+                      </div>
+                      <p class="text-card text-brand-dark/70 line-clamp-2">
+                        {course.tagline}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div class="flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-2 pt-3 sm:pt-0 border-t sm:border-t-0 border-brand-dark/6 shrink-0">
+                    <div class="text-left sm:text-right">
+                      <span class="font-display font-semibold text-lg text-brand-secondary block leading-tight">
+                        {course.price}
+                      </span>
+                      {course.price.startsWith('€') && (
+                        <span class="text-xs text-brand-dark/50">
+                          {isEn ? 'excl. VAT' : 'excl. BTW'}
+                        </span>
+                      )}
+                    </div>
+
+                    {course.detailUrl ? (
+                      <a
+                        href={course.detailUrl}
+                        class="hub-direct-link text-card font-semibold text-brand-primary hover:text-brand-accent inline-flex items-center gap-1.5"
+                      >
+                        <span>{isEn ? 'Course page & dates' : 'Cursuspagina & data'}</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                      </a>
+                    ) : (
+                      <span class="text-card font-semibold text-brand-primary inline-flex items-center gap-1.5">
+                        <span>{isEn ? 'View details' : 'Bekijk details'}</span>
+                        <i class="fa-solid fa-chevron-up text-xs"></i>
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <slot name="extra-left" />
+        </div>
+
+        <!-- Right Side: Locked Gold-Standard Sticky Cart ("Winkelmandje" — 4 columns, lg:top-[152px]) -->
+        <aside class="hidden lg:block lg:col-span-4 lg:sticky lg:top-[152px] self-start z-20">
+          <div class="bg-white rounded-3xl p-6 shadow-lg border border-brand-dark/5">
+            <span class="section-eyebrow text-brand-primary mb-1">
+              <span>{isEn ? 'Arrange Directly' : 'Direct regelen'}</span>
+            </span>
+            <h3 id="sidebar-title" class="heading-card text-brand-secondary">
+              {defaultCourse.displayTitle}
+            </h3>
+
+            <!-- Pricing -->
+            <div class="mt-4 pt-4 border-t border-brand-dark/5">
+              <div class="flex items-baseline justify-between mb-1">
+                <span class="section-eyebrow text-brand-dark/45">
+                  {isEn ? 'Rate' : 'Tarief'}
+                </span>
+                <span class="text-card text-brand-dark/50">
+                  {isEn ? 'Excl. VAT' : 'Excl. BTW'}
+                </span>
+              </div>
+              <div class="flex items-baseline gap-2">
+                <span
+                  id="selected-price"
+                  class="font-display text-3xl font-semibold text-brand-secondary"
+                >
+                  {defaultCourse.price}
+                </span>
+                <span
+                  id="selected-price-unit"
+                  class={`text-card text-brand-dark/60 ${
+                    defaultCourse.price.startsWith('€') ? '' : 'hidden'
+                  }`}
+                >
+                  {isEn ? '/ participant' : '/ cursist'}
+                </span>
+              </div>
+            </div>
+
+            <!-- Duration badge -->
+            <div class="mt-4 p-3.5 rounded-xl bg-brand-cream/60 border border-brand-dark/5 flex items-center gap-3 text-card">
+              <div class="w-8 h-8 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary shrink-0">
+                <i class="fa-solid fa-clock text-xs"></i>
+              </div>
+              <div>
+                <div class="section-eyebrow text-brand-dark/45 mb-0.5">
+                  {isEn ? 'Format & Duration' : 'Traject & Duur'}
+                </div>
+                <span
+                  id="selected-duration"
+                  class="font-semibold text-brand-secondary text-card block"
+                >
+                  {defaultCourse.duration}
+                </span>
+              </div>
+            </div>
+
+            <!-- Beschikbare talen (met echte SVG-vlaggetjes NL & ENG op 1 regel) -->
+            <div class="mt-2.5 p-3.5 rounded-xl bg-brand-cream/60 border border-brand-dark/5 flex items-center justify-between gap-2 text-card">
+              <span class="font-semibold text-brand-dark/65">
+                {isEn ? 'Available languages:' : 'Beschikbare talen:'}
+              </span>
+              <div class="flex items-center gap-1.5">
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-brand-dark/10 font-semibold text-brand-secondary text-xs shadow-2xs">
+                  <svg class="w-4 h-3 rounded-[2px] shrink-0" viewBox="0 0 640 480" aria-hidden="true">
+                    <path fill="#21468b" d="M0 0h640v480H0z"/>
+                    <path fill="#fff" d="M0 0h640v320H0z"/>
+                    <path fill="#ae1c28" d="M0 0h640v160H0z"/>
+                  </svg>
+                  <span>NL</span>
+                </span>
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-brand-dark/10 font-semibold text-brand-secondary text-xs shadow-2xs">
+                  <svg class="w-4 h-3 rounded-[2px] shrink-0" viewBox="0 0 60 30" aria-hidden="true">
+                    <clipPath id="uk-clip-hub"><path d="M0,0 v30 h60 v-30 z"/></clipPath>
+                    <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
+                    <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6" clip-path="url(#uk-clip-hub)"/>
+                    <path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" stroke-width="4" clip-path="url(#uk-clip-hub)"/>
+                    <path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/>
+                    <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/>
+                  </svg>
+                  <span>ENG</span>
+                </span>
+              </div>
+            </div>
+
+            <!-- Inclusions Checklist (Korte 1-regelige bullets) -->
+            <div class="mt-4 pt-4 border-t border-brand-dark/5">
+              <span class="section-eyebrow text-brand-dark/45 mb-2.5">
+                <span>{isEn ? "What's included?" : 'Wat is inbegrepen?'}</span>
+              </span>
+              <ul id="selected-inclusions" class="space-y-2">
+                {defaultCourse.inclusions.map((item) => (
+                  <li class="flex items-center gap-2.5 text-card text-brand-dark/80 font-medium">
+                    <i class="fa-solid fa-circle-check text-emerald-500 text-xs shrink-0"></i>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="mt-6 space-y-2.5">
+              <a
+                id="selected-cta"
+                href={defaultCourse.requestUrl}
+                class="btn-base w-full"
+              >
+                <span>{isEn ? 'Request course →' : 'Cursus aanvragen →'}</span>
+              </a>
+
+              <a
+                id="selected-incompany-cta"
+                href={defaultCourse.incompanyUrl}
+                class="inline-flex items-center justify-center gap-2 font-display font-semibold text-sm px-5 py-3 rounded-xl bg-brand-secondary hover:bg-brand-primary text-white shadow-xs transition-all duration-300 w-full"
+              >
+                <span>
+                  {isEn ? 'In-company quote (from 6 pers.) →' : 'Incompany offerte (vanaf 6 pers.) →'}
+                </span>
+              </a>
+
+              <a
+                id="selected-detail-link"
+                href={defaultCourse.detailUrl || '#'}
+                class={`text-card font-semibold text-brand-primary hover:text-brand-secondary transition-colors py-1 w-full inline-flex items-center justify-center gap-1.5 ${
+                  defaultCourse.detailUrl ? '' : 'hidden'
+                }`}
+              >
+                <span>
+                  {isEn
+                    ? 'Full course page & start dates →'
+                    : 'Volledige cursuspagina & startdata →'}
+                </span>
+              </a>
+            </div>
+
+            <!-- Quality Tag -->
+            <div class="mt-4 pt-3.5 border-t border-brand-dark/5 flex items-center justify-center gap-2 text-card font-semibold text-brand-primary">
+              <i class="fa-solid fa-certificate text-sm"></i>
+              <span>{qualityTagLabel}</span>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </section>
+
+    <!-- 3. COMPLETE FOOTER STACK: FAQ + GOOGLE REVIEWS + KOFFIE CTA BANNER -->
+    <CourseFaq
+      category={category}
+      hubTitle={faqTitle || breadcrumbLabel}
+      customFaqs={customFaqs}
+      lang={lang}
+    />
+    <Reviews />
+    <ContactForm courseSlug={contactCourseSlug || defaultCourse.slug} />
+
+    <MobileCourseBottomBar
+      defaultCourse={defaultMobileCourse}
+      courseSlug={contactCourseSlug || defaultCourse.slug}
+      advisorText={resolvedAdvisorText}
+    />
+  </main>
+</Layout>
+
+<script define:vars={{ normalizedCourses, isEn }}>
+  function initHubNavigator() {
+    const rows = document.querySelectorAll('.hub-course-row');
+    if (!rows.length) return;
+
+    function selectHubCourse(courseId) {
+      const course = normalizedCourses.find((c) => c.id === courseId);
+      if (!course) return;
+
+      rows.forEach((row) => {
+        if (row.getAttribute('data-course-id') === courseId) {
+          row.classList.add(
+            'bg-white',
+            'border-brand-primary',
+            'ring-2',
+            'ring-brand-primary/15',
+            'shadow-xs'
+          );
+          row.classList.remove(
+            'bg-brand-cream/40',
+            'border-brand-dark/8',
+            'hover:border-brand-primary/30'
+          );
+        } else {
+          row.classList.remove(
+            'bg-white',
+            'border-brand-primary',
+            'ring-2',
+            'ring-brand-primary/15',
+            'shadow-xs'
+          );
+          row.classList.add(
+            'bg-brand-cream/40',
+            'border-brand-dark/8',
+            'hover:border-brand-primary/30'
+          );
+        }
+      });
+
+      const tagline = document.getElementById('selected-tagline');
+      const title = document.getElementById('selected-title');
+      const target = document.getElementById('selected-target');
+      const suitable = document.getElementById('selected-suitable');
+      const modules = document.getElementById('selected-modules');
+      const durationSpec = document.getElementById('selected-duration-spec');
+      const requirements = document.getElementById('selected-requirements');
+      const exam = document.getElementById('selected-exam');
+      const certification = document.getElementById('selected-certification');
+      const cardFooter = document.getElementById('selected-card-footer');
+      const cardDetailLink = document.getElementById('selected-card-detail-link');
+
+      if (tagline) tagline.innerHTML = `<span>${course.tagline}</span>`;
+      if (title) title.textContent = course.title;
+      if (target) target.textContent = course.target;
+      if (durationSpec) durationSpec.textContent = course.duration;
+      if (requirements) requirements.textContent = course.requirements;
+      if (exam) exam.textContent = course.exam;
+      if (certification) certification.textContent = course.certification;
+
+      if (suitable) {
+        if (course.suitableForHtml && course.suitableForHtml.length > 0) {
+          suitable.innerHTML = course.suitableForHtml.map((p) => `<p>${p}</p>`).join('');
+        } else {
+          suitable.innerHTML = `<p>${course.target}</p>`;
+        }
+      }
+
+      if (modules) {
+        modules.innerHTML = (course.modules || [])
+          .map(
+            (mod) => `
+          <li class="py-3 first:pt-0 last:pb-0 flex items-start gap-3.5">
+            <span class="w-6 h-6 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary text-xs shrink-0 mt-0.5">
+              <i class="fa-solid fa-check"></i>
+            </span>
+            <div>
+              <h4 class="heading-tile text-brand-secondary leading-snug">${mod.name}</h4>
+              ${
+                mod.description
+                  ? `<p class="text-card text-brand-dark/70 mt-0.5">${mod.description}</p>`
+                  : ''
+              }
+            </div>
+          </li>
+        `
+          )
+          .join('');
+      }
+
+      if (cardFooter && cardDetailLink) {
+        if (course.detailUrl) {
+          cardFooter.classList.remove('hidden');
+          cardDetailLink.setAttribute('href', course.detailUrl);
+        } else {
+          cardFooter.classList.add('hidden');
+        }
+      }
+
+      // Sticky Cart updates
+      const sidebarTitle = document.getElementById('sidebar-title');
+      const selectedPrice = document.getElementById('selected-price');
+      const selectedPriceUnit = document.getElementById('selected-price-unit');
+      const selectedDuration = document.getElementById('selected-duration');
+      const selectedInclusions = document.getElementById('selected-inclusions');
+      const selectedCta = document.getElementById('selected-cta');
+      const selectedIncompanyCta = document.getElementById('selected-incompany-cta');
+      const selectedDetailLink = document.getElementById('selected-detail-link');
+
+      if (sidebarTitle) sidebarTitle.textContent = course.displayTitle;
+      if (selectedPrice) selectedPrice.textContent = course.price;
+      if (selectedPriceUnit) {
+        if ((course.price || '').startsWith('€')) {
+          selectedPriceUnit.classList.remove('hidden');
+        } else {
+          selectedPriceUnit.classList.add('hidden');
+        }
+      }
+      if (selectedDuration) selectedDuration.textContent = course.duration;
+      if (selectedCta) selectedCta.setAttribute('href', course.requestUrl);
+      if (selectedIncompanyCta) selectedIncompanyCta.setAttribute('href', course.incompanyUrl);
+
+      if (selectedDetailLink) {
+        if (course.detailUrl) {
+          selectedDetailLink.classList.remove('hidden');
+          selectedDetailLink.setAttribute('href', course.detailUrl);
+        } else {
+          selectedDetailLink.classList.add('hidden');
+        }
+      }
+
+      if (selectedInclusions) {
+        selectedInclusions.innerHTML = (course.inclusions || [])
+          .map(
+            (inc) => `
+          <li class="flex items-center gap-2.5 text-card text-brand-dark/80 font-medium">
+            <i class="fa-solid fa-circle-check text-emerald-500 text-xs shrink-0"></i>
+            <span>${inc}</span>
+          </li>
+        `
+          )
+          .join('');
+      }
+
+      if (typeof window.syncMobileCourseDrawer === 'function') {
+        window.syncMobileCourseDrawer({
+          ...course,
+          title: course.displayTitle,
+          registerLink: course.detailUrl || course.requestUrl,
+        });
+      }
+
+      const detailsCardLeft = document.getElementById('details-card-left');
+      if (detailsCardLeft) {
+        detailsCardLeft.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    rows.forEach((row) => {
+      row.addEventListener('click', (e) => {
+        const targetEl = e.target;
+        if (targetEl && targetEl.closest && targetEl.closest('.hub-direct-link')) {
+          return; // allow normal navigation to dedicated course detail page
+        }
+        const id = row.getAttribute('data-course-id');
+        if (id) selectHubCourse(id);
+      });
+    });
+  }
+
+  initHubNavigator();
+  document.addEventListener('astro:page-load', initHubNavigator);
+</script>

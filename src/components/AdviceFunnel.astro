@@ -1,0 +1,2985 @@
+---
+import { courses as fallbackCoursesNl } from '../data/courses.js';
+import { courses_en as fallbackCoursesEn } from '../data/courses_en.js';
+
+interface Props {
+  lang?: 'nl' | 'en';
+}
+
+const { lang = 'nl' } = Astro.props;
+const isEn = lang === 'en';
+const initialFallbackEvents = isEn ? fallbackCoursesEn : fallbackCoursesNl;
+---
+
+<main class="w-full bg-brand-cream min-h-[calc(100vh-80px)] pt-8 sm:pt-12 md:pt-14 pb-16 relative overflow-hidden flex items-start">
+  <section class="w-full max-w-[760px] mx-auto px-4 sm:px-6 relative z-10">
+    
+    <!-- Wrapper met het herkenbare Edusafe 3/4-cirkel logo-element achter de aanvraagstraat -->
+    <div class="relative">
+      
+      <!-- Edusafe Logo-Cirkel Achtergrond die royaal aan de rechterzijde achter het formulier uitspringt -->
+      <div
+        aria-hidden="true"
+        class="pointer-events-none select-none absolute -right-36 sm:-right-56 md:-right-72 lg:-right-80 top-1/2 -translate-y-1/2 w-[480px] h-[480px] sm:w-[600px] sm:h-[600px] md:w-[680px] md:h-[680px] -z-10"
+      >
+        <svg viewBox="0 0 680 680" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full drop-shadow-2xl -scale-x-100">
+          <defs>
+            <linearGradient id="edusafeCircleGrad" x1="40" y1="40" x2="640" y2="640" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#0E56B5" />
+              <stop offset="60%" stop-color="#0C4EA2" />
+              <stop offset="100%" stop-color="#07326B" />
+            </linearGradient>
+          </defs>
+          <!-- Volle Edusafe-blauwe cirkel die voor ~3/4 rechts naast de kaart uitspringt -->
+          <circle cx="330" cy="340" r="305" fill="url(#edusafeCircleGrad)" />
+          <!-- Subtiele 3/4e buitenboog (accentueert de 3/4e vorm) -->
+          <path
+            d="M 555 115 A 328 328 0 1 0 555 565"
+            stroke="#0C4EA2"
+            stroke-opacity="0.25"
+            stroke-width="2.5"
+            stroke-linecap="round"
+          />
+          <!-- Subtiele 3/4e binnenboog op de blauwe cirkel voor extra diepte -->
+          <path
+            d="M 510 160 A 265 265 0 1 0 510 520"
+            stroke="#FFFFFF"
+            stroke-opacity="0.16"
+            stroke-width="1.5"
+            stroke-dasharray="6 8"
+            stroke-linecap="round"
+          />
+        </svg>
+      </div>
+
+      <!-- Single Centered Unified Street Card -->
+      <div
+        id="wizard-card-container"
+        class="bg-white rounded-3xl shadow-2xl shadow-[#062856]/15 border border-brand-dark/8 p-4 min-[375px]:p-5 sm:p-8 md:p-10 scroll-mt-24 relative z-10"
+      >
+        <!-- Integrated Compact Step Progress Bar -->
+        <div id="wizard-progress-header" class="mb-6 pb-5 border-b border-brand-dark/8">
+          <div class="flex items-center justify-between gap-3 mb-3">
+            <a
+              href={isEn ? '/en' : '/'}
+              class="inline-flex items-center gap-1.5 text-brand-dark/55 hover:text-[#0C4EA2] transition-colors font-semibold text-xs group"
+            >
+              <i class="fa-solid fa-arrow-left text-[10px] group-hover:-translate-x-0.5 transition-transform"></i>
+              <span>{isEn ? 'Back to website' : 'Terug naar website'}</span>
+            </a>
+
+            <div class="flex items-center gap-3">
+              <button
+                type="button"
+                id="reset-wizard-btn"
+                class="text-xs font-semibold text-brand-dark/50 hover:text-brand-accent transition-colors cursor-pointer hidden"
+              >
+                <i class="fa-solid fa-rotate-left mr-1 text-[10px]"></i>
+                {isEn ? 'Start over' : 'Opnieuw beginnen'}
+              </button>
+              <span class="text-[11px] font-medium text-brand-dark/50">
+                <i class="fa-regular fa-clock mr-1 text-[#0C4EA2]"></i>
+                {isEn ? '< 1 min' : '< 1 minuut'}
+              </span>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between gap-2 mb-2">
+            <span id="wizard-step-eyebrow" class="text-[11px] font-bold uppercase tracking-wider text-[#0C4EA2]">
+              {isEn ? 'Step 1 of 3 • Subject' : 'Stap 1 van 3 • Onderwerp'}
+            </span>
+          </div>
+
+          <div class="grid grid-cols-3 gap-2" id="wizard-progress-steps">
+            <button
+              type="button"
+              data-step-nav="1"
+              aria-label={isEn ? 'Step 1' : 'Stap 1'}
+              class="step-indicator h-2 rounded-full bg-[#0C4EA2] transition-all cursor-pointer"
+            ></button>
+            <button
+              type="button"
+              data-step-nav="2"
+              disabled
+              aria-label={isEn ? 'Step 2' : 'Stap 2'}
+              class="step-indicator h-2 rounded-full bg-brand-dark/10 transition-all cursor-not-allowed"
+            ></button>
+            <button
+              type="button"
+              data-step-nav="3"
+              disabled
+              aria-label={isEn ? 'Step 3' : 'Stap 3'}
+              class="step-indicator h-2 rounded-full bg-brand-dark/10 transition-all cursor-not-allowed"
+            ></button>
+          </div>
+        </div>
+
+        <!-- Pre-filled Course / Service Context Banner (Shown when arriving via ?course=... or ?service=...) -->
+        <div
+          id="prefill-context-banner"
+          class="hidden mb-6 p-3.5 rounded-2xl bg-[#0C4EA2]/[0.05] border border-[#0C4EA2]/20 items-center justify-between gap-3"
+        >
+          <div class="flex items-center gap-3 min-w-0">
+            <div class="w-8 h-8 rounded-xl bg-[#0C4EA2] text-white flex items-center justify-center text-xs shrink-0">
+              <i class="fa-solid fa-check"></i>
+            </div>
+            <div class="min-w-0">
+              <p id="prefill-context-title" class="font-display font-bold text-sm text-brand-secondary leading-snug"></p>
+              <p id="prefill-context-sub" class="text-xs text-brand-dark/65 leading-snug"></p>
+            </div>
+          </div>
+          <button
+            type="button"
+            id="prefill-change-btn"
+            class="shrink-0 text-xs font-semibold text-[#0C4EA2] hover:text-brand-secondary underline underline-offset-2 cursor-pointer"
+          >
+            {isEn ? 'Change' : 'Wijzigen'}
+          </button>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- STEP 1: WAAR KUNNEN WIJ U MEE HELPEN?      -->
+        <!-- ========================================== -->
+        <div id="wizard-step-1" class="wizard-panel flex flex-col justify-between space-y-6">
+          <div class="space-y-5">
+            <div>
+              <h1 class="heading-card text-brand-secondary">
+                {isEn ? 'How can we help you?' : 'Waar kunnen wij u mee helpen?'}
+              </h1>
+              <p id="step-1-subtitle" class="text-card text-brand-dark/65 mt-1">
+                {isEn
+                  ? 'Select one or more topics below, or choose a quick option directly.'
+                  : 'Kies één of meerdere onderwerpen, of gebruik direct een snelkeuze.'}
+              </p>
+            </div>
+
+            <!-- 6 Subject Cards + 2 Quick-Action Shortcut Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5" id="step-1-cards-grid">
+              <!-- 1. BHV -->
+              <button
+                type="button"
+                data-subject-card="BHV Opleidingen"
+                data-subject-label={isEn ? 'BHV Courses' : 'BHV Opleidingen'}
+                data-subject-group="opleiding"
+                class="subject-card group text-left p-4 rounded-2xl border-2 border-brand-dark/8 hover:border-[#0C4EA2] bg-brand-cream/25 hover:bg-[#0C4EA2]/[0.03] transition-all cursor-pointer flex items-center justify-between gap-3"
+              >
+                <div class="flex items-center gap-3 min-w-0">
+                  <div class="w-10 h-10 rounded-xl bg-[#0C4EA2]/10 text-[#0C4EA2] flex items-center justify-center text-sm shrink-0 group-hover:bg-[#0C4EA2] group-hover:text-white group-[.is-selected]:bg-[#0C4EA2] group-[.is-selected]:text-white transition-colors">
+                    <i class="fa-solid fa-fire-extinguisher"></i>
+                  </div>
+                  <div class="min-w-0">
+                    <h2 class="heading-tile text-brand-secondary leading-snug">
+                      {isEn ? 'BHV Courses' : 'BHV Opleidingen'}
+                    </h2>
+                    <p class="text-xs text-brand-dark/65 mt-0.5 leading-snug">
+                      {isEn ? 'Basic, Refresher & Team Leader' : 'Basis, Herhaling & Ploegleider'}
+                    </p>
+                  </div>
+                </div>
+                <span class="cat-check-circle w-5 h-5 rounded-full border-2 border-brand-dark/20 group-hover:border-[#0C4EA2] flex items-center justify-center text-transparent shrink-0 transition-all">
+                  <i class="fa-solid fa-check text-[9px]"></i>
+                </span>
+              </button>
+
+              <!-- 2. EHBO -->
+              <button
+                type="button"
+                data-subject-card="EHBO & Reanimatie"
+                data-subject-label={isEn ? 'First Aid & CPR' : 'EHBO & Reanimatie'}
+                data-subject-group="opleiding"
+                class="subject-card group text-left p-4 rounded-2xl border-2 border-brand-dark/8 hover:border-[#0C4EA2] bg-brand-cream/25 hover:bg-[#0C4EA2]/[0.03] transition-all cursor-pointer flex items-center justify-between gap-3"
+              >
+                <div class="flex items-center gap-3 min-w-0">
+                  <div class="w-10 h-10 rounded-xl bg-[#0C4EA2]/10 text-[#0C4EA2] flex items-center justify-center text-sm shrink-0 group-hover:bg-[#0C4EA2] group-hover:text-white group-[.is-selected]:bg-[#0C4EA2] group-[.is-selected]:text-white transition-colors">
+                    <i class="fa-solid fa-kit-medical"></i>
+                  </div>
+                  <div class="min-w-0">
+                    <h2 class="heading-tile text-brand-secondary leading-snug">
+                      {isEn ? 'First Aid & CPR' : 'EHBO & Reanimatie'}
+                    </h2>
+                    <p class="text-xs text-brand-dark/65 mt-0.5 leading-snug">
+                      {isEn ? 'First Aid, AED & Child First Aid' : 'EHBO, AED & Kinder-EHBO'}
+                    </p>
+                  </div>
+                </div>
+                <span class="cat-check-circle w-5 h-5 rounded-full border-2 border-brand-dark/20 group-hover:border-[#0C4EA2] flex items-center justify-center text-transparent shrink-0 transition-all">
+                  <i class="fa-solid fa-check text-[9px]"></i>
+                </span>
+              </button>
+
+              <!-- 3. VCA -->
+              <button
+                type="button"
+                data-subject-card="VCA Certificering"
+                data-subject-label={isEn ? 'VCA Certification' : 'VCA Certificering'}
+                data-subject-group="opleiding"
+                class="subject-card group text-left p-4 rounded-2xl border-2 border-brand-dark/8 hover:border-[#0C4EA2] bg-brand-cream/25 hover:bg-[#0C4EA2]/[0.03] transition-all cursor-pointer flex items-center justify-between gap-3"
+              >
+                <div class="flex items-center gap-3 min-w-0">
+                  <div class="w-10 h-10 rounded-xl bg-[#0C4EA2]/10 text-[#0C4EA2] flex items-center justify-center text-sm shrink-0 group-hover:bg-[#0C4EA2] group-hover:text-white group-[.is-selected]:bg-[#0C4EA2] group-[.is-selected]:text-white transition-colors">
+                    <i class="fa-solid fa-helmet-safety"></i>
+                  </div>
+                  <div class="min-w-0">
+                    <h2 class="heading-tile text-brand-secondary leading-snug">
+                      {isEn ? 'VCA Certification' : 'VCA Certificering'}
+                    </h2>
+                    <p class="text-xs text-brand-dark/65 mt-0.5 leading-snug">
+                      {isEn ? 'B-VCA, VOL-VCA & Exam' : 'B-VCA, VOL-VCA & Examen'}
+                    </p>
+                  </div>
+                </div>
+                <span class="cat-check-circle w-5 h-5 rounded-full border-2 border-brand-dark/20 group-hover:border-[#0C4EA2] flex items-center justify-center text-transparent shrink-0 transition-all">
+                  <i class="fa-solid fa-check text-[9px]"></i>
+                </span>
+              </button>
+
+              <!-- 4. Intern Transport -->
+              <button
+                type="button"
+                data-subject-card="Intern Transport"
+                data-subject-label={isEn ? 'Internal Transport' : 'Intern Transport'}
+                data-subject-group="opleiding"
+                class="subject-card group text-left p-4 rounded-2xl border-2 border-brand-dark/8 hover:border-[#0C4EA2] bg-brand-cream/25 hover:bg-[#0C4EA2]/[0.03] transition-all cursor-pointer flex items-center justify-between gap-3"
+              >
+                <div class="flex items-center gap-3 min-w-0">
+                  <div class="w-10 h-10 rounded-xl bg-[#0C4EA2]/10 text-[#0C4EA2] flex items-center justify-center text-sm shrink-0 group-hover:bg-[#0C4EA2] group-hover:text-white group-[.is-selected]:bg-[#0C4EA2] group-[.is-selected]:text-white transition-colors">
+                    <i class="fa-solid fa-truck-ramp-box"></i>
+                  </div>
+                  <div class="min-w-0">
+                    <h2 class="heading-tile text-brand-secondary leading-snug">
+                      {isEn ? 'Internal Transport' : 'Intern Transport'}
+                    </h2>
+                    <p class="text-xs text-brand-dark/65 mt-0.5 leading-snug">
+                      {isEn ? 'Forklift, Reach Truck & Aerial' : 'Heftruck, Reachtruck & Hoogwerker'}
+                    </p>
+                  </div>
+                </div>
+                <span class="cat-check-circle w-5 h-5 rounded-full border-2 border-brand-dark/20 group-hover:border-[#0C4EA2] flex items-center justify-center text-transparent shrink-0 transition-all">
+                  <i class="fa-solid fa-check text-[9px]"></i>
+                </span>
+              </button>
+
+              <!-- 5. Offshore & E-learning -->
+              <button
+                type="button"
+                data-subject-card="Offshore & E-learning"
+                data-subject-label={isEn ? 'Offshore & E-learning' : 'Offshore & E-learning'}
+                data-subject-group="opleiding"
+                class="subject-card group text-left p-4 rounded-2xl border-2 border-brand-dark/8 hover:border-[#0C4EA2] bg-brand-cream/25 hover:bg-[#0C4EA2]/[0.03] transition-all cursor-pointer flex items-center justify-between gap-3"
+              >
+                <div class="flex items-center gap-3 min-w-0">
+                  <div class="w-10 h-10 rounded-xl bg-[#0C4EA2]/10 text-[#0C4EA2] flex items-center justify-center text-sm shrink-0 group-hover:bg-[#0C4EA2] group-hover:text-white group-[.is-selected]:bg-[#0C4EA2] group-[.is-selected]:text-white transition-colors">
+                    <i class="fa-solid fa-water"></i>
+                  </div>
+                  <div class="min-w-0">
+                    <h2 class="heading-tile text-brand-secondary leading-snug">
+                      {isEn ? 'Offshore & E-learning' : 'Offshore & E-learning'}
+                    </h2>
+                    <p class="text-xs text-brand-dark/65 mt-0.5 leading-snug">
+                      {isEn ? 'BOSIET, OPITO & Online theory' : 'BOSIET, OPITO & Online theorie'}
+                    </p>
+                  </div>
+                </div>
+                <span class="cat-check-circle w-5 h-5 rounded-full border-2 border-brand-dark/20 group-hover:border-[#0C4EA2] flex items-center justify-center text-transparent shrink-0 transition-all">
+                  <i class="fa-solid fa-check text-[9px]"></i>
+                </span>
+              </button>
+
+              <!-- 6. Keuringen & Diensten -->
+              <button
+                type="button"
+                data-subject-card="Keuringen & Diensten"
+                data-subject-label={isEn ? 'Inspections & Services' : 'Keuringen & Diensten'}
+                data-subject-group="diensten"
+                class="subject-card group text-left p-4 rounded-2xl border-2 border-brand-dark/8 hover:border-[#0C4EA2] bg-brand-cream/25 hover:bg-[#0C4EA2]/[0.03] transition-all cursor-pointer flex items-center justify-between gap-3"
+              >
+                <div class="flex items-center gap-3 min-w-0">
+                  <div class="w-10 h-10 rounded-xl bg-[#0C4EA2]/10 text-[#0C4EA2] flex items-center justify-center text-sm shrink-0 group-hover:bg-[#0C4EA2] group-hover:text-white group-[.is-selected]:bg-[#0C4EA2] group-[.is-selected]:text-white transition-colors">
+                    <i class="fa-solid fa-clipboard-check"></i>
+                  </div>
+                  <div class="min-w-0">
+                    <h2 class="heading-tile text-brand-secondary leading-snug">
+                      {isEn ? 'Inspections & Services' : 'Keuringen & Diensten'}
+                    </h2>
+                    <p class="text-xs text-brand-dark/65 mt-0.5 leading-snug">
+                      {isEn ? 'NEN 3140, RI&E & Safety staffing' : 'NEN 3140, RI&E & Veiligheidspersoneel'}
+                    </p>
+                  </div>
+                </div>
+                <span class="cat-check-circle w-5 h-5 rounded-full border-2 border-brand-dark/20 group-hover:border-[#0C4EA2] flex items-center justify-center text-transparent shrink-0 transition-all">
+                  <i class="fa-solid fa-check text-[9px]"></i>
+                </span>
+              </button>
+
+              <!-- 7. Snelkeuze A: E-learning afgerond -> Praktijkdag plannen (Helder Edusafe-blauw accent) -->
+              <button
+                type="button"
+                id="praktijkdag-shortcut-btn"
+                class="group text-left p-4 rounded-2xl border-2 border-[#0C4EA2]/30 hover:border-[#0C4EA2] bg-[#0C4EA2]/[0.06] hover:bg-[#0C4EA2] transition-all cursor-pointer flex items-center justify-between gap-3 shadow-xs hover:shadow-md hover:shadow-[#0C4EA2]/20"
+              >
+                <div class="flex items-center gap-3 min-w-0">
+                  <div class="w-10 h-10 rounded-xl bg-[#0C4EA2] text-white flex items-center justify-center text-sm shrink-0 group-hover:bg-white group-hover:text-[#0C4EA2] transition-colors shadow-xs">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                  </div>
+                  <div class="min-w-0">
+                    <h2 class="heading-tile text-brand-secondary group-hover:text-white leading-snug transition-colors">
+                      {isEn ? 'E-learning completed?' : 'E-learning afgerond?'}
+                    </h2>
+                    <p class="text-xs text-brand-dark/75 group-hover:text-white/90 mt-0.5 leading-snug transition-colors">
+                      {isEn ? 'Pick a practical day date directly' : 'Kies direct een datum voor uw praktijkdag'}
+                    </p>
+                  </div>
+                </div>
+                <span class="w-7 h-7 rounded-full bg-[#0C4EA2] text-white group-hover:bg-white group-hover:text-[#0C4EA2] flex items-center justify-center shrink-0 transition-all shadow-xs">
+                  <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-0.5 transition-transform"></i>
+                </span>
+              </button>
+
+              <!-- 8. Snelkeuze B: Direct contact of algemene vraag (Opvallend Oranje) -->
+              <button
+                type="button"
+                id="direct-contact-card-btn"
+                class="group text-left p-4 rounded-2xl border-2 border-brand-accent/40 hover:border-brand-accent bg-brand-accent/[0.08] hover:bg-brand-accent transition-all cursor-pointer flex items-center justify-between gap-3 shadow-xs hover:shadow-md hover:shadow-brand-accent/20"
+              >
+                <div class="flex items-center gap-3 min-w-0">
+                  <div class="w-10 h-10 rounded-xl bg-brand-accent text-white flex items-center justify-center text-sm shrink-0 group-hover:bg-white group-hover:text-brand-accent transition-colors shadow-xs">
+                    <i class="fa-solid fa-headset"></i>
+                  </div>
+                  <div class="min-w-0">
+                    <h2 class="heading-tile text-brand-secondary group-hover:text-white leading-snug transition-colors">
+                      {isEn ? 'Direct contact or question' : 'Direct contact of vraag'}
+                    </h2>
+                    <p class="text-xs text-brand-dark/75 group-hover:text-white/90 mt-0.5 leading-snug transition-colors">
+                      {isEn ? 'Send a message or view phone details' : 'Bericht sturen of onze gegevens bekijken'}
+                    </p>
+                  </div>
+                </div>
+                <span class="w-7 h-7 rounded-full bg-brand-accent text-white group-hover:bg-white group-hover:text-brand-accent flex items-center justify-center shrink-0 transition-all shadow-xs">
+                  <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-0.5 transition-transform"></i>
+                </span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Bottom Navigation Bar -->
+          <div class="pt-4 border-t border-brand-dark/8 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
+            <span class="inline-flex items-center justify-center sm:justify-start gap-1.5 text-xs text-brand-dark/55 text-center sm:text-left">
+              <i class="fa-solid fa-shield-halved text-[#0C4EA2]"></i>
+              {isEn ? 'Direct booking or advice within 1 working day' : 'Direct inschrijven of advies binnen 1 werkdag'}
+            </span>
+            <button
+              type="button"
+              id="step-1-next-btn"
+              disabled
+              class="btn-base w-full sm:w-auto justify-center min-h-[48px] bg-brand-accent hover:bg-brand-accent-hover disabled:bg-brand-dark/15 disabled:text-brand-dark/40 disabled:cursor-not-allowed text-white shadow-xs cursor-pointer"
+            >
+              <span>{isEn ? 'Next step' : 'Volgende stap'}</span>
+              <i class="fa-solid fa-arrow-right text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- STEP 2: UW SITUATIE & DIRECTE DATUMKEUZE   -->
+        <!-- ========================================== -->
+        <div id="wizard-step-2" class="wizard-panel hidden flex-col justify-between space-y-6">
+          <div class="space-y-5">
+            <div>
+              <h2 class="heading-card text-brand-secondary" id="step-2-heading">
+                {isEn ? 'What best fits your situation?' : 'Wat past het beste bij uw situatie?'}
+              </h2>
+              <p class="text-card text-brand-dark/65 mt-1" id="step-2-subtitle">
+                {isEn
+                  ? 'Choose direct enrollment on an open date, practical day, or tailored in-company proposal.'
+                  : 'Kies directe inschrijving op een datum, praktijkdag na E-learning, of een Incompany voorstel.'}
+              </p>
+            </div>
+
+            <!-- Praktijkdag Snelkeuze Categorie-Tabs (Alleen zichtbaar in Praktijkdag-shortcut modus) -->
+            <div id="step-2-praktijkdag-tabs-wrap" class="hidden space-y-2">
+              <label class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary">
+                {isEn ? 'Choose your completed E-learning course' : 'Kies de opleiding waarvoor u de E-learning heeft afgerond'}
+              </label>
+              <div id="step-2-praktijkdag-tabs" class="flex flex-wrap gap-2"></div>
+            </div>
+
+            <!-- Compacte optionele specificatie-chips per gekozen vakgebied -->
+            <div id="step-2-subtopics-wrapper" class="hidden space-y-2">
+              <label class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary">
+                {isEn
+                  ? 'Specific course or service (optional — filters available dates)'
+                  : 'Specifieke training of dienst (optioneel — filtert beschikbare data)'}
+              </label>
+              <div id="step-2-subtopics-grid" class="flex flex-wrap gap-2"></div>
+            </div>
+
+            <!-- 4 Compact Situation Cards in 2x2 Grid -->
+            <div id="step-2-situation-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 items-stretch"></div>
+
+            <!-- INLINE LIVE GHL CURSUSDATA PICKER (Zichtbaar bij Open inschrijving 1-5p of Praktijkdag na E-learning) -->
+            <div
+              id="step-2-datepicker-box"
+              class="hidden rounded-2xl border border-[#0C4EA2]/20 bg-[#0C4EA2]/[0.03] p-4 sm:p-5 space-y-3.5"
+            >
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 pb-3 border-b border-brand-dark/8">
+                <div class="flex items-center gap-2">
+                  <i class="fa-regular fa-calendar-check text-[#0C4EA2] text-sm"></i>
+                  <span id="datepicker-box-title" class="font-display font-bold text-sm text-brand-secondary">
+                    {isEn ? 'Choose an available course date (The Hague)' : 'Kies een beschikbare cursusdatum (Den Haag)'}
+                  </span>
+                </div>
+
+                <!-- Deelnemers teller (1 t/m 5 — alleen bij Nieuwe Open Inschrijving) -->
+                <div id="step-2-participants-bar" class="flex items-center justify-between sm:justify-start gap-2">
+                  <span class="text-xs font-semibold text-brand-dark/65">
+                    {isEn ? 'Participants:' : 'Deelnemers:'}
+                  </span>
+                  <div class="inline-flex items-center gap-1 bg-white p-1 rounded-xl border border-brand-dark/10" id="step-2-participants-pills">
+                    {[1, 2, 3, 4, 5].map((num) => (
+                      <button
+                        type="button"
+                        data-part-count={num}
+                        class="part-count-btn w-9 h-9 sm:w-8 sm:h-8 rounded-lg text-xs font-bold transition-all cursor-pointer"
+                      >
+                        {num}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Dynamische lijst met live datums + 'Datum in overleg' vangnet -->
+              <div id="step-2-dates-list" class="space-y-2.5"></div>
+
+              <!-- 'Toon meer data' knop wanneer er > 4 datums beschikbaar zijn -->
+              <button
+                type="button"
+                id="step-2-show-more-dates"
+                class="hidden w-full py-2 text-xs font-bold text-[#0C4EA2] hover:text-brand-secondary transition-colors cursor-pointer text-center"
+              ></button>
+            </div>
+          </div>
+
+          <!-- Bottom Navigation Bar -->
+          <div class="pt-4 border-t border-brand-dark/8 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
+            <button
+              type="button"
+              data-prev-step="1"
+              class="min-h-[40px] inline-flex items-center justify-center sm:justify-start text-xs font-semibold text-brand-dark/60 hover:text-brand-secondary cursor-pointer"
+            >
+              ← {isEn ? 'Previous step' : 'Vorige stap'}
+            </button>
+            <button
+              type="button"
+              id="step-2-next-btn"
+              disabled
+              class="btn-base w-full sm:w-auto justify-center min-h-[48px] bg-brand-accent hover:bg-brand-accent-hover disabled:bg-brand-dark/15 disabled:text-brand-dark/40 disabled:cursor-not-allowed text-white shadow-xs cursor-pointer"
+            >
+              <span>{isEn ? 'Next step' : 'Volgende stap'}</span>
+              <i class="fa-solid fa-arrow-right text-xs"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- STEP 3: GEGEVENS & SLIMME AFRONDING        -->
+        <!-- ========================================== -->
+        <div id="wizard-step-3" class="wizard-panel hidden flex-col justify-between space-y-5">
+          <div class="space-y-5">
+            <!-- Samenvatting van gekozen Cursusdatum OF Advieskeuze -->
+            <div
+              id="step-3-selection-chip"
+              class="p-4 sm:p-5 rounded-2xl bg-[#0C4EA2]/[0.05] border border-[#0C4EA2]/20 space-y-2.5"
+            >
+              <div class="flex items-start justify-between gap-3">
+                <div class="min-w-0 space-y-1">
+                  <span
+                    id="step-3-badge"
+                    class="inline-flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-[#0C4EA2]/10 text-[#0C4EA2]"
+                  ></span>
+                  <div class="flex items-center gap-2 min-w-0 text-sm sm:text-[15px] font-display font-bold text-brand-secondary">
+                    <span id="step-3-summary-text" class="leading-snug"></span>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  id="step-3-prev-btn"
+                  data-prev-step="2"
+                  class="shrink-0 text-xs font-semibold text-[#0C4EA2] hover:text-brand-secondary underline underline-offset-2 cursor-pointer"
+                >
+                  {isEn ? 'Change' : 'Wijzigen'}
+                </button>
+              </div>
+
+              <p id="step-3-preadvice-text" class="text-xs text-brand-dark/75 leading-relaxed"></p>
+
+              <!-- Handige snelregeling in Stap 3 bij directe datum-inschrijving (bijv. binnenkomend vanaf /cursusdata) -->
+              <div
+                id="step-3-event-quick-controls"
+                class="hidden pt-2.5 mt-1 border-t border-[#0C4EA2]/12 flex-col sm:flex-row sm:items-center justify-between gap-3"
+              >
+                <label class="inline-flex items-center gap-2 cursor-pointer select-none text-xs font-semibold text-brand-secondary hover:text-[#0C4EA2] transition-colors">
+                  <input
+                    type="checkbox"
+                    id="step-3-elearning-done-toggle"
+                    class="w-4 h-4 rounded accent-[#0C4EA2] cursor-pointer"
+                  />
+                  <span>
+                    {isEn
+                      ? 'I already completed the online E-learning (practical day only)'
+                      : 'Ik heb de online E-learning al afgerond (alleen praktijkdag)'}
+                  </span>
+                </label>
+
+                <div id="step-3-participants-mini" class="flex items-center justify-between sm:justify-start gap-2 shrink-0">
+                  <span class="text-xs text-brand-dark/65 font-medium">
+                    {isEn ? 'Participants:' : 'Aantal:'}
+                  </span>
+                  <select
+                    id="step-3-participants-select"
+                    class="min-h-[42px] rounded-lg border border-brand-dark/15 bg-white px-3 py-1.5 text-base sm:text-xs font-bold text-brand-secondary focus:outline-none focus:border-[#0C4EA2] cursor-pointer"
+                  >
+                    <option value="1">{isEn ? '1 person' : '1 persoon'}</option>
+                    <option value="2">{isEn ? '2 persons' : '2 personen'}</option>
+                    <option value="3">{isEn ? '3 persons' : '3 personen'}</option>
+                    <option value="4">{isEn ? '4 persons' : '4 personen'}</option>
+                    <option value="5">{isEn ? '5 persons' : '5 personen'}</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Direct Contact Quick Strip (Only shown when "Direct contact" was selected in Step 1) -->
+            <div id="step-3-direct-strip" class="hidden grid-cols-1 sm:grid-cols-2 gap-3">
+              <a
+                href="tel:0704447795"
+                class="flex items-center gap-3 p-3.5 rounded-2xl bg-brand-cream/60 border border-brand-dark/8 hover:border-[#0C4EA2]/40 transition-all"
+              >
+                <div class="w-9 h-9 rounded-xl bg-[#0C4EA2]/10 text-[#0C4EA2] flex items-center justify-center text-xs shrink-0">
+                  <i class="fa-solid fa-phone"></i>
+                </div>
+                <div class="min-w-0">
+                  <span class="block text-[10px] font-semibold uppercase tracking-wider text-brand-dark/50">
+                    {isEn ? 'Mon–Fri 08:30–17:00' : 'Werkdagen 08:30–17:00'}
+                  </span>
+                  <span class="font-display font-bold text-sm text-brand-secondary">070 - 444 77 95</span>
+                </div>
+              </a>
+
+              <a
+                href="mailto:info@edusafe.nl"
+                class="flex items-center gap-3 p-3.5 rounded-2xl bg-brand-cream/60 border border-brand-dark/8 hover:border-[#0C4EA2]/40 transition-all"
+              >
+                <div class="w-9 h-9 rounded-xl bg-[#0C4EA2]/10 text-[#0C4EA2] flex items-center justify-center text-xs shrink-0">
+                  <i class="fa-solid fa-envelope"></i>
+                </div>
+                <div class="min-w-0">
+                  <span class="block text-[10px] font-semibold uppercase tracking-wider text-brand-dark/50">
+                    {isEn ? 'Direct email' : 'Direct mailen'}
+                  </span>
+                  <span class="font-display font-bold text-sm text-brand-secondary">info@edusafe.nl</span>
+                </div>
+              </a>
+            </div>
+
+            <!-- Contact / Registration Details Form -->
+            <div id="advice-form-wrapper" class="space-y-4">
+              <div>
+                <h2 id="advice-form-heading" class="heading-card text-brand-secondary">
+                  {isEn
+                    ? 'Where may we send your proposal or advice?'
+                    : 'Waar mogen wij het voorstel of advies naartoe sturen?'}
+                </h2>
+                <p id="advice-form-sub" class="text-card text-brand-dark/65 mt-0.5">
+                  {isEn
+                    ? 'We will respond within 1 working day — completely non-binding.'
+                    : 'Wij reageren binnen 1 werkdag — geheel vrijblijvend.'}
+                </p>
+              </div>
+
+              <form id="advice-funnel-form" class="space-y-4">
+                <input type="hidden" name="customerType" id="input-customerType" value="" />
+                <input type="hidden" name="category" id="input-category" value="" />
+                <input type="hidden" name="topics" id="input-topics" value="" />
+                <input type="hidden" name="detailPrimary" id="input-detailPrimary" value="" />
+                <input type="hidden" name="detailSecondary" id="input-detailSecondary" value="" />
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  <div class="space-y-1.5">
+                    <label for="adv-name" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary">
+                      {isEn ? 'Your Name' : 'Voor- en achternaam'} <span class="text-brand-accent">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="adv-name"
+                      name="name"
+                      required
+                      placeholder={isEn ? 'e.g. Jan de Vries' : 'Bijv. Jan de Vries'}
+                      class="w-full px-4 py-3 rounded-xl bg-brand-cream/30 border border-brand-dark/10 focus:border-[#0C4EA2] focus:bg-white focus:outline-none text-base sm:text-sm font-medium text-brand-secondary transition-all"
+                    />
+                  </div>
+
+                  <div id="field-company-wrapper" class="space-y-1.5">
+                    <label for="adv-company" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary">
+                      {isEn ? 'Company / Organization' : 'Bedrijfsnaam / Organisatie'} <span id="company-req-star" class="text-brand-accent">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="adv-company"
+                      name="company"
+                      placeholder={isEn ? 'e.g. Company B.V. or Freelance' : 'Bijv. Uw Bedrijf B.V. of ZZP'}
+                      class="w-full px-4 py-3 rounded-xl bg-brand-cream/30 border border-brand-dark/10 focus:border-[#0C4EA2] focus:bg-white focus:outline-none text-base sm:text-sm font-medium text-brand-secondary transition-all"
+                    />
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  <div class="space-y-1.5">
+                    <label for="adv-email" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary">
+                      {isEn ? 'Email Address' : 'E-mailadres'} <span class="text-brand-accent">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      id="adv-email"
+                      name="email"
+                      required
+                      placeholder={isEn ? 'name@example.nl' : 'naam@voorbeeld.nl'}
+                      class="w-full px-4 py-3 rounded-xl bg-brand-cream/30 border border-brand-dark/10 focus:border-[#0C4EA2] focus:bg-white focus:outline-none text-base sm:text-sm font-medium text-brand-secondary transition-all"
+                    />
+                  </div>
+
+                  <div class="space-y-1.5">
+                    <label for="adv-phone" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary">
+                      {isEn ? 'Phone Number' : 'Telefoonnummer'} <span class="text-brand-accent">*</span>
+                    </label>
+                    <input
+                      type="tel"
+                      id="adv-phone"
+                      name="phone"
+                      required
+                      placeholder="06 - 12345678"
+                      class="w-full px-4 py-3 rounded-xl bg-brand-cream/30 border border-brand-dark/10 focus:border-[#0C4EA2] focus:bg-white focus:outline-none text-base sm:text-sm font-medium text-brand-secondary transition-all"
+                    />
+                  </div>
+                </div>
+
+                <div class="space-y-1.5">
+                  <label for="adv-notes" id="adv-notes-label" class="block text-xs font-semibold uppercase tracking-wider text-brand-secondary">
+                    {isEn
+                      ? 'Additional question or comment (optional)'
+                      : 'Eventuele toelichting of vraag (optioneel)'}
+                  </label>
+                  <textarea
+                    id="adv-notes"
+                    name="notes"
+                    rows="2"
+                    placeholder={isEn
+                      ? 'Briefly let us know if you have specific wishes or dates...'
+                      : 'Bijv. gewenste periode, locatie of specifieke vraag...'}
+                    class="w-full px-4 py-3 rounded-xl bg-brand-cream/30 border border-brand-dark/10 focus:border-[#0C4EA2] focus:bg-white focus:outline-none text-base sm:text-sm font-medium text-brand-secondary transition-all resize-none"
+                  ></textarea>
+                </div>
+
+                <!-- Algemene voorwaarden vinkje (Alleen zichtbaar & verplicht bij een definitieve datum-inschrijving) -->
+                <div id="advice-terms-wrapper" class="hidden items-start gap-2.5 pt-1">
+                  <input
+                    type="checkbox"
+                    id="adv-terms-agree"
+                    class="w-4 h-4 accent-[#0C4EA2] cursor-pointer mt-0.5 shrink-0"
+                  />
+                  <label for="adv-terms-agree" class="text-xs text-brand-dark/75 leading-relaxed cursor-pointer select-none">
+                    {isEn ? (
+                      <>
+                        I agree to the{' '}
+                        <a href="/en/terms-conditions" target="_blank" class="text-[#0C4EA2] font-semibold hover:underline">
+                          terms and conditions
+                        </a>{' '}
+                        of Edusafe.
+                      </>
+                    ) : (
+                      <>
+                        Ik ga akkoord met de{' '}
+                        <a href="/algemene-voorwaarden" target="_blank" class="text-[#0C4EA2] font-semibold hover:underline">
+                          algemene voorwaarden
+                        </a>{' '}
+                        van Edusafe.
+                      </>
+                    )}
+                  </label>
+                </div>
+
+                <div id="advice-error-msg" class="hidden p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-semibold"></div>
+
+                <div class="pt-3 border-t border-brand-dark/8 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                  <button
+                    type="button"
+                    id="step-3-back-link"
+                    data-prev-step="2"
+                    class="min-h-[40px] inline-flex items-center justify-center sm:justify-start text-xs font-semibold text-brand-dark/60 hover:text-brand-secondary cursor-pointer"
+                  >
+                    ← {isEn ? 'Previous step' : 'Vorige stap'}
+                  </button>
+
+                  <button
+                    type="submit"
+                    id="advice-submit-btn"
+                    class="btn-base w-full sm:w-auto justify-center min-h-[48px] bg-brand-accent hover:bg-brand-accent-hover text-white shadow-sm cursor-pointer"
+                  >
+                    <span id="advice-submit-label">
+                      {isEn ? 'Send request' : 'Aanvraag versturen'}
+                    </span>
+                    <i id="advice-submit-icon" class="fa-solid fa-paper-plane text-xs"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- SUCCESS SCREEN -->
+            <div id="advice-success-screen" class="hidden text-center py-6 px-2 space-y-4">
+              <div class="w-14 h-14 rounded-full bg-emerald-500/15 text-emerald-600 flex items-center justify-center text-2xl mx-auto">
+                <i class="fa-solid fa-check"></i>
+              </div>
+              <h3 id="advice-success-title" class="heading-card text-brand-secondary">
+                {isEn ? 'Thank you! We have received your request.' : 'Bedankt! Uw aanvraag is ontvangen.'}
+              </h3>
+              <p id="advice-success-body" class="text-card text-brand-dark/70 max-w-md mx-auto">
+                {isEn
+                  ? 'Our advisor will review your request and contact you within 1 working day.'
+                  : 'Onze adviseur neemt binnen 1 werkdag persoonlijk contact met u op.'}
+              </p>
+              <div class="pt-3 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center justify-center gap-3">
+                <a
+                  href={isEn ? '/en/course-dates' : '/cursusdata'}
+                  class="btn-base w-full sm:w-auto justify-center min-h-[48px] bg-brand-accent hover:bg-brand-accent-hover text-white"
+                >
+                  {isEn ? 'View course schedule' : 'Bekijk cursusagenda'}
+                </a>
+                <a
+                  href={isEn ? '/en' : '/'}
+                  class="btn-base w-full sm:w-auto justify-center min-h-[48px] bg-brand-cream hover:bg-brand-dark/10 text-brand-secondary"
+                >
+                  {isEn ? 'Back to homepage' : 'Terug naar homepage'}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subtle Trust & Phone Footer Pill below the Card -->
+      <div class="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-center text-xs text-brand-dark/70 bg-white/95 backdrop-blur-sm px-5 py-2.5 rounded-full shadow-md border border-brand-dark/8 w-fit mx-auto relative z-10">
+        <span class="inline-flex items-center gap-1.5">
+          <i class="fa-solid fa-shield-halved text-[#0C4EA2]"></i>
+          {isEn ? 'Certified safety training' : 'Erkend opleider'}
+        </span>
+        <span class="text-brand-dark/30">•</span>
+        <span>{isEn ? 'The Hague & In-company' : 'Den Haag & Incompany'}</span>
+        <span class="text-brand-dark/30">•</span>
+        <a href="tel:0704447795" class="font-semibold text-brand-secondary hover:text-[#0C4EA2] transition-colors">
+          <i class="fa-solid fa-phone text-[10px] mr-1 text-[#0C4EA2]"></i>070 - 444 77 95
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script is:inline define:vars={{ isEn, initialFallbackEvents }}>
+  (function () {
+    // Normalize any event record (local fallback or live GHL /api/events)
+    function mapToSubjectCard(category, slug, title) {
+      const c = String(category || '').toLowerCase();
+      const s = String(slug || '').toLowerCase();
+      const t = String(title || '').toLowerCase();
+      if (
+        c.includes('ehbo') ||
+        c.includes('first aid') ||
+        c.includes('ehak') ||
+        c.includes('aed') ||
+        s.includes('ehbo') ||
+        s.includes('ehak') ||
+        s.includes('aed') ||
+        t.includes('ehbo') ||
+        t.includes('ehak') ||
+        t.includes('reanimatie') ||
+        t.includes('first aid')
+      ) {
+        return 'EHBO & Reanimatie';
+      }
+      if (c.includes('vca') || s.includes('vca') || s.includes('vcu') || t.includes('vca')) {
+        return 'VCA Certificering';
+      }
+      if (
+        c.includes('heftruck') ||
+        c.includes('transport') ||
+        s.includes('heftruck') ||
+        s.includes('reachtruck') ||
+        s.includes('hoogwerker') ||
+        s.includes('stapelaar') ||
+        t.includes('heftruck') ||
+        t.includes('forklift') ||
+        t.includes('hoogwerker')
+      ) {
+        return 'Intern Transport';
+      }
+      if (
+        c.includes('offshore') ||
+        s.includes('bosiet') ||
+        s.includes('opito') ||
+        t.includes('bosiet') ||
+        t.includes('offshore')
+      ) {
+        return 'Offshore & E-learning';
+      }
+      return 'BHV Opleidingen';
+    }
+
+    function normalizeEvent(raw) {
+      const id = String(raw.id || '');
+      const title = String(raw.title || '');
+      const courseSlug = String(raw.courseSlug || 'bhv-basis');
+      const category = String(raw.category || 'BHV');
+      const date = String(raw.date || '');
+      const time = String(raw.time || '');
+      const location = String(
+        raw.location || (isEn ? 'Edusafe Main Location The Hague' : 'Edusafe Hoofdlocatie Den Haag')
+      );
+      const price = String(raw.price || '');
+      const isOnRequest =
+        !date || /aanvraag|request/i.test(date) || /aanvraag|request/i.test(String(raw.freeSpots || ''));
+
+      const hasExplicitSpotsField = raw.spots !== undefined && raw.spots !== null;
+      const hasCapacityLimit = hasExplicitSpotsField
+        ? Number(raw.spots) > 0
+        : typeof raw.freeSpots === 'string' && /\d+/.test(raw.freeSpots);
+
+      let freeSpotsCount = null;
+      if (hasCapacityLimit) {
+        if (typeof raw.freeSpots === 'number') {
+          freeSpotsCount = raw.freeSpots;
+        } else if (typeof raw.freeSpots === 'string') {
+          const numMatch = raw.freeSpots.match(/\d+/);
+          if (numMatch) freeSpotsCount = parseInt(numMatch[0], 10);
+        }
+      }
+
+      const isFull =
+        String(raw.status || '').toLowerCase() === 'vol' ||
+        (hasCapacityLimit && freeSpotsCount !== null && freeSpotsCount <= 0);
+
+      let freeSpotsLabel = '';
+      if (isFull) {
+        freeSpotsLabel = isEn ? 'Full' : 'Volgeboekt';
+      } else if (hasCapacityLimit && freeSpotsCount !== null && freeSpotsCount > 0) {
+        freeSpotsLabel = isEn ? `${freeSpotsCount} open` : `${freeSpotsCount} vrij`;
+      } else {
+        freeSpotsLabel = isEn ? 'Available' : 'Beschikbaar';
+      }
+
+      return {
+        id,
+        title,
+        courseSlug,
+        category,
+        subjectCard: mapToSubjectCard(category, courseSlug, title),
+        date,
+        time,
+        location,
+        price,
+        isOnRequest,
+        freeSpotsCount,
+        freeSpotsLabel,
+        isFull,
+      };
+    }
+
+    let allEvents = Array.isArray(initialFallbackEvents)
+      ? initialFallbackEvents.map(normalizeEvent).filter((e) => !e.isOnRequest)
+      : [];
+
+    const state = {
+      step: 1,
+      flowMode: 'standard', // 'standard' | 'praktijkdag_shortcut' | 'direct_contact'
+      praktijkdagTab: 'BHV Opleidingen',
+      customerType: '',
+      customerLabel: '',
+      selectedSubjects: [], // Array of { value, label, group }
+      selectedSubtopics: [], // Array of specific course/service labels
+      situationKey: '', // 'open_enrollment' | 'elearning_completed' | 'incompany' | 'corporate_advice' | service keys
+      situationValue: '',
+      situationLabel: '',
+      selectedEventId: '', // Concrete event ID or 'custom_date' or ''
+      participantsCount: 1,
+      showAllDates: false,
+      prefilledItem: null,
+    };
+
+    const subtopicsByCategory = {
+      'BHV Opleidingen': isEn
+        ? ['BHV Basic', 'BHV Refresher', 'BHV Team Leader', 'Evacuation Drill']
+        : ['BHV Basis', 'BHV Herhaling', 'Ploegleider BHV', 'Ontruimingsoefening'],
+      'EHBO & Reanimatie': isEn
+        ? ['First Aid Basic', 'First Aid Refresher', 'CPR & AED', 'Child First Aid (EHAK)']
+        : ['EHBO Basis', 'EHBO Herhaling', 'Reanimatie & AED', 'Kinder-EHBO (EHAK)'],
+      'VCA Certificering': isEn
+        ? ['B-VCA Basic', 'VOL-VCA', 'VCA E-learning', 'Standalone VCA Exam']
+        : ['B-VCA Basis', 'VOL-VCA', 'VCA E-learning', 'Los VCA Examen'],
+      'Intern Transport': isEn
+        ? ['Forklift', 'Reach Truck', 'Aerial Platform', 'EPT / Stacker']
+        : ['Heftruck', 'Reachtruck', 'Hoogwerker', 'EPT / Stapelaar'],
+      'Offshore & E-learning': isEn
+        ? ['BOSIET / OPITO', 'NEN 3140 VOP/VP', 'Confined Spaces', 'Online E-learning']
+        : ['BOSIET / OPITO', 'NEN 3140 VOP/VP', 'Besloten Ruimten', 'Online E-learning'],
+      'Keuringen & Diensten': isEn
+        ? ['NEN 3140 Inspection', 'SCIOS Scope 8/10/12', 'RI&E & Action Plan', 'Fire Extinguishers (REOB)', 'Evacuation Plans', 'Safety Staffing / Fire Watch']
+        : ['NEN 3140 Keuring', 'SCIOS Scope 8/10/12', 'RI&E & Plan van Aanpak', 'Blusmiddelen (REOB)', 'Ontruimingsplattegronden', 'Brandwacht / Detachering'],
+    };
+
+    const prefillCatalog = {
+      // BHV
+      'bhv-basis': {
+        title: isEn ? 'Emergency Response (BHV) Basic Course' : 'BHV Basiscursus',
+        categoryCard: 'BHV Opleidingen',
+        categoryLabel: 'BHV',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? 'E-learning + 1 Practical Day' : 'E-learning + 1 Praktijkdag',
+      },
+      'bhv-herhaling': {
+        title: isEn ? 'Emergency Response (BHV) Refresher' : 'BHV Herhalingscursus',
+        categoryCard: 'BHV Opleidingen',
+        categoryLabel: 'BHV',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? '1 Practical Day (or Half Day)' : '1 Praktijkdag (of dagdeel)',
+      },
+      'bhv-e-learning': {
+        title: isEn ? 'BHV Blended (E-learning + Practical)' : 'BHV Blended (E-learning + Praktijkdag)',
+        categoryCard: 'BHV Opleidingen',
+        categoryLabel: 'BHV',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? 'E-learning + Practical Day' : 'E-learning + Praktijkdag',
+      },
+      'ploegleider-bhv': {
+        title: isEn ? 'BHV Team Leader Course' : 'Ploegleider BHV',
+        categoryCard: 'BHV Opleidingen',
+        categoryLabel: 'BHV',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? '2 Practical Days' : '2 Praktijkdagen',
+      },
+      'bhv-ploegleider': {
+        title: isEn ? 'BHV Team Leader Course' : 'BHV Ploegleider',
+        categoryCard: 'BHV Opleidingen',
+        categoryLabel: 'BHV',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? '2 Practical Days' : '2 Praktijkdagen',
+      },
+      'hoofd-bhv': {
+        title: isEn ? 'Head of BHV (Safety Coordinator)' : 'Hoofd BHV',
+        categoryCard: 'BHV Opleidingen',
+        categoryLabel: 'BHV',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? '2 to 3 sessions' : '2 tot 3 bijeenkomsten',
+      },
+      'brand-en-ontruiming': {
+        title: isEn ? 'Fire Fighting & Evacuation' : 'Brand & Ontruiming',
+        categoryCard: 'BHV Opleidingen',
+        categoryLabel: 'BHV',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? 'Half Day (4 hours)' : '1 Dagdeel (4 uur)',
+      },
+      'brandbestrijding': {
+        title: isEn ? 'Fire Fighting & Evacuation' : 'Brandbestrijding & Ontruiming',
+        categoryCard: 'BHV Opleidingen',
+        categoryLabel: 'BHV',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? 'Half Day (4 hours)' : '1 Dagdeel (4 uur)',
+      },
+      'portotraining': {
+        title: isEn ? 'Two-Way Radio Emergency Communication' : 'Portofoontraining',
+        categoryCard: 'BHV Opleidingen',
+        categoryLabel: 'BHV',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? 'Half Day' : '1 Dagdeel',
+      },
+      'kleine-blusmiddelen': {
+        title: isEn ? 'Small Fire Extinguishers Training' : 'Training Kleine Blusmiddelen',
+        categoryCard: 'BHV Opleidingen',
+        categoryLabel: 'BHV',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? 'Half Day' : 'Halve dag',
+      },
+      'ontruimingsoefening': {
+        title: isEn ? 'Evacuation Drill (On-site)' : 'Ontruimingsoefening op locatie',
+        categoryCard: 'BHV Opleidingen',
+        categoryLabel: 'BHV',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? 'On-site customization' : 'Maatwerk op locatie',
+      },
+      // EHBO
+      'ehbo-basis': {
+        title: isEn ? 'First Aid (EHBO) Basic Course' : 'EHBO Basiscursus (Oranje Kruis)',
+        categoryCard: 'EHBO & Reanimatie',
+        categoryLabel: isEn ? 'First Aid & CPR' : 'EHBO & Reanimatie',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? 'E-learning + Practical Days' : 'E-learning + Praktijkdagen',
+      },
+      'ehbo-herhaling': {
+        title: isEn ? 'First Aid (EHBO) Refresher' : 'EHBO Herhalingscursus',
+        categoryCard: 'EHBO & Reanimatie',
+        categoryLabel: isEn ? 'First Aid & CPR' : 'EHBO & Reanimatie',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? '1 Practical Day' : '1 Praktijkdag',
+      },
+      'reanimatie-aed': {
+        title: isEn ? 'CPR & AED Training' : 'Reanimatie & AED Training',
+        categoryCard: 'EHBO & Reanimatie',
+        categoryLabel: isEn ? 'First Aid & CPR' : 'EHBO & Reanimatie',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? 'Half Day' : '1 Dagdeel',
+      },
+      'aed-reanimatie': {
+        title: isEn ? 'CPR & AED Training (BLS)' : 'AED / Reanimatie (BLS)',
+        categoryCard: 'EHBO & Reanimatie',
+        categoryLabel: isEn ? 'First Aid & CPR' : 'EHBO & Reanimatie',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? 'Half Day' : '1 Dagdeel',
+      },
+      'ehak-kinderen': {
+        title: isEn ? 'First Aid for Infants & Children (EHAK)' : 'Eerste Hulp aan Kinderen (EHAK)',
+        categoryCard: 'EHBO & Reanimatie',
+        categoryLabel: isEn ? 'First Aid & CPR' : 'EHBO & Reanimatie',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? 'E-learning + 1 Practical Day' : 'E-learning + 1 Praktijkdag',
+      },
+      'ehak': {
+        title: isEn ? 'First Aid for Infants & Children (EHAK)' : 'EHAK (Eerste Hulp aan Kinderen)',
+        categoryCard: 'EHBO & Reanimatie',
+        categoryLabel: isEn ? 'First Aid & CPR' : 'EHBO & Reanimatie',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? 'E-learning + 1 Practical Day' : 'E-learning + 1 Praktijkdag',
+      },
+      'ehbo-kinderen': {
+        title: isEn ? 'First Aid for Infants & Children (EHAK)' : "EHBO aan Baby's en Kinderen (IKK)",
+        categoryCard: 'EHBO & Reanimatie',
+        categoryLabel: isEn ? 'First Aid & CPR' : 'EHBO & Reanimatie',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? 'E-learning + 1 Practical Day' : 'E-learning + 1 Praktijkdag',
+      },
+      'levensreddend-handelen': {
+        title: isEn ? 'Life-Saving Actions Workshop' : 'Levensreddend Handelen',
+        categoryCard: 'EHBO & Reanimatie',
+        categoryLabel: isEn ? 'First Aid & CPR' : 'EHBO & Reanimatie',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? 'Half Day' : 'Halve dag',
+      },
+      // VCA
+      'vca-basis': {
+        title: isEn ? 'B-VCA Basic Safety' : 'VCA Basisveiligheid (B-VCA)',
+        categoryCard: 'VCA Certificering',
+        categoryLabel: isEn ? 'VCA Certification' : 'VCA Certificering',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? '1 Day incl. Exam' : '1 Dag incl. Examen',
+      },
+      'vca-vol': {
+        title: isEn ? 'VOL-VCA Safety for Supervisors' : 'VOL-VCA (Leidinggevenden)',
+        categoryCard: 'VCA Certificering',
+        categoryLabel: isEn ? 'VCA Certification' : 'VCA Certificering',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? '1 Day incl. Exam' : '1 Dag incl. Examen',
+      },
+      'vil-vcu': {
+        title: isEn ? 'VIL-VCU Safety for Staffing Agencies' : 'VIL-VCU (Intercedenten)',
+        categoryCard: 'VCA Certificering',
+        categoryLabel: isEn ? 'VCA Certification' : 'VCA Certificering',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? 'E-learning + Official Exam' : 'E-learning + Officieel Examen',
+      },
+      'vcu-vil': {
+        title: isEn ? 'VCU-VIL Safety for Staffing Agencies' : 'VCU-VIL (Intercedenten)',
+        categoryCard: 'VCA Certificering',
+        categoryLabel: isEn ? 'VCA Certification' : 'VCA Certificering',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? '1 Day + Official Exam' : '1 Dag + Officieel Examen',
+      },
+      'vca-e-learning': {
+        title: isEn ? 'VCA E-learning + Official Exam' : 'VCA E-learning + Officieel Examen',
+        categoryCard: 'VCA Certificering',
+        categoryLabel: isEn ? 'VCA Certification' : 'VCA Certificering',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? 'Online Theory + Exam' : 'Online Theorie + Examen',
+      },
+      'vca-examen': {
+        title: isEn ? 'Standalone Official VCA Exam' : 'Los VCA Examen',
+        categoryCard: 'VCA Certificering',
+        categoryLabel: isEn ? 'VCA Certification' : 'VCA Certificering',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? 'Exam session' : 'Examensessie',
+      },
+      // Logistiek & Heftruck
+      'heftruck-basis': {
+        title: isEn ? 'Forklift Basic Course' : 'Heftruck Basiscursus',
+        categoryCard: 'Intern Transport',
+        categoryLabel: isEn ? 'Internal Transport' : 'Intern Transport',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? '1 Practical Day' : '1 Praktijkdag',
+      },
+      'heftruck-herhaling': {
+        title: isEn ? 'Forklift Refresher Course' : 'Heftruck Herhalingscursus',
+        categoryCard: 'Intern Transport',
+        categoryLabel: isEn ? 'Internal Transport' : 'Intern Transport',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? 'Half Day / 1 Day' : 'Halve dag / 1 Praktijkdag',
+      },
+      'reachtruck': {
+        title: isEn ? 'Reach Truck Certificate' : 'Reachtruck Certificaat',
+        categoryCard: 'Intern Transport',
+        categoryLabel: isEn ? 'Internal Transport' : 'Intern Transport',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? '1 Practical Day' : '1 Praktijkdag',
+      },
+      'hoogwerker': {
+        title: isEn ? 'Aerial Work Platform (Hoogwerker)' : 'Hoogwerker Certificaat',
+        categoryCard: 'Intern Transport',
+        categoryLabel: isEn ? 'Internal Transport' : 'Intern Transport',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? '1 Practical Day' : '1 Praktijkdag',
+      },
+      'ept-stapelaar': {
+        title: isEn ? 'Electric Pallet Truck (EPT) & Stacker' : 'EPT & Stapelaar Training',
+        categoryCard: 'Intern Transport',
+        categoryLabel: isEn ? 'Internal Transport' : 'Intern Transport',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? 'Half Day' : 'Halve dag',
+      },
+      'stapelaar': {
+        title: isEn ? 'Stacker & Electric Pallet Truck (EPT)' : 'Stapelaar & EPT',
+        categoryCard: 'Intern Transport',
+        categoryLabel: isEn ? 'Internal Transport' : 'Intern Transport',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? 'Half Day' : '1 Dagdeel',
+      },
+      'veilig-hijsen': {
+        title: isEn ? 'Safe Lifting & Rigging' : 'Veilig Hijsen',
+        categoryCard: 'Intern Transport',
+        categoryLabel: isEn ? 'Internal Transport' : 'Intern Transport',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? '1 Practical Day' : '1 Praktijkdag',
+      },
+      // Offshore & Techniek
+      'bosiet': {
+        title: isEn ? 'BOSIET Offshore Training' : 'BOSIET Offshore Training',
+        categoryCard: 'Offshore & E-learning',
+        categoryLabel: 'Offshore & E-learning',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? '3 Days (OPITO)' : '3 Dagen (OPITO)',
+      },
+      'opito': {
+        title: isEn ? 'OPITO Offshore Training' : 'OPITO Offshore Trainingen',
+        categoryCard: 'Offshore & E-learning',
+        categoryLabel: 'Offshore & E-learning',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? '1 to 3 Days' : '1 tot 3 Dagen',
+      },
+      'nen-3140-vop': {
+        title: isEn ? 'NEN 3140 VOP' : 'NEN 3140 VOP',
+        categoryCard: 'Offshore & E-learning',
+        categoryLabel: 'Offshore & E-learning',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? '1 Day' : '1 Dag',
+      },
+      'nen-3140-vp': {
+        title: isEn ? 'NEN 3140 VP' : 'NEN 3140 VP',
+        categoryCard: 'Offshore & E-learning',
+        categoryLabel: 'Offshore & E-learning',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? '1 to 2 Days' : '1 tot 2 Dagen',
+      },
+      'nen-3140-keurmeester': {
+        title: isEn ? 'NEN 3140 Inspector Course' : 'Cursus Keurmeester NEN 3140',
+        categoryCard: 'Offshore & E-learning',
+        categoryLabel: 'Offshore & E-learning',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? '1 Practical Day' : '1 Praktijkdag',
+      },
+      'besloten-ruimten': {
+        title: isEn ? 'Confined Spaces & Gas Measurement' : 'Besloten Ruimten & Gasmeten',
+        categoryCard: 'Offshore & E-learning',
+        categoryLabel: 'Offshore & E-learning',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? '1 Practical Day' : '1 Praktijkdag',
+      },
+      'onafhankelijke-ademlucht': {
+        title: isEn ? 'Independent Breathing Apparatus (SCBA)' : 'Onafhankelijke Ademlucht (OAB)',
+        categoryCard: 'Offshore & E-learning',
+        categoryLabel: 'Offshore & E-learning',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? '1 Practical Day' : '1 Praktijkdag',
+      },
+      'werken-op-hoogte-gwo': {
+        title: isEn ? 'Working Safely at Height / GWO' : 'Veilig Werken op Hoogte / GWO',
+        categoryCard: 'Offshore & E-learning',
+        categoryLabel: 'Offshore & E-learning',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? '1 Practical Day' : '1 Praktijkdag',
+      },
+      // Category Hubs
+      'bhv': {
+        title: isEn ? 'BHV Training' : 'BHV Opleidingen',
+        categoryCard: 'BHV Opleidingen',
+        categoryLabel: 'BHV',
+        group: 'opleiding',
+        isCategoryHub: true,
+        duration: isEn ? 'E-learning + Practical Day or Refresher' : 'E-learning + Praktijkdag of Herhaling',
+      },
+      'ehbo': {
+        title: isEn ? 'First Aid & CPR Training' : 'EHBO & Reanimatie Opleidingen',
+        categoryCard: 'EHBO & Reanimatie',
+        categoryLabel: isEn ? 'First Aid & CPR' : 'EHBO & Reanimatie',
+        group: 'opleiding',
+        isCategoryHub: true,
+        duration: isEn ? 'E-learning + Practical Day or Refresher' : 'E-learning + Praktijkdag of Herhaling',
+      },
+      'vca': {
+        title: isEn ? 'VCA Certification' : 'VCA Certificering',
+        categoryCard: 'VCA Certificering',
+        categoryLabel: isEn ? 'VCA Certification' : 'VCA Certificering',
+        group: 'opleiding',
+        isCategoryHub: true,
+        duration: isEn ? '1-Day Course or Online E-learning' : '1-Daagse Cursus of Online E-learning',
+      },
+      'heftruck': {
+        title: isEn ? 'Forklift & Internal Transport' : 'Heftruck Certificaat',
+        categoryCard: 'Intern Transport',
+        categoryLabel: isEn ? 'Internal Transport' : 'Intern Transport',
+        group: 'opleiding',
+        isCategoryHub: false,
+        duration: isEn ? '1 Practical Day' : '1 Praktijkdag',
+      },
+      'offshore-gwo': {
+        title: isEn ? 'Offshore Safety, BOSIET & OPITO' : 'Offshore Veiligheid, BOSIET & OPITO',
+        categoryCard: 'Offshore & E-learning',
+        categoryLabel: 'Offshore & E-learning',
+        group: 'opleiding',
+        isCategoryHub: true,
+        duration: isEn ? 'OPITO & Offshore Certification' : 'OPITO & Offshore Certificering',
+      },
+      // Diensten
+      'keuringen': {
+        title: isEn ? 'NEN 3140 & SCIOS Scope Inspections' : 'Keuringen & Inspecties (NEN 3140 & Scope)',
+        categoryCard: 'Keuringen & Diensten',
+        categoryLabel: isEn ? 'Inspections & Services' : 'Keuringen & Diensten',
+        group: 'diensten',
+        isCategoryHub: false,
+        duration: isEn ? 'On-site inspection' : 'Op locatie door keurmeester',
+      },
+      'inspecties': {
+        title: isEn ? 'NEN 3140 & SCIOS Scope Inspections' : 'Keuringen & Inspecties (NEN 3140 & Scope)',
+        categoryCard: 'Keuringen & Diensten',
+        categoryLabel: isEn ? 'Inspections & Services' : 'Keuringen & Diensten',
+        group: 'diensten',
+        isCategoryHub: false,
+        duration: isEn ? 'On-site inspection' : 'Op locatie door keurmeester',
+      },
+      'certificeringen': {
+        title: isEn ? 'Company Certifications (VCA / VCU)' : 'Bedrijfscertificeringen (VCA / VCU)',
+        categoryCard: 'Keuringen & Diensten',
+        categoryLabel: isEn ? 'Inspections & Services' : 'Keuringen & Diensten',
+        group: 'diensten',
+        isCategoryHub: false,
+        duration: isEn ? 'Full guidance' : 'Volledige begeleiding',
+      },
+      'vergunningen': {
+        title: isEn ? 'Permits, Fire Safe Use & ISO 9001' : 'Vergunningen, Brandveilig gebruik & ISO 9001',
+        categoryCard: 'Keuringen & Diensten',
+        categoryLabel: isEn ? 'Inspections & Services' : 'Keuringen & Diensten',
+        group: 'diensten',
+        isCategoryHub: false,
+        duration: isEn ? 'Tailored guidance' : 'Begeleiding op maat',
+      },
+      'vluchtwegplattegronden': {
+        title: isEn ? 'Evacuation Floor Plans (NEN 1414)' : 'Ontruimingsplattegronden (NEN 1414)',
+        categoryCard: 'Keuringen & Diensten',
+        categoryLabel: isEn ? 'Inspections & Services' : 'Keuringen & Diensten',
+        group: 'diensten',
+        isCategoryHub: false,
+        duration: isEn ? '5 to 10 working days' : 'Binnen 5 tot 10 werkdagen',
+      },
+      'ontruimingsplattegronden': {
+        title: isEn ? 'Evacuation Floor Plans (NEN 1414)' : 'Ontruimingsplattegronden (NEN 1414)',
+        categoryCard: 'Keuringen & Diensten',
+        categoryLabel: isEn ? 'Inspections & Services' : 'Keuringen & Diensten',
+        group: 'diensten',
+        isCategoryHub: false,
+        duration: isEn ? '5 to 10 working days' : 'Binnen 5 tot 10 werkdagen',
+      },
+      'brandveiligheid': {
+        title: isEn ? 'Fire Safety & REOB Maintenance' : 'Brandveiligheid & Blusmiddelen (REOB)',
+        categoryCard: 'Keuringen & Diensten',
+        categoryLabel: isEn ? 'Inspections & Services' : 'Keuringen & Diensten',
+        group: 'diensten',
+        isCategoryHub: false,
+        duration: isEn ? 'On-site maintenance' : 'Onderhoud op locatie',
+      },
+      'dakveiligheid': {
+        title: isEn ? 'Roof Safety & Fall Protection (NEN-EN 365)' : 'Dakveiligheid & Valbeveiliging (NEN-EN 365)',
+        categoryCard: 'Keuringen & Diensten',
+        categoryLabel: isEn ? 'Inspections & Services' : 'Keuringen & Diensten',
+        group: 'diensten',
+        isCategoryHub: false,
+        duration: isEn ? 'Inspection & RI&E on-site' : 'Inspectie & RI&E op locatie',
+      },
+      'noodverlichting': {
+        title: isEn ? 'Emergency Lighting & Escape Route Signage' : 'Noodverlichting & Vluchtwegaanduiding',
+        categoryCard: 'Keuringen & Diensten',
+        categoryLabel: isEn ? 'Inspections & Services' : 'Keuringen & Diensten',
+        group: 'diensten',
+        isCategoryHub: false,
+        duration: isEn ? 'Annual NEN-EN 1838 inspection' : 'Jaarlijkse NEN-EN 1838 keuring',
+      },
+      'event-ehbo': {
+        title: isEn ? 'Event First Aid & Safety Staffing' : 'Evenementen EHBO & Veiligheidspersoneel',
+        categoryCard: 'Keuringen & Diensten',
+        categoryLabel: isEn ? 'Inspections & Services' : 'Keuringen & Diensten',
+        group: 'diensten',
+        isCategoryHub: false,
+        duration: isEn ? 'Certified specialists on-site' : 'Gecertificeerd team op locatie',
+      },
+      'rie': {
+        title: isEn ? 'RI&E & Action Plan' : 'RI&E & Plan van Aanpak',
+        categoryCard: 'Keuringen & Diensten',
+        categoryLabel: isEn ? 'Inspections & Services' : 'Keuringen & Diensten',
+        group: 'diensten',
+        isCategoryHub: false,
+        duration: isEn ? 'Statutory inventory & review' : 'Volledige inventarisatie & toetsing',
+      },
+      'rie-audit': {
+        title: isEn ? 'RI&E Audit & Action Plan' : 'RI&E Audit & Plan van Aanpak',
+        categoryCard: 'Keuringen & Diensten',
+        categoryLabel: isEn ? 'Inspections & Services' : 'Keuringen & Diensten',
+        group: 'diensten',
+        isCategoryHub: false,
+        duration: isEn ? 'Statutory inventory & review' : 'Volledige inventarisatie & toetsing',
+      },
+      'rie-advies': {
+        title: isEn ? 'RI&E & Arbo Advice' : 'RI&E & Arbo-advies',
+        categoryCard: 'Keuringen & Diensten',
+        categoryLabel: isEn ? 'Inspections & Services' : 'Keuringen & Diensten',
+        group: 'diensten',
+        isCategoryHub: false,
+        duration: isEn ? 'Statutory inventory & action plan' : 'Volledige inventarisatie & Plan van Aanpak',
+      },
+      'detachering': {
+        title: isEn ? 'Safety Staffing & Supervision' : 'Veiligheidsdetachering & Brandwacht',
+        categoryCard: 'Keuringen & Diensten',
+        categoryLabel: isEn ? 'Inspections & Services' : 'Keuringen & Diensten',
+        group: 'diensten',
+        isCategoryHub: false,
+        duration: isEn ? 'Certified safety specialists on-site' : 'Gecertificeerd personeel op locatie',
+      },
+      'veiligheidspersoneel': {
+        title: isEn ? 'Deployment of Safety Staffing' : 'Inzet Veiligheidspersoneel',
+        categoryCard: 'Keuringen & Diensten',
+        categoryLabel: isEn ? 'Inspections & Services' : 'Keuringen & Diensten',
+        group: 'diensten',
+        isCategoryHub: false,
+        duration: isEn ? 'Certified specialists on project site' : 'Gecertificeerde specialisten op locatie',
+      },
+      'incompany': {
+        title: isEn ? 'In-company Training at Your Location' : 'Incompany Training op uw bedrijfslocatie',
+        categoryCard: 'BHV Opleidingen',
+        categoryLabel: 'Incompany Maatwerk',
+        group: 'opleiding',
+        isCategoryHub: true,
+        duration: isEn ? 'On-site group training (from 6 participants)' : 'Groepstraining op locatie (vanaf 6 deelnemers)',
+      },
+      'e-learning': {
+        title: isEn ? 'Online E-learning & Blended Courses' : 'Online E-learning & Blended Trainingen',
+        categoryCard: 'BHV Opleidingen',
+        categoryLabel: 'E-learning',
+        group: 'opleiding',
+        isCategoryHub: true,
+        duration: isEn ? 'Direct online start + Practical Day' : 'Direct online starten + Praktijkdag',
+      },
+    };
+
+    const step2Scenarios = {
+      opleiding: [
+        {
+          key: 'open_enrollment',
+          value: 'Open inschrijving Den Haag (1-5 deelnemers)',
+          badge: isEn ? 'Open enrollment • 1 – 5 pers.' : 'Open inschrijving • 1 – 5 pers.',
+          label: isEn ? 'Direct enrollment' : 'Direct inschrijven',
+          summaryLabel: isEn ? 'Open enrollment (1–5 participants)' : 'Open inschrijving (1–5 deelnemers)',
+          sub: isEn ? 'Pick an available course date in The Hague' : 'Kies direct een cursusdatum in Den Haag',
+          customerType: 'ZZP / MKB (1-5 deelnemers)',
+          requireCompany: false,
+          showsDates: true,
+          icon: 'fa-calendar-check',
+        },
+        {
+          key: 'elearning_completed',
+          value: 'E-learning afgerond — Praktijkdag inplannen',
+          badge: isEn ? 'Theory done • Practical day' : 'Theorie voltooid • Praktijkdag',
+          label: isEn ? 'E-learning completed' : 'E-learning afgerond',
+          summaryLabel: isEn ? 'Practical day after E-learning' : 'Praktijkdag na E-learning',
+          sub: isEn ? 'Schedule your practical day in The Hague' : 'Plan alleen nog uw praktijkdag in Den Haag',
+          customerType: 'Cursist (Praktijkdag na E-learning)',
+          requireCompany: false,
+          showsDates: true,
+          icon: 'fa-graduation-cap',
+        },
+        {
+          key: 'incompany',
+          value: '6-15 medewerkers (Incompany op bedrijfslocatie)',
+          badge: isEn ? 'In-company • 6 – 15 staff' : 'Incompany • 6 – 15 medewerkers',
+          label: isEn ? 'At your location' : 'Op uw bedrijfslocatie',
+          summaryLabel: isEn ? '6 – 15 employees (In-company)' : '6 – 15 medewerkers (Incompany)',
+          sub: isEn ? 'Group training at your company on a date of choice' : 'Groepstraining bij u op locatie op een datum naar keuze',
+          customerType: 'MKB / Incompany (6-15 medewerkers)',
+          requireCompany: true,
+          showsDates: false,
+          icon: 'fa-building-user',
+        },
+        {
+          key: 'corporate_advice',
+          value: '15+ medewerkers / Maatwerk of Persoonlijk Advies',
+          badge: isEn ? 'Corporate • 15+ or Advice' : 'Maatwerk • 15+ of Advies',
+          label: isEn ? 'Corporate or advice' : 'Grootzakelijk of advies',
+          summaryLabel: isEn ? '15+ employees / Personal advice' : '15+ medewerkers / Advies op maat',
+          sub: isEn ? 'Multiple groups, custom program or free consultation' : 'Meerdere groepen, maatwerk of vrijblijvend overleg',
+          customerType: 'Grootzakelijk / Maatwerk Advies',
+          requireCompany: false,
+          showsDates: false,
+          icon: 'fa-comments',
+        },
+      ],
+      diensten: [
+        {
+          key: 'srv_single',
+          value: '1 bedrijfslocatie (MKB)',
+          badge: isEn ? 'SME • Single site' : 'MKB • 1 locatie',
+          label: isEn ? '1 company location' : '1 bedrijfslocatie',
+          summaryLabel: isEn ? '1 company location (SME)' : '1 bedrijfslocatie (MKB)',
+          sub: isEn ? 'Inspection, RI&E or advice at your location' : 'Keuring, RI&E of advies op uw locatie',
+          customerType: 'MKB (1 locatie)',
+          requireCompany: true,
+          showsDates: false,
+          icon: 'fa-building-circle-check',
+        },
+        {
+          key: 'srv_multi',
+          value: 'Meerdere locaties / Grootzakelijk',
+          badge: isEn ? 'Corporate • Multi-site' : 'Grootzakelijk',
+          label: isEn ? 'Multiple locations' : 'Meerdere locaties',
+          summaryLabel: isEn ? 'Multiple locations (Corporate)' : 'Meerdere locaties (Grootzakelijk)',
+          sub: isEn ? 'Project approach with dedicated advisor' : 'Projectaanpak met vaste adviseur',
+          customerType: 'Grootzakelijk (Meerdere locaties)',
+          requireCompany: true,
+          showsDates: false,
+          icon: 'fa-diagram-project',
+        },
+        {
+          key: 'srv_urgent',
+          value: 'Spoedaanvraag / Direct nodig',
+          badge: isEn ? 'Fast scheduling' : 'Snel inplannen',
+          label: isEn ? 'Urgent request' : 'Spoedaanvraag',
+          summaryLabel: isEn ? 'Urgent request' : 'Spoedaanvraag',
+          sub: isEn ? 'Schedule on-site as soon as possible' : 'Zo snel mogelijk op locatie inplannen',
+          customerType: 'Zakelijk (Spoedaanvraag)',
+          requireCompany: true,
+          showsDates: false,
+          icon: 'fa-bolt',
+        },
+        {
+          key: 'srv_consult',
+          value: 'Graag eerst overleggen met een adviseur',
+          badge: isEn ? 'Personal advice' : 'Persoonlijk advies',
+          label: isEn ? 'Consult first' : 'Eerst overleggen',
+          summaryLabel: isEn ? 'Consult an advisor first' : 'Eerst even overleggen',
+          sub: isEn ? 'Review statutory requirements together' : 'Samen wettelijke eisen en opties bekijken',
+          customerType: 'Zakelijk (Adviesgesprek)',
+          requireCompany: false,
+          showsDates: false,
+          icon: 'fa-comments',
+        },
+      ],
+    };
+
+    const praktijkdagTabsConfig = [
+      { card: 'BHV Opleidingen', label: isEn ? 'BHV (NL & EN)' : 'BHV (NL & EN)' },
+      { card: 'EHBO & Reanimatie', label: isEn ? 'First Aid & Child First Aid' : 'EHBO & Kinder-EHBO' },
+      { card: 'VCA Certificering', label: isEn ? 'VCA Exam / Day' : 'VCA Dag / Examen' },
+      { card: 'ALL', label: isEn ? 'All practical dates' : 'Alle praktijkdata' },
+    ];
+
+    const panels = {
+      1: document.getElementById('wizard-step-1'),
+      2: document.getElementById('wizard-step-2'),
+      3: document.getElementById('wizard-step-3'),
+    };
+
+    const stepIndicators = document.querySelectorAll('.step-indicator');
+    const stepEyebrow = document.getElementById('wizard-step-eyebrow');
+    const resetBtn = document.getElementById('reset-wizard-btn');
+    const step1NextBtn = document.getElementById('step-1-next-btn');
+    const step2NextBtn = document.getElementById('step-2-next-btn');
+
+    function getStepEyebrowText(stepNum) {
+      if (stepNum === 1) {
+        return isEn ? 'Step 1 of 3 • Subject' : 'Stap 1 van 3 • Onderwerp';
+      }
+      if (stepNum === 2) {
+        if (state.flowMode === 'praktijkdag_shortcut') {
+          return isEn ? 'Step 2 of 3 • Pick Practical Date' : 'Stap 2 van 3 • Kies Praktijkdatum';
+        }
+        return isEn ? 'Step 2 of 3 • Situation & Date' : 'Stap 2 van 3 • Uw Situatie & Datum';
+      }
+      const isDirectBooking = isConcreteEventSelected();
+      if (isDirectBooking) {
+        return isEn ? 'Step 3 of 3 • Confirm Enrollment' : 'Stap 3 van 3 • Bevestig Inschrijving';
+      }
+      return isEn ? 'Step 3 of 3 • Your Details' : 'Stap 3 van 3 • Uw Gegevens';
+    }
+
+    function isConcreteEventSelected() {
+      if (state.flowMode === 'direct_contact') return false;
+      const isDateFlow =
+        state.flowMode === 'praktijkdag_shortcut' ||
+        state.situationKey === 'open_enrollment' ||
+        state.situationKey === 'elearning_completed';
+      return Boolean(
+        isDateFlow && state.selectedEventId && state.selectedEventId !== 'custom_date'
+      );
+    }
+
+    function getSelectedEventObject() {
+      if (!isConcreteEventSelected()) return null;
+      return allEvents.find((ev) => String(ev.id) === String(state.selectedEventId)) || null;
+    }
+
+    function updateSummary() {
+      if (resetBtn) {
+        if (
+          state.selectedSubjects.length > 0 ||
+          state.flowMode !== 'standard' ||
+          state.selectedEventId
+        ) {
+          resetBtn.classList.remove('hidden');
+        } else {
+          resetBtn.classList.add('hidden');
+        }
+      }
+    }
+
+    function scrollToWizardTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
+
+    function goToStep(stepNum, skipScroll) {
+      state.step = stepNum;
+      if (stepEyebrow) {
+        stepEyebrow.textContent = getStepEyebrowText(stepNum);
+      }
+
+      Object.keys(panels).forEach((k) => {
+        const panel = panels[k];
+        if (!panel) return;
+        if (Number(k) === stepNum) {
+          panel.classList.remove('hidden');
+          panel.classList.add('flex');
+        } else {
+          panel.classList.add('hidden');
+          panel.classList.remove('flex');
+        }
+      });
+
+      stepIndicators.forEach((btn) => {
+        const s = Number(btn.getAttribute('data-step-nav'));
+        const isSkippedDirect = state.flowMode === 'direct_contact' && s === 2;
+
+        if (isSkippedDirect) {
+          btn.disabled = true;
+          btn.className = 'step-indicator h-2 rounded-full bg-[#0C4EA2]/35 transition-all cursor-not-allowed';
+        } else if (s < stepNum) {
+          btn.disabled = false;
+          btn.className = 'step-indicator h-2 rounded-full bg-emerald-500 transition-all cursor-pointer';
+        } else if (s === stepNum) {
+          btn.disabled = false;
+          btn.className = 'step-indicator h-2 rounded-full bg-[#0C4EA2] transition-all cursor-pointer';
+        } else {
+          btn.disabled = true;
+          btn.className = 'step-indicator h-2 rounded-full bg-brand-dark/10 transition-all cursor-not-allowed';
+        }
+      });
+
+      updateSummary();
+      if (!skipScroll) {
+        scrollToWizardTop();
+      }
+    }
+
+    function syncStep1CardStyles() {
+      const selectedValues = state.selectedSubjects.map((s) => s.value);
+      document.querySelectorAll('.subject-card').forEach((card) => {
+        const val = card.getAttribute('data-subject-card') || '';
+        const isSelected = selectedValues.includes(val);
+        const cc = card.querySelector('.cat-check-circle');
+        if (isSelected) {
+          card.classList.add('is-selected', 'border-[#0C4EA2]', 'bg-[#0C4EA2]/[0.04]');
+          if (cc) {
+            cc.className =
+              'cat-check-circle w-5 h-5 rounded-full border-2 border-[#0C4EA2] bg-[#0C4EA2] flex items-center justify-center text-white shrink-0 transition-all';
+          }
+        } else {
+          card.classList.remove('is-selected', 'border-[#0C4EA2]', 'bg-[#0C4EA2]/[0.04]');
+          if (cc) {
+            cc.className =
+              'cat-check-circle w-5 h-5 rounded-full border-2 border-brand-dark/20 group-hover:border-[#0C4EA2] flex items-center justify-center text-transparent shrink-0 transition-all';
+          }
+        }
+      });
+      if (step1NextBtn) {
+        step1NextBtn.disabled = state.selectedSubjects.length === 0;
+      }
+    }
+
+    function isOnlyDienstenSelected() {
+      return (
+        state.flowMode === 'standard' &&
+        state.selectedSubjects.length > 0 &&
+        state.selectedSubjects.every((s) => s.group === 'diensten')
+      );
+    }
+
+    function getActiveStep2Options() {
+      return isOnlyDienstenSelected() ? step2Scenarios.diensten : step2Scenarios.opleiding;
+    }
+
+    // Filter live GHL events based on chosen course / subtopics / category
+    function getMatchingEventsForCurrentState() {
+      if (state.flowMode === 'praktijkdag_shortcut') {
+        if (state.praktijkdagTab === 'ALL') return allEvents;
+        return allEvents.filter((ev) => ev.subjectCard === state.praktijkdagTab);
+      }
+
+      // Check specific prefilled course slug first
+      if (state.prefilledItem && !state.prefilledItem.isCategoryHub) {
+        const slug = state.prefilledItem.slug;
+        const exactMatches = allEvents.filter((ev) => {
+          if (ev.courseSlug === slug) return true;
+          const t = ev.title.toLowerCase();
+          if ((slug === 'bhv-basis' || slug === 'bhv-e-learning') && t.includes('bhv') && t.includes('basis')) return true;
+          if (slug === 'bhv-herhaling' && t.includes('bhv') && t.includes('herhaling')) return true;
+          if ((slug === 'vca-basis' || slug === 'vca-e-learning') && t.includes('vca') && t.includes('basis')) return true;
+          if (slug === 'vca-vol' && t.includes('vca') && t.includes('vol')) return true;
+          if ((slug === 'ehak' || slug === 'ehak-kinderen' || slug === 'ehbo-kinderen') && (ev.courseSlug === 'ehak' || t.includes('ehak') || t.includes('kinder'))) return true;
+          if ((slug === 'aed-reanimatie' || slug === 'reanimatie-aed') && (ev.courseSlug === 'aed-reanimatie' || t.includes('aed') || t.includes('reanimatie'))) return true;
+          if ((slug.startsWith('heftruck') || slug === 'hoogwerker') && ev.courseSlug === 'heftruck') return true;
+          return false;
+        });
+        return exactMatches;
+      }
+
+      const activeCards = state.selectedSubjects
+        .filter((s) => s.group === 'opleiding')
+        .map((s) => s.value);
+
+      let pool = allEvents.filter((ev) => activeCards.includes(ev.subjectCard));
+
+      // Refine by subtopic chips if any were clicked
+      if (state.selectedSubtopics.length > 0) {
+        const chipFiltered = pool.filter((ev) => {
+          const t = ev.title.toLowerCase();
+          const s = ev.courseSlug.toLowerCase();
+          return state.selectedSubtopics.some((chip) => {
+            const c = chip.toLowerCase();
+            if (c.includes('basis') || c.includes('basic')) return t.includes('basis') || t.includes('basic') || s.includes('basis');
+            if (c.includes('herhaling') || c.includes('refresher')) return t.includes('herhaling') || t.includes('refresher') || s.includes('herhaling');
+            if (c.includes('kinder') || c.includes('child') || c.includes('ehak')) return s === 'ehak' || t.includes('ehak') || t.includes('kinder');
+            if (c.includes('aed') || c.includes('reanimatie') || c.includes('cpr')) return s === 'aed-reanimatie' || t.includes('aed') || t.includes('reanimatie');
+            if (c.includes('vol')) return t.includes('vol') || s.includes('vol');
+            if (c.includes('ploegleider') || c.includes('team leader')) return s.includes('ploegleider') || t.includes('ploegleider');
+            if (c.includes('ontruiming') || c.includes('evacuation')) return s.includes('ontruiming') || t.includes('ontruiming');
+            if (c.includes('heftruck') || c.includes('forklift') || c.includes('hoogwerker') || c.includes('aerial')) return s === 'heftruck';
+            return false;
+          });
+        });
+        if (chipFiltered.length > 0) {
+          pool = chipFiltered;
+        }
+      }
+
+      return pool;
+    }
+
+    function renderStep2PraktijkdagTabs() {
+      const wrap = document.getElementById('step-2-praktijkdag-tabs-wrap');
+      const container = document.getElementById('step-2-praktijkdag-tabs');
+      if (!wrap || !container) return;
+
+      if (state.flowMode !== 'praktijkdag_shortcut') {
+        wrap.classList.add('hidden');
+        return;
+      }
+
+      wrap.classList.remove('hidden');
+      container.innerHTML = praktijkdagTabsConfig
+        .map((tab) => {
+          const active = state.praktijkdagTab === tab.card;
+          return `<button
+            type="button"
+            data-pday-tab="${tab.card}"
+            class="px-3.5 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer ${
+              active
+                ? 'bg-[#0C4EA2] text-white border-[#0C4EA2] shadow-xs'
+                : 'bg-brand-cream/50 text-brand-secondary border-brand-dark/12 hover:border-[#0C4EA2]'
+            }"
+          >${tab.label}</button>`;
+        })
+        .join('');
+
+      container.querySelectorAll('[data-pday-tab]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          state.praktijkdagTab = btn.getAttribute('data-pday-tab') || 'BHV Opleidingen';
+          state.selectedEventId = '';
+          state.showAllDates = false;
+          renderStep2();
+        });
+      });
+    }
+
+    function renderStep2Subtopics() {
+      const wrap = document.getElementById('step-2-subtopics-wrapper');
+      const grid = document.getElementById('step-2-subtopics-grid');
+      if (!wrap || !grid) return;
+
+      if (
+        state.flowMode === 'praktijkdag_shortcut' ||
+        (state.prefilledItem && !state.prefilledItem.isCategoryHub)
+      ) {
+        wrap.classList.add('hidden');
+        return;
+      }
+
+      const availableChips = [];
+      state.selectedSubjects.forEach((subj) => {
+        const list = subtopicsByCategory[subj.value] || [];
+        list.forEach((chip) => {
+          if (!availableChips.includes(chip)) availableChips.push(chip);
+        });
+      });
+
+      if (availableChips.length === 0) {
+        wrap.classList.add('hidden');
+        return;
+      }
+
+      wrap.classList.remove('hidden');
+      grid.innerHTML = availableChips
+        .map((chip) => {
+          const isSelected = state.selectedSubtopics.includes(chip);
+          return `<button
+            type="button"
+            data-subtopic-chip="${chip}"
+            class="subtopic-chip px-3.5 py-1.5 rounded-full text-xs font-semibold border transition-all cursor-pointer inline-flex items-center gap-1.5 ${
+              isSelected
+                ? 'bg-[#0C4EA2] text-white border-[#0C4EA2] shadow-xs'
+                : 'bg-brand-cream/40 text-brand-secondary border-brand-dark/12 hover:border-[#0C4EA2]'
+            }"
+          >
+            ${isSelected ? '<i class="fa-solid fa-check text-[10px]"></i>' : '<i class="fa-solid fa-plus text-[9px] text-[#0C4EA2]"></i>'}
+            <span>${chip}</span>
+          </button>`;
+        })
+        .join('');
+
+      grid.querySelectorAll('.subtopic-chip').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const val = btn.getAttribute('data-subtopic-chip') || '';
+          if (state.selectedSubtopics.includes(val)) {
+            state.selectedSubtopics = state.selectedSubtopics.filter((c) => c !== val);
+          } else {
+            state.selectedSubtopics.push(val);
+          }
+          state.selectedEventId = '';
+          renderStep2Subtopics();
+          renderStep2DatePicker();
+        });
+      });
+    }
+
+    function renderStep2DatePicker() {
+      const box = document.getElementById('step-2-datepicker-box');
+      const titleEl = document.getElementById('datepicker-box-title');
+      const partBar = document.getElementById('step-2-participants-bar');
+      const listEl = document.getElementById('step-2-dates-list');
+      const showMoreBtn = document.getElementById('step-2-show-more-dates');
+      if (!box || !listEl) return;
+
+      const isPraktijkdag =
+        state.flowMode === 'praktijkdag_shortcut' || state.situationKey === 'elearning_completed';
+      const shouldShow =
+        !isOnlyDienstenSelected() &&
+        (isPraktijkdag || state.situationKey === 'open_enrollment');
+
+      if (!shouldShow) {
+        box.classList.add('hidden');
+        state.selectedEventId = '';
+        if (step2NextBtn) step2NextBtn.disabled = !state.situationValue;
+        return;
+      }
+
+      box.classList.remove('hidden');
+
+      if (titleEl) {
+        titleEl.textContent = isPraktijkdag
+          ? isEn
+            ? 'Choose your practical day date (The Hague)'
+            : 'Kies uw beschikbare praktijkdatum (Den Haag)'
+          : isEn
+            ? 'Choose an available course date (The Hague)'
+            : 'Kies een beschikbare cursusdatum (Den Haag)';
+      }
+
+      if (partBar) {
+        if (isPraktijkdag) {
+          partBar.classList.add('hidden');
+          state.participantsCount = 1;
+        } else {
+          partBar.classList.remove('hidden');
+        }
+      }
+
+      // Update participant pills active state
+      document.querySelectorAll('.part-count-btn').forEach((btn) => {
+        const n = Number(btn.getAttribute('data-part-count'));
+        if (n === state.participantsCount) {
+          btn.className = 'part-count-btn w-9 h-9 sm:w-8 sm:h-8 rounded-lg text-xs font-bold bg-[#0C4EA2] text-white shadow-2xs cursor-pointer transition-all';
+        } else {
+          btn.className = 'part-count-btn w-9 h-9 sm:w-8 sm:h-8 rounded-lg text-xs font-bold text-brand-secondary hover:bg-brand-cream cursor-pointer transition-all';
+        }
+      });
+
+      const matching = getMatchingEventsForCurrentState();
+      const neededSpots = isPraktijkdag ? 1 : state.participantsCount;
+
+      // Ensure a valid default selection exists
+      const validIds = matching
+        .filter((ev) => !ev.isFull && (ev.freeSpotsCount === null || ev.freeSpotsCount >= neededSpots))
+        .map((ev) => String(ev.id));
+
+      if (!state.selectedEventId || (state.selectedEventId !== 'custom_date' && !validIds.includes(String(state.selectedEventId)))) {
+        state.selectedEventId = validIds.length > 0 ? validIds[0] : 'custom_date';
+      }
+
+      const maxVisible = state.showAllDates ? matching.length : 4;
+      const visibleEvents = matching.slice(0, maxVisible);
+
+      const eventRowsHtml = visibleEvents
+        .map((ev) => {
+          const notEnoughSpots =
+            !ev.isFull && ev.freeSpotsCount !== null && ev.freeSpotsCount < neededSpots;
+          const disabled = ev.isFull || notEnoughSpots;
+          const isSelected = !disabled && String(state.selectedEventId) === String(ev.id);
+
+          const dateParts = ev.date.split(' ');
+          const day = dateParts[0] || '';
+          const month = (dateParts[1] || '').substring(0, 3);
+          const year = dateParts[2] || '';
+
+          let spotsBadge = '';
+          if (ev.isFull) {
+            spotsBadge = `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-700">${isEn ? 'Full' : 'Volgeboekt'}</span>`;
+          } else if (notEnoughSpots) {
+            spotsBadge = `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">${isEn ? `Only ${ev.freeSpotsCount} left` : `Nog ${ev.freeSpotsCount} vrij`}</span>`;
+          } else if (ev.freeSpotsLabel) {
+            spotsBadge = `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100/80 text-emerald-700">${ev.freeSpotsLabel}</span>`;
+          }
+
+          const rightPriceHtml = isPraktijkdag
+            ? `<span class="text-[11px] font-bold text-[#0C4EA2] bg-[#0C4EA2]/10 px-2.5 py-1 rounded-lg">${isEn ? 'Practical day' : 'Praktijkdag'}</span>`
+            : ev.price
+              ? `<div class="text-right leading-tight">
+                  <span class="font-display font-bold text-sm text-brand-secondary block">${ev.price}</span>
+                  <span class="text-[10px] text-brand-dark/45">${isEn ? 'excl. VAT' : 'excl. BTW'}</span>
+                </div>`
+              : '';
+
+          const mobileInlinePriceHtml = isPraktijkdag
+            ? `<span class="min-[400px]:hidden text-[11px] font-bold text-[#0C4EA2]">• ${isEn ? 'Practical day' : 'Praktijkdag'}</span>`
+            : ev.price
+              ? `<span class="min-[400px]:hidden font-display font-bold text-brand-secondary">• ${ev.price} <span class="font-sans font-normal text-[10px] text-brand-dark/50">${isEn ? 'excl. VAT' : 'excl. BTW'}</span></span>`
+              : '';
+
+          return `<button
+            type="button"
+            data-pick-event="${ev.id}"
+            ${disabled ? 'disabled' : ''}
+            class="w-full text-left p-3 sm:p-3.5 rounded-xl border-2 transition-all flex items-center justify-between gap-3 ${
+              disabled
+                ? 'bg-white/50 border-brand-dark/6 opacity-55 cursor-not-allowed'
+                : isSelected
+                  ? 'bg-white border-[#0C4EA2] shadow-sm cursor-pointer'
+                  : 'bg-white border-brand-dark/8 hover:border-[#0C4EA2]/50 cursor-pointer'
+            }"
+          >
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="w-12 h-12 rounded-xl flex flex-col items-center justify-center shrink-0 leading-none ${
+                isSelected ? 'bg-[#0C4EA2] text-white' : 'bg-brand-secondary/90 text-white'
+              }">
+                <span class="font-display font-bold text-base">${day}</span>
+                <span class="text-[10px] uppercase font-semibold opacity-85 mt-0.5">${month}</span>
+              </div>
+              <div class="min-w-0">
+                <div class="flex flex-wrap items-center gap-1.5">
+                  <span class="font-display font-bold text-xs sm:text-sm text-brand-secondary leading-snug">${ev.title}</span>
+                  ${spotsBadge}
+                </div>
+                <div class="text-[11px] text-brand-dark/65 mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                  <span>${day} ${month} ${year}</span>
+                  ${ev.time ? `<span>• ${ev.time}</span>` : ''}
+                  <span>• ${isEn ? 'The Hague' : 'Den Haag'}</span>
+                  ${mobileInlinePriceHtml}
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 shrink-0">
+              <div class="hidden min-[400px]:block">${rightPriceHtml}</div>
+              <span class="w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-all ${
+                isSelected
+                  ? 'border-[#0C4EA2] bg-[#0C4EA2] text-white'
+                  : 'border-brand-dark/20 text-transparent'
+              }">
+                <i class="fa-solid fa-check text-[9px]"></i>
+              </span>
+            </div>
+          </button>`;
+        })
+        .join('');
+
+      const isCustomSelected = state.selectedEventId === 'custom_date';
+      const noOpenDatesNotice =
+        matching.length === 0
+          ? `<div class="p-3 rounded-xl bg-white/80 border border-brand-dark/8 text-xs text-brand-dark/75">
+              <i class="fa-solid fa-circle-info text-[#0C4EA2] mr-1.5"></i>
+              ${
+                isEn
+                  ? 'For this training we schedule the start date in consultation with you.'
+                  : 'Voor deze specifieke training plannen wij de startdatum persoonlijk in overleg met u in.'
+              }
+            </div>`
+          : '';
+
+      const customDateRowHtml = `<button
+        type="button"
+        data-pick-event="custom_date"
+        class="w-full text-left p-3 sm:p-3.5 rounded-xl border-2 transition-all flex items-center justify-between gap-3 cursor-pointer ${
+          isCustomSelected
+            ? 'bg-white border-[#0C4EA2] shadow-sm'
+            : 'bg-white/75 border-dashed border-brand-dark/15 hover:border-[#0C4EA2]/50'
+        }"
+      >
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-xs ${
+            isCustomSelected ? 'bg-[#0C4EA2] text-white' : 'bg-[#0C4EA2]/10 text-[#0C4EA2]'
+          }">
+            <i class="fa-regular fa-calendar-plus"></i>
+          </div>
+          <div class="min-w-0">
+            <span class="font-display font-bold text-xs sm:text-sm text-brand-secondary block leading-snug">
+              ${
+                isPraktijkdag
+                  ? isEn
+                    ? 'No suitable date listed? Schedule practical day in consultation'
+                    : 'Staat uw datum er niet bij? Plan praktijkdag in overleg'
+                  : isEn
+                    ? 'No suitable date or prefer advice first?'
+                    : 'Geen passende datum of liever eerst overleg?'
+              }
+            </span>
+            <span class="text-[11px] text-brand-dark/65 block mt-0.5">
+              ${
+                isEn
+                  ? 'Receive a date proposal or personal advice within 1 working day'
+                  : 'Ontvang binnen 1 werkdag een datumvoorstel of vrijblijvend advies'
+              }
+            </span>
+          </div>
+        </div>
+        <span class="w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-all ${
+          isCustomSelected
+            ? 'border-[#0C4EA2] bg-[#0C4EA2] text-white'
+            : 'border-brand-dark/20 text-transparent'
+        }">
+          <i class="fa-solid fa-check text-[9px]"></i>
+        </span>
+      </button>`;
+
+      listEl.innerHTML = noOpenDatesNotice + eventRowsHtml + customDateRowHtml;
+
+      if (showMoreBtn) {
+        if (!state.showAllDates && matching.length > 4) {
+          const extra = matching.length - 4;
+          showMoreBtn.textContent = isEn
+            ? `Show ${extra} more available ${extra === 1 ? 'date' : 'dates'} ↓`
+            : `Toon nog ${extra} beschikbare ${extra === 1 ? 'datum' : 'cursusdata'} ↓`;
+          showMoreBtn.classList.remove('hidden');
+        } else {
+          showMoreBtn.classList.add('hidden');
+        }
+      }
+
+      listEl.querySelectorAll('[data-pick-event]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          if (btn.disabled) return;
+          state.selectedEventId = btn.getAttribute('data-pick-event') || '';
+          renderStep2DatePicker();
+        });
+      });
+
+      if (step2NextBtn) {
+        step2NextBtn.disabled = !state.selectedEventId;
+      }
+    }
+
+    function renderStep2() {
+      const headingEl = document.getElementById('step-2-heading');
+      const subtitleEl = document.getElementById('step-2-subtitle');
+      const grid = document.getElementById('step-2-situation-grid');
+      if (!grid) return;
+
+      renderStep2PraktijkdagTabs();
+
+      // Special fast mode: Praktijkdag Shortcut
+      if (state.flowMode === 'praktijkdag_shortcut') {
+        if (headingEl) {
+          headingEl.textContent = isEn
+            ? 'Schedule your practical day in The Hague'
+            : 'Plan direct uw praktijkdag in Den Haag';
+        }
+        if (subtitleEl) {
+          subtitleEl.textContent = isEn
+            ? 'Select your completed E-learning course and pick an available practical date below.'
+            : 'Kies hieronder uw afgeronde E-learning en selecteer direct een beschikbare praktijkdatum.';
+        }
+        grid.classList.add('hidden');
+        state.situationKey = 'elearning_completed';
+        state.situationValue = 'E-learning afgerond — Praktijkdag inplannen';
+        state.situationLabel = isEn ? 'Practical day after E-learning' : 'Praktijkdag na E-learning';
+        state.customerType = 'Cursist (Praktijkdag na E-learning)';
+        renderStep2Subtopics();
+        renderStep2DatePicker();
+        return;
+      }
+
+      grid.classList.remove('hidden');
+      const onlyDiensten = isOnlyDienstenSelected();
+      if (headingEl) {
+        headingEl.textContent = isEn
+          ? 'What best fits your situation?'
+          : 'Wat past het beste bij uw situatie?';
+      }
+      if (subtitleEl) {
+        subtitleEl.textContent = onlyDiensten
+          ? isEn
+            ? 'Select the scope or urgency below so our specialist can prepare your proposal.'
+            : 'Kies de omvang of gewenste vervolgstap voor uw bedrijfslocatie(s).'
+          : isEn
+            ? 'Enroll directly on an open date, book your practical day, or request an in-company quote.'
+            : 'Schrijf direct in op een cursusdatum, plan uw praktijkdag, of vraag een Incompany offerte aan.';
+      }
+
+      const options = getActiveStep2Options();
+      const hasMultipleSubjects = state.selectedSubjects.length > 1;
+
+      if (!state.situationKey || !options.some((o) => o.key === state.situationKey)) {
+        const defaultOpt =
+          !onlyDiensten && hasMultipleSubjects
+            ? options.find((o) => o.key === 'incompany') || options[0]
+            : options[0];
+        state.situationKey = defaultOpt.key;
+        state.situationValue = defaultOpt.value;
+        state.situationLabel = defaultOpt.summaryLabel || defaultOpt.label;
+        state.customerType = defaultOpt.customerType;
+        state.customerLabel = defaultOpt.customerType;
+      }
+
+      grid.innerHTML = options
+        .map((opt) => {
+          const isSelected = state.situationKey === opt.key;
+          return `<button
+            type="button"
+            data-situation-key="${opt.key}"
+            data-situation-val="${opt.value}"
+            data-situation-label="${opt.summaryLabel || opt.label}"
+            data-customer-type="${opt.customerType}"
+            class="situation-card group text-left p-4 sm:p-5 rounded-2xl border-2 transition-all cursor-pointer flex items-center justify-between gap-3.5 h-full ${
+              isSelected
+                ? 'is-selected border-[#0C4EA2] bg-[#0C4EA2]/[0.04]'
+                : 'border-brand-dark/8 hover:border-[#0C4EA2] bg-brand-cream/25 hover:bg-[#0C4EA2]/[0.03]'
+            }"
+          >
+            <div class="flex items-center gap-3.5 min-w-0">
+              <div class="w-11 h-11 rounded-xl flex items-center justify-center text-base shrink-0 transition-colors ${
+                isSelected
+                  ? 'bg-[#0C4EA2] text-white'
+                  : 'bg-[#0C4EA2]/10 text-[#0C4EA2] group-hover:bg-[#0C4EA2] group-hover:text-white'
+              }">
+                <i class="fa-solid ${opt.icon}"></i>
+              </div>
+              <div class="min-w-0">
+                <span class="inline-block text-[10px] font-bold uppercase tracking-wider text-[#0C4EA2] mb-0.5">${opt.badge || ''}</span>
+                <h3 class="heading-tile text-brand-secondary leading-tight">${opt.label}</h3>
+                <p class="text-xs text-brand-dark/65 mt-1 leading-snug">${opt.sub || ''}</p>
+              </div>
+            </div>
+            <span class="w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 transition-all ${
+              isSelected
+                ? 'border-[#0C4EA2] bg-[#0C4EA2] text-white'
+                : 'border-brand-dark/20 group-hover:border-[#0C4EA2] text-transparent'
+            }">
+              <i class="fa-solid fa-check text-[9px]"></i>
+            </span>
+          </button>`;
+        })
+        .join('');
+
+      grid.querySelectorAll('.situation-card').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          state.situationKey = btn.getAttribute('data-situation-key') || '';
+          state.situationValue = btn.getAttribute('data-situation-val') || '';
+          state.situationLabel = btn.getAttribute('data-situation-label') || '';
+          state.customerType = btn.getAttribute('data-customer-type') || 'Zakelijk';
+          state.customerLabel = state.customerType;
+          state.showAllDates = false;
+          renderStep2();
+          updateSummary();
+        });
+      });
+
+      renderStep2Subtopics();
+      renderStep2DatePicker();
+    }
+
+    // Bind Step 2 participant count buttons & Show More button
+    document.querySelectorAll('.part-count-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const count = Number(btn.getAttribute('data-part-count')) || 1;
+        state.participantsCount = count;
+        renderStep2DatePicker();
+      });
+    });
+
+    document.getElementById('step-2-show-more-dates')?.addEventListener('click', () => {
+      state.showAllDates = true;
+      renderStep2DatePicker();
+    });
+
+    const form = document.getElementById('advice-funnel-form');
+    const errorBox = document.getElementById('advice-error-msg');
+    const submitBtn = document.getElementById('advice-submit-btn');
+    const submitLabel = document.getElementById('advice-submit-label');
+    const submitIcon = document.getElementById('advice-submit-icon');
+    const formWrapper = document.getElementById('advice-form-wrapper');
+    const successScreen = document.getElementById('advice-success-screen');
+
+    function resetStep3FormView() {
+      if (formWrapper) formWrapper.classList.remove('hidden');
+      if (successScreen) successScreen.classList.add('hidden');
+      if (errorBox) errorBox.classList.add('hidden');
+    }
+
+    function renderStep3Advice() {
+      resetStep3FormView();
+
+      const chipEl = document.getElementById('step-3-selection-chip');
+      const badgeEl = document.getElementById('step-3-badge');
+      const summaryTextEl = document.getElementById('step-3-summary-text');
+      const preadviceTextEl = document.getElementById('step-3-preadvice-text');
+      const quickControlsEl = document.getElementById('step-3-event-quick-controls');
+      const elearningToggle = document.getElementById('step-3-elearning-done-toggle');
+      const partMiniWrap = document.getElementById('step-3-participants-mini');
+      const partSelect = document.getElementById('step-3-participants-select');
+      const directStripEl = document.getElementById('step-3-direct-strip');
+      const formHeadingEl = document.getElementById('advice-form-heading');
+      const formSubEl = document.getElementById('advice-form-sub');
+      const notesLabelEl = document.getElementById('adv-notes-label');
+      const notesInputEl = document.getElementById('adv-notes');
+      const termsWrapper = document.getElementById('advice-terms-wrapper');
+      const termsCheckbox = document.getElementById('adv-terms-agree');
+      const companyWrapper = document.getElementById('field-company-wrapper');
+      const companyInput = document.getElementById('adv-company');
+      const companyReqStar = document.getElementById('company-req-star');
+      const step3PrevBtn = document.getElementById('step-3-prev-btn');
+      const step3BackLink = document.getElementById('step-3-back-link');
+
+      const inCustomer = document.getElementById('input-customerType');
+      const inCategory = document.getElementById('input-category');
+      const inTopics = document.getElementById('input-topics');
+      const inPrimary = document.getElementById('input-detailPrimary');
+      const inSecondary = document.getElementById('input-detailSecondary');
+
+      const directEvent = getSelectedEventObject();
+      const isPraktijkdag =
+        state.flowMode === 'praktijkdag_shortcut' || state.situationKey === 'elearning_completed';
+
+      if (stepEyebrow && state.step === 3) {
+        stepEyebrow.textContent = getStepEyebrowText(3);
+      }
+
+      const backTarget = state.flowMode === 'direct_contact' ? '1' : '2';
+      if (step3PrevBtn) step3PrevBtn.setAttribute('data-prev-step', backTarget);
+      if (step3BackLink) step3BackLink.setAttribute('data-prev-step', backTarget);
+
+      // CASE 1: DIRECT CONCRETE EVENT BOOKING (Open Enrollment OR Praktijkdag after E-learning)
+      if (directEvent) {
+        if (chipEl) chipEl.classList.remove('hidden');
+        if (directStripEl) {
+          directStripEl.classList.add('hidden');
+          directStripEl.classList.remove('grid');
+        }
+        if (quickControlsEl) {
+          quickControlsEl.classList.remove('hidden');
+          quickControlsEl.classList.add('flex');
+        }
+        if (elearningToggle) {
+          elearningToggle.checked = isPraktijkdag;
+        }
+        if (partMiniWrap && partSelect) {
+          if (isPraktijkdag) {
+            partMiniWrap.classList.add('hidden');
+            state.participantsCount = 1;
+          } else {
+            partMiniWrap.classList.remove('hidden');
+            partSelect.value = String(state.participantsCount);
+          }
+        }
+
+        if (badgeEl) {
+          badgeEl.textContent = isPraktijkdag
+            ? isEn
+              ? 'Practical Day (E-learning Completed)'
+              : 'Praktijkdag na E-learning'
+            : isEn
+              ? `Direct Course Enrollment • ${state.participantsCount} ${state.participantsCount === 1 ? 'person' : 'persons'}`
+              : `Directe Cursusinschrijving • ${state.participantsCount} ${state.participantsCount === 1 ? 'deelnemer' : 'deelnemers'}`;
+        }
+
+        if (summaryTextEl) {
+          summaryTextEl.textContent = `${directEvent.title} — ${directEvent.date}`;
+        }
+
+        if (preadviceTextEl) {
+          const metaParts = [
+            directEvent.time ? `🕒 ${directEvent.time}` : '',
+            `📍 ${directEvent.location}`,
+            !isPraktijkdag && directEvent.price
+              ? `💶 ${directEvent.price} ${isEn ? 'excl. VAT p.p.' : 'excl. BTW p.p.'}`
+              : '',
+          ].filter(Boolean);
+          preadviceTextEl.textContent = metaParts.join('  •  ');
+        }
+
+        const requireComp = !isPraktijkdag && state.participantsCount > 1;
+        if (companyWrapper && companyInput) {
+          companyWrapper.classList.remove('hidden');
+          if (requireComp) {
+            companyInput.setAttribute('required', 'required');
+            if (companyReqStar) companyReqStar.classList.remove('hidden');
+          } else {
+            companyInput.removeAttribute('required');
+            if (companyReqStar) companyReqStar.classList.add('hidden');
+          }
+        }
+
+        if (termsWrapper && termsCheckbox) {
+          termsWrapper.classList.remove('hidden');
+          termsWrapper.classList.add('flex');
+          termsCheckbox.setAttribute('required', 'required');
+        }
+
+        if (formHeadingEl) {
+          formHeadingEl.textContent = isPraktijkdag
+            ? isEn
+              ? 'Confirm your practical day'
+              : 'Bevestig uw praktijkdag'
+            : isEn
+              ? 'Complete your course registration'
+              : 'Bevestig uw inschrijving';
+        }
+        if (formSubEl) {
+          formSubEl.textContent = isPraktijkdag
+            ? isEn
+              ? 'Please use the same email address as your E-learning account so we can link your certificate.'
+              : 'Gebruik bij voorkeur hetzelfde e-mailadres als van uw E-learning, zodat wij uw dossier direct koppelen.'
+            : isEn
+              ? 'Your spot will be reserved immediately and you will receive a confirmation by email.'
+              : 'Uw plek wordt direct gereserveerd en u ontvangt een bevestiging per e-mail.';
+        }
+        if (notesLabelEl) {
+          notesLabelEl.textContent =
+            !isPraktijkdag && state.participantsCount > 1
+              ? isEn
+                ? 'Names of extra participants or dietary wishes (optional)'
+                : 'Namen extra deelnemers of dieetwensen lunch (optioneel)'
+              : isEn
+                ? 'Dietary wishes or remarks (optional)'
+                : 'Dieetwensen voor de lunch of opmerkingen (optioneel)';
+        }
+        if (notesInputEl) {
+          notesInputEl.placeholder =
+            !isPraktijkdag && state.participantsCount > 1
+              ? isEn
+                ? 'e.g. names of colleagues joining on this date...'
+                : 'Bijv. namen van collega’s die meedoen of dieetwensen...'
+              : isEn
+                ? 'Any remarks or dietary requirements for lunch...'
+                : 'Eventuele opmerkingen of dieetwensen voor de lunch...';
+        }
+        if (submitLabel) {
+          submitLabel.textContent = isPraktijkdag
+            ? isEn
+              ? 'Confirm practical day'
+              : 'Praktijkdag bevestigen'
+            : isEn
+              ? 'Confirm enrollment'
+              : 'Inschrijving bevestigen';
+        }
+        if (submitIcon) {
+          submitIcon.className = 'fa-solid fa-calendar-check text-xs';
+        }
+        return;
+      }
+
+      // CASE 2: ADVICE / INCOMPANY QUOTE / CUSTOM DATE / SERVICES / DIRECT CONTACT
+      if (quickControlsEl) {
+        quickControlsEl.classList.add('hidden');
+        quickControlsEl.classList.remove('flex');
+      }
+      if (termsWrapper && termsCheckbox) {
+        termsWrapper.classList.add('hidden');
+        termsWrapper.classList.remove('flex');
+        termsCheckbox.removeAttribute('required');
+      }
+      if (submitIcon) {
+        submitIcon.className = 'fa-solid fa-paper-plane text-xs';
+      }
+
+      const subjectSummary =
+        state.flowMode === 'direct_contact'
+          ? 'Direct contact'
+          : state.flowMode === 'praktijkdag_shortcut'
+            ? `${state.praktijkdagTab === 'ALL' ? 'E-learning' : state.praktijkdagTab} (Praktijkdag in overleg)`
+            : state.selectedSubjects.map((s) => s.label).join(', ');
+
+      const topicsSummary =
+        state.selectedSubtopics.length > 0
+          ? `${subjectSummary} (${state.selectedSubtopics.join(', ')})`
+          : subjectSummary;
+
+      const activeOptions = getActiveStep2Options();
+      const matchedOpt = activeOptions.find((o) => o.key === state.situationKey);
+      const isCompanyRequired =
+        state.flowMode === 'standard' && matchedOpt ? Boolean(matchedOpt.requireCompany) : false;
+
+      const effectivePrimary =
+        state.selectedEventId === 'custom_date'
+          ? isPraktijkdag
+            ? isEn
+              ? 'Practical day (date in consultation)'
+              : 'Praktijkdag na E-learning (datum in overleg)'
+            : isEn
+              ? `${state.participantsCount} ${state.participantsCount === 1 ? 'participant' : 'participants'} (date in consultation)`
+              : `${state.participantsCount} ${state.participantsCount === 1 ? 'deelnemer' : 'deelnemers'} (datum in overleg)`
+          : state.situationLabel;
+
+      if (inCustomer) {
+        inCustomer.value =
+          state.flowMode === 'direct_contact'
+            ? 'Direct contact'
+            : state.customerType || 'Zakelijk';
+      }
+      if (inCategory) inCategory.value = subjectSummary;
+      if (inTopics) inTopics.value = topicsSummary;
+      if (inPrimary) inPrimary.value = effectivePrimary;
+      if (inSecondary) inSecondary.value = state.situationValue || effectivePrimary;
+
+      if (companyWrapper && companyInput) {
+        companyWrapper.classList.remove('hidden');
+        if (isCompanyRequired) {
+          companyInput.setAttribute('required', 'required');
+          if (companyReqStar) companyReqStar.classList.remove('hidden');
+        } else {
+          companyInput.removeAttribute('required');
+          if (companyReqStar) companyReqStar.classList.add('hidden');
+        }
+      }
+
+      if (state.flowMode === 'direct_contact') {
+        if (chipEl) chipEl.classList.add('hidden');
+        if (directStripEl) {
+          directStripEl.classList.remove('hidden');
+          directStripEl.classList.add('grid');
+        }
+        if (formHeadingEl) {
+          formHeadingEl.textContent = isEn ? 'Send us a direct message' : 'Stuur ons direct een bericht';
+        }
+        if (formSubEl) {
+          formSubEl.textContent = isEn
+            ? 'Leave your details and question below. We respond within 1 working day.'
+            : 'Laat hieronder uw gegevens en vraag achter. Wij reageren binnen 1 werkdag.';
+        }
+        if (notesLabelEl) {
+          notesLabelEl.textContent = isEn ? 'Your question or message' : 'Uw vraag of bericht';
+        }
+        if (notesInputEl) {
+          notesInputEl.placeholder = isEn
+            ? 'How can our advisors help you?'
+            : 'Waar kunnen onze adviseurs u mee helpen?';
+        }
+        if (submitLabel) {
+          submitLabel.textContent = isEn ? 'Send message' : 'Bericht versturen';
+        }
+      } else {
+        if (chipEl) chipEl.classList.remove('hidden');
+        if (directStripEl) {
+          directStripEl.classList.add('hidden');
+          directStripEl.classList.remove('grid');
+        }
+        if (badgeEl) {
+          badgeEl.textContent = isEn ? 'Tailored Request & Advice' : 'Aanvraag & Persoonlijk Voorstel';
+        }
+        if (summaryTextEl) {
+          const parts = [topicsSummary, effectivePrimary].filter(Boolean);
+          summaryTextEl.textContent = parts.join(' • ');
+        }
+        if (preadviceTextEl) {
+          if (isOnlyDienstenSelected()) {
+            preadviceTextEl.textContent = isEn
+              ? 'Our specialist will review your location requirements and send a tailored proposal within 1 working day.'
+              : 'Onze specialist bekijkt uw aanvraag en stuurt binnen 1 werkdag een passend voorstel voor uw locatie(s).';
+          } else if (state.situationKey === 'incompany' || state.situationKey === 'corporate_advice') {
+            preadviceTextEl.textContent = isEn
+              ? 'From 6 participants we provide in-company group training at your location on a date of your choice.'
+              : 'Vanaf 6 deelnemers verzorgen wij de training voordelig Incompany bij u op bedrijfslocatie op een datum naar keuze.';
+          } else {
+            preadviceTextEl.textContent = isEn
+              ? 'Our planning team will contact you within 1 working day with suitable date options.'
+              : 'Onze planning neemt binnen 1 werkdag contact met u op om samen een geschikte datum in te plannen.';
+          }
+        }
+        if (formHeadingEl) {
+          formHeadingEl.textContent = isEn
+            ? 'Where may we send your proposal or advice?'
+            : 'Waar mogen wij het voorstel of advies naartoe sturen?';
+        }
+        if (formSubEl) {
+          formSubEl.textContent = isEn
+            ? 'Our advisor will respond within 1 working day — completely non-binding.'
+            : 'Onze adviseur reageert binnen 1 werkdag — geheel vrijblijvend.';
+        }
+        if (notesLabelEl) {
+          notesLabelEl.textContent = isEn
+            ? 'Preferred period, location or question (optional)'
+            : 'Gewenste periode, locatie of toelichting (optioneel)';
+        }
+        if (notesInputEl) {
+          notesInputEl.placeholder = isEn
+            ? 'Briefly let us know if you have specific wishes or preferred dates...'
+            : 'Bijv. voorkeursdagen, aantal deelnemers of specifieke vraag...';
+        }
+        if (submitLabel) {
+          submitLabel.textContent = isEn ? 'Send request' : 'Aanvraag versturen';
+        }
+      }
+    }
+
+    // Step 3 inline quick-controls listeners (for direct date bookings / ?event=ID arrivals)
+    document.getElementById('step-3-elearning-done-toggle')?.addEventListener('change', (e) => {
+      const checked = Boolean(e.target && e.target.checked);
+      if (checked) {
+        state.situationKey = 'elearning_completed';
+        state.participantsCount = 1;
+      } else {
+        if (state.flowMode === 'praktijkdag_shortcut') {
+          state.flowMode = 'standard';
+        }
+        state.situationKey = 'open_enrollment';
+      }
+      renderStep3Advice();
+    });
+
+    document.getElementById('step-3-participants-select')?.addEventListener('change', (e) => {
+      const val = Number(e.target && e.target.value) || 1;
+      const ev = getSelectedEventObject();
+      if (ev && ev.freeSpotsCount !== null && val > ev.freeSpotsCount) {
+        state.participantsCount = Math.max(1, ev.freeSpotsCount);
+      } else {
+        state.participantsCount = val;
+      }
+      renderStep3Advice();
+    });
+
+    // Step 1: Select subject card(s)
+    document.querySelectorAll('.subject-card').forEach((card) => {
+      card.addEventListener('click', () => {
+        const val = card.getAttribute('data-subject-card') || '';
+        const label = card.getAttribute('data-subject-label') || val;
+        const group = card.getAttribute('data-subject-group') || 'opleiding';
+
+        state.flowMode = 'standard';
+        state.customerType = '';
+        state.customerLabel = '';
+        state.prefilledItem = null;
+        state.selectedEventId = '';
+        const prefillBanner = document.getElementById('prefill-context-banner');
+        if (prefillBanner) prefillBanner.classList.add('hidden');
+
+        const exists = state.selectedSubjects.some((s) => s.value === val);
+        if (exists) {
+          state.selectedSubjects = state.selectedSubjects.filter((s) => s.value !== val);
+        } else {
+          state.selectedSubjects.push({ value: val, label, group });
+        }
+
+        state.situationKey = '';
+        state.situationValue = '';
+        state.situationLabel = '';
+        syncStep1CardStyles();
+        updateSummary();
+      });
+    });
+
+    // Step 1 Shortcut A: E-learning afgerond -> Praktijkdag plannen
+    document.getElementById('praktijkdag-shortcut-btn')?.addEventListener('click', () => {
+      state.flowMode = 'praktijkdag_shortcut';
+      state.praktijkdagTab = 'BHV Opleidingen';
+      state.selectedSubjects = [];
+      state.selectedSubtopics = [];
+      state.selectedEventId = '';
+      state.participantsCount = 1;
+      state.prefilledItem = null;
+      const prefillBanner = document.getElementById('prefill-context-banner');
+      if (prefillBanner) prefillBanner.classList.add('hidden');
+      syncStep1CardStyles();
+      renderStep2();
+      goToStep(2);
+    });
+
+    // Step 1 Shortcut B: Direct contact (Oranje kaart)
+    document.getElementById('direct-contact-card-btn')?.addEventListener('click', () => {
+      state.flowMode = 'direct_contact';
+      state.customerType = 'Direct contact';
+      state.customerLabel = 'Direct contact';
+      state.selectedSubjects = [];
+      state.selectedSubtopics = [];
+      state.situationKey = '';
+      state.situationValue = '';
+      state.situationLabel = '';
+      state.selectedEventId = '';
+      const prefillBanner = document.getElementById('prefill-context-banner');
+      if (prefillBanner) prefillBanner.classList.add('hidden');
+      syncStep1CardStyles();
+      renderStep3Advice();
+      goToStep(3);
+    });
+
+    step1NextBtn?.addEventListener('click', () => {
+      if (state.selectedSubjects.length === 0) return;
+      state.flowMode = 'standard';
+      renderStep2();
+      goToStep(2);
+    });
+
+    step2NextBtn?.addEventListener('click', () => {
+      if (!state.situationValue && state.flowMode !== 'praktijkdag_shortcut') return;
+      renderStep3Advice();
+      goToStep(3);
+    });
+
+    document.querySelectorAll('[data-prev-step]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const target = Number(btn.getAttribute('data-prev-step'));
+        if (target >= 1) {
+          if (target === 1) {
+            syncStep1CardStyles();
+          } else if (target === 2) {
+            // Ensure subjects exist if user entered directly via ?event=ID and clicked "Wijzigen"
+            const ev = getSelectedEventObject();
+            if (ev && state.selectedSubjects.length === 0 && state.flowMode === 'standard') {
+              state.selectedSubjects = [
+                { value: ev.subjectCard, label: ev.subjectCard, group: 'opleiding' },
+              ];
+            }
+            renderStep2();
+          }
+          goToStep(target);
+        }
+      });
+    });
+
+    stepIndicators.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (btn.disabled) return;
+        const target = Number(btn.getAttribute('data-step-nav'));
+        if (target >= 1 && target <= state.step) {
+          if (target === 1) {
+            syncStep1CardStyles();
+          } else if (target === 2) {
+            const ev = getSelectedEventObject();
+            if (ev && state.selectedSubjects.length === 0 && state.flowMode === 'standard') {
+              state.selectedSubjects = [
+                { value: ev.subjectCard, label: ev.subjectCard, group: 'opleiding' },
+              ];
+            }
+            renderStep2();
+          }
+          goToStep(target);
+        }
+      });
+    });
+
+    document.getElementById('prefill-change-btn')?.addEventListener('click', () => {
+      state.flowMode = 'standard';
+      syncStep1CardStyles();
+      goToStep(1);
+    });
+
+    resetBtn?.addEventListener('click', () => {
+      state.step = 1;
+      state.flowMode = 'standard';
+      state.customerType = '';
+      state.customerLabel = '';
+      state.selectedSubjects = [];
+      state.selectedSubtopics = [];
+      state.situationKey = '';
+      state.situationValue = '';
+      state.situationLabel = '';
+      state.selectedEventId = '';
+      state.participantsCount = 1;
+      state.showAllDates = false;
+      state.prefilledItem = null;
+      const prefillBanner = document.getElementById('prefill-context-banner');
+      if (prefillBanner) prefillBanner.classList.add('hidden');
+      resetStep3FormView();
+      form?.reset();
+      if (step1NextBtn) step1NextBtn.disabled = true;
+      if (step2NextBtn) step2NextBtn.disabled = true;
+      syncStep1CardStyles();
+      goToStep(1);
+    });
+
+    function selectEventFromUrl(eventIdParam, isPraktijkdagIntent) {
+      const matched = allEvents.find((ev) => String(ev.id) === String(eventIdParam));
+      if (!matched || matched.isFull) return false;
+
+      state.flowMode = 'standard';
+      state.selectedSubjects = [
+        { value: matched.subjectCard, label: matched.subjectCard, group: 'opleiding' },
+      ];
+      state.situationKey = isPraktijkdagIntent ? 'elearning_completed' : 'open_enrollment';
+      state.situationValue = isPraktijkdagIntent
+        ? 'E-learning afgerond — Praktijkdag inplannen'
+        : 'Open inschrijving Den Haag (1-5 deelnemers)';
+      state.situationLabel = isPraktijkdagIntent
+        ? isEn
+          ? 'Practical day after E-learning'
+          : 'Praktijkdag na E-learning'
+        : isEn
+          ? 'Open enrollment (1–5 participants)'
+          : 'Open inschrijving (1–5 deelnemers)';
+      state.customerType = isPraktijkdagIntent
+        ? 'Cursist (Praktijkdag na E-learning)'
+        : 'ZZP / MKB (1-5 deelnemers)';
+      state.selectedEventId = String(matched.id);
+
+      syncStep1CardStyles();
+      renderStep3Advice();
+      goToStep(3, true);
+      return true;
+    }
+
+    function applyUrlPrefill() {
+      const params = new URLSearchParams(window.location.search);
+      const eventParam = (params.get('event') || '').trim();
+      const intentParam = (params.get('intent') || '').toLowerCase().trim();
+      const courseKey = (params.get('course') || '').toLowerCase().trim();
+      const serviceKey = (params.get('service') || '').toLowerCase().trim();
+      const categoryKey = (params.get('category') || '').toLowerCase().trim();
+      const modeParam = (params.get('mode') || '').toLowerCase().trim();
+
+      const isPraktijkdagIntent = intentParam === 'praktijkdag' || modeParam === 'praktijkdag';
+
+      // 1. Direct arrival from /cursusdata or /inschrijven/[id] with ?event=<id>
+      if (eventParam) {
+        if (selectEventFromUrl(eventParam, isPraktijkdagIntent)) {
+          return;
+        }
+      }
+
+      // 2. Arrival with ?intent=praktijkdag (e.g. from /e-learning or /cursusdata)
+      if (isPraktijkdagIntent && !courseKey && !serviceKey) {
+        state.flowMode = 'praktijkdag_shortcut';
+        if (categoryKey && prefillCatalog[categoryKey]) {
+          state.praktijkdagTab = prefillCatalog[categoryKey].categoryCard;
+        } else {
+          state.praktijkdagTab = 'BHV Opleidingen';
+        }
+        renderStep2();
+        goToStep(2, true);
+        return;
+      }
+
+      // 3. Arrival from a specific course / category / service page
+      const lookupKey = courseKey || serviceKey || categoryKey;
+      const item = lookupKey ? prefillCatalog[lookupKey] : null;
+
+      if (item) {
+        state.prefilledItem = { slug: lookupKey, ...item };
+        state.selectedSubjects = [
+          {
+            value: item.categoryCard,
+            label: `${item.categoryLabel} — ${item.title}`,
+            group: item.group,
+          },
+        ];
+
+        const bannerEl = document.getElementById('prefill-context-banner');
+        const titleEl = document.getElementById('prefill-context-title');
+        const subEl = document.getElementById('prefill-context-sub');
+
+        if (bannerEl && titleEl && subEl) {
+          titleEl.textContent = item.title;
+          subEl.textContent = item.duration;
+          bannerEl.classList.remove('hidden');
+          bannerEl.classList.add('flex');
+        }
+      }
+
+      if (modeParam === 'incompany') {
+        state.situationKey = 'incompany';
+        state.situationValue = '6-15 medewerkers (Incompany op bedrijfslocatie)';
+        state.situationLabel = isEn ? '6 – 15 employees (In-company)' : '6 – 15 medewerkers (Incompany)';
+        state.customerType = 'MKB / Incompany (6-15 medewerkers)';
+        state.customerLabel = state.customerType;
+      } else if (isPraktijkdagIntent) {
+        state.situationKey = 'elearning_completed';
+        state.situationValue = 'E-learning afgerond — Praktijkdag inplannen';
+        state.situationLabel = isEn ? 'Practical day after E-learning' : 'Praktijkdag na E-learning';
+        state.customerType = 'Cursist (Praktijkdag na E-learning)';
+        state.customerLabel = state.customerType;
+      }
+
+      syncStep1CardStyles();
+      updateSummary();
+
+      if (state.selectedSubjects.length > 0) {
+        renderStep2();
+        goToStep(2, true);
+      }
+    }
+
+    // Hydrate live GoHighLevel events in the background and refresh if needed
+    async function hydrateLiveGhlEvents() {
+      try {
+        const res = await fetch('/api/events');
+        if (!res.ok) return;
+        const json = await res.json();
+        if (!json.success || !Array.isArray(json.data) || json.data.length === 0) return;
+
+        const liveNormalized = json.data.map(normalizeEvent).filter((e) => !e.isOnRequest);
+        if (liveNormalized.length > 0) {
+          allEvents = liveNormalized;
+
+          // Check if user arrived with a live GHL ?event=<recordId> that wasn't in static fallback
+          const params = new URLSearchParams(window.location.search);
+          const eventParam = (params.get('event') || '').trim();
+          const intentParam = (params.get('intent') || '').toLowerCase().trim();
+          if (eventParam && state.step === 1) {
+            if (selectEventFromUrl(eventParam, intentParam === 'praktijkdag')) {
+              return;
+            }
+          }
+
+          if (state.step === 2) {
+            renderStep2DatePicker();
+          } else if (state.step === 3 && isConcreteEventSelected()) {
+            renderStep3Advice();
+          }
+        }
+      } catch (err) {
+        // Fallback schedule stays active smoothly
+      }
+    }
+
+    applyUrlPrefill();
+    hydrateLiveGhlEvents();
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (errorBox) errorBox.classList.add('hidden');
+
+      const formData = new FormData(form);
+      const rawEntries = Object.fromEntries(formData.entries());
+      const directEvent = getSelectedEventObject();
+      const isPraktijkdag =
+        state.flowMode === 'praktijkdag_shortcut' || state.situationKey === 'elearning_completed';
+
+      if (submitBtn) submitBtn.disabled = true;
+      if (submitLabel) {
+        submitLabel.textContent = isEn ? 'Processing...' : 'Bezig met verwerken...';
+      }
+
+      try {
+        let res;
+        if (directEvent) {
+          // Route A: Direct Course Enrollment or Practical Day Booking -> POST /api/inschrijven
+          res = await fetch('/api/inschrijven', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              eventId: directEvent.id,
+              name: rawEntries.name,
+              company: rawEntries.company,
+              email: rawEntries.email,
+              phone: rawEntries.phone,
+              notes: rawEntries.notes,
+              participantsCount: isPraktijkdag ? 1 : state.participantsCount,
+              registrationType: isPraktijkdag ? 'elearning_completed' : 'new',
+            }),
+          });
+        } else {
+          // Route B: Incompany Quote, Advice, Services, Custom Date or Direct Contact -> POST /api/advies
+          res = await fetch('/api/advies', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(rawEntries),
+          });
+        }
+
+        const data = await res.json();
+        if (!res.ok || !data.success) {
+          throw new Error(
+            data.error || (isEn ? 'Could not complete your request.' : 'Kon uw aanvraag niet verwerken.')
+          );
+        }
+
+        const successTitleEl = document.getElementById('advice-success-title');
+        const successBodyEl = document.getElementById('advice-success-body');
+
+        if (directEvent) {
+          if (successTitleEl) {
+            successTitleEl.textContent = isPraktijkdag
+              ? isEn
+                ? 'Your practical day is scheduled!'
+                : 'Uw praktijkdag is ingepland!'
+              : isEn
+                ? 'Enrollment confirmed!'
+                : 'Inschrijving ontvangen!';
+          }
+          if (successBodyEl) {
+            successBodyEl.textContent = isEn
+              ? `We have reserved your spot for ${directEvent.title} on ${directEvent.date}. You will receive a confirmation by email.`
+              : `Wij hebben uw plek voor ${directEvent.title} op ${directEvent.date} gereserveerd. U ontvangt een bevestiging per e-mail.`;
+          }
+        } else if (state.flowMode === 'direct_contact') {
+          if (successTitleEl) {
+            successTitleEl.textContent = isEn
+              ? 'Thank you! Your message has been received.'
+              : 'Bedankt! Uw bericht is ontvangen.';
+          }
+          if (successBodyEl) {
+            successBodyEl.textContent = isEn
+              ? 'Our team in The Hague will contact you within 1 working day.'
+              : 'Ons team neemt binnen 1 werkdag persoonlijk contact met u op.';
+          }
+        } else {
+          if (successTitleEl) {
+            successTitleEl.textContent = isEn
+              ? 'Thank you! We have received your request.'
+              : 'Bedankt! Uw aanvraag is ontvangen.';
+          }
+          if (successBodyEl) {
+            successBodyEl.textContent = isEn
+              ? 'Our advisor has received your wishes and will contact you within 1 working day.'
+              : 'Onze adviseur heeft uw wensen ontvangen en neemt binnen 1 werkdag persoonlijk contact met u op.';
+          }
+        }
+
+        if (formWrapper) formWrapper.classList.add('hidden');
+        if (successScreen) successScreen.classList.remove('hidden');
+        scrollToWizardTop();
+      } catch (err) {
+        if (errorBox) {
+          errorBox.textContent =
+            err.message || (isEn ? 'Something went wrong.' : 'Er ging iets mis.');
+          errorBox.classList.remove('hidden');
+        }
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+        if (submitLabel) {
+          if (directEvent) {
+            submitLabel.textContent = isPraktijkdag
+              ? isEn
+                ? 'Confirm practical day'
+                : 'Praktijkdag bevestigen'
+              : isEn
+                ? 'Confirm enrollment'
+                : 'Inschrijving bevestigen';
+          } else {
+            submitLabel.textContent =
+              state.flowMode === 'direct_contact'
+                ? isEn
+                  ? 'Send message'
+                  : 'Bericht versturen'
+                : isEn
+                  ? 'Send request'
+                  : 'Aanvraag versturen';
+          }
+        }
+      }
+    });
+  })();
+</script>

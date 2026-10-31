@@ -1,116 +1,279 @@
 ---
+import { getLangFromUrl } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const isEn = lang === 'en';
 ---
-<section id="portaal" class="w-full bg-white py-16 md:py-24 relative reveal">
-  <div class="max-w-[1280px] mx-auto px-6 relative">
+<section id="portaal" class="w-full bg-white py-16 md:py-24 relative overflow-hidden reveal">
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 relative">
     
-    <!-- Section Header -->
-    <div class="text-center mb-12">
-      <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-brand-secondary leading-tight mb-4 max-w-4xl mx-auto">
-        Maak kennis met ons nieuwe <span class="relative inline-block text-white px-5 py-2 mx-1 transform -rotate-1"><span class="absolute inset-0 bg-brand-accent rounded-2xl z-0"></span><span class="relative z-10">e-learning portaal</span></span>
+    <!-- Section Header: Rustig, gecentreerd en in één oogopslag duidelijk -->
+    <div class="text-center mb-2 sm:mb-4 relative z-10">
+      <h2 class="font-display text-[25px] min-[375px]:text-[28px] sm:text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-brand-secondary leading-tight mb-4 max-w-3xl mx-auto">
+        {isEn ? (
+          <>
+            Learn at your own pace <span class="whitespace-nowrap">in our</span> <span class="relative inline-block text-white px-3.5 sm:px-5 py-1 sm:py-1.5 mx-0.5 sm:mx-1 my-0.5 transform -rotate-1"><span class="absolute inset-0 bg-brand-accent rounded-xl sm:rounded-2xl z-0"></span><span class="relative z-10">e-learning portal</span></span>
+          </>
+        ) : (
+          <>
+            Leer in je eigen tempo <span class="whitespace-nowrap">via ons</span> <span class="relative inline-block text-white px-3.5 sm:px-5 py-1 sm:py-1.5 mx-0.5 sm:mx-1 my-0.5 transform -rotate-1"><span class="absolute inset-0 bg-brand-accent rounded-xl sm:rounded-2xl z-0"></span><span class="relative z-10">e-learning portaal</span></span>
+          </>
+        )}
       </h2>
-      <p class="text-brand-dark/70 text-sm md:text-base max-w-2xl mx-auto mt-3 font-normal">
-        Snel je theoriecertificaat halen als zelfstandige, of de veiligheid van al je medewerkers beheren vanaf één centraal dashboard.
+      <p class="text-brand-dark/70 text-sm md:text-base max-w-2xl mx-auto mt-3 font-normal leading-relaxed">
+        {isEn
+          ? "Complete the theory for BHV, VCA, First Aid or Forklift online on any device, or manage all employee certificates in one central place."
+          : "Volg de theorie voor BHV, VCA, EHBO of Heftruck op elk apparaat, of beheer als werkgever alle certificaten overzichtelijk op één plek."}
       </p>
     </div>
 
-    <!-- Symmetrical 2-Column Cards Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-[960px] mx-auto items-stretch reveal-stagger">
+    <!-- 3-Device Showcase Mockup (Telefoon, Laptop & Tablet) in 300-DPI 2x Retina HD boven de 2 kaarten -->
+    <div
+      id="portal-mockup-stage"
+      class="portal-mockup-stage relative z-0 max-w-[920px] mx-auto mt-6 sm:mt-8 pointer-events-none select-none"
+    >
+      <!-- Subtiele ambient backlight achter de schermen die rustig meegloeit bij het scrollen -->
+      <div
+        id="portal-mockup-glow"
+        class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[78%] h-[68%] rounded-full bg-gradient-to-r from-[#0C4EA2]/15 via-[#0C4EA2]/25 to-brand-accent/15 blur-3xl opacity-0 transition-opacity duration-1000 pointer-events-none"
+      ></div>
+
+      <div id="portal-mockup-mover" class="portal-mockup-mover relative z-10 will-change-transform">
+        <picture>
+          <source srcset="/assets/images/edusafe_devices_mockup_hd.webp?v=4" type="image/webp" />
+          <img
+            src="/assets/images/edusafe_devices_mockup_hd.png?v=4"
+            width="2512"
+            height="1200"
+            alt={isEn ? "Edusafe E-learning Portal on phone, laptop and tablet" : "Edusafe E-learning Portaal op telefoon, laptop en tablet"}
+            class="w-full h-auto object-contain mx-auto"
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
+      </div>
+    </div>
+
+    <!-- Compacte, Rustige 2-Koloms Portaal Kaarten (overlappend over de onderzijde van de devices) -->
+    <div class="relative z-10 -mt-6 sm:-mt-12 md:-mt-16 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-[980px] mx-auto items-stretch reveal-stagger">
       
-      <!-- Card 1: ZZP & Particulieren (Lichte kaart) -->
-      <div class="bg-white rounded-2xl border border-brand-dark/10 p-6 sm:p-8 flex flex-col justify-between shadow-sm hover:shadow-md transition-all duration-300 group">
+      <!-- Card 1: Voor Cursisten & Particulieren (Rustige witte kaart met zachte schaduw voor mooi contrast op de overlap) -->
+      <div class="bg-white/95 backdrop-blur-md rounded-3xl border border-brand-dark/10 p-6 sm:p-9 flex flex-col justify-between shadow-xl hover:shadow-2xl transition-all duration-300">
         <div>
-          <!-- Photo Banner -->
-          <div class="relative w-full h-40 sm:h-44 rounded-xl overflow-hidden mb-6 bg-brand-cream border border-brand-dark/5">
-            <img 
-              src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&q=80&w=600" 
-              alt="E-learning ZZP & Particulieren" 
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-            />
+          <!-- Compacte Portaal Header (Icon + Badge) -->
+          <div class="flex flex-wrap items-center justify-between gap-2.5 sm:gap-3 mb-6">
+            <div class="w-12 h-12 rounded-2xl bg-[#0C4EA2]/10 text-[#0C4EA2] flex items-center justify-center text-xl shrink-0">
+              <i class="fa-solid fa-laptop-file"></i>
+            </div>
+            <span class="text-xs font-display font-semibold bg-[#F8FAFC] border border-brand-dark/10 text-[#0C4EA2] px-3.5 py-1.5 rounded-full">
+              {isEn ? "Direct access • from € 49,-" : "Direct starten • vanaf € 49,-"}
+            </span>
           </div>
 
-          <h3 class="font-display text-xl sm:text-2xl font-semibold text-brand-secondary mb-2">
-            Voor ZZP & Particulieren
+          <h3 class="font-display text-2xl font-semibold text-brand-secondary mb-2">
+            {isEn ? "For Trainees & Individuals" : "Voor Cursisten & Particulieren"}
           </h3>
           
-          <p class="text-brand-dark/70 text-xs sm:text-sm leading-relaxed mb-6 font-normal min-h-[40px]">
-            Start direct online met je theorie en plan je praktijkdag wanneer het jou uitkomt.
+          <p class="text-brand-dark/70 text-sm leading-relaxed mb-6">
+            {isEn
+              ? "Prepare for your practical day or exam from home at your own pace."
+              : "Bereid je thuis in je eigen tempo voor op je praktijkdag of het examen."}
           </p>
 
-          <!-- 4 USPs -->
-          <ul class="space-y-3.5 mb-6 text-xs sm:text-sm text-brand-dark/80">
-            <li class="flex items-start gap-2.5">
-              <i class="fa-solid fa-check text-brand-primary text-xs mt-1 shrink-0"></i>
-              <span><strong>Flexibel Leren:</strong> Studeer in je eigen tempo op mobiel of tablet.</span>
+          <!-- 4 Korte, scanbare 1-regel vinkjes -->
+          <ul class="space-y-3 mb-8 text-sm text-brand-secondary font-medium border-t border-brand-dark/8 pt-6">
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-check text-[#0C4EA2] text-xs shrink-0"></i>
+              <span>{isEn ? "Personal login code by email right after registration" : "Direct na aanmelding je persoonlijke inlogcode"}</span>
             </li>
-            <li class="flex items-start gap-2.5">
-              <i class="fa-solid fa-check text-brand-primary text-xs mt-1 shrink-0"></i>
-              <span><strong>Start Direct:</strong> Geen wachttijden, direct beginnen met leren.</span>
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-check text-[#0C4EA2] text-xs shrink-0"></i>
+              <span>{isEn ? "Video lessons & practice exams for BHV, VCA, First Aid & Forklift" : "Videolessen & proefexamens voor BHV, VCA, EHBO & Heftruck"}</span>
             </li>
-            <li class="flex items-start gap-2.5">
-              <i class="fa-solid fa-check text-brand-primary text-xs mt-1 shrink-0"></i>
-              <span><strong>Scherpe Tarieven:</strong> Voordelig en officieel gecertificeerd.</span>
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-check text-[#0C4EA2] text-xs shrink-0"></i>
+              <span>{isEn ? "Available in Dutch & English on phone, tablet or PC" : "Beschikbaar in het Nederlands én Engels op elk apparaat"}</span>
             </li>
-            <li class="flex items-start gap-2.5">
-              <i class="fa-solid fa-check text-brand-primary text-xs mt-1 shrink-0"></i>
-              <span><strong>100% Slagingsgarantie:</strong> Oefen gratis examenvragen tot je slaagt.</span>
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-check text-[#0C4EA2] text-xs shrink-0"></i>
+              <span>{isEn ? "Includes digital theory certificate & shorter practical day" : "Inclusief digitaal theoriebewijs voor een kortere praktijkdag"}</span>
             </li>
           </ul>
         </div>
 
         <!-- Button -->
-        <a href="/e-learning" class="font-display font-semibold text-sm py-3.5 px-6 rounded-xl text-center bg-brand-primary text-white hover:bg-brand-primary-hover transition-all duration-300 shadow-sm block w-full mt-4">
-          Direct Online Starten
+        <a href={isEn ? "/en/e-learning" : "/e-learning"} class="font-display font-semibold text-sm sm:text-base py-3.5 px-6 rounded-xl text-center bg-[#0C4EA2] text-white hover:bg-brand-primary-hover transition-all duration-300 shadow-xs flex items-center justify-center gap-2 w-full">
+          <span>{isEn ? "View E-learning courses" : "Bekijk de E-learning cursussen"}</span>
+          <i class="fa-solid fa-arrow-right text-xs"></i>
         </a>
       </div>
 
-      <!-- Card 2: Bedrijven & Werkgevers (Donkere kaart) -->
-      <div class="bg-brand-secondary text-white rounded-2xl border border-brand-secondary/5 p-6 sm:p-8 flex flex-col justify-between shadow-lg hover:shadow-xl transition-all duration-300 group">
+      <!-- Card 2: Voor Bedrijven & Werkgevers (Edusafe Blauw #0C4EA2 kaart) -->
+      <div class="bg-[#0C4EA2] text-white rounded-3xl border border-white/15 p-6 sm:p-9 flex flex-col justify-between shadow-xl hover:shadow-2xl transition-all duration-300">
         <div>
-          <!-- Photo Banner -->
-          <div class="relative w-full h-40 sm:h-44 rounded-xl overflow-hidden mb-6 bg-brand-secondary-hover border border-white/10">
-            <img 
-              src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=600" 
-              alt="MKB Werkgeversportaal" 
-              class="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-500" 
-            />
+          <!-- Compacte Portaal Header (Icon + Badge) -->
+          <div class="flex flex-wrap items-center justify-between gap-2.5 sm:gap-3 mb-6">
+            <div class="w-12 h-12 rounded-2xl bg-white/15 text-white flex items-center justify-center text-xl shrink-0">
+              <i class="fa-solid fa-chart-pie"></i>
+            </div>
+            <span class="text-xs font-display font-semibold bg-white/15 border border-white/20 text-white px-3.5 py-1.5 rounded-full">
+              {isEn ? "Employer Dashboard" : "Werkgeversomgeving"}
+            </span>
           </div>
 
-          <h3 class="font-display text-xl sm:text-2xl font-semibold text-white mb-2">
-            Voor Bedrijven & Werkgevers
+          <h3 class="font-display text-2xl font-semibold text-white mb-2">
+            {isEn ? "For Companies & Employers" : "Voor Bedrijven & Werkgevers"}
           </h3>
 
-          <p class="text-white/80 text-xs sm:text-sm leading-relaxed mb-6 font-normal min-h-[40px]">
-            Beheer certificeringen, uitnodigingen en herhalingen voor personeel op één dashboard.
+          <p class="text-white/80 text-sm leading-relaxed mb-6">
+            {isEn
+              ? "One central dashboard for all courses, certificates and renewals of your staff."
+              : "Één centraal overzicht voor alle opleidingen, certificaten en verlengingen."}
           </p>
 
-          <!-- 4 USPs -->
-          <ul class="space-y-3.5 mb-6 text-xs sm:text-sm text-white/90">
-            <li class="flex items-start gap-2.5">
-              <i class="fa-solid fa-check text-brand-accent text-xs mt-1 shrink-0"></i>
-              <span><strong>Centraal Dashboard:</strong> Real-time inzicht in veiligheid en status.</span>
+          <!-- 4 Korte, scanbare 1-regel vinkjes -->
+          <ul class="space-y-3 mb-8 text-sm text-white/95 font-medium border-t border-white/15 pt-6">
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-check text-brand-accent text-xs shrink-0"></i>
+              <span>{isEn ? "Invite employees for their theory with one click" : "Medewerkers met één klik uitnodigen voor hun theorie"}</span>
             </li>
-            <li class="flex items-start gap-2.5">
-              <i class="fa-solid fa-check text-brand-accent text-xs mt-1 shrink-0"></i>
-              <span><strong>Automatisch Uitnodigen:</strong> Medewerkers ontvangen direct lesstoegang.</span>
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-check text-brand-accent text-xs shrink-0"></i>
+              <span>{isEn ? "Direct insight into study progress and pass status" : "Direct inzicht in studievoortgang en wie geslaagd is"}</span>
             </li>
-            <li class="flex items-start gap-2.5">
-              <i class="fa-solid fa-check text-brand-accent text-xs mt-1 shrink-0"></i>
-              <span><strong>Digitaal Archief:</strong> Alle pasjes en certificaten direct downloadbaar.</span>
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-check text-brand-accent text-xs shrink-0"></i>
+              <span>{isEn ? "Download all certificates and passes centrally (PDF)" : "Alle certificaten en pasjes centraal downloadbaar (PDF)"}</span>
             </li>
-            <li class="flex items-start gap-2.5">
-              <i class="fa-solid fa-check text-brand-accent text-xs mt-1 shrink-0"></i>
-              <span><strong>Aantrekkelijk Voordeel:</strong> Staffelkorting voor groepen vanaf 5 personen.</span>
+            <li class="flex items-center gap-3">
+              <i class="fa-solid fa-check text-brand-accent text-xs shrink-0"></i>
+              <span>{isEn ? "Automatic notification before a certificate expires" : "Automatisch bericht vóórdat een certificaat verloopt"}</span>
             </li>
           </ul>
         </div>
 
         <!-- Button -->
-        <button type="button" data-open-contact-drawer class="font-display font-semibold text-sm py-3.5 px-6 rounded-xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 shadow-md shadow-brand-accent/20 block cursor-pointer w-full mt-4">
-          Ontdek het Werkgeversportaal
-        </button>
+        <a href={isEn ? "/en/personal-advice" : "/persoonlijk-advies"} class="font-display font-semibold text-sm sm:text-base py-3.5 px-6 rounded-xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 shadow-xs flex items-center justify-center gap-2 w-full">
+          <span>{isEn ? "Request Employer Portal" : "Werkgeversportaal aanvragen"}</span>
+          <i class="fa-solid fa-arrow-right text-xs"></i>
+        </a>
       </div>
 
     </div>
 
   </div>
 </section>
+
+<style>
+  .portal-mockup-stage {
+    perspective: 1400px;
+  }
+
+  .portal-mockup-mover {
+    transform-origin: center bottom;
+    transform: translate3d(0, 32px, 0) scale(0.92) rotateX(9deg);
+    opacity: 0.45;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .portal-mockup-mover {
+      transform: none !important;
+      opacity: 1 !important;
+    }
+  }
+</style>
+
+<script>
+  const initPortalMockupScroll = () => {
+    const stage = document.getElementById('portal-mockup-stage');
+    const mover = document.getElementById('portal-mockup-mover');
+    const glow = document.getElementById('portal-mockup-glow');
+
+    if (!stage || !mover) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    let currentProgress = 0;
+    let targetProgress = 0;
+    let rafId: number | null = null;
+    let isVisible = false;
+
+    const clamp = (val: number, min: number, max: number) => Math.max(min, Math.min(max, val));
+
+    const computeTargetProgress = () => {
+      const rect = stage.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+
+      // Start zodra de onderkant van het scherm de mockup nadert (rect.top = vh * 0.95)
+      // en bereik het volledige punt rustig wanneer de mockup mooi in het midden/bovenin staat (rect.top = vh * 0.20)
+      const start = vh * 0.95;
+      const end = vh * 0.15;
+      const raw = (start - rect.top) / (start - end);
+      targetProgress = clamp(raw, 0, 1.25);
+    };
+
+    const renderFrame = () => {
+      // Lage lerp-factor (0.055) zorgt voor een hele rustige, vertraagde ('niet te snelle') vloeiende beweging
+      currentProgress += (targetProgress - currentProgress) * 0.055;
+
+      // p1 loopt van 0 -> 1 voor de opkomst (scale, rotateX en opacity)
+      const p1 = clamp(currentProgress, 0, 1);
+      // Ease-out curve voor een zachte landing
+      const eased = 1 - Math.pow(1 - p1, 2.4);
+
+      // Van licht achterover gekanteld & iets kleiner naar 100% recht en scherp
+      const scale = 0.91 + eased * 0.09 + Math.max(0, currentProgress - 1) * 0.02;
+      const rotateX = (1 - eased) * 9;
+      // Rustige verticale parallax tijdens het verder scrollen
+      const translateY = (1 - eased) * 34 - Math.max(0, currentProgress - 0.65) * 18;
+      const opacity = clamp(0.35 + eased * 0.65, 0, 1);
+
+      mover.style.transform = `translate3d(0, ${translateY.toFixed(2)}px, 0) scale(${scale.toFixed(4)}) rotateX(${rotateX.toFixed(2)}deg)`;
+      mover.style.opacity = opacity.toFixed(3);
+
+      if (glow) {
+        glow.style.opacity = (eased * 0.9).toFixed(2);
+      }
+
+      if (Math.abs(targetProgress - currentProgress) > 0.001 && isVisible) {
+        rafId = requestAnimationFrame(renderFrame);
+      } else {
+        rafId = null;
+      }
+    };
+
+    const onScroll = () => {
+      if (!isVisible) return;
+      computeTargetProgress();
+      if (!rafId) {
+        rafId = requestAnimationFrame(renderFrame);
+      }
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isVisible = entry.isIntersecting;
+          if (isVisible) {
+            computeTargetProgress();
+            if (!rafId) {
+              rafId = requestAnimationFrame(renderFrame);
+            }
+          }
+        });
+      },
+      { rootMargin: '120px 0px 120px 0px', threshold: 0 }
+    );
+
+    observer.observe(stage);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+
+    // Eerste berekening bij laden
+    computeTargetProgress();
+    currentProgress = targetProgress;
+    renderFrame();
+  };
+
+  initPortalMockupScroll();
+  document.addEventListener('astro:after-swap', initPortalMockupScroll);
+</script>

@@ -1,6 +1,11 @@
 ---
-// Mock reviews for Edusafe training courses
-const reviewsRow1 = [
+import { getLangFromUrl } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const isEn = lang === 'en';
+
+// Mock reviews for Edusafe training courses (NL & EN)
+const reviewsRow1Nl = [
   { 
     title: "Uitstekende BHV herhaling",
     text: "De BHV training was praktisch, interactief en erg leerzaam. Onze medewerkers zijn weer helemaal up-to-date en voelen zich veilig.", 
@@ -31,7 +36,7 @@ const reviewsRow1 = [
   }
 ];
 
-const reviewsRow2 = [
+const reviewsRow2Nl = [
   { 
     title: "Fijne instructeurs op locatie",
     text: "Edusafe dacht heel flexibel mee met onze ploegendiensten. De BHV trainingen waren perfect afgestemd op onze werkomgeving.", 
@@ -61,18 +66,86 @@ const reviewsRow2 = [
     date: "2 maanden geleden"
   }
 ];
+
+const reviewsRow1En = [
+  { 
+    title: "Excellent BHV Refresher",
+    text: "The BHV training was practical, interactive, and highly informative. Our staff are fully up to date and feel confident handling emergencies.", 
+    author: "Martijn de Vries", 
+    role: "HR Manager, TechNL",
+    date: "3 days ago"
+  },
+  { 
+    title: "Highly professional First Aid",
+    text: "Certified instructors with genuine frontline experience. The CPR and AED training gave our international team tremendous confidence.", 
+    author: "Linda H.", 
+    role: "Operations Director, KPN",
+    date: "1 week ago"
+  },
+  { 
+    title: "Passed VCA on the first try!",
+    text: "Thanks to the clear instruction and preparation, our entire field service team earned their VCA certification right away.", 
+    author: "Youssef El M.", 
+    role: "Safety Coordinator, BouwWest",
+    date: "2 weeks ago"
+  },
+  { 
+    title: "Forklift training smoothly arranged",
+    text: "Incompany forklift certification at our own warehouse. The instructor focused closely on safety and efficiency. Very satisfied!", 
+    author: "Peter van Dijk", 
+    role: "Logistics Manager, DistriLog",
+    date: "1 month ago"
+  }
+];
+
+const reviewsRow2En = [
+  { 
+    title: "Great instructors on-site",
+    text: "Edusafe accommodated our shift schedules with great flexibility. The English & Dutch BHV sessions were tailored to our facility.", 
+    author: "Sandra K.", 
+    role: "HSE Specialist, FoodGroup",
+    date: "5 days ago"
+  },
+  { 
+    title: "Recommended for every company",
+    text: "Complete peace of mind from registration to wallet cards. We will definitely book our annual refresher courses with Edusafe again.", 
+    author: "Thomas B.", 
+    role: "Office Manager, Alfa Advies",
+    date: "3 weeks ago"
+  },
+  { 
+    title: "Tailored AED & CPR training",
+    text: "Hands-on AED instruction with realistic scenarios. Really convenient that this could be organized directly at our office.", 
+    author: "Anouk de Jong", 
+    role: "Safety Officer, Municipality of The Hague",
+    date: "1 week ago"
+  },
+  { 
+    title: "Arbowet compliant and expert advice",
+    text: "Edusafe also advised us on statutory BHV staffing requirements under the Dutch Arbowet. Pleasant collaboration and expert guidance.", 
+    author: "Robert T.", 
+    role: "HSE Director, Securitas",
+    date: "2 months ago"
+  }
+];
+
+const reviewsRow1 = isEn ? reviewsRow1En : reviewsRow1Nl;
+const reviewsRow2 = isEn ? reviewsRow2En : reviewsRow2Nl;
 ---
-<section class="py-20 md:py-28 overflow-hidden bg-brand-cream text-brand-secondary relative border-t border-b border-brand-dark/5 z-10 reveal">
+<section class="py-16 md:py-24 overflow-hidden bg-brand-cream text-brand-secondary relative border-t border-brand-dark/5 z-10 reveal">
   
   <!-- Header Text -->
-  <div class="max-w-[1280px] mx-auto px-6 mb-12 text-center animate-fade-in">
-    <span class="text-xs font-display font-semibold tracking-widest uppercase text-brand-primary block mb-3">Beoordelingen</span>
-    <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-brand-secondary">
-      Wat klanten over Edusafe zeggen
+  <div class="max-w-[1280px] mx-auto px-4 sm:px-6 mb-10 sm:mb-12 text-center animate-fade-in">
+    <div class="section-eyebrow text-brand-primary justify-center mb-2.5">
+      <i class="fa-solid fa-star text-amber-500"></i>
+      <span>{isEn ? "Reviews" : "Beoordelingen"}</span>
+    </div>
+    <h2 class="heading-section text-brand-secondary">
+      {isEn ? "What clients say about Edusafe" : "Wat klanten over Edusafe zeggen"}
     </h2>
     
     <!-- App Store Rating Badge representation -->
-    <div class="flex items-center justify-center gap-2 mt-4 text-xs font-medium text-brand-dark/70">
+    <div class="flex flex-wrap items-center justify-center gap-2 mt-4 text-xs font-medium text-brand-dark/70">
       <span class="font-semibold text-brand-secondary bg-brand-primary/10 px-2.5 py-0.5 rounded-lg border border-brand-primary/20">4.9</span>
       <div class="flex gap-0.5 text-amber-500">
         {Array.from({ length: 5 }).map(() => (
@@ -81,7 +154,9 @@ const reviewsRow2 = [
           </svg>
         ))}
       </div>
-      <span class="text-brand-dark/50 font-medium">&bull; 150+ gecertificeerde partners</span>
+      <span class="text-brand-dark/50 font-medium">
+        &bull; {isEn ? "150+ certified partners" : "150+ gecertificeerde partners"}
+      </span>
     </div>
   </div>
 
@@ -92,7 +167,7 @@ const reviewsRow2 = [
     <div class="marquee-row overflow-hidden flex w-full relative">
       <div class="marquee-track-left flex gap-6 whitespace-nowrap">
         {reviewsRow1.map(review => (
-          <div class="w-[320px] sm:w-[380px] shrink-0 whitespace-normal bg-white p-6 rounded-3xl border border-brand-dark/5 shadow-[0_4px_20px_rgba(0,0,0,0.015)] flex flex-col justify-between hover:border-brand-primary/20 transition-all duration-300">
+          <div class="w-[280px] sm:w-[380px] shrink-0 whitespace-normal bg-white p-5 sm:p-6 rounded-3xl border border-brand-dark/5 shadow-[0_4px_20px_rgba(0,0,0,0.015)] flex flex-col justify-between hover:border-brand-primary/20 transition-all duration-300">
             <div>
               <div class="flex items-center justify-between mb-4">
                 <div class="flex gap-0.5 text-amber-500">
@@ -104,8 +179,8 @@ const reviewsRow2 = [
                 </div>
                 <span class="text-[10px] text-brand-dark/40 font-medium">{review.date}</span>
               </div>
-              <h4 class="font-display font-semibold text-brand-secondary text-sm sm:text-base mb-2">{review.title}</h4>
-              <p class="text-xs sm:text-sm text-brand-dark/75 leading-relaxed font-normal mb-6">
+              <h4 class="heading-tile text-brand-secondary mb-2">{review.title}</h4>
+              <p class="text-card text-brand-dark/75 mb-6">
                 "{review.text}"
               </p>
             </div>
@@ -125,7 +200,7 @@ const reviewsRow2 = [
       <!-- Duplicate for infinite effect -->
       <div class="marquee-track-left flex gap-6 whitespace-nowrap" aria-hidden="true">
         {reviewsRow1.map(review => (
-          <div class="w-[320px] sm:w-[380px] shrink-0 whitespace-normal bg-white p-6 rounded-3xl border border-brand-dark/5 shadow-[0_4px_20px_rgba(0,0,0,0.015)] flex flex-col justify-between hover:border-brand-primary/20 transition-all duration-300">
+          <div class="w-[280px] sm:w-[380px] shrink-0 whitespace-normal bg-white p-5 sm:p-6 rounded-3xl border border-brand-dark/5 shadow-[0_4px_20px_rgba(0,0,0,0.015)] flex flex-col justify-between hover:border-brand-primary/20 transition-all duration-300">
             <div>
               <div class="flex items-center justify-between mb-4">
                 <div class="flex gap-0.5 text-amber-500">
@@ -137,8 +212,8 @@ const reviewsRow2 = [
                 </div>
                 <span class="text-[10px] text-brand-dark/40 font-medium">{review.date}</span>
               </div>
-              <h4 class="font-display font-semibold text-brand-secondary text-sm sm:text-base mb-2">{review.title}</h4>
-              <p class="text-xs sm:text-sm text-brand-dark/75 leading-relaxed font-normal mb-6">
+              <h4 class="heading-tile text-brand-secondary mb-2">{review.title}</h4>
+              <p class="text-card text-brand-dark/75 mb-6">
                 "{review.text}"
               </p>
             </div>
@@ -161,7 +236,7 @@ const reviewsRow2 = [
     <div class="marquee-row overflow-hidden flex w-full relative">
       <div class="marquee-track-right flex gap-6 whitespace-nowrap">
         {reviewsRow2.map(review => (
-          <div class="w-[320px] sm:w-[380px] shrink-0 whitespace-normal bg-white p-6 rounded-3xl border border-brand-dark/5 shadow-[0_4px_20px_rgba(0,0,0,0.015)] flex flex-col justify-between hover:border-brand-primary/20 transition-all duration-300">
+          <div class="w-[280px] sm:w-[380px] shrink-0 whitespace-normal bg-white p-5 sm:p-6 rounded-3xl border border-brand-dark/5 shadow-[0_4px_20px_rgba(0,0,0,0.015)] flex flex-col justify-between hover:border-brand-primary/20 transition-all duration-300">
             <div>
               <div class="flex items-center justify-between mb-4">
                 <div class="flex gap-0.5 text-amber-500">
@@ -173,8 +248,8 @@ const reviewsRow2 = [
                 </div>
                 <span class="text-[10px] text-brand-dark/40 font-medium">{review.date}</span>
               </div>
-              <h4 class="font-display font-semibold text-brand-secondary text-sm sm:text-base mb-2">{review.title}</h4>
-              <p class="text-xs sm:text-sm text-brand-dark/75 leading-relaxed font-normal mb-6">
+              <h4 class="heading-tile text-brand-secondary mb-2">{review.title}</h4>
+              <p class="text-card text-brand-dark/75 mb-6">
                 "{review.text}"
               </p>
             </div>
@@ -194,7 +269,7 @@ const reviewsRow2 = [
       <!-- Duplicate for infinite effect -->
       <div class="marquee-track-right flex gap-6 whitespace-nowrap" aria-hidden="true">
         {reviewsRow2.map(review => (
-          <div class="w-[320px] sm:w-[380px] shrink-0 whitespace-normal bg-white p-6 rounded-3xl border border-brand-dark/5 shadow-[0_4px_20px_rgba(0,0,0,0.015)] flex flex-col justify-between hover:border-brand-primary/20 transition-all duration-300">
+          <div class="w-[280px] sm:w-[380px] shrink-0 whitespace-normal bg-white p-5 sm:p-6 rounded-3xl border border-brand-dark/5 shadow-[0_4px_20px_rgba(0,0,0,0.015)] flex flex-col justify-between hover:border-brand-primary/20 transition-all duration-300">
             <div>
               <div class="flex items-center justify-between mb-4">
                 <div class="flex gap-0.5 text-amber-500">
@@ -206,8 +281,8 @@ const reviewsRow2 = [
                 </div>
                 <span class="text-[10px] text-brand-dark/40 font-medium">{review.date}</span>
               </div>
-              <h4 class="font-display font-semibold text-brand-secondary text-sm sm:text-base mb-2">{review.title}</h4>
-              <p class="text-xs sm:text-sm text-brand-dark/75 leading-relaxed font-normal mb-6">
+              <h4 class="heading-tile text-brand-secondary mb-2">{review.title}</h4>
+              <p class="text-card text-brand-dark/75 mb-6">
                 "{review.text}"
               </p>
             </div>

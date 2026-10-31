@@ -2,10 +2,10 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --color-brand-primary: #1B66B1;
-  --color-brand-primary-hover: #154e88;
-  --color-brand-secondary: #0E223D;
-  --color-brand-secondary-hover: #081629;
+  --color-brand-primary: #0C4EA2;
+  --color-brand-primary-hover: #093D80;
+  --color-brand-secondary: #062856;
+  --color-brand-secondary-hover: #041B3B;
   --color-brand-accent: #FF6B35;
   --color-brand-accent-hover: #e55620;
   --color-brand-cream: #FAF9F6;
@@ -21,8 +21,6 @@
   --animate-float: float 6s ease-in-out infinite;
   --animate-marquee: marquee 40s linear infinite;
   --animate-marquee-reverse: marquee-reverse 40s linear infinite;
-  --animate-coin-flip: coin-flip-3d 1.5s infinite ease-in-out;
-  --animate-loader-progress: loader-fill 2s linear forwards;
 
   @keyframes fade-in-up {
     0% {
@@ -72,27 +70,6 @@
       transform: translateX(0);
     }
   }
-
-  @keyframes coin-flip-3d {
-    0% {
-      transform: rotateY(0deg) scale(1);
-    }
-    50% {
-      transform: rotateY(180deg) scale(1.1);
-    }
-    100% {
-      transform: rotateY(360deg) scale(1);
-    }
-  }
-
-  @keyframes loader-fill {
-    0% {
-      width: 0%;
-    }
-    100% {
-      width: 100%;
-    }
-  }
 }
 
 @layer base {
@@ -102,6 +79,60 @@
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-display font-semibold tracking-tight text-brand-secondary;
+  }
+}
+
+@layer components {
+  /* ==========================================================================
+     Edusafe Typography & Button Styling Guide
+     ========================================================================== */
+
+  /* Headings (Outfit, font-semibold) */
+  .heading-hero {
+    @apply font-display font-semibold text-[28px] min-[375px]:text-[32px] sm:text-[44px] lg:text-[54px] leading-[1.15] tracking-tight break-words;
+  }
+
+  .heading-page {
+    @apply font-display font-semibold text-[24px] min-[375px]:text-[27px] sm:text-4xl lg:text-[44px] leading-[1.15] tracking-tight break-words;
+  }
+
+  .heading-section {
+    @apply font-display font-semibold text-[24px] min-[375px]:text-[26px] sm:text-3xl lg:text-4xl leading-[1.2] tracking-tight break-words;
+  }
+
+  .heading-card {
+    @apply font-display font-semibold text-lg sm:text-xl leading-snug tracking-tight;
+  }
+
+  .heading-tile {
+    @apply font-display font-semibold text-base sm:text-[17px] leading-snug tracking-tight;
+  }
+
+  /* Section Eyebrow / Kicker */
+  .section-eyebrow {
+    @apply inline-flex items-center gap-2 font-display font-semibold text-xs uppercase tracking-wider;
+  }
+
+  /* Body Copy (Plus Jakarta Sans) */
+  .text-lead {
+    @apply font-sans text-[15px] sm:text-base leading-relaxed;
+  }
+
+  .text-body {
+    @apply font-sans text-[15px] sm:text-base leading-relaxed;
+  }
+
+  .text-card {
+    @apply font-sans text-[13.5px] sm:text-sm leading-relaxed;
+  }
+
+  /* Buttons (Outfit, font-semibold, rounded-xl, orange bg-brand-accent, shadow-sm) */
+  .btn-base {
+    @apply inline-flex items-center justify-center gap-2.5 font-display font-semibold text-sm px-6 py-3.5 rounded-xl bg-brand-accent hover:bg-brand-accent-hover text-white shadow-sm transition-all duration-300;
+  }
+
+  .btn-hero {
+    @apply inline-flex items-center justify-center gap-2.5 font-display font-semibold text-[15px] px-7 py-3.5 sm:py-4 rounded-xl bg-brand-accent hover:bg-brand-accent-hover text-white shadow-sm transition-all duration-300;
   }
 }
 
@@ -115,22 +146,11 @@
   }
   
   .text-glow-primary {
-    text-glow: 0 0 20px rgba(27, 102, 177, 0.2);
+    text-glow: 0 0 20px rgba(12, 78, 162, 0.2);
   }
   
   .text-glow-accent {
     text-glow: 0 0 20px rgba(255, 107, 53, 0.2);
-  }
-
-  /* 3D Coin Flip Preloader Utilities */
-  .transform-style-3d {
-    transform-style: preserve-3d;
-  }
-  .rotate-y-180 {
-    transform: rotateY(180deg);
-  }
-  .coin-side {
-    backface-visibility: hidden;
   }
 
   /* Reveal scroll animations */
@@ -165,4 +185,25 @@
   .reveal.active .reveal-stagger > *:nth-child(4) { transition-delay: 400ms; }
   .reveal.active .reveal-stagger > *:nth-child(5) { transition-delay: 500ms; }
   .reveal.active .reveal-stagger > *:nth-child(6) { transition-delay: 600ms; }
+}
+
+/* Mobile UX Safeguards: prevent iOS Safari <16px input auto-zoom & ensure sticky bottom bar never covers footer links */
+@media (max-width: 639.98px) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
+/* Automatically tighten footer top padding & hide top border whenever ContactForm (#contact) precedes it */
+body:has(#contact) footer {
+  padding-top: 3rem;
+  border-top-width: 0;
+}
+
+@media (max-width: 1023.98px) {
+  body:has(#mobile-sticky-bottom-bar) footer {
+    padding-bottom: calc(6rem + env(safe-area-inset-bottom, 0px));
+  }
 }

@@ -1,517 +1,312 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import MobileCourseBottomBar from '../../components/MobileCourseBottomBar.astro';
+import CourseCategoryHub, { type HubCourseItem } from '../../components/CourseCategoryHub.astro';
 
-const incompanyCourses = [
+const incompanyCourses: HubCourseItem[] = [
   {
-    id: "incompany-bhv",
-    title: "Incompany BHV (Basic & Refresher)",
-    tagline: "Comprehensive emergency response training at your company premises",
-    price: "from € 95.00 p.p.",
-    spotsText: "From 6 participants",
-    duration: "1 day (or custom schedule)",
-    target: "For organizations seeking efficient, cost-effective, and company-specific training for their emergency response team.",
-    requirements: "A suitable training room and a safe outdoor area for the fire suppression exercises.",
-    exam: "Theory via e-learning or classroom + continuous practical evaluation.",
-    certification: "Official certified BHV diplomas + wallet ID cards for all passing employees.",
-    inclusions: ["Complete study guides & e-learning", "Manikins, trainer AEDs & fire simulators", "Company-specific evacuation assessment", "Official diplomas & ID passes"],
-    modules: [
-      { name: "First Aid interventions tailored to your industry" },
-      { name: "Resuscitation using your on-site AED device" },
-      { name: "Live fire suppression with foam, CO2 & blankets" },
-      { name: "Evacuation protocols in your own building" }
+    id: 'incompany-bhv',
+    slug: 'bhv-basis',
+    title: 'In-company BHV (Basic, Refresher & Team Leader)',
+    shortTitle: 'In-company BHV',
+    tagline: 'Train your emergency response team in your own building using your own escape routes',
+    price: 'from € 125,00',
+    duration: '1 day or half-day at your site',
+    target:
+      'For international companies, offices, schools, warehouses and healthcare facilities with 6+ participants seeking tailored Dutch or English BHV certification without travel time.',
+    suitableForHtml: [
+      'From <strong>6 participants</strong>, an In-company BHV training at your own premises is almost always more cost-effective and impactful than individual open-enrollment bookings.',
+      'Your Dutch- and English-speaking employees practice directly with your own AED, fire panel, escape routes, assembly point and site-specific RI&amp;E risks.',
     ],
-    image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=600",
-    registerLink: "#contact"
-  },
-  {
-    id: "incompany-ehbo",
-    title: "Incompany First Aid & CPR",
-    tagline: "Certified first aid training focused on your workplace hazards",
-    price: "from € 85.00 p.p.",
-    spotsText: "Oranje Kruis / ERC",
-    duration: "1 or 2 half days",
-    target: "For organizations with specific workplace risks such as schools, sports clubs, industry, hospitality, or care facilities.",
-    requirements: "A suitable meeting or classroom room.",
-    exam: "Practical skill verification by certified instructor.",
-    certification: "Oranje Kruis / ERC Certificate First Aid & CPR (valid 2 years).",
-    inclusions: ["Course materials & dressing packs", "CPR training with AED units", "Simulated casualty actor upon request", "Certificates & photo cards"],
-    modules: [
-      { name: "Recognizing life-threatening medical emergencies" },
-      { name: "CPR and AED deployment protocols" },
-      { name: "Controlling major bleeds & shock treatment" },
-      { name: "Industry-specific trauma (chemicals, machinery, sports)" }
+    requirements: 'A meeting/training room and a safe outdoor area (approx. 6x6m) for the live-fire exercise.',
+    exam: 'Online pre-study or classroom theory + continuous practical assessment on site.',
+    certification: 'Official Dutch Arbowet BHV certificates + ID cards (valid 1 year).',
+    inclusions: [
+      'Instructor & gear on site',
+      'CPR manikins, AEDs & fire unit',
+      'Tailored to your building',
+      'Official certificates & cards',
     ],
-    image: "https://images.unsplash.com/photo-1603398938378-e54eab446dde?auto=format&fit=crop&q=80&w=600",
-    registerLink: "#contact"
-  },
-  {
-    id: "incompany-vca",
-    title: "Incompany VCA Training & Exam",
-    tagline: "Classroom instruction + official CBT digital exam on-site",
-    price: "from € 165.00 p.p.",
-    spotsText: "Includes on-site examiner",
-    duration: "1 course day (incl. exam)",
-    target: "For contractors, engineering firms, and technical services certifying entire teams at once.",
-    requirements: "Room equipped with tables, chairs, and adequate lighting.",
-    exam: "Official CBT exam administered on-site by accredited examination board.",
-    certification: "Official VCA Basic or VOL-VCA diploma (valid 10 years) + CDR registry.",
-    inclusions: ["Textbooks and practice mock tests", "Exam preparation by accredited teacher", "Official exam on-site", "CDR registration & passes"],
     modules: [
-      { name: "Health & safety regulations and legal compliance" },
-      { name: "Hazardous substances, fire & explosion prevention" },
-      { name: "Working at height, confined spaces & tooling safety" },
-      { name: "Exam prep drills with tailored question techniques" }
+      {
+        name: 'Lifesaving First Aid & CPR with your company AED',
+        description: 'Practical emergency scenarios tailored to your specific workplace environment.',
+      },
+      {
+        name: 'Hands-on extinguishing with foam, CO2 and fire blanket',
+        description: 'Clean, eco-friendly live-fire extinguishing drill at your outdoor parking or courtyard.',
+      },
+      {
+        name: 'Building walkthrough along your actual emergency exits',
+        description: 'Testing alarm procedures, escape routes, door checks and assembly point reporting.',
+      },
     ],
-    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=600",
-    registerLink: "#contact"
+    image: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=600',
+    requestUrl: '/en/personal-advice?type=zakelijk&course=bhv-basis&mode=incompany',
+    incompanyUrl: '#incompany-request',
   },
   {
-    id: "incompany-ontruiming",
-    title: "Incompany Evacuation Drill & Safety Audit",
-    tagline: "Realistic evacuation simulation with smoke, observers, and debrief",
-    price: "Fixed rate from € 650.-",
-    spotsText: "Mandatory annual drill",
-    duration: "Half day (planning, drill & evaluation)",
-    target: "For corporate offices, healthcare facilities, schools, and distribution centers.",
-    requirements: "Prior consultation on the emergency plan and coordination with alarm monitoring.",
-    exam: "Assessment of response time, staff coordination, and evacuation speed.",
-    certification: "Official evaluation report and safety audit document for insurance.",
-    inclusions: ["Scenario planning and risk mapping", "Training smoke & sound effects", "Edusafe observer team", "Comprehensive photo report & recommendations"],
+    id: 'incompany-ehbo',
+    slug: 'ehbo-basis',
+    title: 'In-company First Aid (EHBO), Pediatric First Aid (IKK) & CPR',
+    shortTitle: 'In-company First Aid & AED',
+    tagline: 'Accredited First Aid or Wet IKK training for your entire team on site',
+    price: 'from € 95,00',
+    duration: '1 half-day or 1 day on site',
+    target:
+      'For international schools, daycares, offices, hospitality, manufacturing plants and sports clubs.',
+    requirements: 'A quiet indoor room with floor space for CPR manikin exercises.',
+    exam: 'Practical skills assessment per The Orange Cross / NRR / Wet IKK guidelines.',
+    certification: 'Official recognized EHBO, EHAK or NRR CPR certificate (valid 2 years).',
+    inclusions: [
+      'QCPR manikins & bandage kits',
+      'Tailored to your industry',
+      'Official certificates & cards',
+      'Daytime, evening or Saturday',
+    ],
     modules: [
-      { name: "Testing response upon emergency alarm sounds" },
-      { name: "Checking emergency escape routes and fire exits" },
-      { name: "Directing by Team Leader and emergency wardens" },
-      { name: "Assembly point headcounts and emergency services handover" }
+      {
+        name: 'Adult & Pediatric CPR (BLS / PBLS) + AED deployment',
+        description: 'High-engagement practical training in small groups with English-speaking instructors.',
+      },
+      {
+        name: 'Industry-specific injuries & workplace emergencies',
+        description: 'Focused scenarios for childcare (Wet IKK), offices, laboratories or production sites.',
+      },
     ],
-    image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=600",
-    registerLink: "#contact"
+    image: 'https://images.unsplash.com/photo-1603398938378-e54eab446dde?auto=format&fit=crop&q=80&w=600',
+    requestUrl: '/en/personal-advice?type=zakelijk&course=ehbo-basis&mode=incompany',
+    incompanyUrl: '#incompany-request',
   },
   {
-    id: "veiligheidsdag-carrousel",
-    title: "Corporate Safety Day / Safety Carousel",
-    tagline: "Interactive safety workshop stations for your entire workforce",
-    price: "Custom on request",
-    spotsText: "For 15 to 200+ employees",
-    duration: "Half day or full day",
-    target: "For companies aiming to make safety engaging and memorable across all company departments.",
-    requirements: "Facility with multiple meeting rooms or outdoor space.",
-    exam: "No written exam; emphasis on engagement, awareness, and team building.",
-    certification: "Certificates of participation for all attendees.",
-    inclusions: ["Rotating workshop stations", "Firefighting simulator, VR headsets & First Aid games", "Full facilitation by safety specialists", "Celebratory certificate presentation"],
+    id: 'incompany-vca',
+    slug: 'vca-vol',
+    title: 'In-company VCA Course + Official CBT Exam on Site',
+    shortTitle: 'In-company VCA + Exam',
+    tagline: 'Classroom exam training plus official SSVV CBT exam at your own premises',
+    price: 'from € 175,00',
+    duration: '1 training day (incl. exam)',
+    target:
+      'For contractors, engineering firms, staffing agencies and technical teams certifying groups in one day.',
+    requirements: 'Training room with desks, chairs and reliable power/internet connection.',
+    exam: 'Official SSVV CBT digital exam administered by an independent exam institute at your site.',
+    certification: 'Official VCA Basic or VOL-VCA diploma + 10-year CDR registration.',
+    inclusions: [
+      'On-site exam training',
+      'Official SSVV exam included',
+      '10-year CDR registration',
+      'Available in EN, NL & more',
+    ],
     modules: [
-      { name: "Station 1: VR Firefighting & Kitchen Flame Simulator" },
-      { name: "Station 2: Resuscitation Challenge with real-time feedback" },
-      { name: "Station 3: Forklift tipping simulator or ergonomics clinic" },
-      { name: "Station 4: Hazard identification escape room game" }
+      {
+        name: 'Targeted VCA exam preparation with practical cases',
+        description: 'Dutch Arbowet, hazardous substances, working at height, LMRA and electrical safety.',
+      },
+      {
+        name: 'Same-day official SSVV CBT exam with instant result',
+        description: 'We arrange the examiner, exam laptops and official Central Diploma Register entry.',
+      },
     ],
-    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=600",
-    registerLink: "#contact"
-  }
-];
-
-const defaultCourse = incompanyCourses[0];
-
-const faqs = [
-  {
-    q: "What are the benefits of incompany training versus open registration?",
-    a: "With incompany training, your staff learns in their familiar work environment, utilizing your own emergency equipment, escape corridors, and specific facility layout. You also save on travel time and costs, while benefiting from substantial group discounts from 6+ attendees."
+    image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=600',
+    requestUrl: '/en/personal-advice?type=zakelijk&course=vca-vol&mode=incompany',
+    incompanyUrl: '#incompany-request',
   },
   {
-    q: "What requirements must our training room meet?",
-    a: "For BHV or First Aid, we need a quiet room with sufficient tables and chairs for theory. For firefighting practice, a safe outdoor space (such as a 6x6m courtyard or parking lot) is sufficient. We bring all simulators, manikins, AEDs, and eco-friendly extinguishers."
+    id: 'incompany-transport',
+    slug: 'heftruck',
+    title: 'In-company Forklift, Reach Truck & Aerial Platform Training',
+    shortTitle: 'In-company Internal Transport',
+    tagline: 'Certify your operators directly in your own warehouse on their own equipment',
+    price: 'from € 165,00',
+    duration: '1 day or half-day in your warehouse',
+    target:
+      'For logistics hubs, distribution centers and production warehouses certifying operators in their own aisles and racking.',
+    requirements: 'Inspected forklift/reach truck/MEWP and a safe practice zone in your warehouse.',
+    exam: 'Theory test + practical driving exam in your own operational environment.',
+    certification: 'Official Dutch Arbowet Internal Transport certificate + card (valid 5 years).',
+    inclusions: [
+      'Train on your own machines',
+      'Zero travel time for drivers',
+      'Per Dutch Arbobesluit 7.17c',
+      'Certificates & safety cards',
+    ],
+    modules: [
+      {
+        name: 'Pre-use inspection, load capacity charts & warehouse safety',
+        description: 'Tailored to your actual trucks, racking heights, loading docks and pedestrian zones.',
+      },
+      {
+        name: 'Practical assessment in your own warehouse aisles',
+        description: 'Safe maneuvering and high-level stacking with minimal disruption to daily shifts.',
+      },
+    ],
+    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&q=80&w=600',
+    requestUrl: '/en/personal-advice?type=zakelijk&course=heftruck&mode=incompany',
+    incompanyUrl: '#incompany-request',
   },
   {
-    q: "Can we flexibly schedule dates and times?",
-    a: "Yes, we fully customize training dates to your operational schedule. Sessions can be scheduled during regular business hours, evenings, or Saturdays to prevent business interruption."
+    id: 'incompany-evacuation',
+    slug: 'ontruimingsoefening',
+    title: 'In-company Evacuation Drill & Safety Day',
+    shortTitle: 'In-company Evacuation Drill',
+    tagline: 'Annual realistic evacuation simulation with smoke, observers and official report',
+    price: 'Custom quote',
+    duration: '1 half-day at your site',
+    target:
+      'For offices, schools, hotels and multi-tenant buildings fulfilling their annual statutory evacuation drill.',
+    requirements: 'Pre-drill scenario briefing and temporary test status with your alarm monitoring center.',
+    exam: 'Practical observation with evacuation timing and improvement audit.',
+    certification: 'Official Evacuation Drill Evaluation Report per Dutch Arbowet & NEN 8112.',
+    inclusions: [
+      'Scenario script & briefing',
+      'Smoke simulation & observers',
+      'Team debriefing on site',
+      'Official Arbowet audit report',
+    ],
+    modules: [
+      {
+        name: 'Realistic emergency simulation in your building',
+        description: 'Testing alarm response, evacuation time, floor sweeps and assembly point headcount.',
+      },
+      {
+        name: 'Written evaluation report for Labour Inspectorate & insurer',
+        description: 'Actionable compliance report with concrete recommendations for your safety dossier.',
+      },
+    ],
+    image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=600',
+    requestUrl: '/en/personal-advice?type=zakelijk&course=ontruimingsoefening&mode=incompany',
+    incompanyUrl: '#incompany-request',
   },
-  {
-    q: "How fast can we receive a proposal?",
-    a: "When you send an inquiry via our form, you will receive a transparent, non-binding proposal within 1 business day."
-  }
 ];
 ---
 
-<Layout title="Tailored Incompany Safety Training | Edusafe" description="Book practical BHV, First Aid, VCA, or Evacuation training at your company location. Flexible scheduling and competitive group rates across the Netherlands.">
-  <main class="w-full">
-    
-    <!-- Hero Header Section -->
-    <section class="relative bg-brand-secondary text-white pt-20 pb-36 md:pt-24 md:pb-44 overflow-hidden">
-      <div class="absolute inset-0 z-0 overflow-hidden">
-        <img 
-          src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1600" 
-          alt="Incompany Safety Training" 
-          class="w-full h-full object-cover opacity-35 scale-105" 
-        />
-        <div class="absolute inset-0 bg-gradient-to-r from-brand-secondary via-brand-secondary/85 to-brand-secondary/40"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-brand-secondary via-transparent to-black/20"></div>
-      </div>
-      
-      <div class="max-w-[1280px] mx-auto px-6 relative z-10">
-        <div class="max-w-3xl animate-fade-in">
-          <span class="inline-flex items-center gap-1.5 text-brand-accent font-display font-semibold text-xs uppercase tracking-wider mb-3.5">
-            <i class="fa-solid fa-building-shield animate-pulse"></i>
-            Tailored Training At Your Own Location
-          </span>
-          <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight leading-tight mb-4 text-white">
-            Incompany <span class="relative inline-block text-white px-5 py-2 mx-1 transform -rotate-1"><span class="absolute inset-0 bg-brand-accent rounded-2xl z-0"></span><span class="relative z-10">Training</span></span>
-          </h1>
-          <p class="text-white/90 text-base md:text-lg max-w-2xl leading-relaxed mb-6 font-normal">
-            No travel time for your personnel, train with your own emergency resources, and maximize relevance for your business. Request a custom quote today.
-          </p>
+<CourseCategoryHub
+  lang="en"
+  category="Incompany"
+  seoTitle="In-company Safety Training on Site (BHV, First Aid, VCA & Forklift) | Edusafe"
+  seoDescription="Book tailored In-company BHV, First Aid, VCA, Forklift or Evacuation training at your premises anywhere in the Netherlands. From 6 participants in English or Dutch."
+  breadcrumbLabel="In-company Training"
+  heroTitle="In-company Safety Training at Your Location"
+  heroSubtitle="Train your team in your own building or warehouse with zero travel time. Fully tailored in English or Dutch from 6 participants across the Netherlands."
+  heroImage="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80&w=1600"
+  heroBullets={[
+    'Cost-effective from 6 pers.',
+    'At your own company site',
+    'Flexible: day, evening, weekend',
+    'Proposal within 1 business day',
+  ]}
+  primaryCtaUrl="/en/personal-advice?type=zakelijk&mode=incompany"
+  primaryCtaLabel="Request In-company quote"
+  courses={incompanyCourses}
+  coursesHeading="All In-company trainings at your location"
+  faqTitle="In-company Safety Training"
+  advisorText="Need an In-company quote or custom date?"
+>
+  <div
+    slot="extra-left"
+    id="incompany-request"
+    class="bg-white rounded-3xl p-5 sm:p-8 shadow-md border border-brand-dark/5 scroll-mt-24 lg:scroll-mt-40"
+  >
+    <span class="section-eyebrow text-brand-primary mb-1">
+      <span>Direct Group Proposal</span>
+    </span>
+    <h2 class="heading-card text-brand-secondary mb-2">
+      Request a tailored In-company quote
+    </h2>
+    <p class="text-body text-brand-dark/75 mb-6">
+      Receive a clear, no-obligation group proposal within 1 business day — including certified instructor, training equipment and official certification on site.
+    </p>
+
+    <form id="incompany-quote-form-en" class="space-y-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-semibold text-brand-secondary uppercase tracking-wider mb-1.5">Company Name</label>
+          <input type="text" name="company" placeholder="e.g. Acme Logistics NL" class="w-full bg-brand-cream/60 border border-brand-dark/10 rounded-xl px-4 py-3 text-base sm:text-sm focus:outline-none focus:border-brand-primary" required />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-brand-secondary uppercase tracking-wider mb-1.5">Contact Person</label>
+          <input type="text" name="name" placeholder="First and last name" class="w-full bg-brand-cream/60 border border-brand-dark/10 rounded-xl px-4 py-3 text-base sm:text-sm focus:outline-none focus:border-brand-primary" required />
         </div>
       </div>
-    </section>
 
-    <!-- Main Content Grid (Floating overlap) -->
-    <section class="max-w-[1280px] mx-auto px-6 -mt-20 md:-mt-24 relative z-20 pb-24">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
-        
-        <!-- Left Side: Dynamic Grid of Cards + Details (8 columns) -->
-        <div class="lg:col-span-8 space-y-6">
-          
-          <!-- Compact Dynamic Details Card -->
-          <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-md border border-brand-dark/5 reveal" id="details-card-left">
-            
-            <!-- Title Header -->
-            <div class="border-b border-brand-dark/5 pb-3 mb-3.5 flex flex-wrap items-baseline justify-between gap-2">
-              <div>
-                <span id="selected-tagline" class="text-[10px] font-semibold text-brand-primary uppercase tracking-wider block mb-0.5">{defaultCourse.tagline}</span>
-                <h2 id="selected-title" class="font-display text-xl sm:text-2xl font-semibold text-brand-secondary leading-snug">{defaultCourse.title}</h2>
-              </div>
-            </div>
-            
-            <!-- Description -->
-            <div class="mb-4">
-              <p id="selected-target" class="text-brand-dark/75 text-xs sm:text-[13px] leading-relaxed font-normal">
-                {defaultCourse.target}
-              </p>
-            </div>
-            
-            <!-- Modules Checklist -->
-            <div class="mb-4 border-t border-brand-dark/5 pt-3.5">
-              <h3 class="font-display text-[10px] font-semibold uppercase text-brand-dark/40 tracking-widest mb-2.5">Included Training Elements</h3>
-              <div id="selected-modules" class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5">
-                {defaultCourse.modules.map(mod => (
-                  <div class="flex items-center gap-2">
-                    <span class="w-4 h-4 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-[10px] shrink-0">
-                      <i class="fa-solid fa-check"></i>
-                    </span>
-                    <span class="font-medium text-brand-secondary text-xs sm:text-[13px]">{mod.name}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <!-- Specs Table -->
-            <div class="border-t border-brand-dark/5 pt-3.5">
-              <h3 class="font-display text-[10px] font-semibold uppercase text-brand-dark/40 tracking-widest mb-3">Practical Details</h3>
-              <div class="space-y-2 text-xs">
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-1">
-                  <span class="font-semibold text-brand-secondary text-[10px] uppercase tracking-wider">Facility Requirements</span>
-                  <span id="selected-requirements" class="sm:col-span-2 text-brand-dark/75 font-normal leading-relaxed">{defaultCourse.requirements}</span>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-1 border-t border-brand-dark/5 pt-2">
-                  <span class="font-semibold text-brand-secondary text-[10px] uppercase tracking-wider">Evaluation & Exam</span>
-                  <span id="selected-exam" class="sm:col-span-2 text-brand-dark/75 font-normal leading-relaxed">{defaultCourse.exam}</span>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-1 border-t border-brand-dark/5 pt-2">
-                  <span class="font-semibold text-brand-secondary text-[10px] uppercase tracking-wider">Certification</span>
-                  <span id="selected-certification" class="sm:col-span-2 text-brand-dark/75 font-normal leading-relaxed">{defaultCourse.certification}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Section Divider/Header for Variations -->
-          <div class="pt-1 reveal">
-            <h3 class="font-display text-lg sm:text-xl font-semibold text-brand-secondary mb-1">Available Incompany Programs</h3>
-            <p class="text-xs text-brand-dark/60 font-medium mb-3">Click on any course below to view the specifications above.</p>
-          </div>
-
-          <!-- Cards Grid Section -->
-          <div class="reveal">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 reveal-stagger">
-              {incompanyCourses.map((course, idx) => (
-                <button 
-                  data-id={course.id}
-                  class={`course-card-btn group relative bg-white rounded-[24px] p-3 border transition-all duration-500 cursor-pointer text-left flex flex-col justify-between shadow-[0_10px_30px_rgba(0,0,0,0.015)] hover:shadow-[0_20px_40px_rgba(27,102,177,0.06)] hover:-translate-y-1.5 ${
-                    idx === 0 
-                      ? 'border-brand-primary ring-2 ring-brand-primary/20 bg-brand-cream/5' 
-                      : 'border-brand-dark/5 hover:border-brand-primary/25'
-                  }`}
-                >
-                  <!-- Framed Image Area -->
-                  <div class="relative w-full aspect-[16/10] rounded-[18px] overflow-hidden mb-4 shrink-0 bg-gradient-to-br from-brand-secondary to-brand-primary">
-                    <img 
-                      src={course.image} 
-                      alt={course.title} 
-                      class="absolute inset-0 w-full h-full object-cover grayscale-[30%] opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 group-hover:scale-105" 
-                      onerror="this.style.display='none'; this.nextElementSibling.classList.remove('hidden');"
-                    />
-                    <div class="absolute inset-0 flex items-center justify-center text-white/30 hidden">
-                      <i class="fa-solid fa-building-shield text-4xl animate-pulse"></i>
-                    </div>
-                    
-                    <!-- Duration floating badge -->
-                    <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 shadow-sm flex items-center gap-1.5 z-10">
-                      <span class="w-1.5 h-1.5 rounded-full bg-brand-primary animate-pulse"></span>
-                      <span class="text-[9px] font-black uppercase text-brand-secondary tracking-wider">{course.spotsText}</span>
-                    </div>
-                  </div>
-
-                  <!-- Content Area -->
-                  <div class="px-2 pb-2 flex-grow flex flex-col justify-between w-full">
-                    <div>
-                      <h3 class="font-display font-black text-brand-secondary text-base lg:text-lg leading-tight mb-2 group-hover:text-brand-primary transition-colors">
-                        {course.title}
-                      </h3>
-                      <p class="text-[11px] text-brand-dark/60 font-semibold leading-relaxed mb-4 line-clamp-2">
-                        {course.target}
-                      </p>
-                    </div>
-
-                    <!-- Bottom Pricing & Action Row -->
-                    <div class="flex items-center justify-between pt-3 border-t border-brand-dark/5 mt-auto w-full">
-                      <div class="flex flex-col">
-                        <span class="text-[9px] font-black uppercase text-brand-dark/40 leading-none mb-0.5">Indication</span>
-                        <span class="font-display font-black text-brand-secondary text-sm leading-none">{course.price}</span>
-                      </div>
-                      <span class="inline-flex items-center gap-1 text-[10px] font-black uppercase text-brand-primary tracking-wider group-hover:text-brand-accent transition-colors">
-                        View details
-                        <svg class="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24">
-                          <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                        </svg>
-                      </span>
-                    </div>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <!-- Incompany Quote Form Section -->
-          <div id="contact" class="bg-brand-secondary text-white rounded-3xl p-8 md:p-10 shadow-xl border border-white/5 relative overflow-hidden scroll-mt-24 reveal">
-            <div class="absolute -right-12 -bottom-12 text-white/5 pointer-events-none">
-              <i class="fa-solid fa-file-invoice-dollar text-[240px]"></i>
-            </div>
-            
-            <div class="relative z-10 max-w-2xl">
-              <h3 class="font-display text-2xl md:text-3xl font-black mb-3 text-white">Request Incompany Quote</h3>
-              <p class="text-white/70 text-sm leading-relaxed mb-8">
-                Tell us your preferred dates and participant numbers. We will send you a transparent, customized proposal within 24 hours.
-              </p>
-              
-              <form class="space-y-4" onsubmit="event.preventDefault(); alert('Thank you! Your quote request has been sent. We will contact you shortly.'); this.reset();">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input type="text" placeholder="Company Name" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors" required />
-                  <input type="text" placeholder="Contact Person" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors" required />
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <input type="email" placeholder="Email Address" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors" required />
-                  <input type="tel" placeholder="Phone Number" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors" required />
-                </div>
-                <textarea placeholder="Desired training, approximate group size, and location" rows="3" class="w-full bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-brand-accent transition-colors"></textarea>
-                <button type="submit" class="bg-brand-accent hover:bg-brand-accent-hover text-white font-semibold py-3 px-8 rounded-xl transition-colors cursor-pointer">
-                  Send Proposal Request
-                </button>
-              </form>
-            </div>
-          </div>
-
-          <!-- FAQ Section -->
-          <div class="rounded-2xl bg-white p-5 sm:p-7 border border-brand-dark/5 shadow-sm reveal">
-            <h3 class="font-display text-xl font-semibold text-brand-secondary mb-5">Frequently Asked Questions about Incompany Training</h3>
-            <div class="space-y-3.5">
-              {faqs.map((faq) => (
-                <div class="border-b border-brand-dark/5 pb-3.5 last:border-b-0 last:pb-0">
-                  <h4 class="font-display font-semibold text-sm sm:text-base text-brand-secondary mb-1.5 flex items-start gap-2">
-                    <span class="text-brand-primary">?</span>
-                    <span>{faq.q}</span>
-                  </h4>
-                  <p class="text-xs sm:text-[13px] text-brand-dark/70 leading-relaxed pl-4 font-normal">
-                    {faq.a}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-semibold text-brand-secondary uppercase tracking-wider mb-1.5">Email Address</label>
+          <input type="email" name="email" placeholder="name@company.com" class="w-full bg-brand-cream/60 border border-brand-dark/10 rounded-xl px-4 py-3 text-base sm:text-sm focus:outline-none focus:border-brand-primary" required />
         </div>
-
-        <!-- Right Side: Sticky Booking & Summary Card (Desktop Only: 4 columns) -->
-        <div class="hidden lg:block lg:col-span-4 relative">
-          <div class="sticky top-28 lg:top-[148px] space-y-5 z-20">
-            
-            <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-lg border border-brand-dark/5">
-              <span class="text-[9px] font-semibold uppercase text-brand-dark/40 tracking-wider block mb-1">Selected Training</span>
-              <h3 id="sidebar-title" class="font-display text-xl sm:text-2xl font-semibold text-brand-secondary leading-snug">{defaultCourse.title}</h3>
-              
-              <!-- Pricing -->
-              <div class="mt-4 pt-4 border-t border-brand-dark/5">
-                <div class="flex items-baseline justify-between mb-0.5">
-                  <span class="text-[9px] font-semibold uppercase text-brand-dark/40 tracking-wider">Tariff Indication</span>
-                  <span class="text-[10px] text-brand-dark/50">Excl. VAT</span>
-                </div>
-                <div class="flex items-baseline gap-2">
-                  <span id="selected-price" class="font-display text-3xl sm:text-4xl font-semibold text-brand-secondary">{defaultCourse.price}</span>
-                </div>
-              </div>
-
-              <!-- Spots & Duration badge -->
-              <div class="mt-3.5 p-2.5 rounded-xl bg-brand-cream/60 border border-brand-dark/5 space-y-1.5">
-                <div class="flex items-center gap-2 text-xs">
-                  <div class="w-6 h-6 rounded-lg bg-brand-primary/10 flex items-center justify-center text-brand-primary shrink-0">
-                    <i class="fa-solid fa-clock text-[10px]"></i>
-                  </div>
-                  <div>
-                    <div class="text-[9px] font-semibold uppercase text-brand-dark/40 leading-none mb-0.5">Duration</div>
-                    <span id="selected-duration" class="font-semibold text-brand-secondary text-xs">{defaultCourse.duration}</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Inclusions Checklist -->
-              <div class="mt-4 pt-4 border-t border-brand-dark/5">
-                <span class="text-[9px] font-semibold uppercase text-brand-dark/40 tracking-wider block mb-2.5">What is included?</span>
-                <ul id="selected-inclusions" class="space-y-2">
-                  {defaultCourse.inclusions.map(item => (
-                    <li class="flex items-center gap-2 text-xs text-brand-dark/80 font-medium">
-                      <i class="fa-solid fa-circle-check text-emerald-500 text-xs shrink-0"></i>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <!-- CTA Buttons -->
-              <div class="mt-6 space-y-2.5">
-                <button 
-                  type="button"
-                  data-open-contact-drawer
-                  class="font-display font-semibold text-sm py-3.5 px-5 rounded-xl text-center bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 w-full block shadow-md shadow-brand-accent/20 cursor-pointer"
-                >
-                  Request Incompany Quote →
-                </button>
-              </div>
-
-              <!-- Guarantee Tag -->
-              <div class="mt-4 pt-4 border-t border-brand-dark/5 flex items-center justify-center gap-1.5 text-xs font-semibold text-emerald-600">
-                <i class="fa-solid fa-shield-check text-sm"></i>
-                <span>100% Pass Guarantee</span>
-              </div>
-
-            </div>
-
-            <!-- Direct Contact Box -->
-            <div class="bg-brand-cream/60 rounded-2xl p-4 sm:p-5 border border-brand-dark/5 text-center reveal">
-              <span class="text-[10px] font-semibold uppercase tracking-wider text-brand-dark/50 block mb-1">Need personal advice?</span>
-              <p class="text-xs text-brand-dark/70 mb-3 font-normal">Our training advisors are happy to help formulate your incompany safety program.</p>
-              <a href="tel:0704447795" class="font-display font-semibold text-sm text-brand-primary hover:text-brand-primary/80 transition-colors inline-flex items-center gap-2">
-                <i class="fa-solid fa-phone text-xs"></i>
-                <span>+31 (0)70 - 444 77 95</span>
-              </a>
-            </div>
-
-          </div>
+        <div>
+          <label class="block text-xs font-semibold text-brand-secondary uppercase tracking-wider mb-1.5">Phone Number</label>
+          <input type="tel" name="phone" placeholder="+31 6 12345678" class="w-full bg-brand-cream/60 border border-brand-dark/10 rounded-xl px-4 py-3 text-base sm:text-sm focus:outline-none focus:border-brand-primary" required />
         </div>
-
       </div>
-    </section>
 
-    <!-- Mobile Bottom Summary & Expand Drawer -->
-    <MobileCourseBottomBar defaultCourse={defaultCourse} advisorText="Personal advice for incompany training?" />
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-xs font-semibold text-brand-secondary uppercase tracking-wider mb-1.5">Desired Training</label>
+          <select name="category" class="w-full bg-brand-cream/60 border border-brand-dark/10 rounded-xl px-4 py-3 text-base sm:text-sm focus:outline-none focus:border-brand-primary cursor-pointer">
+            <option>In-company BHV (Basic / Refresher)</option>
+            <option>In-company First Aid, Pediatric First Aid or CPR</option>
+            <option>In-company VCA Course & Exam</option>
+            <option>In-company Forklift / Reach Truck / Aerial Platform</option>
+            <option>In-company Evacuation Drill</option>
+            <option>Custom combination</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-brand-secondary uppercase tracking-wider mb-1.5">Number of Participants</label>
+          <input type="number" name="participants" min="1" placeholder="e.g. 10 employees" class="w-full bg-brand-cream/60 border border-brand-dark/10 rounded-xl px-4 py-3 text-base sm:text-sm focus:outline-none focus:border-brand-primary" />
+        </div>
+      </div>
 
-  </main>
-</Layout>
+      <div>
+        <label class="block text-xs font-semibold text-brand-secondary uppercase tracking-wider mb-1.5">Location & Specific Preferences</label>
+        <textarea name="message" rows="3" placeholder="City, preferred language (English / Dutch) or preferred dates..." class="w-full bg-brand-cream/60 border border-brand-dark/10 rounded-xl px-4 py-3 text-base sm:text-sm resize-none focus:outline-none focus:border-brand-primary"></textarea>
+      </div>
 
-<script define:vars={{ incompanyCourses }}>
-  function initCourseNavigator() {
-    const buttons = document.querySelectorAll('.course-card-btn');
-    if (!buttons.length) return;
+      <button type="submit" class="btn-base w-full sm:w-auto min-h-[48px] cursor-pointer">
+        <span>Request free quote →</span>
+      </button>
+    </form>
 
-    function selectCourse(courseId) {
-      const course = incompanyCourses.find(c => c.id === courseId);
-      if (!course) return;
+    <div id="incompany-quote-success-en" class="hidden flex-col items-center justify-center text-center p-6 bg-emerald-50 border border-emerald-200 rounded-2xl mt-4">
+      <h3 class="heading-tile text-emerald-900 mb-1">Quote request received!</h3>
+      <p class="text-card text-emerald-700">Thank you for your inquiry. We will contact you within 1 business day with a tailored proposal.</p>
+    </div>
 
-      buttons.forEach(btn => {
-        if (btn.getAttribute('data-id') === courseId) {
-          btn.classList.add('border-brand-primary', 'ring-2', 'ring-brand-primary/20', 'bg-brand-cream/5');
-          btn.classList.remove('border-brand-dark/5', 'hover:border-brand-primary/25');
-        } else {
-          btn.classList.remove('border-brand-primary', 'ring-2', 'ring-brand-primary/20', 'bg-brand-cream/5');
-          btn.classList.add('border-brand-dark/5', 'hover:border-brand-primary/25');
-        }
-      });
-
-      const elements = {
-        title: document.getElementById('selected-title'),
-        tagline: document.getElementById('selected-tagline'),
-        target: document.getElementById('selected-target'),
-        requirements: document.getElementById('selected-requirements'),
-        exam: document.getElementById('selected-exam'),
-        certification: document.getElementById('selected-certification'),
-        sidebarTitle: document.getElementById('sidebar-title'),
-        price: document.getElementById('selected-price'),
-        duration: document.getElementById('selected-duration'),
-        modules: document.getElementById('selected-modules'),
-        inclusions: document.getElementById('selected-inclusions')
-      };
-
-      if (elements.title) elements.title.textContent = course.title;
-      if (elements.tagline) elements.tagline.textContent = course.tagline;
-      if (elements.target) elements.target.textContent = course.target;
-      if (elements.requirements) elements.requirements.textContent = course.requirements;
-      if (elements.exam) elements.exam.textContent = course.exam;
-      if (elements.certification) elements.certification.textContent = course.certification;
-      if (elements.sidebarTitle) elements.sidebarTitle.textContent = course.title;
-      if (elements.price) elements.price.textContent = course.price;
-      if (elements.duration) elements.duration.textContent = course.duration;
-
-      if (elements.modules && course.modules) {
-        elements.modules.innerHTML = course.modules.map(mod => `
-          <div class="flex items-center gap-2">
-            <span class="w-4 h-4 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary text-[10px] shrink-0">
-              <i class="fa-solid fa-check"></i>
-            </span>
-            <span class="font-medium text-brand-secondary text-xs sm:text-[13px]">${mod.name}</span>
-          </div>
-        `).join('');
+    <script>
+      const incFormEn = document.getElementById('incompany-quote-form-en') as HTMLFormElement | null;
+      const incSuccessEn = document.getElementById('incompany-quote-success-en');
+      if (incFormEn && incSuccessEn) {
+        incFormEn.addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const btn = incFormEn.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+          const orig = btn ? btn.innerHTML : '';
+          if (btn) { btn.disabled = true; btn.textContent = 'Sending...'; }
+          const fd = new FormData(incFormEn);
+          try {
+            await fetch('/api/advies', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                source: 'incompany-offerte-en',
+                customerType: 'Zakelijk',
+                company: fd.get('company') || '',
+                name: fd.get('name') || '',
+                email: fd.get('email') || '',
+                phone: fd.get('phone') || '',
+                category: fd.get('category') || 'In-company Training',
+                participants: fd.get('participants') ? `${fd.get('participants')} participants` : '',
+                message: fd.get('message') || '',
+              }),
+            });
+            incFormEn.classList.add('hidden');
+            incSuccessEn.classList.remove('hidden');
+            incSuccessEn.classList.add('flex');
+          } catch (err) {
+            console.error(err);
+          } finally {
+            if (btn) { btn.disabled = false; btn.innerHTML = orig; }
+          }
+        });
       }
-
-      if (elements.inclusions && course.inclusions) {
-        elements.inclusions.innerHTML = course.inclusions.map(inc => `
-          <li class="flex items-center gap-2 text-xs text-brand-dark/80 font-medium">
-            <i class="fa-solid fa-circle-check text-emerald-500 text-xs shrink-0"></i>
-            <span>${inc}</span>
-          </li>
-        `).join('');
-      }
-
-      // Mobile Bottom Bar sync
-      const mobileTitle = document.getElementById('mobile-bar-title');
-      const mobilePrice = document.getElementById('mobile-bar-price');
-      const mobileDuration = document.getElementById('mobile-bar-duration');
-
-      if (mobileTitle) mobileTitle.textContent = course.title;
-      if (mobilePrice) mobilePrice.textContent = course.price;
-      if (mobileDuration) mobileDuration.textContent = course.duration;
-    }
-
-    buttons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const id = btn.getAttribute('data-id');
-        if (id) selectCourse(id);
-      });
-    });
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const initialId = urlParams.get('course') || (window.location.hash ? window.location.hash.replace('#', '') : null);
-    if (initialId && incompanyCourses.some(c => c.id === initialId)) {
-      selectCourse(initialId);
-    }
-  }
-
-  initCourseNavigator();
-  document.addEventListener('astro:page-load', initCourseNavigator);
-</script>
+    </script>
+  </div>
+</CourseCategoryHub>

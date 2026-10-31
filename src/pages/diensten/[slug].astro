@@ -1,0 +1,212 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHeroBackdrop from '../../components/PageHeroBackdrop.astro';
+import MobileCourseBottomBar from '../../components/MobileCourseBottomBar.astro';
+import { servicePillars, type ServicePillar } from '../../data/catalog';
+
+export function getStaticPaths() {
+  return servicePillars.map((pillar) => ({
+    params: { slug: pillar.slug },
+    props: { pillar },
+  }));
+}
+
+interface Props {
+  pillar: ServicePillar;
+}
+
+const { pillar } = Astro.props;
+const otherPillars = servicePillars.filter((p) => p.slug !== pillar.slug);
+const mobileServiceItem = {
+  id: pillar.slug,
+  title: pillar.shortTitle,
+  tagline: pillar.badge,
+  price: 'Offerte op maat',
+  duration: 'Landelijk op locatie',
+  inclusions: pillar.benefits.slice(0, 4),
+  registerLink: `/persoonlijk-advies?type=zakelijk&service=${pillar.slug}`,
+};
+---
+
+<Layout
+  title={`${pillar.title} | Veiligheidsdiensten | Edusafe`}
+  description={`${pillar.tagline}. ${pillar.description}`}
+>
+  <main class="w-full">
+    <!-- Hero Section -->
+    <section class="relative bg-brand-primary text-white pt-14 pb-20 sm:pt-24 sm:pb-24 md:pt-28 md:pb-32 overflow-hidden">
+      <PageHeroBackdrop image={pillar.image} alt={pillar.title} />
+
+      <div class="max-w-[1280px] mx-auto px-4 sm:px-6 relative z-10">
+        <!-- Breadcrumbs -->
+        <div class="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-wider mb-3.5 sm:mb-4">
+          <a href="/" class="hover:underline text-white/75 hover:text-white">Home</a>
+          <span class="text-white/40">/</span>
+          <span class="text-white/75">Diensten</span>
+          <span class="text-white/40">/</span>
+          <span class="text-brand-accent">{pillar.shortTitle}</span>
+        </div>
+
+        <div class="max-w-3xl">
+          <span class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/12 text-white border border-white/25 backdrop-blur-sm text-xs font-bold uppercase tracking-wider mb-3.5 sm:mb-4">
+            <i class={`${pillar.icon} text-brand-accent`}></i>
+            {pillar.badge}
+          </span>
+
+          <h1 class="heading-page mb-4 sm:mb-5 text-white">
+            {pillar.title}
+          </h1>
+
+          <p class="text-[15px] sm:text-lg text-white/85 leading-relaxed mb-6 sm:mb-8">
+            {pillar.description}
+          </p>
+
+          <div class="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 sm:gap-4">
+            <a
+              href={`/persoonlijk-advies?type=zakelijk&service=${pillar.slug}`}
+              class="w-full sm:w-auto justify-center min-h-[48px] bg-brand-accent hover:bg-brand-accent-hover text-white font-display font-semibold px-7 py-3.5 rounded-xl transition-all shadow-lg cursor-pointer inline-flex items-center gap-2"
+            >
+              <span>Vrijblijvende Offerte Aanvragen</span>
+              <i class="fa-solid fa-arrow-right text-xs"></i>
+            </a>
+            <a
+              href="tel:0704447795"
+              class="w-full sm:w-auto justify-center min-h-[48px] bg-white/12 hover:bg-white/20 text-white border border-white/25 backdrop-blur-sm font-display font-semibold px-6 py-3.5 rounded-xl shadow-sm transition-all inline-flex items-center gap-2"
+            >
+              <i class="fa-solid fa-phone text-xs text-brand-accent"></i>
+              <span>070 - 444 77 95</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Content Grid -->
+    <section class="max-w-[1280px] mx-auto px-4 sm:px-6 -mt-10 sm:-mt-12 md:-mt-16 relative z-20 pb-20 sm:pb-24">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
+        
+        <!-- Left: Detailed Sub-services (8 cols) -->
+        <div class="lg:col-span-8 space-y-6">
+          <div class="bg-white rounded-3xl p-5 sm:p-8 md:p-10 shadow-xl border border-brand-dark/5">
+            <span class="text-xs font-semibold uppercase tracking-wider text-brand-primary block mb-1">
+              Specialismen onder {pillar.shortTitle}
+            </span>
+            <h2 class="heading-section text-brand-secondary mb-6">
+              Waarmee kunnen wij uw organisatie ondersteunen?
+            </h2>
+
+            <div class="space-y-4">
+              {pillar.items.map((item) => (
+                <div class="p-5 sm:p-6 rounded-2xl bg-brand-cream/50 border border-brand-dark/8 hover:border-brand-primary/30 transition-all">
+                  <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <h3 class="font-display font-semibold text-base sm:text-lg text-brand-secondary">
+                      {item.name}
+                    </h3>
+                    {item.norm && (
+                      <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-brand-primary/10 text-brand-primary">
+                        {item.norm}
+                      </span>
+                    )}
+                  </div>
+                  <p class="text-xs sm:text-sm text-brand-dark/75 leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Other Services Navigation -->
+          <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-md border border-brand-dark/5">
+            <h3 class="font-display text-lg sm:text-xl font-semibold text-brand-secondary mb-4">
+              Overige Veiligheidsdiensten van Edusafe
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+              {otherPillars.map((other) => (
+                <a
+                  href={other.url}
+                  class="p-4 rounded-2xl bg-brand-cream/40 border border-brand-dark/5 hover:border-brand-primary/30 hover:bg-brand-primary/5 transition-all flex items-center justify-between gap-3 group"
+                >
+                  <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center shrink-0 group-hover:bg-brand-primary group-hover:text-white transition-colors">
+                      <i class={`${other.icon} text-xs`}></i>
+                    </div>
+                    <div>
+                      <span class="font-display font-semibold text-sm text-brand-secondary block">
+                        {other.shortTitle}
+                      </span>
+                      <span class="text-[11px] text-brand-dark/60">{other.badge}</span>
+                    </div>
+                  </div>
+                  <i class="fa-solid fa-chevron-right text-xs text-brand-primary group-hover:translate-x-1 transition-transform"></i>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Sticky Benefits & Direct Request Card (4 cols) -->
+        <div class="lg:col-span-4">
+          <div class="sticky top-28 lg:top-[136px] space-y-5">
+            <div class="bg-white rounded-3xl p-6 sm:p-7 shadow-xl border border-brand-dark/5">
+              <span class="text-[10px] font-semibold uppercase tracking-wider text-brand-accent block mb-1">
+                Waarom Edusafe?
+              </span>
+              <h3 class="font-display text-xl font-semibold text-brand-secondary mb-4">
+                Uw voordelen bij {pillar.shortTitle}
+              </h3>
+
+              <ul class="space-y-3 mb-6">
+                {pillar.benefits.map((benefit) => (
+                  <li class="flex items-start gap-2.5 text-xs sm:text-sm text-brand-dark/80 font-medium">
+                    <i class="fa-solid fa-circle-check text-emerald-500 text-sm shrink-0 mt-0.5"></i>
+                    <span>{benefit}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <a
+                href={`/persoonlijk-advies?type=zakelijk&service=${pillar.slug}`}
+                class="w-full py-3.5 px-6 rounded-xl bg-brand-accent hover:bg-brand-accent-hover text-white font-display font-semibold text-sm text-center transition-all shadow-md cursor-pointer block"
+              >
+                Advies of Offerte Aanvragen
+              </a>
+
+              <div class="mt-4 pt-4 border-t border-brand-dark/5 flex items-center justify-center gap-1.5 text-xs font-semibold text-brand-primary">
+                <i class="fa-solid fa-shield-halved text-sm"></i>
+                <span>Praktijkgerichte certificering & ontzorging</span>
+              </div>
+            </div>
+
+            <div class="bg-brand-secondary text-white rounded-3xl p-6 shadow-lg">
+              <span class="text-[10px] font-semibold uppercase tracking-wider text-brand-accent block mb-1">
+                Heeft u een vraag?
+              </span>
+              <p class="text-xs text-white/80 leading-relaxed mb-4">
+                Ons team staat telefonisch op werkdagen van 08:30-17:00 voor u klaar. Mail beantwoorden wij binnen 24 uur.
+              </p>
+              <div class="space-y-2 text-sm font-semibold">
+                <a href="tel:0704447795" class="flex items-center gap-2.5 text-white hover:text-brand-accent transition-colors">
+                  <i class="fa-solid fa-phone text-brand-accent text-xs"></i>
+                  <span>070 - 444 77 95</span>
+                </a>
+                <a href="mailto:info@edusafe.nl" class="flex items-center gap-2.5 text-white hover:text-brand-accent transition-colors">
+                  <i class="fa-solid fa-envelope text-brand-accent text-xs"></i>
+                  <span>info@edusafe.nl</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <MobileCourseBottomBar
+      defaultCourse={mobileServiceItem}
+      itemType="service"
+      serviceSlug={pillar.slug}
+      advisorText={`Offerte voor ${pillar.shortTitle}?`}
+    />
+  </main>
+</Layout>

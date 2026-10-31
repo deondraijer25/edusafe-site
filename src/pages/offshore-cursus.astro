@@ -1,216 +1,165 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import PageHeroBackdrop from '../components/PageHeroBackdrop.astro';
+import CourseFaq from '../components/CourseFaq.astro';
+import Reviews from '../components/Reviews.astro';
+import ContactForm from '../components/ContactForm.astro';
 
 const offshorePillars = [
   {
-    icon: "fa-solid fa-oil-well",
-    badge: "OPITO & NOGEPA",
-    title: "Offshore Olie & Gas",
-    description: "BOSIET, FOET en HUET met EBS (helikopter ontsnapping) en NOGEPA 0.5A/B voor het Nederlands Continentaal Plat.",
-    status: "Binnenkort beschikbaar"
+    id: 'trainingen',
+    icon: 'fa-solid fa-helicopter',
+    badge: 'BOSIET & OPITO',
+    title: 'Offshore Trainingen',
+    description:
+      'Erkende offshore veiligheidstrainingen conform OPITO- en NOGEPA-standaarden, waaronder BOSIET (met HUET & CA-EBS), FOET en maritieme herhalingen.',
+    links: [
+      { label: 'BOSIET Cursus', href: '/cursussen/bosiet' },
+      { label: 'OPITO & FOET', href: '/cursussen/opito' },
+    ],
   },
   {
-    icon: "fa-solid fa-wind",
-    badge: "GWO BST Standaard",
-    title: "Wind op Zee (Offshore Wind)",
-    description: "GWO Basic Safety Training: Werken op hoogte, Sea Survival, First Aid, Fire Awareness en Manual Handling voor windparken.",
-    status: "Binnenkort beschikbaar"
+    id: 'middelen',
+    icon: 'fa-solid fa-life-ring',
+    badge: 'Middelen & Inspectie',
+    title: 'Offshore Middelen',
+    description:
+      'Levering, verhuur en gecertificeerde keuring van reddingsvesten, overlevingspakken, gasdetectie, ademlucht en valbeveiliging.',
+    links: [{ label: 'Keuringen & Middelen', href: '/diensten/keuringen' }],
   },
   {
-    icon: "fa-solid fa-ship",
-    badge: "STCW Zeevaart",
-    title: "Maritiem & Scheepvaart",
-    description: "STCW Basic Safety Training, Advanced Fire Fighting en Medical First Aid voor scheepsbemanning en support vessels.",
-    status: "Binnenkort beschikbaar"
+    id: 'detachering',
+    icon: 'fa-solid fa-user-shield',
+    badge: '24/7 Bemanning',
+    title: 'Offshore Detachering',
+    description:
+      '24/7 inzet van gecertificeerd veiligheidspersoneel: offshore medics, brandwachten, mangatwachten en gasmeetdeskundigen.',
+    links: [{ label: 'Detachering bekijken', href: '/diensten/detachering' }],
   },
-  {
-    icon: "fa-solid fa-user-doctor",
-    badge: "NOGEPA & OEUK",
-    title: "Offshore Medische Keuringen",
-    description: "Officiële medische fit-to-work verklaringen (OEUK / NOGEPA / Scheepvaart) vereist voor vertrek naar offshore installaties.",
-    status: "Binnenkort beschikbaar"
-  }
 ];
 ---
 
-<Layout 
-  title="Binnenkort Beschikbaar: Offshore Trainingen | Edusafe" 
-  description="Edusafe breidt binnenkort uit met geaccrediteerde offshore- en maritieme veiligheidstrainingen (OPITO, NOGEPA, GWO en STCW). Schrijf u in voor de wachtlijst."
+<Layout
+  title="Offshore Trainingen (BOSIET & OPITO), Middelen & Detachering | Edusafe"
+  description="Compleet offshore veiligheidsaanbod van Edusafe: OPITO-erkende BOSIET & FOET trainingen met Vantage-registratie, gekeurde offshore middelen en 24/7 detachering."
 >
   <main class="w-full">
-    
-    <!-- Hero Header: Binnenkort beschikbaar: Offshore Trainingen -->
-    <section class="relative bg-brand-secondary text-white pt-20 pb-20 sm:pb-24 md:pt-24 md:pb-28 overflow-hidden">
-      <!-- Background Visual with Marine Overlay -->
-      <div class="absolute inset-0 z-0 overflow-hidden">
-        <img 
-          src="https://images.unsplash.com/photo-1544724480-6cc691cf9569?auto=format&fit=crop&q=80&w=1600" 
-          alt="Offshore Platform and Wind Turbines" 
-          class="w-full h-full object-cover opacity-25 scale-105" 
-        />
-        <div class="absolute inset-0 bg-gradient-to-r from-brand-secondary via-brand-secondary/90 to-brand-secondary/80"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-brand-secondary via-transparent to-black/20"></div>
-      </div>
-      
-      <div class="max-w-[1000px] mx-auto px-6 relative z-10 text-center">
-        
-        <span class="inline-flex items-center gap-1.5 text-brand-accent font-display font-semibold text-xs uppercase tracking-wider mb-3.5">
-          <i class="fa-solid fa-anchor"></i>
-          Maritieme & Offshore Veiligheid
-        </span>
+    <!-- 1. GOLD-STANDARD HERO HEADER -->
+    <section class="relative bg-brand-primary text-white pt-12 pb-20 sm:pt-20 sm:pb-28 md:pt-24 md:pb-36 overflow-hidden">
+      <PageHeroBackdrop
+        image="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&q=80&w=1600"
+        alt="Offshore Platform & Windpark Veiligheid"
+      />
 
-        <h1 class="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-white mb-5 leading-tight">
-          Binnenkort beschikbaar: <span class="relative inline-block text-white px-4 py-1.5 mx-1 transform -rotate-1"><span class="absolute inset-0 bg-brand-accent rounded-xl z-0"></span><span class="relative z-10">Offshore Trainingen</span></span>
-        </h1>
-        
-        <p class="text-white/85 text-sm sm:text-base md:text-lg max-w-2xl mx-auto leading-relaxed mb-8 font-normal">
-          Edusafe legt momenteel de laatste hand aan de accreditaties en praktijkfaciliteiten voor internationaal erkende offshore veiligheidsopleidingen conform <strong>OPITO</strong>, <strong>NOGEPA</strong>, <strong>GWO</strong> en <strong>STCW</strong> richtlijnen.
-        </p>
+      <div class="max-w-[1280px] mx-auto px-4 sm:px-6 relative z-10">
+        <nav aria-label="Breadcrumb" class="section-eyebrow text-brand-primary mb-3.5 flex-wrap">
+          <a href="/" class="hover:underline text-white/70 hover:text-white">Home</a>
+          <span class="text-white/40">/</span>
+          <span class="text-brand-accent">Offshore &amp; Maritiem</span>
+        </nav>
 
-        <!-- Action Buttons -->
-        <div class="flex flex-wrap items-center justify-center gap-3.5">
-          <button 
-            type="button"
-            data-open-contact-drawer
-            class="font-display font-semibold text-sm px-6 py-3.5 rounded-xl bg-brand-accent hover:bg-brand-accent-hover text-white transition-all duration-300 flex items-center justify-center gap-2 shadow-md shadow-brand-accent/20 cursor-pointer whitespace-nowrap hover:scale-[1.01]"
-          >
-            <i class="fa-solid fa-bell text-xs"></i>
-            <span>Houd mij op de hoogte</span>
-          </button>
-          
-          <button 
-            type="button"
-            data-open-contact-drawer
-            class="font-display font-semibold text-sm px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-md transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer whitespace-nowrap hover:scale-[1.01]"
-          >
-            <i class="fa-regular fa-file-lines text-xs"></i>
-            <span>Vrijblijvende Groepsofferte</span>
-          </button>
-        </div>
-      </div>
-    </section>
+        <div class="max-w-3xl">
+          <h1 class="heading-page mb-3 text-white">
+            Offshore Trainingen, Middelen &amp; Detachering
+          </h1>
 
-    <!-- Wat kun je binnenkort verwachten? (4 Hoofdpijlers - 50/50 Overlap) -->
-    <section class="max-w-[1280px] mx-auto px-6 -mt-10 sm:-mt-12 md:-mt-14 relative z-30 pb-20">
-      
-      <div class="bg-white rounded-3xl p-8 sm:p-10 md:p-12 shadow-xl border border-brand-dark/5">
-        <div class="text-center max-w-2xl mx-auto mb-10">
-          <span class="text-xs font-semibold uppercase tracking-wider text-brand-primary block mb-1.5">Programma Preview</span>
-          <h2 class="font-display text-2xl sm:text-3xl font-semibold text-brand-secondary">De 4 pijlers van onze offshore opleidingen</h2>
-          <p class="text-xs sm:text-sm text-brand-dark/70 font-normal mt-2">
-            Volledig gecertificeerde praktijktrainingen met geavanceerde simulators, zeeoverleving en officiële databaseregistraties.
+          <p class="text-lead text-white/85 max-w-2xl mb-6">
+            Uw totaalpartner voor veiligheid op zee, windparken en maritieme projecten: van OPITO-erkende BOSIET &amp; FOET opleidingen tot gekeurde middelen en 24/7 veiligheidspersoneel.
           </p>
-        </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-          {offshorePillars.map((pillar) => (
-            <div class="bg-brand-cream/40 rounded-2xl p-5 sm:p-6 border border-brand-dark/5 hover:border-brand-primary/30 transition-all flex flex-col justify-between group">
-              <div>
-                <div class="w-11 h-11 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-3.5 text-lg group-hover:bg-brand-primary group-hover:text-white transition-colors">
-                  <i class={pillar.icon}></i>
-                </div>
-                <div class="flex items-center gap-2 mb-1.5">
-                  <span class="text-[10px] font-bold uppercase tracking-wider text-brand-accent bg-brand-accent/10 px-2 py-0.5 rounded">{pillar.badge}</span>
-                </div>
-                <h3 class="font-display font-semibold text-base sm:text-lg text-brand-secondary mb-1.5">{pillar.title}</h3>
-                <p class="text-xs text-brand-dark/70 font-normal leading-relaxed mb-4">
-                  {pillar.description}
-                </p>
-              </div>
-              <span class="text-xs font-semibold text-brand-primary flex items-center gap-1">
-                {pillar.status} <i class="fa-solid fa-clock text-[10px]"></i>
-              </span>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2.5 max-w-xl mb-7 text-card text-white/95 font-medium">
+            <div class="flex items-center gap-2.5">
+              <i class="fa-solid fa-circle-check text-brand-accent text-sm shrink-0"></i>
+              <span>BOSIET &amp; FOET (OPITO-erkend)</span>
             </div>
-          ))}
-        </div>
+            <div class="flex items-center gap-2.5">
+              <i class="fa-solid fa-circle-check text-brand-accent text-sm shrink-0"></i>
+              <span>4 jaar Vantage-registratie</span>
+            </div>
+            <div class="flex items-center gap-2.5">
+              <i class="fa-solid fa-circle-check text-brand-accent text-sm shrink-0"></i>
+              <span>Gecertificeerde PBM &amp; keuring</span>
+            </div>
+            <div class="flex items-center gap-2.5">
+              <i class="fa-solid fa-circle-check text-brand-accent text-sm shrink-0"></i>
+              <span>24/7 Offshore detachering</span>
+            </div>
+          </div>
 
-      </div>
-
-    </section>
-
-    <!-- Aanvragen & Interesse Banner -->
-    <section class="max-w-[1280px] mx-auto px-6 pb-20">
-      <div class="bg-brand-secondary text-white rounded-3xl p-8 sm:p-10 md:p-12 relative overflow-hidden shadow-xl">
-        <div class="relative z-10 max-w-2xl">
-          <span class="text-xs font-semibold uppercase tracking-wider text-brand-accent block mb-2">Interesse & Vroegtijdige Aanvragen</span>
-          <h2 class="font-display text-2xl sm:text-3xl font-semibold mb-3 text-white">Alvast interesse in onze offshore opleidingen?</h2>
-          <p class="text-white/80 text-xs sm:text-sm leading-relaxed mb-6 font-normal">
-            Hoewel we de officiële start voorbereiden, nemen wij nu al aanvragen en opleidingswensen in behandeling. Wij denken graag met u mee over planning, benodigde certificeringen en maatwerk.
-          </p>
-          <div class="flex flex-wrap gap-3.5">
-            <button 
-              type="button" 
-              data-open-contact-drawer
-              class="font-display font-semibold text-sm py-3.5 px-6 rounded-xl bg-brand-accent text-white hover:bg-brand-accent-hover transition-all duration-300 shadow-md shadow-brand-accent/20 cursor-pointer inline-flex items-center gap-2"
-            >
-              <span>Dien een Aanvraag In</span>
+          <div class="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-3 sm:gap-3.5">
+            <a href="/cursussen/bosiet" class="btn-hero w-full sm:w-auto justify-center min-h-[48px]">
+              <span>BOSIET &amp; OPITO bekijken</span>
               <i class="fa-solid fa-arrow-right text-xs"></i>
-            </button>
-            <a 
-              href="tel:0704447795"
-              class="font-display font-semibold text-sm py-3.5 px-5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all duration-300 inline-flex items-center gap-2"
+            </a>
+            <a
+              href="/persoonlijk-advies?type=zakelijk&course=bosiet"
+              class="w-full sm:w-auto min-h-[48px] inline-flex items-center justify-center gap-2.5 font-display font-semibold text-[15px] px-6 sm:px-7 py-3.5 sm:py-4 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-sm transition-all duration-300"
             >
-              <i class="fa-solid fa-phone text-xs text-brand-accent"></i>
-              <span>070 - 444 77 95</span>
+              <i class="fa-regular fa-file-lines text-brand-accent"></i>
+              <span>Offerte of advies aanvragen</span>
             </a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Direct Beschikbare Cursussen -->
-    <section class="max-w-[1280px] mx-auto px-6 pb-24 border-t border-brand-dark/5 pt-14">
-      <div class="text-center max-w-xl mx-auto mb-8">
-        <span class="text-xs font-semibold uppercase tracking-wider text-brand-primary block mb-1">Direct Beschikbaar</span>
-        <h2 class="font-display text-xl sm:text-2xl font-semibold text-brand-secondary">Bekijk onze actieve veiligheidsopleidingen</h2>
-      </div>
-
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <a href="/bhv-cursus" class="p-5 rounded-2xl bg-white border border-brand-dark/10 hover:border-brand-primary shadow-xs hover:shadow-md transition-all text-left group">
-          <div class="w-9 h-9 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-3 group-hover:bg-brand-primary group-hover:text-white transition-colors">
-            <i class="fa-solid fa-shield-halved text-sm"></i>
-          </div>
-          <h3 class="font-display font-semibold text-sm sm:text-base text-brand-secondary mb-1">BHV Opleidingen</h3>
-          <p class="text-xs text-brand-dark/65 font-normal mb-3">Basis, herhaling en ploegleider.</p>
-          <span class="text-xs font-semibold text-brand-primary flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-            Direct inschrijven <i class="fa-solid fa-arrow-right text-[10px]"></i>
+    <!-- 2. DE 3 OFFSHORE PIJLERS -->
+    <section class="max-w-[1280px] mx-auto px-4 sm:px-6 -mt-12 sm:-mt-14 md:-mt-20 relative z-20 pb-20">
+      <div class="bg-white rounded-3xl p-5 sm:p-10 md:p-12 shadow-lg border border-brand-dark/5">
+        <div class="text-center max-w-2xl mx-auto mb-8">
+          <span class="section-eyebrow justify-center text-brand-primary mb-1">
+            <span>Offshore Totaaloplossing</span>
           </span>
-        </a>
+          <h2 class="heading-section text-brand-secondary">Onze 3 Offshore Pijlers</h2>
+          <p class="text-body text-brand-dark/70 mt-2">
+            Alles onder één dak voor veilig werken op offshore platforms, windparken en schepen.
+          </p>
+        </div>
 
-        <a href="/vca-cursus" class="p-5 rounded-2xl bg-white border border-brand-dark/10 hover:border-brand-primary shadow-xs hover:shadow-md transition-all text-left group">
-          <div class="w-9 h-9 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-3 group-hover:bg-brand-primary group-hover:text-white transition-colors">
-            <i class="fa-solid fa-helmet-safety text-sm"></i>
-          </div>
-          <h3 class="font-display font-semibold text-sm sm:text-base text-brand-secondary mb-1">VCA Certificering</h3>
-          <p class="text-xs text-brand-dark/65 font-normal mb-3">VCA Basis en VOL-VCA met examen.</p>
-          <span class="text-xs font-semibold text-brand-primary flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-            Direct inschrijven <i class="fa-solid fa-arrow-right text-[10px]"></i>
-          </span>
-        </a>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+          {offshorePillars.map((pillar) => (
+            <div
+              id={pillar.id}
+              class="bg-brand-cream/45 rounded-2xl p-5 sm:p-7 border border-brand-dark/8 hover:border-brand-primary/30 hover:bg-white transition-all flex flex-col justify-between scroll-mt-24 lg:scroll-mt-40"
+            >
+              <div>
+                <div class="flex flex-wrap items-center justify-between gap-2.5 mb-4">
+                  <div class="w-11 h-11 rounded-xl bg-brand-primary text-white flex items-center justify-center text-base shrink-0 shadow-xs">
+                    <i class={pillar.icon}></i>
+                  </div>
+                  <span class="text-xs font-display font-semibold uppercase tracking-wider text-brand-accent bg-brand-accent/10 px-2.5 py-1 rounded-md">
+                    {pillar.badge}
+                  </span>
+                </div>
 
-        <a href="/ehbo-cursus" class="p-5 rounded-2xl bg-white border border-brand-dark/10 hover:border-brand-primary shadow-xs hover:shadow-md transition-all text-left group">
-          <div class="w-9 h-9 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary mb-3 group-hover:bg-brand-primary group-hover:text-white transition-colors">
-            <i class="fa-solid fa-heart-pulse text-sm"></i>
-          </div>
-          <h3 class="font-display font-semibold text-sm sm:text-base text-brand-secondary mb-1">EHBO & Reanimatie</h3>
-          <p class="text-xs text-brand-dark/65 font-normal mb-3">Levensreddend handelen & AED.</p>
-          <span class="text-xs font-semibold text-brand-primary flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-            Direct inschrijven <i class="fa-solid fa-arrow-right text-[10px]"></i>
-          </span>
-        </a>
+                <h3 class="heading-card text-brand-secondary mb-2">
+                  {pillar.title}
+                </h3>
+                <p class="text-card text-brand-dark/75 mb-6">
+                  {pillar.description}
+                </p>
+              </div>
 
-        <a href="/cursusdata" class="p-5 rounded-2xl bg-white border border-brand-dark/10 hover:border-brand-primary shadow-xs hover:shadow-md transition-all text-left group">
-          <div class="w-9 h-9 rounded-xl bg-brand-accent/10 flex items-center justify-center text-brand-accent mb-3 group-hover:bg-brand-accent group-hover:text-white transition-colors">
-            <i class="fa-regular fa-calendar-days text-sm"></i>
-          </div>
-          <h3 class="font-display font-semibold text-sm sm:text-base text-brand-secondary mb-1">Alle Cursusdata</h3>
-          <p class="text-xs text-brand-dark/65 font-normal mb-3">Bekijk actuele data en locaties.</p>
-          <span class="text-xs font-semibold text-brand-accent flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-            Bekijk planning <i class="fa-solid fa-arrow-right text-[10px]"></i>
-          </span>
-        </a>
+              <div class={`grid gap-2.5 pt-4 border-t border-brand-dark/8 ${pillar.links.length > 1 ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1'}`}>
+                {pillar.links.map((lnk) => (
+                  <a
+                    href={lnk.href}
+                    class="w-full min-h-[44px] font-display font-semibold text-sm bg-brand-accent hover:bg-brand-accent-hover text-white py-3 px-4 rounded-xl flex items-center justify-center gap-2 shadow-xs hover:shadow-md transition-all whitespace-nowrap"
+                  >
+                    <span>{lnk.label}</span>
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
 
+    <!-- 3. COMPLETE FOOTER STACK -->
+    <CourseFaq category="Offshore" hubTitle="Offshore (BOSIET & OPITO)" lang="nl" />
+    <Reviews />
+    <ContactForm courseSlug="bosiet" />
   </main>
 </Layout>

@@ -1,0 +1,219 @@
+---
+import { getLangFromUrl } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url);
+const isEn = lang === 'en';
+
+const faqItems = isEn
+  ? [
+      {
+        badge: "BHV • Pricing & Duration",
+        question: "How much does a BHV (Emergency Response) course cost and how long does it take?",
+        answerHtml: `An accredited <a href="/en/bhv-course" class="text-brand-primary font-semibold underline decoration-brand-primary/30 hover:decoration-brand-primary">BHV course</a> at Edusafe costs <strong>€ 145 excl. VAT for the BHV Refresher</strong> (half-day practical) and <strong>€ 195 excl. VAT for BHV Basic</strong> (online e-learning + 1 practical training day). This is all-inclusive: study materials, coffee/tea, lunch, and your official BHV certificate and ID card. Courses are available in Dutch and English.`,
+        answerPlain: "An accredited BHV course at Edusafe costs € 145 excl. VAT for the BHV Refresher (half-day practical) and € 195 excl. VAT for BHV Basic (online e-learning + 1 practical training day). This is all-inclusive: study materials, coffee/tea, lunch, and your official BHV certificate and ID card. Courses are available in Dutch and English."
+      },
+      {
+        badge: "Dutch Arbowet • Validity",
+        question: "Is BHV mandatory for every company in the Netherlands and how long is the certificate valid?",
+        answerHtml: `Yes, under <strong>Article 15 of the Dutch Working Conditions Act (Arbowet)</strong>, every employer with one or more employees (including interns and temp workers) is legally required to appoint certified Emergency Response Officers (BHV). A BHV certificate is <strong>valid for 1 year</strong>. To remain compliant with the Labour Inspectorate and your fire insurer, BHV officers complete an annual <a href="/en/courses/bhv-herhaling" class="text-brand-primary font-semibold underline decoration-brand-primary/30 hover:decoration-brand-primary">BHV Refresher training</a>.`,
+        answerPlain: "Yes, under Article 15 of the Dutch Working Conditions Act (Arbowet), every employer with one or more employees (including interns and temp workers) is legally required to appoint certified Emergency Response Officers (BHV). A BHV certificate is valid for 1 year. To remain compliant with the Labour Inspectorate and your fire insurer, BHV officers complete an annual BHV Refresher training."
+      },
+      {
+        badge: "VCA & SSVV • 10 Years Valid",
+        question: "What is the difference between VCA Basic (B-VCA) and VCA-VOL, and how long is VCA valid?",
+        answerHtml: `<strong>B-VCA (VCA Basic)</strong> is designed for operational workers on site, whereas <strong>VCA-VOL</strong> is mandatory for operational supervisors and self-employed contractors (ZZP) working for a main contractor. At Edusafe, you complete your <a href="/en/vca-course" class="text-brand-primary font-semibold underline decoration-brand-primary/30 hover:decoration-brand-primary">VCA course and official SSVV exam</a> in 1 day (from € 195 excl. VAT). An official VCA diploma is <strong>valid for 10 years</strong> in the Central Diploma Register.`,
+        answerPlain: "B-VCA (VCA Basic) is designed for operational workers on site, whereas VCA-VOL is mandatory for operational supervisors and self-employed contractors (ZZP) working for a main contractor. At Edusafe, you complete your VCA course and official SSVV exam in 1 day (from € 195 excl. VAT). An official VCA diploma is valid for 10 years in the Central Diploma Register."
+      },
+      {
+        badge: "First Aid vs. BHV",
+        question: "What is the difference between a BHV course and a First Aid (EHBO) course?",
+        answerHtml: `A <strong>BHV course</strong> focuses on the four core emergency duties at work: life-saving first aid (CPR & AED), non-urgent first aid, <strong>firefighting</strong>, and <strong>building evacuation</strong>. An official <a href="/en/first-aid-course" class="text-brand-primary font-semibold underline decoration-brand-primary/30 hover:decoration-brand-primary">First Aid (EHBO) course</a> (Oranje Kruis certified, valid for 2 years) does not cover firefighting or evacuation, but goes much deeper into medical first responder care, bandaging, and Paediatric First Aid (EHAK for childcare).`,
+        answerPlain: "A BHV course focuses on the four core emergency duties at work: life-saving first aid (CPR & AED), non-urgent first aid, firefighting, and building evacuation. An official First Aid (EHBO) course (Oranje Kruis certified, valid for 2 years) does not cover firefighting or evacuation, but goes much deeper into medical first responder care, bandaging, and Paediatric First Aid (EHAK for childcare)."
+      },
+      {
+        badge: "Forklift & Logistics",
+        question: "Is a forklift certificate legally mandatory and how long does it remain valid?",
+        answerHtml: `Under <strong>Article 7.17c of the Dutch Working Conditions Decree (Arbobesluit)</strong>, employers are legally obligated to prove that drivers of a forklift, reach truck, or aerial platform have demonstrable expert training. Insurers and the Labour Inspectorate require a valid <a href="/en/forklift-course" class="text-brand-primary font-semibold underline decoration-brand-primary/30 hover:decoration-brand-primary">forklift certificate</a> in the event of an inspection or incident. You can obtain your certificate in 1 day (€ 195 excl. VAT) and it is <strong>valid for 5 years</strong>.`,
+        answerPlain: "Under Article 7.17c of the Dutch Working Conditions Decree (Arbobesluit), employers are legally obligated to prove that drivers of a forklift, reach truck, or aerial platform have demonstrable expert training. Insurers and the Labour Inspectorate require a valid forklift certificate in the event of an inspection or incident. You can obtain your certificate in 1 day (€ 195 excl. VAT) and it is valid for 5 years."
+      },
+      {
+        badge: "RI&E & Incompany",
+        question: "From how many employees is a Risk Assessment (RI&E) mandatory and when is Incompany cheaper?",
+        answerHtml: `An up-to-date <a href="/en/risk-assessment-rie" class="text-brand-primary font-semibold underline decoration-brand-primary/30 hover:decoration-brand-primary">RI&E (Risk Inventory & Evaluation)</a> including an Action Plan is mandatory under <strong>Article 5 of the Arbowet for every business with 1 or more employees</strong> (and requires certified external review above 25 employees). Training multiple staff members? Starting from <strong>5 to 6 participants</strong>, an <a href="/en/incompany-training" class="text-brand-primary font-semibold underline decoration-brand-primary/30 hover:decoration-brand-primary">Incompany training on your own premises</a> is more cost-effective and tailored directly to your building's evacuation routes.`,
+        answerPlain: "An up-to-date RI&E (Risk Inventory & Evaluation) including an Action Plan is mandatory under Article 5 of the Arbowet for every business with 1 or more employees (and requires certified external review above 25 employees). Training multiple staff members? Starting from 5 to 6 participants, an Incompany training on your own premises is more cost-effective and tailored directly to your building's evacuation routes."
+      }
+    ]
+  : [
+      {
+        badge: "BHV • Kosten & Duur",
+        question: "Wat kost een BHV-cursus en hoe lang duurt de opleiding?",
+        answerHtml: `Een erkende <a href="/bhv-cursus" class="text-brand-primary font-semibold underline decoration-brand-primary/30 hover:decoration-brand-primary">BHV-cursus</a> bij Edusafe kost <strong>€ 145,- excl. btw voor BHV Herhaling</strong> (1 dagdeel praktijk) en <strong>€ 195,- excl. btw voor BHV Basis</strong> (online e-learning + 1 praktijkdag). Dit tarief is all-in: inclusief lesmateriaal, koffie/thee, uitgebreide lunch en het officiële BHV-certificaat met pasje. Onze BHV-trainingen zijn beschikbaar in het Nederlands en Engels.`,
+        answerPlain: "Een erkende BHV-cursus bij Edusafe kost € 145,- excl. btw voor BHV Herhaling (1 dagdeel praktijk) en € 195,- excl. btw voor BHV Basis (online e-learning + 1 praktijkdag). Dit tarief is all-in: inclusief lesmateriaal, koffie/thee, uitgebreide lunch en het officiële BHV-certificaat met pasje. Onze BHV-trainingen zijn beschikbaar in het Nederlands en Engels."
+      },
+      {
+        badge: "Arbowet • Geldigheid",
+        question: "Is BHV verplicht voor elk bedrijf en hoe lang is een BHV-certificaat geldig?",
+        answerHtml: `Ja, volgens <strong>artikel 15 van de Arbowet</strong> is iedere werkgever met één of meer medewerkers (inclusief stagiairs en uitzendkrachten) wettelijk verplicht om gecertificeerde bedrijfshulpverleners aan te wijzen. Een BHV-certificaat is <strong>1 jaar geldig</strong>. Om te blijven voldoen aan de eisen van de Nederlandse Arbeidsinspectie en uw brandverzekering, volgt de BHV'er jaarlijks een praktijkgerichte <a href="/cursussen/bhv-herhaling" class="text-brand-primary font-semibold underline decoration-brand-primary/30 hover:decoration-brand-primary">BHV-herhalingstraining</a>.`,
+        answerPlain: "Ja, volgens artikel 15 van de Arbowet is iedere werkgever met één of meer medewerkers (inclusief stagiairs en uitzendkrachten) wettelijk verplicht om gecertificeerde bedrijfshulpverleners aan te wijzen. Een BHV-certificaat is 1 jaar geldig. Om te blijven voldoen aan de eisen van de Nederlandse Arbeidsinspectie en uw brandverzekering, volgt de BHV'er jaarlijks een praktijkgerichte BHV-herhalingstraining."
+      },
+      {
+        badge: "VCA & SSVV • 10 Jaar Geldig",
+        question: "Wat is het verschil tussen VCA Basis (B-VCA) en VCA-VOL, en hoe lang is VCA geldig?",
+        answerHtml: `<strong>B-VCA (VCA Basis)</strong> is bedoeld voor uitvoerende vakmensen op de werkvloer, terwijl <strong>VCA-VOL</strong> verplicht is voor operationeel leidinggevenden en ZZP'ers die onder een VCA-gecertificeerde hoofdaannemer werken. Bij Edusafe behaalt u uw <a href="/vca-cursus" class="text-brand-primary font-semibold underline decoration-brand-primary/30 hover:decoration-brand-primary">VCA-certificaat</a> binnen 1 lesdag met aansluitend het officiële SSVV-examen (vanaf € 195,- excl. btw). Een behaald VCA-diploma is <strong>10 jaar geldig</strong> in het Centraal Diplomaregister.`,
+        answerPlain: "B-VCA (VCA Basis) is bedoeld voor uitvoerende vakmensen op de werkvloer, terwijl VCA-VOL verplicht is voor operationeel leidinggevenden en ZZP'ers die onder een VCA-gecertificeerde hoofdaannemer werken. Bij Edusafe behaalt u uw VCA-certificaat binnen 1 lesdag met aansluitend het officiële SSVV-examen (vanaf € 195,- excl. btw). Een behaald VCA-diploma is 10 jaar geldig in het Centraal Diplomaregister."
+      },
+      {
+        badge: "EHBO vs. BHV",
+        question: "Wat is het verschil tussen een BHV-cursus en een EHBO-cursus?",
+        answerHtml: `Een <strong>BHV-cursus</strong> richt zich op de vier kerntaken bij bedrijfscalamiteiten: spoedeisende eerste hulp (reanimatie & AED), niet-spoedeisende eerste hulp, <strong>brandbestrijding</strong> en <strong>ontruiming</strong>. Een officiële <a href="/ehbo-cursus" class="text-brand-primary font-semibold underline decoration-brand-primary/30 hover:decoration-brand-primary">EHBO-cursus</a> (conform Het Oranje Kruis, 2 jaar geldig) behandelt geen brand en ontruiming, maar gaat veel dieper in op uitgebreide medische hulpverlening, verbandleer en kinder-EHBO (EHAK voor kinderopvang conform de wet IKK).`,
+        answerPlain: "Een BHV-cursus richt zich op de vier kerntaken bij bedrijfscalamiteiten: spoedeisende eerste hulp (reanimatie & AED), niet-spoedeisende eerste hulp, brandbestrijding en ontruiming. Een officiële EHBO-cursus (conform Het Oranje Kruis, 2 jaar geldig) behandelt geen brand en ontruiming, maar gaat veel dieper in op uitgebreide medische hulpverlening, verbandleer en kinder-EHBO (EHAK voor kinderopvang conform de wet IKK)."
+      },
+      {
+        badge: "Heftruck & Logistiek",
+        question: "Is een heftruckcertificaat wettelijk verplicht en hoe lang is het geldig?",
+        answerHtml: `Volgens <strong>artikel 7.17c van het Arbobesluit</strong> is een werkgever wettelijk verplicht aan te tonen dat chauffeurs van een heftruck, reachtruck of hoogwerker beschikken over aantoonbare, specifieke deskundigheid. Verzekeraars en de Arbeidsinspectie eisen hiervoor bij controle of een arbeidsongeval een geldig <a href="/heftruck-cursus" class="text-brand-primary font-semibold underline decoration-brand-primary/30 hover:decoration-brand-primary">heftruckcertificaat</a>. U behaalt dit certificaat binnen 1 dag (€ 195,- excl. btw) en het is <strong>5 jaar geldig</strong>.`,
+        answerPlain: "Volgens artikel 7.17c van het Arbobesluit is een werkgever wettelijk verplicht aan te tonen dat chauffeurs van een heftruck, reachtruck of hoogwerker beschikken over aantoonbare, specifieke deskundigheid. Verzekeraars en de Arbeidsinspectie eisen hiervoor bij controle of een arbeidsongeval een geldig heftruckcertificaat. U behaalt dit certificaat binnen 1 dag (€ 195,- excl. btw) en het is 5 jaar geldig."
+      },
+      {
+        badge: "RI&E & Incompany",
+        question: "Vanaf hoeveel medewerkers is een RI&E verplicht en wanneer loont Incompany trainen?",
+        answerHtml: `Een actuele <a href="/rie-audit" class="text-brand-primary font-semibold underline decoration-brand-primary/30 hover:decoration-brand-primary">RI&E (Risico-Inventarisatie & -Evaluatie)</a> inclusief Plan van Aanpak is volgens <strong>artikel 5 van de Arbowet</strong> verplicht voor <strong>ieder bedrijf met personeel vanaf 1 werknemer</strong> (en moet boven de 25 medewerkers getoetst worden). Moeten er meerdere collega's getraind worden? Al <strong>vanaf 5 à 6 deelnemers</strong> is een <a href="/incompany-training" class="text-brand-primary font-semibold underline decoration-brand-primary/30 hover:decoration-brand-primary">Incompany training op uw eigen bedrijfslocatie</a> voordeliger én direct afgestemd op uw eigen RI&E en vluchtroutes.`,
+        answerPlain: "Een actuele RI&E (Risico-Inventarisatie & -Evaluatie) inclusief Plan van Aanpak is volgens artikel 5 van de Arbowet verplicht voor ieder bedrijf met personeel vanaf 1 werknemer (en moet boven de 25 medewerkers getoetst worden). Moeten er meerdere collega's getraind worden? Al vanaf 5 à 6 deelnemers is een Incompany training op uw eigen bedrijfslocatie voordeliger én direct afgestemd op uw eigen RI&E en vluchtroutes."
+      }
+    ];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqItems.map((item) => ({
+    "@type": "Question",
+    "name": item.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.answerPlain
+    }
+  }))
+};
+
+const faqPageUrl = isEn ? "/en/faq" : "/faq";
+---
+
+<section class="w-full py-20 lg:py-24 bg-brand-cream/40 border-t border-brand-dark/5 relative overflow-hidden">
+  <div class="max-w-[1280px] mx-auto px-6 relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+      
+      <!-- Left Column (4 cols, sticky on desktop): Section Header & Direct Advice Box -->
+      <div class="lg:col-span-4 lg:sticky lg:top-32">
+        <span class="section-eyebrow">
+          <i class="fa-solid fa-circle-question text-brand-accent"></i>
+          {isEn ? "Frequently Asked Questions & Law" : "Veelgestelde Vragen & Wetgeving"}
+        </span>
+        
+        <h2 class="heading-section mb-4">
+          {isEn
+            ? "Clarity on legal obligations, costs and validity"
+            : "Duidelijkheid over verplichtingen, kosten en geldigheid"}
+        </h2>
+        
+        <p class="text-body mb-7">
+          {isEn
+            ? "Every day we advise employers, HR managers and safety coordinators on the Dutch Arbowet, certification validity and the fastest route to compliance."
+            : "Dagelijks adviseren wij werkgevers, HR-managers en preventiemedewerkers over de Arbowet, certificaatgeldigheid en de snelste route naar volledige compliance."}
+        </p>
+
+        <!-- Direct Advisor Support Card -->
+        <div class="bg-white rounded-2xl p-6 border border-brand-dark/8 shadow-sm">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-10 h-10 rounded-xl bg-brand-primary/10 text-brand-primary flex items-center justify-center text-sm shrink-0">
+              <i class="fa-solid fa-headset"></i>
+            </div>
+            <div>
+              <h3 class="heading-tile text-brand-secondary">
+                {isEn ? "Need tailored safety advice?" : "Persoonlijk advies nodig?"}
+              </h3>
+              <span class="text-xs text-brand-dark/60 block">
+                {isEn ? "Direct answer on weekdays (08:30 - 17:00)" : "Direct antwoord op werkdagen (08:30 - 17:00)"}
+              </span>
+            </div>
+          </div>
+          
+          <p class="text-card mb-5">
+            {isEn
+              ? "Not sure which training, inspection or RI&E your organization needs? Our safety advisors are happy to help."
+              : "Twijfelt u welke cursus, keuring of RI&E voor uw branche verplicht is? Onze veiligheidsadviseurs denken direct met u mee."}
+          </p>
+
+          <div class="flex flex-col gap-2.5">
+            <a
+              href={isEn ? "/en/personal-advice" : "/persoonlijk-advies"}
+              class="btn-base w-full bg-brand-accent hover:bg-brand-accent-hover text-white shadow-xs"
+            >
+              <span>{isEn ? "Ask a safety advisor" : "Stel uw vraag aan een adviseur"}</span>
+              <i class="fa-solid fa-arrow-right text-xs"></i>
+            </a>
+
+            <a
+              href={faqPageUrl}
+              class="w-full text-center font-display font-semibold text-xs text-brand-secondary hover:text-brand-primary py-2 transition-colors inline-flex items-center justify-center gap-1.5"
+            >
+              <span>{isEn ? "View all frequently asked questions" : "Bekijk alle veelgestelde vragen"}</span>
+              <i class="fa-solid fa-arrow-right text-[10px]"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column (8 cols): 6 High-Intent DataForSEO / GEO Accordions -->
+      <div class="lg:col-span-8 space-y-3" data-home-faq-group>
+        {faqItems.map((item, idx) => (
+          <details
+            name="home-faq"
+            data-home-faq-item
+            class="group bg-white rounded-2xl border border-brand-dark/8 hover:border-brand-primary/25 px-5 py-4 sm:px-6 sm:py-5 shadow-xs transition-all duration-200 [&_summary::-webkit-details-marker]:hidden open:border-brand-primary/30 open:shadow-md"
+            open={idx === 0}
+          >
+            <summary class="flex items-center justify-between gap-4 cursor-pointer list-none select-none">
+              <h3 class="heading-tile text-brand-secondary group-hover:text-brand-primary transition-colors min-w-0">
+                {item.question}
+              </h3>
+              <span class="w-8 h-8 rounded-xl bg-brand-cream/80 group-hover:bg-brand-primary/10 text-brand-secondary group-open:bg-brand-accent group-open:text-white flex items-center justify-center shrink-0 transition-all duration-300 group-open:rotate-180">
+                <i class="fa-solid fa-chevron-down text-xs"></i>
+              </span>
+            </summary>
+
+            <div
+              class="mt-4 pt-4 border-t border-brand-dark/5 text-card"
+              set:html={item.answerHtml}
+            />
+          </details>
+        ))}
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Schema.org FAQPage Structured Data (1-to-1 synchronized with visible FAQ items) -->
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <script>
+    function initHomeFaqAccordion() {
+      document.querySelectorAll('[data-home-faq-group]').forEach((group) => {
+        const items = group.querySelectorAll<HTMLDetailsElement>('details[data-home-faq-item]');
+        items.forEach((detail) => {
+          detail.addEventListener('toggle', () => {
+            if (detail.open) {
+              items.forEach((other) => {
+                if (other !== detail && other.open) {
+                  other.open = false;
+                }
+              });
+            }
+          });
+        });
+      });
+    }
+
+    initHomeFaqAccordion();
+    document.addEventListener('astro:page-load', initHomeFaqAccordion);
+  </script>
+</section>
