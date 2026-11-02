@@ -27,6 +27,7 @@ pnpm-debug.log*
 
 .vercel
 scratch/
+.agents/
 
 # Pre-built static output (for DirectAdmin server only, not for Vercel)
 index.html
